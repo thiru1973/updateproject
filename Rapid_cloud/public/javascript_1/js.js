@@ -15,7 +15,7 @@ function isIE () {
 
 $('#Templates').click(function(){
 	$("#view_temp").show();
-	$("#single_node").hide();
+	//$("#single_node").hide();
 });
 var tempName = [];
 var region = [];
@@ -114,6 +114,10 @@ function pvdSpec_function(myT){
 	//alert("Disabled the functions....!");
 	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+template;
 }
+
+$('#manageEnv').click(function(){
+	location.href="//172.29.59.65:3000/manageEnv";
+})
 
 
 function myTemp_details(){

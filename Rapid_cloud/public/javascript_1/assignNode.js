@@ -70,7 +70,7 @@ function templateDetails(){
 					+"<tr><td><table class='nodeSel' id='nodeSel"+i+"'><tr><th>Inst_Name</th><th>VCPU</th><th>RAM</th><th>Storage</th></tr><tr><td>--</td><td>--</td><td>--</td><td>--</td></tr></table></td></tr>"
 					+"<tr><td>"
 					+"<div id='noDEpullL' class='pull-left'><span></span><label id='' class='labelTemp'><span>Image</span></label><div id='selll"+i+"' class='clickRole forWid'><span>Select</span><ul id='sellls"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div>"
-					+"<button class='buttonSm' onclick='submit_fun("+i+" )'style='margin-top: 35px;margin-left:10px;'>Submit</button>"
+					//+"<button class='buttonSm' onclick='submit_fun("+i+" )'style='margin-top: 35px;margin-left:10px;'>Submit</button>"
 					+"</td></tr></table>"
 					+"</td></tr>"
 					+"<tr>"
@@ -177,7 +177,7 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 DropdownConst.prototype.cre = function(){
 	var re = document.getElementById(this.addId);
 	re.innerHTML+="<ul id='"+this.addId+"s' class='dropDown'>"
-			+"</ul>"
+				+"</ul>"
 	var ulI = document.getElementById(this.addId+"s");
 	for(var i=0;i<=this.dataSt.length-1;i++){
 		ulI.innerHTML +="<li onclick='selectOpt(this,"+i+")' class='"+this.dataSt[i]+"'>"
@@ -238,6 +238,7 @@ function region_fun(reg){
 	var p_name=reg;	
 	var data = {};
     data.pname = p_name;
+    var region_name1=[];
 	   $.ajax({
 	     type: 'POST',
 		 jsonpCallback: "callback",
@@ -245,9 +246,12 @@ function region_fun(reg){
 	     data: data,	 
 	     url: 'http://172.29.59.65:3000/temp_region',
 	     success: function(results) {
-	    	 //alert(results);
+	    	 for(var i=0;i<results.length;i++)
+				{
+					region_name1[i]=results[i].region_name;											
+				}
 	    	 var appendD = new DropdownConst();
-	    	 appendD.appendData(results,"sells");
+	    	 appendD.appendData(region_name1,"sells");
 	     },
 		 error: function (xhr, status, error){
 	        console.log('Failure');
@@ -363,57 +367,75 @@ function show_images(id){
 		   });	
 }
 var save_info =[];
-function submit_fun(arg1){
+/*function submit_fun(arg1){
 	
 	var str1 = "Select";
-	var node_role = templates[arg1].role;
-	//alert(node_role);
-	var x = document.getElementById("sel"+arg1+"").innerText;
-	var y = document.getElementById("sell"+arg1+"").innerText;
-	var z = document.getElementById("selll"+arg1+"").innerText;
 	
-	if(x == str1)
-		{
-		document.getElementById("sel"+arg1+"").style.border="thin dashed #E24B4B";
-		return;
-		}else if(y == str1)
-			{
-			document.getElementById("sell"+arg1+"").style.border="thin dashed #E24B4B";
-			return;
-			}
-		else if(z == str1)
-			{
-			document.getElementById("selll"+arg1+"").style.border="thin dashed #E24B4B";
-			return;
-			}
-			console.log(node_role+save_info.length);
-			var role_info={};
-			role_info.node=node;
-			role_info.image=z;
-			role_info.role=node_role;			
-			save_info.push(role_info);
-	console.log(save_info);
-	console.log(provider);
-}
+}*/
 
 
 
 $(".saveInfo").click(function(){
-	var arr1=JSON.stringify(save_info);
-	console.log(arr1);
+	//var arr1=JSON.stringify(save_info);
+	//console.log(arr1);
 	var tm_name = document.getElementById("t_name").value;
+	var str1="Select";
+	
+	for(var i=0;i<templates.length;i++)
+	{	
+		var node_role = templates[i].role;
+		var x = document.getElementById("sel"+i+"").innerText;
+		var y = document.getElementById("sell"+i+"").innerText;
+		var z = document.getElementById("selll"+i+"").innerText;
+		
+		if(x == str1)
+			{
+			document.getElementById("sel"+i+"").style.border="thin dashed #E24B4B";
+			return;
+			}else if(y == str1)
+				{
+				document.getElementById("sell"+i+"").style.border="thin dashed #E24B4B";
+				return;
+				}
+			else if(z == str1)
+				{
+				document.getElementById("selll"+i+"").style.border="thin dashed #E24B4B";
+				return;
+				}
+	}
 	if(tm_name == null || tm_name == "" )
 		{
 		 document.getElementById("t_name").focus();
 		 return;
 		}
-	//console.log(tm_name);
+	saveInformation(tm_name);
+})
+
+function saveInformation(tm_name){
+
+	for(var i=0;i<templates.length;i++)
+	{	
+		var node_role = templates[i].role;
+		var x = document.getElementById("sel"+i+"").innerText;
+		var y = document.getElementById("sell"+i+"").innerText;
+		var z = document.getElementById("selll"+i+"").innerText;
+		var role_info={};
+		role_info.node=node;
+		role_info.image=z;
+		role_info.role=node_role;			
+		save_info.push(role_info);
+		console.log(save_info.length);
+		console.log(provider);
+	}
+	var arr1=JSON.stringify(save_info);
+	//console.log(arr1);	
 	var arr2=[];
 	arr2.push(provider);
 	arr2.push(region);
 	arr2.push(save_info.length);
 	arr2.push(tm_name);
 	console.log(arr2);
+	console.log(save_info);
 	$.ajax({
 	     type: 'POST',
 		 jsonpCallback: "callback",
@@ -429,7 +451,9 @@ $(".saveInfo").click(function(){
 			},
 		 });
 	
-})
+}
+
+
 
 /* Provider */
 var provider = new DropdownConst("div","nodeId","","assignNode","","","");

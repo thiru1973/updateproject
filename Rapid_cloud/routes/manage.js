@@ -28,11 +28,16 @@ var p_name = [];
 var subnet_name = [];
 var auth=[];
 
+var client_pg = new pg.Client(conString);
+client_pg.connect();
 
+exports.manageEnv = function(req, res){
+	res.render('manageEnv');
+}
 
 exports.manage = function(req, res){
-	var client_pg = new pg.Client(conString);
-	client_pg.connect();
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
 	client_pg.query("SELECT * FROM azure_details where status <> 'terminated';", function(err, result){
 	if(err){
 	throw err;
@@ -90,8 +95,8 @@ exports.manage_env_nodes = function(req,res){
 };
 exports.manage_env = function(req, res){
 	var proj_name = [];
-	var client_pg = new pg.Client(conString);
-	client_pg.connect();
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
 	client_pg.query("SELECT * FROM project3;", function(err, result){
 	if(err){
 	throw err;
@@ -102,9 +107,9 @@ exports.manage_env = function(req, res){
 	for(var i=0;i<row_length;i++){
 		proj_name[i] = rows[i].p_name;
 	}
-	//res.send(rows);
+	res.send(rows);
 	//console.log(proj_name);
-	res.render('manage_env', {data : rows});
+	//res.render('manage_env', {data : rows});
 	 });	 
 };
 
@@ -278,7 +283,8 @@ exports.createSecGroup = function(req, res){
 	  var sgFPort = Obj.sgFPort;
 	  var sgTPort = Obj.sgTPort;
 	  var sgCidrIp = Obj.sgCidrIp;
-	  var sgVpcId = "vpc-2de7a049";
+	  var sgVpcId = Obj.vpcId;
+	  console.log(sgVpcId);
 	 // console.log(pvd+sgRegion+sgName+sgFPort+sgTPort+sgCidrIp);
 	  /* var client = new zerorpc.Client();
 	   client.connect("rpcConString");*/     
@@ -307,6 +313,43 @@ exports.createKeyPair = function(req, res){
 	   });
 	res.send("Success");
 }
+exports.deployTemplate = function(req, res){
+	
+	var arr=[];
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var d1 = Obj.d1;
+	var d1arr = d1.split(',');
+	d1arr.splice(2, 0, auth[0]);
+	d1arr.splice(3, 0, auth[1]);
+	for(var i=0;i<d1arr.length;i++)
+		{
+			arr.push(d1arr[i]);
+		}
+	
+	var d2 = Obj.d2;
+	var d3 = d2.split(',');
+	console.log(d3.length);
+	
+	if(d3.length>6)
+		{
+			var results = [];
+			  while (d3.length) {
+			    results.push(d3.splice(0, 6));
+			  }
+			  for(var i=0;i<results.length;i++)
+				  {
+				  	arr.push(results[i]);
+				  }
+		}else{arr.push(d3);}
+	  console.log(arr);
+	  /*client.invoke("assign", arr, function(error, resq, more) {
+	       
+	   });*/
+	res.send("Success");
+}
+
+
 
 //New screen function end
 /*Old screen functions*/
@@ -359,8 +402,8 @@ exports.deploy_data = function(req, res){
 
 exports.vpc_deploy = function(req, res){
 	var vpc_name = [];
-	var client_pg = new pg.Client(conString);
-	client_pg.connect();
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
 	client_pg.query("SELECT * FROM vpc", function(err, result){
 	if(err){
 	throw err;
@@ -383,8 +426,8 @@ exports.vpc_deploy = function(req, res){
 };
 
 exports.project = function(req, res){
-	var client_pg = new pg.Client(conString);
-	client_pg.connect();
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
 	//client_pg.query("SELECT p_name FROM project", function(err, result){
 	client_pg.query("SELECT * FROM project", function(err, result){
 	if(err){
@@ -409,8 +452,8 @@ exports.project = function(req, res){
 
 exports.subnet_deploy = function(req, res){
 	var vpc_name = [];
-	var client_pg = new pg.Client(conString);
-	client_pg.connect();
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
 	client_pg.query("SELECT * FROM subnet", function(err, result){
 	if(err){
 	throw err;
@@ -505,8 +548,8 @@ var ninst = new_inst[i];
 
 
 exports.manage_template = function(req, res){
-	var client_pg = new pg.Client(conString);
-	client_pg.connect();
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
 	client_pg.query("SELECT * FROM enviroment3;", function(err, result){
 	if(err){
 	throw err;
@@ -517,43 +560,23 @@ exports.manage_template = function(req, res){
 	 });
 	
 };
-client_pg.connect();
+//client_pg.connect();
 exports.filter_env = function(req,res){
-	var result=JSON.stringify(req.body);
-	var Obj = JSON.parse(result);	
-	var proj_name=Obj.id;
-	console.log(proj_name);
+	 var result=JSON.stringify(req.body);
+	 var Obj = JSON.parse(result); 
+	 var proj_id=Obj.id;
+	 console.log(proj_id);
+	 console.log("Project before Index.js:  "+proj_id);
 
-	client_pg.query("Select * from aws_env where p_name = ($1)", [proj_name], function(err,result){
-		if(err){
-			throw err;
-		}
-		var t_id = [];
-		var t_name = [];
-		var inst_role = [];
-		var inst_type = [];
-		var inst_id = [];
-		var status = [];
-		var provider = [];
-		var vpc = [];
-		var rows = result.rows;
-		console.log(rows);
-		console.log(rows.length);
-		var rows_len = rows.length;
-		for(var i=0;i<rows_len;i++){
-			//t_id[i] = rows[i].template_id;
-			t_name[i] = rows[i].template_name;
-			inst_role[i] = rows[i].role;
-			inst_type[i] = rows[i].inst_type;
-			inst_id[i] = rows[i].inst_id;
-			status[i] = rows[i].status;
-			provider[i] = rows[i].prov_id;
-			vpc[i] = rows[i].vpc_name;
-			
-		}
-		res.send(t_name.toString()+"~"+inst_role.toString()+"~"+inst_type.toString()+"~"+inst_id.toString()+"~"+status.toString()+"~"+provider.toString()+"~"+vpc.toString());
-	});
-
+	
+	  client_pg.query("SELECT env_name FROM deployment_env where p_id = ($1) GROUP BY env_name", [proj_id], function(err,result){
+		  if(err){
+		   throw err;
+	  }
+		  var rows = result.rows;
+		  console.log(rows);
+		  res.send(rows);
+	 });
 };
 
 exports.popup_nodes = function(req,res){
@@ -561,7 +584,7 @@ exports.popup_nodes = function(req,res){
 	var Obj = JSON.parse(result);	
 	var t_name=Obj.tname;
 	console.log(t_name);
-	client_pg.query("Select role,inst_type,inst_id,status from aws_env where template_name = ($1)", [t_name], function(err,result){
+	client_pg.query("Select role,inst_type,inst_id,status from deployment_env where template_name = ($1)", [t_name], function(err,result){
 		if(err){
 			throw err;
 		}
@@ -599,21 +622,22 @@ exports.popup_nodes = function(req,res){
 };
 
 exports.node_details = function(req,res){
-	var result=JSON.stringify(req.body);
-	var Obj = JSON.parse(result);	
-	var inst_id=Obj.nid;
-	console.log(inst_id);	
-	client_pg.query("Select prov_id,role,inst_type,status,vpc_name from aws_env where inst_id = ($1)", [inst_id], function(err,result){
-		if(err){
-			throw err;
-		}
-		var rows = result.rows;
-
-		console.log(rows);
-		res.send(rows);
-	});
-	
-};
+	 var result=JSON.stringify(req.body);
+	 var Obj = JSON.parse(result);
+	 console.log(Obj);
+	 var t_name=Obj.env_name;
+	 var proj_id = Obj.proj_id;
+	 console.log(t_name);
+	 client_pg.query("Select * from deployment_env where env_name = ($1) AND p_id = ($2)", [t_name, proj_id], function(err,result){
+	  if(err){
+	   throw err;
+	  }
+	  var rows = result.rows;
+	  console.log(rows);
+	  res.send(rows);
+	 });
+	 
+	};
 
 fs.readFile('new.txt', 'utf-8', function(err,data){
     if(err){

@@ -68,6 +68,21 @@ $(document).ready(function(){
 		$("[role='naviGation'] ul li dl dt").removeClass("activeLink");
 		$(this).addClass("activeLink");
 	});
+	
+	var i =0;
+	/*$(".clickRole").click(function(e){
+		e.stopPropagation();		
+		if ($(this).find(".dropDown").css('display') == 'block'){
+			$(this).find(".dropDown").slideUp();
+		}else{
+			$(".dropDown").slideUp();
+			$(this).find(".dropDown").slideDown();
+		}
+	});
+
+	$(document).on("click", function () {
+		$(".dropDown").slideUp();
+	});*/
 });
 
 function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){
@@ -143,24 +158,24 @@ function selectOpt(ev, idn){
 	 var vb = v.parentNode;
 	 var idd = vb.id;
 	 var roleAt;
-	 for (var i=0;i<count;i++)
+	 console.log(idd);
+	 for (var i=0;i<norole.length;i++)
 		 {		 		
 		 			for(var j=0;j<idDt.length;j++)
 		 				{
-		 					if(aTex == idDt[j].name && idd == "sel")
-		 						{
-		 							roleAt = idDt[j].subrole;
-		 							addValues(roleAt, "sells");
-		 						}else if(aTex == idDt[j].name && idd == "sel"+i+"")
+		 					 if(aTex == idDt[j].name && idd == "sel"+norole[i]+"")
 		 							{	
 		 								roleAt = idDt[j].subrole;
-		 								addValues(roleAt,"sell"+i+"s")
+		 								addValues(roleAt,"sell"+norole[i]+"s")
 		 							}
 		 				}	 		
 		 }
 	 document.getElementById(idd).style.border="none";
 	 $("#"+idd+" span:first").html(aImage+aTex);
-	 $("#"+idd+" span img").css("width", "25px");	 
+	 $("#"+idd+" span img").css("width", "25px");	
+	 //event.stopPropagation();
+	 //$(ev).parent(".dropDown").slideUp();
+
 }
 function addValues(data, toWhat){
 		var appendD = new DropdownConst();
@@ -180,7 +195,8 @@ function dataUpDate2(ev){
 	$(".projectTech").text(aTex);
 }
 function closeRole(ev){
-	if(count == 1){
+	
+	if(count == 0){
 		$(".alertS div.alert").stop().hide();
 		$(".alert-danger").stop().slideDown();		
 		return;
@@ -190,14 +206,25 @@ function closeRole(ev){
 	var ev = evv.parentNode;
 	ev.remove();
 	var i = ev.id;
+	var delRoleNo = i.charAt(i.length-1);
+	for(var j = 0;j<norole.length;j++) 
+	{
+        if(norole[j] == delRoleNo) 
+        {
+            norole.splice(j, 1);
+        }
+    }
+	console.log(norole);
 	$("."+i).remove();
 }
 
 window.onload = function(){
 	data();
 }
-var idArr=[];
-var osArr=[];
+//var idArr=[];
+//var osArr=[];
+var idArr = ["Database", "WebServer", "ApplicationServer", "Integration", "Test Server", "Build Server", "Proxy Server", "Mail Server"];
+var osArr = ["Ubuntu", "Debian", "SUSE", "CentOS", "RHEL(AWS)", "Windows", "Gentoo(AWS)","Debian"];
 var idDt;
 function data(){
 	$(function(){		
@@ -210,14 +237,14 @@ function data(){
 			   }
 			   
 			   var os = data[1].types;			  
-			   for(var d=0; d<=os.length-1; d++){				   
+			   for(var d=0; d<os.length-1; d++){				   
 				   var oss = data[1].types[d].name;				  
 				   osArr.push(oss);
 			   }			   
 			   //roleAt = data[0].types[1].subrole;
-			   //var opeSys = data[0].types[2].subrole;			  
-			  
+			   //var opeSys = data[0].types[2].subrole;		  
 		   });
+		   
 		   $.getJSON('http://172.29.59.65:3000/project', function(data){
 			   var proje = data;
 			   var pj_Na=[], pr_Na=[], tec_ngy=[];
@@ -225,22 +252,23 @@ function data(){
 				    pj_Na [d] = data[d].p_name;
 				    pr_Na [d] = data[d].account;
 				    tec_ngy [d] = data[d].technology;				   
-			   }			  
-			   objectData(idArr, osArr, pj_Na, pr_Na, tec_ngy);
+			   }
+
+			   objectData(pj_Na, pr_Na, tec_ngy);
 		   })
 		});
 }
 
-function objectData(idArr, osArr, pj_Na, pr_Na, tec_ngy){
+function objectData(pj_Na, pr_Na, tec_ngy){
 	/* Role */
 	var role = new DropdownConst("div","roleID","","templateConta","","","");
 	role.createCon();
 	var role = new DropdownConst("div","pullL","pull-left","roleID","","","").createCon();
 	var role = new DropdownConst("label","","labelTemp","pullL","Role","","").createCon();
-	var role = new DropdownConst("div","sel","clickRole forWid","pullL","Select","",roleImg,idArr);
+	var role = new DropdownConst("div","sel0","clickRole forWid","pullL","Select","",roleImg,idArr);
 	role.createCon();
 	role.cre();	
-	var role = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel","","","").createCon();
+	var role = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel0","","","").createCon();
 
 	var roleAt1 = ["Java","asp"];
 	/* Role Attribute */
@@ -248,20 +276,20 @@ function objectData(idArr, osArr, pj_Na, pr_Na, tec_ngy){
 	roleAttri.createCon();
 	var roleAttri = new DropdownConst("div","pullLi","pull-left","roleAtID","","","").createCon();
 	var roleAttri = new DropdownConst("label","","labelTemp","pullLi","Role Attribute","","").createCon();
-	var roleAttri = new DropdownConst("div","sell","clickRole forWid","pullLi","Select","","",roleAt1);
+	var roleAttri = new DropdownConst("div","sell0","clickRole forWid","pullLi","Select","","",roleAt1);
 	roleAttri.createCon();
 	roleAttri.cre();
-	var roleAttri = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sell","","","").createCon();
+	var roleAttri = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sell0","","","").createCon();
 	
 	/* Operating System */
 	var operatingSys = new DropdownConst("div","oSys","","templateConta","","","");
 	operatingSys.createCon();
 	var operatingSys = new DropdownConst("div","pullLii","pull-left","oSys","","","").createCon();
 	var operatingSys = new DropdownConst("label","","labelTemp","pullLii","Operating System","","").createCon();
-	var operatingSys = new DropdownConst("div","selll","clickRole forWid","pullLii","Select","",osImg,osArr);
+	var operatingSys = new DropdownConst("div","selll0","clickRole forWid","pullLii","Select","",osImg,osArr);
 	operatingSys.createCon();
 	operatingSys.cre();
-	var operatingSys = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selll","","","").createCon();
+	var operatingSys = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selll0","","","").createCon();
 
 	/* Project Name*/	
 	var projectName = new DropdownConst("div","pnameId","","templateConta1","","","");
@@ -310,10 +338,13 @@ function objectData(idArr, osArr, pj_Na, pr_Na, tec_ngy){
 
 /* New Row */
 var i=0;
-var count=1;
+var norole=[0];
+var count = 0;
 function createTem(eve)
-{
+{	
+	
 	count++;
+	norole.push(count);
 	i++;
 	var refId = document.getElementById("roleAdded");
 	var creAl = document.createElement("div");
@@ -367,57 +398,29 @@ function createTem(eve)
 
 var select_result = [];
 function saveTemplateInformation(buttonId){
-	//alert(buttonId);
+	var id=buttonId;
 	var str="Select";
-	for(var i=0;i<count;i++)
+	console.log(norole);
+	for(var i=0;i<norole.length;i++)
 		{
-			if(i == 0)
-				{					
-					var x = document.getElementById("sel").innerText;				
-					var y = document.getElementById("sell").innerText;
-					var z = document.getElementById("selll").innerText;
-					if(x == str )
-					{
-						document.getElementById("sel").style.border="thin dashed #E24B4B";
-						return;
-					}else if(y == str)
-						{
-							document.getElementById("sell").style.border="thin dashed #E24B4B";
-							return;
-						}else if(z == str)
-							{
-								document.getElementById("selll").style.border="thin dashed #E24B4B";
-								return;
-							}
-						var role_info={};
-						role_info.role=x;
-						role_info.roleAttr=y;
-						role_info.os=z;
-						select_result.push(role_info);
-				}else{
-					var x1 = document.getElementById("sel"+i).innerText;
-					var y1 = document.getElementById("sell"+i).innerText;
-					var z1 = document.getElementById("selll"+i).innerText;
+					var x1 = document.getElementById("sel"+norole[i]).innerText;
+					var y1 = document.getElementById("sell"+norole[i]).innerText;
+					var z1 = document.getElementById("selll"+norole[i]).innerText;
 					if(x1 == str )
 					{
-						document.getElementById("sel"+i).style.border="thin dashed #E24B4B";
+						document.getElementById("sel"+norole[i]).style.border="thin dashed #E24B4B";
 						return;
 					}else if(y1 == str)
 						{
-							document.getElementById("sell"+i).style.border="thin dashed #E24B4B";
+							document.getElementById("sell"+norole[i]).style.border="thin dashed #E24B4B";
 							return;
 						}else if(z1 == str)
 							{
-								document.getElementById("selll"+1).style.border="thin dashed #E24B4B";
+								document.getElementById("selll"+norole[i]).style.border="thin dashed #E24B4B";
 								return;
 							}
-					var role_info={};
-					role_info.role=x1;
-					role_info.roleAttr=y1;
-					role_info.os=z1;
-					select_result.push(role_info);
-				}
-		}
+			}
+		
 	var pj_name = document.getElementById("sellll").innerText
 	var pd_name = document.getElementById("selllll").innerText
 	var tc_gy = document.getElementById("sellllll").innerText
@@ -445,8 +448,25 @@ function saveTemplateInformation(buttonId){
 					 return;
 					}
 	var te_name=pj_name+"_"+tc_gy+"_"+tm_name;
-	alert("Template saved with "+te_name+" name!!!!!!!!");	
+	alert("Template saved with "+te_name+" name!!!!!!!!");
+	saveTemplateFunction(id,te_name);
+}
+function saveTemplateFunction(id, te_name){
+	alert(id);
+	console.log(norole);
+	for(var i=0;i<norole.length;i++)
+	{
+				var x1 = document.getElementById("sel"+norole[i]).innerText;
+				var y1 = document.getElementById("sell"+norole[i]).innerText;
+				var z1 = document.getElementById("selll"+norole[i]).innerText;
+				var role_info={};
+				role_info.role=x1;
+				role_info.roleAttr=y1;
+				role_info.os=z1;
+				select_result.push(role_info);
+	}
 	var ary1=JSON.stringify(select_result); 
+	console.log(ary1);
 	$.ajax({
 	     type: 'POST',
 		 jsonpCallback: "callback",
@@ -454,13 +474,14 @@ function saveTemplateInformation(buttonId){
 	     data: "d1="+ary1+"&d2="+te_name,
 	     url: 'http://172.29.59.65:3000/node_store',
 	     success: function(results) {
-	    	 if(buttonId == "save_exit")
+	    	 if(id == "save_exit")
 	    	 {
 		    	 location.href="http://172.29.59.65:3000/assignNode"+"?data="+te_name;
-	    	 }else if(buttonId == "create_exit")
+	    	 }else if(id == "create_exit")
 	    	 		 {
 				    	 $(".alertS div.alert").stop().hide();
 				    	 $(".alert-success").stop().slideDown();
+				    	 location.href="http://172.29.59.65:3000/master_2"
 	    	 		 }
 	     },
 		 error: function (xhr, status, error){

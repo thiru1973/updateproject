@@ -57,6 +57,7 @@ app.post('/gateWay', manage.gateWay);
 app.post('/createStorage', manage.createStorage);
 app.post('/createSecGroup', manage.createSecGroup);
 app.post('/createKeyPair', manage.createKeyPair);
+app.post('/deployTemplate', manage.deployTemplate);
 
 app.get('/actions', manage.actions);
 app.get('/vpc_deploy',manage.vpc_deploy);
@@ -103,6 +104,9 @@ app.get('/azure_image',routes.azure_image);
 app.post('/cloud_project',manage.cloud_project);
 app.post('/create_deploy_slot',routes.create_deploy_slot);
 app.post('/filter_slot',manage.filter_slot);
+
+//New manage screen
+app.get('/manageEnv', manage.manageEnv);
 
 
 

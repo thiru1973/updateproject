@@ -285,19 +285,20 @@ exports.temp_region=function(req,res){
 							throw err
 							}
 						else{									
-									var len=result.length;								
+									/*var len=result.length;								
 									for(var i=0;i<len;i++)
 									{
 										region_name1[i]=result[i].region_name;											
-									}
+									}*/
 									//console.log(region_name1);
 									/*var newarr2=[];									
 									newarr2 = region_name1.filter(function(elem, pos) {
 										return region_name1.indexOf(elem) == pos;
 									})*/									
-									res.send(region_name1);									
+									//res.send(region_name1);	
+									res.send(result);
 							}
-					 db.close();					
+					 db.close();						
 					});	
 				   }
 		});

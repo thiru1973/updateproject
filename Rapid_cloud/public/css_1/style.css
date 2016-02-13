@@ -217,7 +217,8 @@ display:none;
 
 .forPopup{width:228px}
 .redButton{background-color:#E24B4B;padding:5px 10px;color:#fff;border:none;}
-.disAbledButton{background-color:#DDDDDD;padding:5px 10px;color:#AAAAAA;border:none;cursor:not-allowed;}
+/*.disAbledButton{background-color:#DDDDDD;padding:5px 10px;color:#AAAAAA;border:none;cursor:not-allowed;}*/
+button:disabled {background-color:#DDDDDD;padding:5px 10px;color:#AAAAAA;border:none;cursor:not-allowed;}
 
 .countAlign{margin:4px 0px 0px 10px;}
 .addStoTab{font-size:14px;font-weight:bold;}
@@ -239,10 +240,66 @@ display:none;
 
 .clonedRo{float:left;}
 
+/*manage screen*/
+.enviTable tr td{padding:12px 10px;}
+.redLinks{color:#E24B4B;}
+.popover{font-size:12px;width:250px;}
+.popover h3{font-size:12px;border-top:1px solid #ebebeb;}
+.statusOfNodeH3{font-size:14px!important;font-weight:bold;}
+.tempBg{background-color:#eee;padding:12px 14px;}
+.statusNodes li{padding-left:10px;border-bottom:solid 1px #ccc;padding:6px 0px 10px 10px;}
+.statusNodes li:last-child{border:none;}
+.running, .stopped, .terminated{width:17px;height:17px;display:inline-block;position:relative;bottom:-4px;left:-7px;border-radius: 200px 200px 200px 200px;-moz-border-radius: 200px 200px 200px 200px;-webkit-border-radius: 200px 200px 200px 200px;}
+.running{border:2px solid #00AA00;background-color:#36D900;}
+.stopped{border:2px solid #B20000;background-color:#FF7373 ;}
+.terminated{border:2px solid #B25900;background-color:#FF8000;}
+.popover-content{padding:0px 14px;}
+.statusOfNode{background-color:#fff;padding:12px 10px;text-align:center;}
+.statusOfNode span.st{font-size:16px;color:#333333;}
+.statusOfNode span.statusText{font-size:15px;}
+.nodeBuT{text-align:center;padding:10px 5px;}
+.nodeBuT button{padding:8px 14px;margin-left:10px;}
+.wid100per{width:100%;}
 
+#manageTable tr:nth-child(odd) {background-color: #eee;}
+
+
+
+[role="tempLates"]{width:100%;background-color:#666666;float:left;position:relative;z-index:10;}
+[role="tempLates"] a{display:block;color:#DDDDDD;font-size:16px;border-bottom:solid 1px #ddd;}
+[role="tempLates"] ul li{margin-bottom:2px;padding-bottom: 13px;}
+[role="tempLates"] ul li a {text-decoration: none;padding-top: 10px;padding-left: 20px;padding-right: 16px;padding-bottom: 10px;cursor:default;margin-bottom:15px;}
+[role="tempLates"] ul li a span{float:right;}
+[role="tempLates"] ul li dl dt{font-weight:normal;padding:10px 20px;cursor:pointer;color:#DDDDDD;}
+[role="tempLates"] ul li dl dt.activeLink{background-color:#7C7C7C;}
+[role="tempLates"] ul li dl dt:hover{color:#DDDDDD;background-color:#7C7C7C;}
+
+
+[role="noDes"]{width:100%;background-color:#DDDDDD;float:left;position:relative;z-index:10;}
+[role="noDes"] a{display:block;color:#333333;font-size:16px;border-bottom:solid 1px #7C7C7C;}
+[role="noDes"] ul li{margin-bottom:2px;padding-bottom: 13px;}
+[role="noDes"] ul li a {text-decoration: none;padding-top: 10px;padding-left: 20px;padding-right: 16px;padding-bottom: 10px;cursor:default;margin-bottom:15px;}
+[role="noDes"] ul li a span{float:right;}
+[role="noDes"] ul li dl dt{font-weight:normal;padding:10px 20px;cursor:pointer;color:#333333;}
+[role="noDes"] ul li dl dt.activeLink{background-color:#EAEAEA;}
+[role="noDes"] ul li dl dt:hover{color:#333333;background-color:#EAEAEA;}
+
+
+/*[table="projectDetails"]{padding:12px 22px 15px 22px;clear:both;} for reference */
+/* Settings & Notifications Popups */
+[role="notification"]{border-top:solid 5px #393939;border-bottom:solid 2px #393939;background-color:#f8f8f8;padding:10px;float:right;}
+[role="notification"] > ul{list-style-type:none;}
+[role="notification"] > header{border-bottom:solid 1px #ddd;}
+[role="notification"] + [role="settingsPopup"]{float:left;}
+[role="notification"] + [role="settingsPopup"] ul li a{background-color:#222;display:block;border-bottom:solid 1px #444;padding:10px;text-decoration:none;color:#c5c5c5;font-weight:normal;}
+[role="notification"] + [role="settingsPopup"] ul li a:hover{color:#fff;background-color:#404040;}
+.header-sec{width:100%;float:left;padding-left:15px;padding-right: 15px;}
 
 @media screen and (max-width:768px) and (min-width:1px){
 [role="template"] article{margin:15px 0px;}
 [role="header"] {margin:0px 0px;}
 .header-txt{display:none;}
 }
+
+.securityGr{float:left;padding:10px;margin-top: 10px;/*background-color:#eee;border: solid 1px #ddd;*/}
+.securityGr > div {float:left;}

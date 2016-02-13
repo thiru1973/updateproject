@@ -121,6 +121,7 @@ function selectOpt(ev, idn){
 				 	getPublicIp(aTex,i);
 				 }
 		 }
+	 document.getElementById(idd).style.border="none";
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
 }
@@ -199,6 +200,10 @@ function get_templateName(){
 			            document.getElementById("regName").value=results[0].Region;
 			            node_info=results[0].Instances;
 			            show_nodeDetails(node_info);
+			            if(pvd_name == "AWS")
+			            	{
+			            		displayZones(pvd_name,pvd_region);
+			            	}
 			    	 },
 				 error: function (xhr, status, error){
 			        console.log('Failure');
@@ -207,6 +212,39 @@ function get_templateName(){
 			   });
 		});
 }
+function displayZones(pname,region){
+	//alert(pname);
+	var p_name=pname;	
+	var data = {};
+    data.pname = p_name;
+	   $.ajax({
+	     type: 'POST',
+		 jsonpCallback: "callback",
+	     datatype: 'jsonp',
+	     data: data,	 
+	     url: 'http://172.29.59.65:3000/temp_region',
+	     success: function(results) {
+	    	//console.log(results);
+	    	 var zones;
+	    	 for(var i=0;i<results.length;i++)
+	    		 {
+	    		 	if(results[i].region_name == region)
+	    		 		{
+	    		 			zones = results[i].availability_zones;
+	    		 		}
+	    		 }
+	    	 console.log(zones);
+	    	 var appendD = new DropdownConst();
+				appendD.appendData(zones,"selsZn");
+	    	
+	     },
+		 error: function (xhr, status, error){
+	        console.log('Failure');
+			alert("failure");
+			},
+	   });
+}
+
 function get_project(){
 	$(function(){
 		  $.getJSON('http://172.29.59.65:3000/project', function(data){
@@ -232,9 +270,7 @@ function getVpcName(){
 				 }
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"selsvpc");
-			   appendD.appendData(vpc_Name,"selsVpcSn");
-			   //appendD.appendData(vpc_Name,"selsRtVpc");
-			   //appendD.appendData(vpc_Name,"selsGtVpc");
+			   appendD.appendData(vpc_Name,"selsVpcSn");			   
 		  });
 	});
 	
@@ -243,13 +279,13 @@ function getVpcName(){
 function getSubnetName(vpcid){
 	$(function(){
 		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){
-			  //var subNetName = [];
 			  //console.log(data);
+			  var subNetName = [];
 			 for(var x=0;x<data.length;x++)
 				 {				 
 				 	if(data[x].vpc_id == vpcid)
 				 		{
-				 			var subNetName = [];
+				 			
 				 			subNetName[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
 				 			//alert(subNetName[x]);
 				 		}
@@ -279,9 +315,33 @@ function getPublicIp(value, append){
 			document.getElementById("ipText"+append+"").value=Anywhere;
 		}else{
 			document.getElementById("ipText"+append+"").value="";
+			$('#ipText'+append+'').focus();
 		}
 }
-
+function iopsFunction(value,Id){
+	//alert(value+""+Id);
+	var vType = document.getElementById("selstg"+Id+"").innerText;
+	if(vType == "General Purpose SSD")
+		{	
+			if(value >= 1 && value <= 3333)
+				{
+					var iops=value*3;
+					document.getElementById("stgIops"+Id+"").value=iops;
+				}else{
+					document.getElementById("stgIops"+Id+"").value="10000";
+				}
+		}else if(vType == "Magnetic")
+			{
+				document.getElementById("stgIops"+Id+"").value="NA";
+			}
+}
+function fortCheckFunction(value, Id){
+	//alert(value+""+Id);
+	if(value < 0 || value > 65535)
+		{
+			$('#'+Id+'').val("");
+		}
+}
 function show_nodeDetails(data){
 	for(var i=0;i<data.length;i++)
 		{
@@ -289,7 +349,7 @@ function show_nodeDetails(data){
 	         tr.append("<td>"+data[i].node+"</td>");
 	         tr.append("<td>"+data[i].image+"</td>");
 	         tr.append("<td>"+data[i].role+"</td>");
-	         tr.append("<td><div class='input-group spinner pull-left count_1'><input type='text' class='form-control' value='1'><div class='input-group-btn-vertical'>"
+	         tr.append("<td><div class='input-group spinner pull-left count_1'><input id='count"+i+"' type='text' class='form-control' value='1'><div class='input-group-btn-vertical'>"
 	        		 +"<button class='btn btn-default up_1' type='button'><i class='fa glyphicon glyphicon-triangle-top'></i></button>"
 	         		 +"<button class='btn btn-default down_1' type='button'><i class='fa glyphicon glyphicon-triangle-bottom'></i></button>"
 	         		 +"</div></div><button class='redButton pull-left countAlign 1stRowAdd' name='add_"+i+"'>Add</button>"
@@ -314,30 +374,34 @@ function show_nodeDetails(data){
 					  
 					  +"<div class='tab-pane fade  in active alignAllsides' id='alerts"+i+"'>"
 					  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>Volume Type</label><div id='selstg"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='text' id='stgsz"+i+"' placeholder='Ex: 1 to 16384GB' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='number' id='stgIops"+i+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, "+i+")' id='stgsz"+i+"' min='1' style='border:none;width:100%;'/></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+i+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
-					  //+"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Encryption</label><div class='checkB addStoTabWid'><input type='checkbox' style='border:none'>Yes</div></div></div>"
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='storage"+i+"' onclick='createStgFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
 					  
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='requests"+i+"'>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+i+"' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>To Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"<div><form class='' id='rbtn"+i+"'><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
+					  +"<div class='CreateNewSecurity CreateSec"+i+"' ><div class='roleId'><div class='pull-left'><div id='selsg"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsgn"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div></div>"
+					  +"<div style='' class='securityGr' id='securityGrIDD"+i+"'><div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+i+"' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>To Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
 					  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"</div>"
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
-					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
+					  +"<div><form class='' id='rbtnkp"+i+"'><label class='radio-inline'> <input type='radio' id='key_Create' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' id='key_Old' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
+					  +"<div id='KeyNew' class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='CreateNewSecurity'><div id='keyOld' class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+					  +"</div><div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='publicIp"+i+"'>"
-					  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><input type='radio' name='pubIp' value='Yes' style='border:none'>Yes<input name='pubIp' type='radio' value='No' style='border:none'>No</div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><form id='ip"+i+"'><input type='radio' name='pubIp' value='Yes' style='border:none'/>Yes<input name='pubIp' type='radio' value='No' checked style='border:none'/>No</form></div></div></div>"
 					  +"</div>"
 					  
 					  +"</div></div>"
@@ -436,10 +500,32 @@ function show_nodeDetails(data){
 			$(this).find(".dropDown").slideToggle();
 		})
 		
-		
-		
-		
-
+		$(".CreateNewSecurity").hide();
+	$('[name="inlineRadioOptions"]').click(function(){
+		var th = $(this).attr("id")
+		var pos = th.charAt(th.length-1);
+		console.log(pos);
+		if(th == "inlineRadio2"+pos+""){
+			$(".CreateSec"+pos+"").show();
+			$("#securityGrIDD"+pos+"").hide()
+		}else if(th == "inlineRadio1"+pos+""){
+			$("#securityGrIDD"+pos+"").show()
+			$(".CreateSec"+pos+"").hide();
+		}
+	})
+	
+		$(".CreateNewSecurity").hide();
+			$('[name="inlineRadioOptions"]').click(function(){
+				var th = $(this).attr("id")
+				console.log(th);
+				if(th == "key_Old"){
+					$("#keyOld").show();
+					$("#KeyNew").hide()
+				}else if(th == "key_Create"){
+					$("#KeyNew").show()
+					$("#keyOld").hide();
+				}
+			})
 		
 }
 
@@ -473,6 +559,8 @@ $('#createVpc').click(function(){
          		},
             });	
 })
+
+
 
 $('#createSubnet').click(function(){
 	alert("In Create subnet page");
@@ -508,12 +596,27 @@ $('#createSubnet').click(function(){
 $('.buttonRt').click(function(){
 
 	var routeName = document.getElementById("routeName").value;
-	//var routeVpc = document.getElementById("selRtVpc").innerText
+	var vpcId1 = document.getElementById("selvpc").innerText;
+	var subnetId1 = document.getElementById("selsn").innerText;
+	//alert(vpcId1);
+	if(vpcId1 == "Select")
+		{
+			document.getElementById("selvpc").style.border="thin dashed #0099FF";
+			return;
+		}else if(subnetId1 == "Select")
+			{
+				document.getElementById("selsn").style.border="thin dashed #0099FF";
+				return;
+			}else if(routeName == null || routeName == "")
+				{
+					$('#routeName').focus()
+					return;
+				}
 	var data = {};
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.routeName = routeName;
-	data.routeVpc = vpcId;
+	data.routeVpc = vpcId1;
 	data.routeSubnet = subnetId;
 	//console.log(routeName+routeVpc+pvd_name);
 	$.ajax({
@@ -534,7 +637,11 @@ $('.buttonRt').click(function(){
 $('.buttonGtw').click(function(){
 
 	var gtWayName = document.getElementById("gateWayName").value;
-	//var gtWayVpc = document.getElementById("selGtVpc").innerText
+	if(gtWayName == null || gtWayName == "")
+		{
+		$('#gateWayName').focus()
+		return;
+		}
 	var data = {};
 	data.provider = pvd_name;
 	data.region = pvd_region;
@@ -562,6 +669,23 @@ function createStgFunction(buttonId, Id){
 	var vSize = document.getElementById("stgsz"+Id+"").value;
 	var vIops = document.getElementById("stgIops"+Id+"").value;
 	var vName = document.getElementById("stgName"+Id+"").value
+	if(vType == "Select")
+		{
+		document.getElementById("selstg"+Id+"").style.border="thin dashed #0099FF";
+		return;
+		}else if(vSize == null || vSize == "" || vSize > 16384)
+			{
+				$('#stgsz'+Id+'').attr("placeholder", "1-16384 GiB").val("").focus().blur();
+				return;
+			}else if(vType =="Magnetic" && (vSize == null || vSize == "" || vSize > 1024))
+				{
+					$('#stgsz'+Id+'').attr("placeholder", "1-1024 GiB").val("").focus().blur();
+					return;
+				}else if(vName == "" || vName == null)
+				{
+					$('#stgName'+Id+'').focus();
+					return;
+				}
 	var data = {};
 	data.provider = pvd_name;
 	data.region = pvd_region;
@@ -590,6 +714,25 @@ function createSgpFunction(buttonId, Id){
 	var sgFPort = document.getElementById("sgFPort"+Id+"").value;
 	var sgTPort = document.getElementById("sgTPort"+Id+"").value;
 	var sgCidrIp = document.getElementById("ipText"+Id+"").value;
+	var cidr = document.getElementById("selci"+Id+"").innerText;
+	var vpcId = document.getElementById("selvpc").innerText;
+	if (sgName == "" || sgName == null)
+		{
+			$('#sgName'+Id+'').focus()
+			return;
+		}else if(sgFPort == "" || sgFPort == null)
+			{
+				$('#sgFPort'+Id+'').focus();
+				return;
+			}else if(sgTPort == "" || sgTPort == null)
+				{
+					$('#sgTPort'+Id+'').focus();
+				}else if(cidr == "Select")
+				{
+					document.getElementById("selci"+Id+"").style.border="thin dashed #0099FF";
+					return;
+				}
+	
 	var data = {};
 	data.provider = pvd_name;
 	data.region = pvd_region;
@@ -597,6 +740,7 @@ function createSgpFunction(buttonId, Id){
 	data.sgFPort = sgFPort;
 	data.sgTPort = sgTPort;
 	data.sgCidrIp = sgCidrIp;
+	data.vpcId = vpcId;
 	//console.log(data);
 	$.ajax({
         type: 'POST',
@@ -615,7 +759,11 @@ function createSgpFunction(buttonId, Id){
 }
 function createKpFunction(buttonId, Id){
 	var keyPair = document.getElementById("keyPairName"+Id+"").value;
-	//console.log(keyPair);
+	if(keyPair == null || keyPair == "")
+		{
+		$('#keyPairName'+Id+'').focus()
+		return;
+		}
 	var data = {};
 	data.provider = pvd_name;
 	data.region = pvd_region;
@@ -638,6 +786,7 @@ function createKpFunction(buttonId, Id){
 
 function deployFunction(){
 	alert("In deploy function");
+	var result_arr = [];
 	var pvName = pvd_name;
 	var region = pvd_region;
 	var envName = document.getElementById("sel").innerText;
@@ -646,19 +795,66 @@ function deployFunction(){
 	var subnetId = document.getElementById("selsn").innerText;
 	var routeName = document.getElementById("routeName").value;
 	var gateName = document.getElementById("gateWayName").value;
+	if(envName == "Select")
+		{
+		document.getElementById("sel").style.border="thin dashed #0099FF";
+		return;
+		}else if(prjName == "Select")
+			{
+			document.getElementById("selpj").style.border="thin dashed #0099FF";
+			return;
+			}
 	console.log(pvName+region+envName+prjName+vpcId+subnetId+routeName+gateName);
-	//console.log(temp_info);
+	//console.log(temp_info);	
+	var ra = (Math.random() * (999 - 000) + 000);
+	alert(parseInt(ra));
+	result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName);
+	
+	
+	var resultObj1 = [];
 	for(var i=0;i<temp_info.length;i++)
 		{
 			//alert(i);
+			var resultObj = [];
 			var stgName = document.getElementById("stgName"+i+"").value;
-			var sgName = document.getElementById("sgName"+i+"").value;
+			//var sgName = document.getElementById("sgName"+i+"").value;
 			var keyPairName = document.getElementById("keyPairName"+i+"").value;
+			var count = document.getElementById("count"+i+"").value;
+			var form = document.getElementById("ip"+i+"");
+			var pIp=form.elements["pubIp"].value;
+			var form1 = document.getElementById("rbtn"+i+"");
+			var selopt = form1.elements["inlineRadioOptions"].value;
+			if(selopt == "option1")
+				{
+				var sgName = document.getElementById("sgName"+i+"").value;
+				}else{
+					var sgName = document.getElementById("selsg"+i+"").innerText;
+				}
 			var instName = temp_info[i].node;
 			var imageName = temp_info[i].image;
 			var roleName = temp_info[i].role;
 			console.log(stgName+sgName+keyPairName+instName+imageName+roleName);
+			resultObj.push(stgName,sgName,keyPairName,instName,imageName,roleName,pIp);
+			resultObj1.push(resultObj);			
 		}
+	console.log(result_arr);
+	console.log(resultObj1);
+	$.ajax({
+        type: 'POST',
+   	 	jsonpCallback: "callback",
+        datatype: 'jsonp',
+        data:  "d1="+result_arr+"&d2="+resultObj1,
+        url: 'http://172.29.59.65:3000/deployTemplate',
+        success: function(data, textStatus){
+        	alert(data);
+        	},
+        	 error: function (xhr, status, error){
+                 console.log('Failure');
+         		alert("failure");
+         		},
+            });
+	
+	
 }
 
 
