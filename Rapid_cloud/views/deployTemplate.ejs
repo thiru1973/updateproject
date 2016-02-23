@@ -92,6 +92,48 @@
 								<button class="redButton" id="createSubnet">Create</button>
 							  </div>
 					</div>
+					<!-- Popup menu for Creating Cloud Service -->
+						<div class="popDataClsrv">
+						<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">Create Cloud Service</h4>
+							  </div>
+							  <div class="modal-body">
+								<table style="width:100%;">
+									<tr>
+										<td>
+											<span>Region</span><br>
+											<input type="Text" id="regNameClsrv" disabled="disabled" style="width:75%;"/>
+										</td>
+										<td>&nbsp;</td>
+										<!--<td>
+										<span>CIDR Block</span><br>
+										<input type="Text" id="cidrBlk"style="width:53%;" placeholder="ex 10.0.0.0/24"/>
+										</td>-->
+										<td>
+										<span>Cloud Service Name</span><br>
+										<input type="Text" id="cloudName"style="width:75%;"/>
+										</td><td></td>
+										<td>
+									</tr>
+									<!--<tr>
+										<td>
+										<span>VPC Name</span><br>
+										<input type="Text" id="vpcName"style="width:75%;"/>
+										</td><td></td>
+										<td>
+											<div id="noDEpullL" class="pull-left"><span></span><label id="" class="labelTemp"><span>Tenency </span>
+</label><div id="selTn" class="clickRole forPopup"><span>Select</span><ul id="selsTn" class="dropDown"><li onclick="selectOpt(this,0)" class="One"><dl><dt></dt><dd class="va">default</dd></dl></li><li onclick="selectOpt(this,1)" class="Two"><dl><dt></dt><dd class="va">dedicated</dd></dl></li></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div>
+										</td>
+									</tr>-->
+								</table>
+							  </div>
+							  <div class="modal-footer">
+								<a class="cancelPoup">Cancel</a>&nbsp;
+								<button class="redButton" id="createClsrv">Create</button>
+							  </div>
+					</div>
+					<!-- Popup for create cloud service ends here -->
 				
 				<!--Pop ups will end here-->
 				</div>
@@ -209,19 +251,27 @@
 	<a href="#" data-toggle="tooltip" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>
 	</label><div id="selpj" class="clickRole borderNoN"><span>Select</span><ul id="selspj" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div>
 												</td>
-												<td>
-													<div id="noDEpullL" class="pull-left"><span></span><label id="" class="labelTemp">
+												<td id="depVpc">
+													<div id="noDEpullL" class="pull-left depVpc"><span></span><label id="" class="labelTemp">
 													<span>Add VPC * </span>
 													<a href="#" data-toggle="tooltipVpc" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>
 													</label><div id="selvpc" class="clickRole borderNoN"><span>Select</span><ul id="selsvpc" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div>
 													<button class="buttonVpc" style="margin-top: 35px;margin-left:10px;">New</button>
 												</td>
-												<td>
-													<div id="noDEpullL" class="pull-left"><span></span><label id="" class="labelTemp"><span>Add Subnet * </span>
+												<td id="depSub">
+													<div id="noDEpullL" class="pull-left depSub"><span></span><label id="" class="labelTemp"><span>Add Subnet * </span>
 													<a href="#" data-toggle="tooltipSubnet" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>
 													</label><div id="selsn" class="clickRole borderNoN"><span>Select</span><ul id="selssn" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div>
 													<button class="buttonSn" style="margin-top: 35px;margin-left:10px;">New</button>
 												</td>
+												<!-- td for cloud service drop down -->
+												<td id="depClsrv">
+													<div id="noDEpullL" class="pull-left depClsrv"><span></span><label id="" class="labelTemp"><span>Cloud Service</span>
+													<a href="#" data-toggle="tooltipClsrv" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>
+													</label><div id="selClsrv" class="clickRole borderNoN"><span>Select</span><ul id="selsClsrv" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div>
+													<button class="buttonClsrv" style="margin-top: 35px;margin-left:10px;">New</button>
+												</td>
+												<!-- td cloud service drop down ends here -->
 											</tr>
 									</tbody>
 								</table>
@@ -251,7 +301,7 @@
 															<input type="text" id="routeName" placeholder="Name" style="border:none;width:100%;"/>	
 														</div>
 														</div>
-														<button class="buttonRt" style="margin-top: 35px;margin-left:10px;">Create</button>
+														<button id="buttonRt" class="buttonRt" style="margin-top: 35px;margin-left:10px;">Create</button>
 													
 												</td>
 										
@@ -262,7 +312,7 @@
 															<input type="text" id="gateWayName" placeholder="Name" style="border:none;width:100%;"/>
 														</div>
 													</div>
-													<button class="buttonGtw" style="margin-top: 35px;margin-left:10px;">Create</button>
+													<button id="buttonGtw" class="buttonGtw" style="margin-top: 35px;margin-left:10px;">Create</button>
 												</td>												
 											</tr>
 									</tbody>									
@@ -270,10 +320,10 @@
 							</td>
 					</tr>
 				</table>
-				  <div class="pull-right" style="padding: 10px 30px;">
+				  <!--<div class="pull-right" style="padding: 10px 30px;">
 					<a href="#" class="advancedOptions">Advanced Options</a>
-				  </div><br>
-				</div>
+				  </div><br>-->
+				</div><!--
 				<div class="advancedOptionsDiv">
 					<div class="col-lg-12 col-md-12 col-sm-12 content_box padZero advancedOptionsDivCon" id="latestUpdates">
 						<ul id="latestUpdatesTab" class="nav nav-tabs hidden-xs">
@@ -429,7 +479,7 @@
 							</div>				
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<div>&nbsp;</div>
 				<h4>Count Configuration</h4>
 				<div class="countConfigBox">

@@ -1,4 +1,4 @@
-
+var _ip = "http://172.29.59.65:3000";
 $(document).ready(function(){
 	var i =0;
 	$(".clickRole").click(function(){
@@ -64,7 +64,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 		/*---------- Table ------------------*/
 			function Projects(){
 				  $(function(){
-				   $.getJSON('http://172.29.59.65:3000/manage_env', function (data){
+				   $.getJSON( _ip + '/manage_env', function (data){
 						//console.log("1st Url Data  : "+data);
 							manage.createTableData(data);
 							//console.log("DATA:::::::::"+data);
@@ -139,7 +139,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 						jsonpCallback: "callback",
 						datatype: 'jsonp',
 						data: data,
-						url: 'http://172.29.59.65:3000/filter_env',
+						url: _ip +'/filter_env',
 						success: function(data, textStatus){
 							console.log(data);
 							self.environmentList(data, requestId);
@@ -187,9 +187,10 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 						jsonpCallback: "callback",
 						datatype: 'jsonp',
 						data: data,
-						url: 'http://172.29.59.65:3000/node_details',
+						url: _ip+'/node_details',
 						success: function(data, textStatus) {
-							//console.log("getNodes:::::::::"+data);
+							//console.log(data);
+							
 							manage._init(data);
 							var el = document.getElementById('node_'+project_id);
 							el.innerHTML="";
@@ -231,10 +232,11 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 				var nodeDe = document.getElementById('nodeDetails_'+project_id);
 
 				//console.log("getNodeDetails:::::"+this.dataOfNd);
+				//console.log(this.dataOfNd);
 				var ifNull ="--"
 				var clodSer = this.dataOfNd[clickedData].cloud_service ? this.dataOfNd[clickedData].cloud_service : ifNull ;
 							nodeDe.innerHTML='<tr>\
-									<td><img src="images_1/AWS_Logo.png" /></td>\
+									<td><img src="images_1/'+this.dataOfNd[clickedData].prov_id+'_Logo.png" /></td>\
 									<td>\
 										<table>\
 											<tr>\
@@ -249,6 +251,10 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 												<td>VPC: </td>\
 												<td>'+this.dataOfNd[clickedData].vpc_name+'</td>\
 											</tr>\
+											<tr>\
+											<td>Region: </td>\
+											<td>'+this.dataOfNd[clickedData].region+'</td>\
+										</tr>\
 										</table>\
 									</td>\
 								</tr>\
@@ -263,13 +269,13 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 								<tr>\
 									<td colspan="2">\
 										<div class="nodeBuT">\
-						  <button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+'" onclick="manage.nodeServerEngine(this)">Start</button>\
+						  <button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Start</button>\
 						  \
-						  <button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
+						  <button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
 						  \
-						  <button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
+						  <button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
 						  \
-						  <button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
+						  <button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
 										</div>\
 									</td>\
 								</tr>';
@@ -298,6 +304,29 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 			}
 			Projects.prototype.nodeServerEngine = function(wichOne){
 				console.log(wichOne.value, wichOne.innerHTML);
+				var inst_id = wichOne.value;
+				var arr =inst_id.split(",");
+				var action = wichOne.innerHTML;
+				console.log(arr[0]+arr[1]+action);
+				var data = {};
+				data.inst_id = arr[0];
+				data.action = action;
+				data.region = arr[1];
+				
+				$.ajax({
+			        type: 'POST',
+			   	 	jsonpCallback: "callback",
+			        datatype: 'jsonp',
+			        data: data,
+			        url: _ip+'/manage_env_nodes',
+			        success: function(data, textStatus){
+			        	alert(data);
+			        	},
+			        	 error: function (xhr, status, error){
+			                 console.log('Failure');
+			         		alert("failure");
+			         		},
+			            });
 			}
 			Projects.prototype.createTableData = function(dataSource){
 				//console.log("createTableData:::"+dataSource);
@@ -310,7 +339,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 						manageTr.innerHTML+='<td>'+dataSource[j].p_name+'</td>'
 										   +'<td>'+dataSource[j].technology+'</td>'
 										   +'<td>'+dataSource[j].start_date+'</td>'
-										   +'<td>'+dataSource[j].team_size+'</td>'
+										   //+'<td>'+dataSource[j].team_size+'</td>'
 										   +'<td><a href="#" onmouseover="disPlayPop(this)" class="redLinks">Status</a>'
 										   +'<div style="position:relative">'
 											+'<div id="Status_'+dataSource[j].p_id+'" class="popover fade right in" role="tooltip" style="left:48px;">'
@@ -337,7 +366,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 						jsonpCallback: "callback",
 						datatype: 'jsonp',
 						data: data,
-						url: 'http://172.29.59.65:3000/filter_env',
+						url: _ip+'/filter_env',
 						success: function(data, textStatus){
 							//console.log("AJAX :::::::::"+JSON.stringify(data));
 							
@@ -396,7 +425,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 						jsonpCallback: "callback",
 						datatype: 'jsonp',
 						data: data,
-						url: 'http://172.29.59.65:3000/node_details',
+						url: _ip+'/node_details',
 						success: function(data, textStatus){
 							//console.log("Node Status:::::::::"+data);
 							//manage._init(data);

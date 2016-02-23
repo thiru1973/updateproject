@@ -5,6 +5,7 @@ var express = require('express')
   , manage = require('./routes/manage')
   , view = require('./routes/view')
   , project = require('./routes/project')
+  , manage_nodes = require('./routes/manage_nodes')
   , http = require('http')
   , path = require('path');
 
@@ -104,10 +105,18 @@ app.get('/azure_image',routes.azure_image);
 app.post('/cloud_project',manage.cloud_project);
 app.post('/create_deploy_slot',routes.create_deploy_slot);
 app.post('/filter_slot',manage.filter_slot);
+app.get('/list_cloud_service',manage.list_cloud_service)
 
 //New manage screen
 app.get('/manageEnv', manage.manageEnv);
 
+//Mange stg, sec, kp
+app.get('/volumeDetails', manage.volumeDetails);
+app.get('/keyPairDetails', manage.keyPairDetails);
+app.get('/secGrpDetails', manage.secGrpDetails);
+app.get('/attachVolume', manage.attachVolume);
+app.get('/attachKeyPair', manage.attachKeyPair);
+app.get('/attachSecGrp', manage.attachSecGrp);
 
 
 http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){

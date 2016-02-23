@@ -319,12 +319,12 @@ function ramsize_fun(data,appendToWhat){
 function showNode_fun(ram,appendTo){
 	//alert(cpu+a+b);
 	var id=appendTo;
+	$('table#nodeSel'+id+' tbody tr td').empty();
 	for(var i=0;i<nodes.length;i++)
 	{
 		if(nodes[i].vcpu == cpu && nodes[i].memory_gib == ram)
 			{					
-				//alert(nodes[i].inst_type);
-				$('table#nodeSel'+id+' tbody tr td').empty();
+				alert(nodes[i].inst_type);				
 				tr = $('<tr class="node1" onclick="get_nodes(this.id)"/>');
 				tr.attr("id", "row"+i);
 	            tr.append("<td>" + nodes[i].inst_type+ "</td>");	

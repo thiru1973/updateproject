@@ -6,6 +6,8 @@ var CryptoJS = require('crypto-js');
 var crypto = require('crypto');
 var fs=require('fs');
 
+var myObject =  require("./manage_nodes.js");
+
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
 
@@ -50,47 +52,14 @@ exports.manage = function(req, res){
 exports.manage_env_nodes = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
-	var inst_id=Obj.instid;
+	var inst_id=Obj.inst_id;
 	var action = Obj.action;
-	var arr=["aws","manage_node",auth[0], auth[1],"ap-northeast-1",inst_id,action];
-	 /*var client = new zerorpc.Client();
-	 client.connect("tcp://172.29.59.61:4242");
-	 client.invoke("assign", arr, function(error, res, more) {
-		 console.log(res);
-		 res1="true";
-		 console.log(res1);
-		 console.log(action);
-		    if(action == "start" && res1 == "true")
-		    	{		    	
-		    	var check="running";
-		    	var client_pg = new pg.Client(conString);
-		    	client_pg.connect();
-		    	client_pg.query("UPDATE aws_env SET status = ($1) WHERE inst_id= ($2)",[check,inst_id]);
-		    	}
-		    else if(action == "stop" && res1 == "true")
-		    {
-		    	var check="stopped";
-		    	var client_pg = new pg.Client(conString);
-		    	client_pg.connect();
-		    	client_pg.query("UPDATE aws_env SET status = ($1) WHERE inst_id= ($2)",[check,inst_id]);	
-		    }
-		    else if(action == "reboot" && res1 == "true")
-		    {
-		    	var check="running";
-		    	var client_pg = new pg.Client(conString);
-		    	client_pg.connect();
-		    	client_pg.query("UPDATE aws_env SET status = ($1) WHERE inst_id= ($2)",[check,inst_id]);	
-		    }
-		    
-		    else if(action == "terminate" && res1 == "true")
-		    {
-		    	var check="terminate";
-		    	var client_pg = new pg.Client(conString);
-		    	client_pg.connect();
-		    	client_pg.query("UPDATE aws_env SET status = ($1) WHERE inst_id= ($2)",[check,inst_id]);	
-		    }
-		    else{console.log("error has oocured");}
-		});*/
+	var region = Obj.region;
+	var arr=["AWS","manage_node",auth[0], auth[1],region,inst_id,action];
+	 console.log(arr);
+	 client.invoke("assign", arr, function(error, res, more) {});
+	
+		 res.send("Success");
 	
 };
 exports.manage_env = function(req, res){
@@ -229,7 +198,7 @@ exports.routeTable = function(req,res){
       		console.log(arr);
 
      		client.invoke("assign", arr, function(error, resq, more) {
-   	         
+   	         console.log(resq);
       		});
 	  
 	  res.send("Success");
@@ -262,7 +231,7 @@ exports.createStorage = function(req, res){
 	  var vSize = Obj.vSize;
 	  var vIops = Obj.vIops;
 	  var vName = Obj.vName;
-	  var vZone = "us-east-1b";
+	  var vZone = Obj.vZone;
 	  //console.log(pvd+vRegion+vType+vSize+vIops+vName);
 	  /* var client = new zerorpc.Client();
 	   client.connect("rpcConString"); */    
@@ -302,17 +271,27 @@ exports.createKeyPair = function(req, res){
 	 var pvd = Obj.provider;
 	 var kpRegion = Obj.region;
 	 var keyPair = Obj.keyPair;
-	//console.log(pvd+kpRegion+keyPair);
-	 /*var client = new zerorpc.Client();
-	   client.connect("rpcConString"); */    
-	   var arr = [pvd, "create_key_pair",auth[0], auth[1], kpRegion , keyPair];
-	   console.log(arr);
+	  var arr = [pvd, "create_key_pair",auth[0], auth[1], kpRegion , keyPair];
+	   //console.log(arr);
 
 	   client.invoke("assign", arr, function(error, resq, more) {
        
 	   });
 	res.send("Success");
 }
+//create snashot for volume
+exports.createSnapShot = function(req, res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	  var arr = [pvd, "create_snap",auth[0], auth[1], volName , snapName];
+	   //console.log(arr);
+
+	   /*client.invoke("assign", arr, function(error, resq, more) {
+      
+	   });*/
+	res.send("Success");
+}
+
 exports.deployTemplate = function(req, res){
 	
 	var arr=[];
@@ -320,35 +299,58 @@ exports.deployTemplate = function(req, res){
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
-	d1arr.splice(2, 0, auth[0]);
-	d1arr.splice(3, 0, auth[1]);
-	for(var i=0;i<d1arr.length;i++)
-		{
-			arr.push(d1arr[i]);
-		}
-	
-	var d2 = Obj.d2;
-	var d3 = d2.split(',');
-	console.log(d3.length);
-	
-	if(d3.length>6)
-		{
-			var results = [];
-			  while (d3.length) {
-			    results.push(d3.splice(0, 6));
-			  }
-			  for(var i=0;i<results.length;i++)
-				  {
-				  	arr.push(results[i]);
-				  }
-		}else{arr.push(d3);}
-	  console.log(arr);
-	  /*client.invoke("assign", arr, function(error, resq, more) {
-	       
-	   });*/
-	res.send("Success");
+	if(d1arr[0] == 'AWS'){
+			d1arr.splice(2, 0, auth[0]);
+			d1arr.splice(3, 0, auth[1]);
+			for(var i=0;i<d1arr.length;i++)
+				{
+					arr.push(d1arr[i]);
+				}
+			
+			var d2 = Obj.d2;
+			var d3 = d2.split(',');
+			console.log(d3.length);
+			
+			if(d3.length>6)
+				{
+					var results = [];
+					  while (d3.length) {
+					    results.push(d3.splice(0, 7));
+					  }
+					  for(var i=0;i<results.length;i++)
+						  {
+						  	arr.push(results[i]);
+						  }
+				}else{arr.push(d3);}
+			  console.log(arr);
+			  client.invoke("assign", arr, function(error, resq, more) {});
+			res.send("Success");
+	}else{
+			for(var i=0;i<d1arr.length;i++)
+			{
+				arr.push(d1arr[i]);
+			}
+		
+			var d2 = Obj.d2;
+			var d3 = d2.split(',');
+			console.log(d3.length);
+			
+			if(d3.length>3)
+				{
+					var results = [];
+					  while (d3.length) {
+					    results.push(d3.splice(0, 3));
+					  }
+					  for(var i=0;i<results.length;i++)
+						  {
+						  	arr.push(results[i]);
+						  }
+				}else{arr.push(d3);}
+			  console.log(arr);
+			 client.invoke("assign", arr, function(error, resq, more) {});
+			res.send("Success");
+			}
 }
-
 
 
 //New screen function end
@@ -732,3 +734,100 @@ exports.filter_slot = function(req,res){
 		
 	});
 };
+
+exports.list_cloud_service = function(req, res){
+	var vpc_name = [];
+	/*var client_pg = new pg.Client(conString);
+	client_pg.connect();*/
+	console.log("Hi");
+	client_pg.query("SELECT cloud_name FROM cloudservice", function(err, result){
+	if(err){
+	throw err;
+	}
+	var rows = result.rows;
+	console.log(rows);
+	res.send(rows);
+	 });
+	
+};
+
+
+//Manage storage, sec group, key pair, 
+exports.volumeDetails = function(req,res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var inst_id = "i-f9491f79";
+	client_pg.query("SELECT * FROM volume where inst_id = ($1)",[inst_id], function(err, result){
+		if(err){
+		throw err;
+		}
+		var rows = result.rows;
+		res.send(rows);
+		 });
+}
+exports.keyPairDetails = function(req, res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	client_pg.query("SELECT * FROM key_pair", function(err, result){
+		if(err){
+		throw err;
+		}
+		var rows = result.rows;
+		res.send(rows);
+	});
+}
+exports.secGrpDetails = function(req, res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	client_pg.query("SELECT * FROM security_group", function(err, result){
+		if(err){
+		throw err;
+		}
+		var rows = result.rows;
+		res.send(rows);
+	});
+}
+exports.attachVolume = function(req, res){	
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var pv_name = "AWS";
+	var arr2 =[["t2.micro", "stg1"],["t3.micro","stg2"]]
+	var region = "california";
+	var obj1 = new myObject(pv_name,"attach_volume",auth[0],auth[1],region,arr2);
+	var result= obj1.attach();	
+	res.send(result);
+}
+exports.attachKeyPair = function(req, res){	
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var pv_name = "AWS";
+	var arr2 =[["t2.micro", "kp1"],["t3.micro","kp2"]]
+	var region = "california";
+	var obj1 = new myObject(pv_name,"attach_key",auth[0],auth[1],region,arr2);
+	var result= obj1.attach();	
+	res.send(result);
+}
+exports.attachSecGrp = function(req,res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var pv_name = "AWS";
+	var arr2 =[["t2.micro", "sg1"],["t3.micro","kg2"]]
+	var region = "california";
+	var obj1 = new myObject(pv_name,"attach_secGroup",auth[0],auth[1],region,arr2);
+	var result= obj1.attach();	
+	res.send(result);
+}
+
+exports.loadBalancerCreate = function(req, res){
+	var result = JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var pv_name ="AWS";
+	var region = "us_east_1";	
+	var arr = [pvd, "create_load_bal",auth[0], auth[1], Region , loadName, port, protocol, algorithem, members];	
+		/*client.invoke("assign", arr, function(error, resq, more) {
+	       
+		   });*/
+}
+
+
+

@@ -495,9 +495,9 @@ exports.create_cloud_service = function(req,res){
 	console.log(name);
 	console.log(location);
 	console.log(project);
-	var arr=["azure","create_cloud_service",name,location,project];
+	var arr=["Azure","create_cloud_service",name,location,project];
 	 var client = new zerorpc.Client();
-	client.connect("tcp://172.29.59.61:4242");
+	client.connect("tcp://172.29.93.97:4242");
 	 client.invoke("assign", arr, function(error, res, more) {
 	 });
 	

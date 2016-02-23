@@ -1,4 +1,4 @@
-
+var _ip = "http://172.29.59.65:3000";
 $(document).ready(function(){
 	var i =0;
 	/*$(".clickRole").click(function(){
@@ -7,6 +7,30 @@ $(document).ready(function(){
 	
 	//$(".nodeSel tr:nth-child(even)").css({'background-color':'green'})
 	//$(".nodeSel tr:nth-child(odd)").css({'background-color':'#f7f7f7'})
+	
+	/*$(".clickRole").click(function(e){
+		//console.log(this);
+		e.stopPropagation();
+		if ($(this).find(".dropDown").css('display') == 'block'){
+			$(this).find(".dropDown").slideUp();
+		}else{
+			$(".dropDown").slideUp();
+			$(this).find(".dropDown").slideDown();
+		}
+
+		//$(document).find(".nowShowing").find(".dropDown").slideUp()
+		//$(this).find(".dropDown").slideDown();
+		//$(this).addClass("nowShowing");
+	});
+
+	$(document).on("click", function () {
+		$(".dropDown").slideUp();
+	});
+	function dataUpDate(){
+		$(this).parent(".dropDown").slideUp();
+	}*/
+	
+	
 	
 	$(".popupData").hide();
 	$(".popData").hide();
@@ -26,11 +50,22 @@ $(document).ready(function(){
 		$(".popData").hide();
 		$(".popData1").hide();
 	})
+	$(".popDataClsrv").hide();
+	$(".buttonClsrv").click(function(){		
+		$(".popupData").show();
+		$(".popDataClsrv").show();
+	});
+	$(".close, .cancelPoup").click(function(){
+		$(".popupData").hide();
+		$(".popData").hide();
+		$(".popData1").hide();
+		$(".popDataClsrv").hide();
+	})
 	
 	 $('[data-toggle="tooltip"]').tooltip({title: "Select any of your previous project to get VPC and Subnet details. Or, You can create New VPC and Subnet for this template.", placement: "right"});
 	 $('[data-toggle="tooltipVpc"]').tooltip({title: "VPC Help content comes here..", placement: "right"});
 	 $('[data-toggle="tooltipSubnet"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
-
+	 $('[data-toggle="tooltipClsrv"]').tooltip({title: "Choose already deployed Cloud Service, Or Create a new Cloud Service", placement: "right"});
 	/* ---------------------------------------------
 		These common actions(Hide, Show, Hide and Show toggle) we can use all pages.
 	------------------------------------------------*/	
@@ -91,13 +126,18 @@ $(document).ready(function(){
 	/* ---------------------------------------------
 		::::::::::::::::::End:::::::::::::::::::::
 	------------------------------------------------*/
+		
 
 })
 var cidrIp = ["Anywhere", "My IP", "Custom IP"];
 var volumeType = ["Provisioned IOPS SSD", "General Purpose SSD", "Magnetic"];
+var rule = ["In Bound", "Out Bound"];
 var vpcId;
 var subnetId;
 function selectOpt(ev, idn){
+	
+	event.stopPropagation();
+	$(ev).parent(".dropDown").slideUp();
 	
 	var aImage = ev.getElementsByTagName("dt")[0].innerHTML;
 	var aTex = ev.getElementsByTagName("dd")[0].innerText;
@@ -142,7 +182,7 @@ function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,image
 	}
 };
 DropdownConst.prototype.appendData = function(name,appentoWhat){
-	//console.log(appentoWhat);
+	//console.log(name);
 	var epn = document.getElementById(appentoWhat);
 	epn.innerHTML="";
 	for(var i=0;i<=name.length-1;i++){
@@ -165,6 +205,7 @@ window.onload = function(){
 	get_project();
 	getVpcName();
 	//getSubnetName();
+	getCloudService();
 }
 var node_info;
 var pvd_name;
@@ -193,6 +234,8 @@ function get_templateName(){
 			    	 temp_info = results[0].Instances;
 			    	 pvd_name = results[0].Cloud;
 			    	 pvd_region = results[0].Region;
+			    	 if(pvd_name == "AWS")
+			         {
 			    	 tr = $('<tr/>');
 			            tr.append("<td><img src='images_1/AWS_Logo.png'/></td>");	
 			            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
@@ -200,10 +243,30 @@ function get_templateName(){
 			            document.getElementById("regName").value=results[0].Region;
 			            node_info=results[0].Instances;
 			            show_nodeDetails(node_info);
+			            $('td#depClsrv').hide();
 			            if(pvd_name == "AWS")
 			            	{
 			            		displayZones(pvd_name,pvd_region);
 			            	}
+			         }
+			    	 else
+			    	 {
+			    		 tr = $('<tr/>');
+			    		 tr.append("<td><img src='images_1/Windows_Azure_Logo.png'/></td>");	
+				            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
+				            $('table.temp_info').append(tr);
+				            document.getElementById("regNameClsrv").value=results[0].Region;
+				            node_info=results[0].Instances;
+				            show_nodeDetails(node_info);
+				            $('td#depVpc').hide();
+				            $('td#depSub').hide();
+				            $('div.routeAndGatWayConfiguration').hide();
+				            $('div.latestUpdates').hide();
+				            $('button.1stRowAdd').hide();
+				            //$('td#singlenode').hide();
+				            //$('td#instname').hide();
+				            //$('table.nodeSelSingle').hide();
+			    	 }
 			    	 },
 				 error: function (xhr, status, error){
 			        console.log('Failure');
@@ -268,36 +331,55 @@ function getVpcName(){
 				 {
 				 	vpc_Name[x] = /*data[x].vpc_name+"/"+*/data[x].vpc_id;
 				 }
+			 	console.log(vpc_Name);
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"selsvpc");
-			   appendD.appendData(vpc_Name,"selsVpcSn");			   
+			   appendD.appendData(vpc_Name,"selsVpcSn");	
+			   
 		  });
 	});
 	
 }
 
 function getSubnetName(vpcid){
+	var id=vpcid;
+	var subNetName1 = [];
 	$(function(){
 		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){
-			  //console.log(data);
-			  var subNetName = [];
+			  console.log(data);
+			  
 			 for(var x=0;x<data.length;x++)
-				 {				 
-				 	if(data[x].vpc_id == vpcid)
+				 {	//alert(data[x].vpc_id);			 
+				 	if(data[x].vpc_id == id)
 				 		{
 				 			
-				 			subNetName[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
-				 			//alert(subNetName[x]);
+				 			subNetName1[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
+				 			//alert(subNetName1[x]);
 				 		}
 				 }
-			 //console.log(subNetName[0]);
+			   console.log(subNetName1.length+subNetName1);
 			   var appendD = new DropdownConst();
-			   appendD.appendData(subNetName,"selssn");
-			   
+			   appendD.appendData(subNetName1,"selssn");
 		  });
+		 
 	});
 }
 
+//cloud service list changed code
+function getCloudService(){
+	$(function(){
+		  $.getJSON('http://172.29.59.65:3000/list_cloud_service', function(data){
+			 //console.log(data);
+			 var cloud_name = [];
+			 for(var x=0;x<data.length;x++)
+			 {
+			 	cloud_name[x] = /*data[x].vpc_name+"/"+*/data[x].cloud_name;
+			 }
+			 var appendD = new DropdownConst();
+			 appendD.appendData(cloud_name,"selsClsrv");
+		  });
+	});
+}
 function getPublicIp(value, append){
 	
 	if(value == "My IP")
@@ -385,20 +467,24 @@ function show_nodeDetails(data){
 					  +"<div><form class='' id='rbtn"+i+"'><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
 					  +"<div class='CreateNewSecurity CreateSec"+i+"' ><div class='roleId'><div class='pull-left'><div id='selsg"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsgn"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div></div>"
 					  +"<div style='' class='securityGr' id='securityGrIDD"+i+"'><div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+i+"' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>To Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
+					  //+"<div class='roleID'><div class='pull-left'><label class='labelTemp'>Rule</label><div id='selrl"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selrle"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+      				  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
 					  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='operatingSys"+i+"'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+i+"' type='text' style='border:none;width:100%;'></div></div>"
+					  //+"<a href='#' style='margin-top: 26px;display: inline-block;'><span class='glyphicon glyphicon-plus-sign addMoreSecuGro' id='"+i+"' style='font-size:23px;color:#999999;'></span></a>"
+					  +"</div>"					 
 					  +"</div>"
+					  +"<div class='addMorehere"+i+"'></div>"
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
-					  
+	
 					  +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
-					  +"<div><form class='' id='rbtnkp"+i+"'><label class='radio-inline'> <input type='radio' id='key_Create' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' id='key_Old' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
-					  +"<div id='KeyNew' class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='CreateNewSecurity'><div id='keyOld' class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-					  +"</div><div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
-					  +"</div>"
+					  +"<div><form class='' id='rbtnkp"+i+"'><label class='radio-inline'> <input type='radio' id='key_Create"+i+"' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' id='key_Old"+i+"' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
+					  +"<div id='KeyNew"+i+"' class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
+					  +"<div class='CreateNewSecurity' id='keyOld"+i+"'><div class='roleID'><div class='pull-left'><label class='labelTemp'></label><div id='selkp"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selskp"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+					  +"</div></div>"
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='publicIp"+i+"'>"
 					  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><form id='ip"+i+"'><input type='radio' name='pubIp' value='Yes' style='border:none'/>Yes<input name='pubIp' type='radio' value='No' checked style='border:none'/>No</form></div></div></div>"
@@ -412,6 +498,7 @@ function show_nodeDetails(data){
 			var appendD = new DropdownConst();
 			appendD.appendData(volumeType,"selsstg"+i+"");
 			appendD.appendData(cidrIp,"selsci"+i+"");
+			//appendD.appendData(rule,"selrle"+i+"");
 		}
 	
 	//$(".nodeSel tr:nth-child(odd)").css({'background-color':'#f7f7f7'})
@@ -499,34 +586,58 @@ function show_nodeDetails(data){
 		$(".clickRole").click(function(){
 			$(this).find(".dropDown").slideToggle();
 		})
+	
+		
 		
 		$(".CreateNewSecurity").hide();
 	$('[name="inlineRadioOptions"]').click(function(){
-		var th = $(this).attr("id")
+		var th = $(this).attr("id");
+		//console.log(th);
 		var pos = th.charAt(th.length-1);
-		console.log(pos);
 		if(th == "inlineRadio2"+pos+""){
 			$(".CreateSec"+pos+"").show();
-			$("#securityGrIDD"+pos+"").hide()
+			$("#securityGrIDD"+pos+"").hide();
+			$("#secGroup"+pos+"").hide();
 		}else if(th == "inlineRadio1"+pos+""){
 			$("#securityGrIDD"+pos+"").show()
 			$(".CreateSec"+pos+"").hide();
+			$("#secGroup"+pos+"").show();
 		}
 	})
 	
 		$(".CreateNewSecurity").hide();
 			$('[name="inlineRadioOptions"]').click(function(){
 				var th = $(this).attr("id")
-				console.log(th);
-				if(th == "key_Old"){
-					$("#keyOld").show();
-					$("#KeyNew").hide()
-				}else if(th == "key_Create"){
-					$("#KeyNew").show()
-					$("#keyOld").hide();
+				//console.log(th);
+				 pos = th.charAt(th.length-1);
+				if(th == "key_Old"+pos+""){
+					$("#keyOld"+pos+"").show();
+					$("#KeyNew"+pos+"").hide();
+					$("#keyPair"+pos+"").hide();
+				}else if(th == "key_Create"+pos+""){
+					$("#KeyNew"+pos+"").show();
+					$("#keyOld"+pos+"").hide();
+					$("#keyPair"+pos+"").show();
 				}
 			})
-		
+			var i = 0;
+			$(".addMoreSecuGro").click(function(e){
+				e.preventDefault();
+				i++;
+				var cl = $("#securityGrIDD"+this.id+"").clone();
+				console.log(cl);
+				cl.find("#securityGrIDD"+this.id+"");
+				cl.attr("id","securityGrIDD_"+i);
+				cl.find(".glyphicon-plus-sign").addClass("glyphicon-minus-sign")
+				cl.find(".glyphicon-plus-sign").attr("title", "securityGrIDD_"+i);
+				cl.find(".glyphicon-plus-sign").on("click", closeThis);
+				$(".addMorehere"+this.id+"").append(cl);
+			});
+			function closeThis(e){
+				e.preventDefault();
+				var myName = $(this).attr("title");
+				$("#"+myName).remove();
+			}
 }
 
 $('#createVpc').click(function(){
@@ -561,7 +672,7 @@ $('#createVpc').click(function(){
 })
 
 
-
+var zone;
 $('#createSubnet').click(function(){
 	alert("In Create subnet page");
 	var snName = document.getElementById("nameTag").value;
@@ -569,7 +680,7 @@ $('#createSubnet').click(function(){
 	var snVpc = document.getElementById("selVpcSn").innerText;
 	var snZone = document.getElementById("selZn").innerText;
 	//console.log(snName+cidrBlkSn+snVpc+snZone+pvd_region);
-	//zone = snZone;
+	zone = snZone;
 	var data={};
 	data.provider = pvd_name;
 	data.region = pvd_region;
@@ -592,6 +703,44 @@ $('#createSubnet').click(function(){
          		alert("failure");
          		},
             });
+})
+
+$('#createClsrv').click(function(){
+	//alert("In cloud page");
+	var cloudname = document.getElementById("cloudName").value;
+	var region = document.getElementById("regNameClsrv").value;
+	var prjName = document.getElementById("selpj").innerText;
+	console.log(cloudname+region+prjName);
+	var data = {};
+	data.name = cloudname;
+	data.location = region;
+	data.project = prjName;
+	      $.ajax({
+	     type: 'POST',
+		 jsonpCallback: "callback",
+	     datatype: 'jsonp',
+	     data: data,
+		 //contentType: 'application/json',
+	     url: 'http://172.29.59.65:3000/create_cloud_service',
+	     success: function(data, textStatus) {
+	     //alert('success');
+		   //if(!alert('Details updated succesfully!')){window.close();}
+		   if(data == "Success")
+		   {
+		   alert("Cloud Service Created");
+		   //window.close();
+		   }
+		   else
+		   {
+		   //alert(data);
+		   //window.location.reload();
+		   }
+	     },
+		 error: function (xhr, status, error){
+	        console.log('Failure');
+			if(!alert('Failure!')){window.location.reload();}
+			},
+	   });
 })
 $('.buttonRt').click(function(){
 
@@ -627,6 +776,8 @@ $('.buttonRt').click(function(){
         url: 'http://172.29.59.65:3000/routeTable',
         success: function(data, textStatus){
         	console.log(data);
+        	document.getElementById("buttonRt").disabled=true;
+        	
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -656,6 +807,7 @@ $('.buttonGtw').click(function(){
         url: 'http://172.29.59.65:3000/gateWay',
         success: function(data, textStatus){
         	console.log(data);
+        	document.getElementById("buttonGtw").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -693,6 +845,7 @@ function createStgFunction(buttonId, Id){
 	data.vSize = vSize;
 	data.vIops = vIops;
 	data.vName = vName;
+	data.vZone = zone;
 	//console.log(data);
 	$.ajax({
         type: 'POST',
@@ -702,6 +855,7 @@ function createStgFunction(buttonId, Id){
         url: 'http://172.29.59.65:3000/createStorage',
         success: function(data, textStatus){
         	console.log(data);
+        	document.getElementById("storage"+Id+"").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -750,6 +904,7 @@ function createSgpFunction(buttonId, Id){
         url: 'http://172.29.59.65:3000/createSecGroup',
         success: function(data, textStatus){
         	console.log(data);
+        	document.getElementById("secGroup"+Id+"").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -776,6 +931,8 @@ function createKpFunction(buttonId, Id){
         url: 'http://172.29.59.65:3000/createKeyPair',
         success: function(data, textStatus){
         	console.log(data);
+        	document.getElementById("keyPair"+Id+"").disabled=true;
+        	
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -786,75 +943,182 @@ function createKpFunction(buttonId, Id){
 
 function deployFunction(){
 	alert("In deploy function");
-	var result_arr = [];
 	var pvName = pvd_name;
-	var region = pvd_region;
-	var envName = document.getElementById("sel").innerText;
-	var prjName = document.getElementById("selpj").innerText;
-	var vpcId = document.getElementById("selvpc").innerText;
-	var subnetId = document.getElementById("selsn").innerText;
-	var routeName = document.getElementById("routeName").value;
-	var gateName = document.getElementById("gateWayName").value;
-	if(envName == "Select")
-		{
-		document.getElementById("sel").style.border="thin dashed #0099FF";
-		return;
-		}else if(prjName == "Select")
+	if(pvName == "AWS")
+	{
+		console.log("This is AWS template");
+		var region = pvd_region;
+		var pvName = pvd_name;
+		var region = pvd_region;
+		var envName = document.getElementById("sel").innerText;
+		var prjName = document.getElementById("selpj").innerText;
+		var vpcId = document.getElementById("selvpc").innerText;
+		var subnetId = document.getElementById("selsn").innerText;
+		var routeName = document.getElementById("routeName").value;
+		var gateName = document.getElementById("gateWayName").value;
+		if(envName == "Select")
 			{
-			document.getElementById("selpj").style.border="thin dashed #0099FF";
+			document.getElementById("sel").style.border="thin dashed #0099FF";
 			return;
-			}
-	console.log(pvName+region+envName+prjName+vpcId+subnetId+routeName+gateName);
-	//console.log(temp_info);	
-	var ra = (Math.random() * (999 - 000) + 000);
-	alert(parseInt(ra));
-	result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName);
-	
-	
-	var resultObj1 = [];
-	for(var i=0;i<temp_info.length;i++)
-		{
-			//alert(i);
-			var resultObj = [];
-			var stgName = document.getElementById("stgName"+i+"").value;
-			//var sgName = document.getElementById("sgName"+i+"").value;
-			var keyPairName = document.getElementById("keyPairName"+i+"").value;
-			var count = document.getElementById("count"+i+"").value;
-			var form = document.getElementById("ip"+i+"");
-			var pIp=form.elements["pubIp"].value;
-			var form1 = document.getElementById("rbtn"+i+"");
-			var selopt = form1.elements["inlineRadioOptions"].value;
-			if(selopt == "option1")
+			}else if(prjName == "Select")
 				{
-				var sgName = document.getElementById("sgName"+i+"").value;
-				}else{
-					var sgName = document.getElementById("selsg"+i+"").innerText;
+				document.getElementById("selpj").style.border="thin dashed #0099FF";
+				return;
 				}
-			var instName = temp_info[i].node;
-			var imageName = temp_info[i].image;
-			var roleName = temp_info[i].role;
-			console.log(stgName+sgName+keyPairName+instName+imageName+roleName);
-			resultObj.push(stgName,sgName,keyPairName,instName,imageName,roleName,pIp);
-			resultObj1.push(resultObj);			
+
+		for(var i=0;i<temp_info.length;i++)
+			{
+				var stgName = document.getElementById("stgName"+i+"").value;
+				var count = document.getElementById("count"+i+"").value;
+				var form = document.getElementById("ip"+i+"");
+				var pIp=form.elements["pubIp"].value;
+				var form1 = document.getElementById("rbtn"+i+"");
+				var selopt = form1.elements["inlineRadioOptions"].value;
+				if(selopt == "option1")
+					{
+					var sgName = document.getElementById("sgName"+i+"").value;
+					}else{
+						var sgName = document.getElementById("selsg"+i+"").innerText;
+					}
+				var form2 = document.getElementById("rbtnkp"+i+"");
+				var selopt2 = form2.elements["inlineRadioOptions"].value;
+				if(selopt2 == "option1")
+					{
+						var keyPairName = document.getElementById("keyPairName"+i+"").value
+					}else{
+							var keyPairName = document.getElementById("selkp"+i+"").innerText;
+					}						
+			}
+		
+	}else
+		{
+		console.log("This is Azure template");
+		var envName = document.getElementById("sel").innerText;
+		var prjName = document.getElementById("selpj").innerText;
+		var CloudName = document.getElementById("selClsrv").innerText;		
 		}
-	console.log(result_arr);
-	console.log(resultObj1);
-	$.ajax({
-        type: 'POST',
-   	 	jsonpCallback: "callback",
-        datatype: 'jsonp',
-        data:  "d1="+result_arr+"&d2="+resultObj1,
-        url: 'http://172.29.59.65:3000/deployTemplate',
-        success: function(data, textStatus){
-        	alert(data);
-        	},
-        	 error: function (xhr, status, error){
-                 console.log('Failure');
-         		alert("failure");
-         		},
-            });
-	
-	
+	deployTemplateFunction();
 }
 
+function deployTemplateFunction()
+{
+		alert("In deploy function");
+		var pvName = pvd_name;
+		console.log(pvd_name);
+		if(pvName == "AWS")
+		{
+			console.log("This is AWS template");
+			var region = pvd_region;
+			var result_arr = [];
+			var pvName = pvd_name;
+			var region = pvd_region;
+			var envName = document.getElementById("sel").innerText;
+			var prjName = document.getElementById("selpj").innerText;
+			var vpcId = document.getElementById("selvpc").innerText;
+			var subnetId = document.getElementById("selsn").innerText;
+			var routeName = document.getElementById("routeName").value;
+			var gateName = document.getElementById("gateWayName").value;
+			if(envName == "Select")
+				{
+				document.getElementById("sel").style.border="thin dashed #0099FF";
+				return;
+				}else if(prjName == "Select")
+					{
+					document.getElementById("selpj").style.border="thin dashed #0099FF";
+					return;
+					}
+			console.log(pvName+region+envName+prjName+vpcId+subnetId+routeName+gateName);
+			result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName);
+			
+			
+			var resultObj1 = [];
+			for(var i=0;i<temp_info.length;i++)
+				{
+					var resultObj = [];
+					var stgName = document.getElementById("stgName"+i+"").value;
+					var count = document.getElementById("count"+i+"").value;
+					var form = document.getElementById("ip"+i+"");
+					var pIp=form.elements["pubIp"].value;
+					var form1 = document.getElementById("rbtn"+i+"");
+					var selopt = form1.elements["inlineRadioOptions"].value;
+					if(selopt == "option1")
+						{
+						var sgName = document.getElementById("sgName"+i+"").value;
+						}else{
+							var sgName = document.getElementById("selsg"+i+"").innerText;
+						}
+					var form2 = document.getElementById("rbtnkp"+i+"");
+					var selopt2 = form2.elements["inlineRadioOptions"].value;
+					if(selopt2 == "option1")
+						{
+							var keyPairName = document.getElementById("keyPairName"+i+"").value
+						}else{
+								var keyPairName = document.getElementById("selkp"+i+"").innerText;
+						}
+					
+					var instName = temp_info[i].node;
+					var imageName = temp_info[i].image;
+					var roleName = temp_info[i].role;
+					console.log(stgName+sgName+keyPairName+instName+imageName+roleName);
+					resultObj.push(stgName,sgName,keyPairName,pIp,instName,imageName,roleName);
+					resultObj1.push(resultObj);			
+				}
+			console.log(result_arr);
+			console.log(resultObj1);
+			$.ajax({
+		        type: 'POST',
+		   	 	jsonpCallback: "callback",
+		        datatype: 'jsonp',
+		        data:  "d1="+result_arr+"&d2="+resultObj1,
+		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        success: function(data, textStatus){
+		        	alert(data);
+		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	},
+		        	 error: function (xhr, status, error){
+		                 console.log('Failure');
+		         		alert("failure");
+		         		},
+		            });
+			
+			
+		}else
+			{
+			console.log("This is Azure template");
+			var result_arr = [];
+			var region = pvd_region;
+			var envName = document.getElementById("sel").innerText;
+			var prjName = document.getElementById("selpj").innerText;
+			var CloudName = document.getElementById("selClsrv").innerText;
+			console.log(pvName+region+envName+prjName+CloudName);
+			result_arr.push(pvName,region,envName,prjName,CloudName);
+			result_arr.splice(1, 0, "create_environment");
+			var resultObj1 = [];
+			for(var i=0;i<temp_info.length;i++)
+			{
+				var instName = temp_info[i].node;
+				var imageName = temp_info[i].image;
+				var roleName = temp_info[i].role;
+				console.log(instName+imageName+roleName);
+				resultObj1.push(instName,imageName,roleName);
+			}
+			console.log(result_arr);
+			console.log(resultObj1);
+			$.ajax({
+		        type: 'POST',
+		   	 	jsonpCallback: "callback",
+		        datatype: 'jsonp',
+		        data:  "d1="+result_arr+"&d2="+resultObj1,
+		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        success: function(data, textStatus){
+		        	//alert(data);
+		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	},
+		        	 error: function (xhr, status, error){
+		                 console.log('Failure');
+		         		alert("failure");
+		         		},
+		            });
+			}
+}
 
