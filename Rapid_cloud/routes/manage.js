@@ -784,6 +784,7 @@ exports.secGrpDetails = function(req, res){
 		throw err;
 		}
 		var rows = result.rows;
+		console.log(rows);
 		res.send(rows);
 	});
 }
@@ -828,6 +829,9 @@ exports.loadBalancerCreate = function(req, res){
 	       
 		   });*/
 }
+
+//Attach security group
+
 
 
 

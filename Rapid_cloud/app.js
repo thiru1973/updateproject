@@ -6,6 +6,7 @@ var express = require('express')
   , view = require('./routes/view')
   , project = require('./routes/project')
   , manage_nodes = require('./routes/manage_nodes')
+  , secGroups = require('./routes/secGroup')
   , http = require('http')
   , path = require('path');
 
