@@ -1,12 +1,5 @@
 var AWS = require('aws-sdk');
 
-AWS.config.update({accessKeyId: 'AKIAIUHKYOX5NVTS55IA', 
-	  secretAccessKey: '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',
-	  });
-
-
-AWS.config.update({region: 'us-east-1'});
-
 var ec2 = new AWS.EC2();
 
 var params = {
