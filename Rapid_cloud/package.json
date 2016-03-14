@@ -15,7 +15,8 @@
     "supertest": "0.13.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha ./test/test.js"
+    "test": "./node_modules/.bin/mocha ./test/test.js",
+	"start": "node app.js"
   }
 
 }

@@ -4,7 +4,7 @@ var rpcConString = "tcp://172.29.93.97:4242";
 var client = new zerorpc.Client();
 client.connect(rpcConString);
 //Constructor for manage volumes, security groups, keypairs 
-function attachObject(pvName, methodName, acc, sec, region, sgArr) {
+function AttachObject(pvName, methodName, acc, sec, region, sgArr) {
 	  this.pvName = pvName;
 	  this.methodName = methodName;
 	  this.acc = acc;
@@ -14,7 +14,7 @@ function attachObject(pvName, methodName, acc, sec, region, sgArr) {
 	  
 	}
 
-attachObject.prototype.attach = function() {
+AttachObject.prototype.attach = function() {
 	  var arr=this.sgArr;
 	  arr.splice(0,0,(this.pvName));
 	  arr.splice(1,0,(this.methodName));
@@ -30,4 +30,4 @@ attachObject.prototype.attach = function() {
 	};
 
 
-module.exports = attachObject;
+module.exports = AttachObject;

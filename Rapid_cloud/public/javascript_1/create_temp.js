@@ -34,6 +34,9 @@ $(".closeMsg").click(function(){
 	$(".alertS div.alert").stop().slideUp();
 	//location.href="http://172.29.59.65:3000/master_2"
 });
+$(".warning").click(function(){
+	$(".alertS div.alert").stop().slideUp();
+});
 $(document).ready(function(){
 	$(".alert").hide();	
 	$("[role='profileLinks']").hide();
@@ -421,11 +424,14 @@ function saveTemplateInformation(buttonId){
 							}
 			}
 		
-	var pj_name = document.getElementById("sellll").innerText
-	var pd_name = document.getElementById("selllll").innerText
-	var tc_gy = document.getElementById("sellllll").innerText
+	var pj_name = document.getElementById("sellll").innerText;
+	var pd_name = document.getElementById("selllll").innerText;
+	var tc_gy = document.getElementById("sellllll").innerText;
 	var tm_name = document.getElementById("t_name").value;
 	var tm_desc = document.getElementById("t_desc").value;
+	var expTname = /^\w+$/;
+	var expDesc =  /^[A-Za-z\d\s\.\()]+$/;
+	
 	if(pj_name == str)
 		{
 		document.getElementById("sellll").style.border="thin dashed #E24B4B";
@@ -438,21 +444,24 @@ function saveTemplateInformation(buttonId){
 			{
 			document.getElementById("sellllll").style.border="thin dashed #E24B4B";
 			return;
-			}else if(tm_name == null || tm_name == "")
-				{
-				 document.getElementById("t_name").focus();
-				 return;
-				}else if(tm_desc == null || tm_desc == "")
+			}else if(!expTname.test(tm_name)){
+				$(".alert-warning").stop().slideDown();
+				document.getElementById("t_name").focus();
+				return;
+			}else if(!expDesc.test(tm_desc))
 					{
+					 $(".description").stop().slideDown();
 					 document.getElementById("t_desc").focus();
 					 return;
 					}
-	var te_name=pj_name+"_"+tc_gy+"_"+tm_name;
+	var a = Math.floor(100000 + Math.random() * 900000)
+	a = a.toString().substring(0, 3);
+	var te_name=pj_name+"_"+tc_gy+"_"+tm_name+"_"+a;
 	alert("Template saved with "+te_name+" name!!!!!!!!");
 	saveTemplateFunction(id,te_name);
 }
 function saveTemplateFunction(id, te_name){
-	alert(id);
+	//alert(id);
 	console.log(norole);
 	for(var i=0;i<norole.length;i++)
 	{
@@ -479,9 +488,8 @@ function saveTemplateFunction(id, te_name){
 		    	 location.href="http://172.29.59.65:3000/assignNode"+"?data="+te_name;
 	    	 }else if(id == "create_exit")
 	    	 		 {
-				    	 $(".alertS div.alert").stop().hide();
 				    	 $(".alert-success").stop().slideDown();
-				    	 location.href="http://172.29.59.65:3000/master_2"
+				    	 //location.href="http://172.29.59.65:3000/master_2"
 	    	 		 }
 	     },
 		 error: function (xhr, status, error){

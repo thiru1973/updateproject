@@ -52,15 +52,28 @@ exports.manage = function(req, res){
 exports.manage_env_nodes = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
-	var inst_id=Obj.inst_id;
-	var action = Obj.action;
-	var region = Obj.region;
-	var arr=["AWS","manage_node",auth[0], auth[1],region,inst_id,action];
-	 console.log(arr);
-	 client.invoke("assign", arr, function(error, res, more) {});
-	
-		 res.send("Success");
-	
+	//console.log(Obj);
+	var inst_id=Obj.inst_id,
+	    action = Obj.action,
+	    region = Obj.region,
+	    pvd_name = Obj.pvd,
+	    cldsrvc = Obj.cldsrvc,
+	    role = Obj.role;
+	if(pvd_name == "AWS")
+		{
+			var arr=["AWS","manage_node",auth[0], auth[1],region,inst_id,action];
+			//console.log(arr);
+			client.invoke("assign", arr, function(error, res, more) {});			
+			 //res.send("Success");
+		}else{
+			if(action == "Reboot"){action = "Reboot";}
+			else if(action == "Terminate"){action = "Terminate";}
+			else{return;}
+			var arr = ["Azure", "manage_node", action, role, cldsrvc];
+			console.log(arr);
+			client.invoke("assign", arr, function(error, res, more) {});			
+			 res.send("Success");
+		}	
 };
 exports.manage_env = function(req, res){
 	var proj_name = [];
@@ -272,7 +285,7 @@ exports.createKeyPair = function(req, res){
 	 var kpRegion = Obj.region;
 	 var keyPair = Obj.keyPair;
 	  var arr = [pvd, "create_key_pair",auth[0], auth[1], kpRegion , keyPair];
-	   //console.log(arr);
+	   console.log(arr);
 
 	   client.invoke("assign", arr, function(error, resq, more) {
        
@@ -315,7 +328,7 @@ exports.deployTemplate = function(req, res){
 				{
 					var results = [];
 					  while (d3.length) {
-					    results.push(d3.splice(0, 7));
+					    results.push(d3.splice(0, 6));
 					  }
 					  for(var i=0;i<results.length;i++)
 						  {
@@ -635,7 +648,7 @@ exports.node_details = function(req,res){
 	   throw err;
 	  }
 	  var rows = result.rows;
-	  console.log(rows);
+	  //console.log(rows);
 	  res.send(rows);
 	 });
 	 
@@ -799,9 +812,9 @@ exports.attachVolume = function(req, res){
 	res.send(result);
 }
 exports.attachKeyPair = function(req, res){	
-	var result=JSON.stringify(req.body);
-	var Obj = JSON.parse(result);
-	var pv_name = "AWS";
+	var result=JSON.stringify(req.body),
+	    Obj = JSON.parse(result),
+	    pv_name = "AWS";
 	var arr2 =[["t2.micro", "kp1"],["t3.micro","kp2"]]
 	var region = "california";
 	var obj1 = new myObject(pv_name,"attach_key",auth[0],auth[1],region,arr2);

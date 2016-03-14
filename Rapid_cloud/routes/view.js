@@ -126,7 +126,7 @@ exports.node_store=function(req,res){
 			var collection=db.collection('generic_template_information');
 		    var DB_data = {Template_name : d2, Template_type : tt_type, Created_at : c_date, Template_Role:d1_obj };
 
-		    collection.insert([DB_data], function (err, result) {
+		   collection.insert([DB_data], function (err, result) {
 
 		    					if (err) {
 		    						console.log(err);

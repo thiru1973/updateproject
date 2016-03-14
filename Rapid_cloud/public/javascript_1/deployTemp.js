@@ -45,11 +45,11 @@ $(document).ready(function(){
 		$(".popData1").show();
 	});
 	
-	$(".close, .cancelPoup").click(function(){
+	/*$(".close, .cancelPoup").click(function(){
 		$(".popupData").hide();
 		$(".popData").hide();
 		$(".popData1").hide();
-	})
+	})*/
 	$(".popDataClsrv").hide();
 	$(".buttonClsrv").click(function(){		
 		$(".popupData").show();
@@ -65,6 +65,9 @@ $(document).ready(function(){
 	 $('[data-toggle="tooltip"]').tooltip({title: "Select any of your previous project to get VPC and Subnet details. Or, You can create New VPC and Subnet for this template.", placement: "right"});
 	 $('[data-toggle="tooltipVpc"]').tooltip({title: "VPC Help content comes here..", placement: "right"});
 	 $('[data-toggle="tooltipSubnet"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
+	 $('[data-toggle="tooltiproute"]').tooltip({title: "Route table Help content comes here..", placement: "right"});
+	 $('[data-toggle="tooltipgate"]').tooltip({title: "Internet Gateway Help content comes here..", placement: "right"});
+	 $('[data-toggle="tooltipkp"]').tooltip({title: "Key Pair Help content comes here..", placement: "right"});
 	 $('[data-toggle="tooltipClsrv"]').tooltip({title: "Choose already deployed Cloud Service, Or Create a new Cloud Service", placement: "right"});
 	/* ---------------------------------------------
 		These common actions(Hide, Show, Hide and Show toggle) we can use all pages.
@@ -434,7 +437,7 @@ function show_nodeDetails(data){
 	         tr.append("<td><div class='input-group spinner pull-left count_1'><input id='count"+i+"' type='text' class='form-control' value='1'><div class='input-group-btn-vertical'>"
 	        		 +"<button class='btn btn-default up_1' type='button'><i class='fa glyphicon glyphicon-triangle-top'></i></button>"
 	         		 +"<button class='btn btn-default down_1' type='button'><i class='fa glyphicon glyphicon-triangle-bottom'></i></button>"
-	         		 +"</div></div><button class='redButton pull-left countAlign 1stRowAdd' name='add_"+i+"'>Add</button>"
+	         		 +"</div></div><button class='redButton pull-left countAlign 1stRowAdd' id='add"+i+"' name='add_"+i+"'>Add</button>"
 	        		 +"</td>");
 	         tr.append("<td>No</td>");
 	         $('table.nodeSel').append(tr);
@@ -449,7 +452,7 @@ function show_nodeDetails(data){
 					  +"<table style='width:100%;'>"
 					  +"<tr><td style='padding:0px;width:250px;vertical-align: top;background-color:#FBFBFB;'>"
 					  +"<div class='col-lg-12 col-md-12 col-sm-12 content_box padZero padAllSides' id='latestUpdates'>"
-					  +"<ul id='latestUpdatesTab' class='nav nav-tabs hidden-xs'><li class='active addStoTab'><a href='#alerts"+i+"' data-toggle='tab'>Add Storage</a></li><li><a href='#requests"+i+"' data-toggle='tab'>Security Groups</a></li><li><a href='#svpTweet"+i+"' data-toggle='tab'>Key Pairs</a></li><li><a href='#publicIp"+i+"' data-toggle='tab'>Public IP</a></li><li class='pull-right'>"
+					  +"<ul id='latestUpdatesTab' class='nav nav-tabs hidden-xs'><li class='active addStoTab'><a href='#alerts"+i+"' data-toggle='tab'>Add Storage</a></li><li><a href='#requests"+i+"' data-toggle='tab'>Security Groups</a></li><li><a href='#publicIp"+i+"' data-toggle='tab'>Public IP</a></li><li class='pull-right'>"
 					  +"<button type='button' class='close redLinks closeRoleConfi' name='add_"+i+"' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>x</span></button></li>"
 					  +"</ul><div class='panel-group visible-xs' id='latestUpdatesTab-accordion'></div>"
 					  +"<div class='tab-content hidden-xs'>"
@@ -479,12 +482,12 @@ function show_nodeDetails(data){
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
 	
-					  +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
+					 /* +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
 					  +"<div><form class='' id='rbtnkp"+i+"'><label class='radio-inline'> <input type='radio' id='key_Create"+i+"' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' id='key_Old"+i+"' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
 					  +"<div id='KeyNew"+i+"' class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
 					  +"<div class='CreateNewSecurity' id='keyOld"+i+"'><div class='roleID'><div class='pull-left'><label class='labelTemp'></label><div id='selkp"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selskp"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-					  +"</div></div>"
+					  +"</div></div>"*/
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='publicIp"+i+"'>"
 					  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><form id='ip"+i+"'><input type='radio' name='pubIp' value='Yes' style='border:none'/>Yes<input name='pubIp' type='radio' value='No' checked style='border:none'/>No</form></div></div></div>"
@@ -639,14 +642,28 @@ function show_nodeDetails(data){
 				$("#"+myName).remove();
 			}
 }
-
+$(".closeAlert").click(function(){
+	$(".alertS div.alert").stop().slideUp();
+})
 $('#createVpc').click(function(){
 	
     var region = document.getElementById("regName").value;
 	var cidr = document.getElementById("cidrBlk").value;
 	var vpc = document.getElementById("vpcName").value;
 	var tenancy = document.getElementById("selTn").innerText
-	
+	if(cidr == "" || cidr == null)
+		{
+			document.getElementById("cidrBlk").style.border="thin dashed #0099FF";
+			return;
+		}else if(vpc == "" || vpc == null)
+			{
+			document.getElementById("vpcName").style.border="thin dashed #0099FF";
+			return;
+			}else if(tenancy == "Select")
+				{
+				document.getElementById("selTn").style.border="thin dashed #0099FF";
+				return;
+				}
 	var data={};
 	data.region = region;
 	data.cidr = cidr;
@@ -663,6 +680,10 @@ $('#createVpc').click(function(){
         url: 'http://172.29.59.65:3000/vpc',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".popupData").hide();
+    		$(".popData").hide();
+	    	 $(".alert-vpc").stop().slideDown();
+	    	 getVpcName();
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -681,6 +702,24 @@ $('#createSubnet').click(function(){
 	var snZone = document.getElementById("selZn").innerText;
 	//console.log(snName+cidrBlkSn+snVpc+snZone+pvd_region);
 	zone = snZone;
+	if(snName == "" || snName == null)
+	{
+		document.getElementById("nameTag").style.border="thin dashed #0099FF";
+		return;
+	}else if(cidrBlkSn == "" || cidrBlkSn == null)
+		{
+		document.getElementById("cidrBlkSn").style.border="thin dashed #0099FF";
+		return;
+		}else if(snVpc == "Select")
+			{
+			document.getElementById("selVpcSn").style.border="thin dashed #0099FF";
+			return;
+			}else if(snZone == "Select")
+				{
+				document.getElementById("selZn").style.border="thin dashed #0099FF";
+				return;
+				}
+	
 	var data={};
 	data.provider = pvd_name;
 	data.region = pvd_region;
@@ -697,6 +736,9 @@ $('#createSubnet').click(function(){
         url: 'http://172.29.59.65:3000/subnet',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".popupData").hide();
+    		$(".popData1").hide();
+        	 $(".alert-subnet").stop().slideDown();
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -727,8 +769,11 @@ $('#createClsrv').click(function(){
 		   //if(!alert('Details updated succesfully!')){window.close();}
 		   if(data == "Success")
 		   {
-		   alert("Cloud Service Created");
-		   //window.close();
+			   $(".popupData").hide();
+			   $(".popDataClsrv").hide();
+			   $(".alert-cldsrv").stop().slideDown();
+			  
+			   //alert("Cloud Service Created");		   
 		   }
 		   else
 		   {
@@ -776,6 +821,7 @@ $('.buttonRt').click(function(){
         url: 'http://172.29.59.65:3000/routeTable',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".alert-route").stop().slideDown();
         	document.getElementById("buttonRt").disabled=true;
         	
         	},
@@ -807,6 +853,7 @@ $('.buttonGtw').click(function(){
         url: 'http://172.29.59.65:3000/gateWay',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".alert-gate").stop().slideDown();
         	document.getElementById("buttonGtw").disabled=true;
         	},
         	 error: function (xhr, status, error){
@@ -855,6 +902,7 @@ function createStgFunction(buttonId, Id){
         url: 'http://172.29.59.65:3000/createStorage',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".alert-stg").stop().slideDown();
         	document.getElementById("storage"+Id+"").disabled=true;
         	},
         	 error: function (xhr, status, error){
@@ -904,6 +952,7 @@ function createSgpFunction(buttonId, Id){
         url: 'http://172.29.59.65:3000/createSecGroup',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".alert-sg").stop().slideDown();
         	document.getElementById("secGroup"+Id+"").disabled=true;
         	},
         	 error: function (xhr, status, error){
@@ -923,6 +972,7 @@ function createKpFunction(buttonId, Id){
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.keyPair = keyPair;
+	console.log(data);
 	$.ajax({
         type: 'POST',
    	 	jsonpCallback: "callback",
@@ -931,6 +981,7 @@ function createKpFunction(buttonId, Id){
         url: 'http://172.29.59.65:3000/createKeyPair',
         success: function(data, textStatus){
         	console.log(data);
+        	$(".alert-kp").stop().slideDown();
         	document.getElementById("keyPair"+Id+"").disabled=true;
         	
         	},
@@ -942,7 +993,7 @@ function createKpFunction(buttonId, Id){
 }
 
 function deployFunction(){
-	alert("In deploy function");
+	//alert("In deploy function");
 	var pvName = pvd_name;
 	if(pvName == "AWS")
 	{
@@ -980,15 +1031,24 @@ function deployFunction(){
 					}else{
 						var sgName = document.getElementById("selsg"+i+"").innerText;
 					}
-				var form2 = document.getElementById("rbtnkp"+i+"");
+				/*var form2 = document.getElementById("rbtnkp"+i+"");
 				var selopt2 = form2.elements["inlineRadioOptions"].value;
 				if(selopt2 == "option1")
 					{
 						var keyPairName = document.getElementById("keyPairName"+i+"").value
 					}else{
 							var keyPairName = document.getElementById("selkp"+i+"").innerText;
-					}						
+					}*/
+				if(!($('#storage'+i+'').prop('disabled')) ) { 
+		            //alert('disabled');
+					document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
+					return;
+		        }else if(!($('#secGroup'+i+'').prop('disabled'))){
+		        	document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
+					return;
+		        }
 			}
+		 
 		
 	}else
 		{
@@ -1002,12 +1062,13 @@ function deployFunction(){
 
 function deployTemplateFunction()
 {
-		alert("In deploy function");
+		//alert("In deploy function");
+	
 		var pvName = pvd_name;
 		console.log(pvd_name);
 		if(pvName == "AWS")
 		{
-			console.log("This is AWS template");
+			console.log("This is AWS template1");
 			var region = pvd_region;
 			var result_arr = [];
 			var pvName = pvd_name;
@@ -1047,24 +1108,26 @@ function deployTemplateFunction()
 						}else{
 							var sgName = document.getElementById("selsg"+i+"").innerText;
 						}
-					var form2 = document.getElementById("rbtnkp"+i+"");
+					/*var form2 = document.getElementById("rbtnkp"+i+"");
 					var selopt2 = form2.elements["inlineRadioOptions"].value;
 					if(selopt2 == "option1")
 						{
 							var keyPairName = document.getElementById("keyPairName"+i+"").value
 						}else{
 								var keyPairName = document.getElementById("selkp"+i+"").innerText;
-						}
+						}*/
 					
 					var instName = temp_info[i].node;
 					var imageName = temp_info[i].image;
 					var roleName = temp_info[i].role;
-					console.log(stgName+sgName+keyPairName+instName+imageName+roleName);
-					resultObj.push(stgName,sgName,keyPairName,pIp,instName,imageName,roleName);
+					//console.log(stgName+sgName+keyPairName+instName+imageName+roleName);
+					//resultObj.push(stgName,sgName,keyPairName,pIp,instName,imageName,roleName);
+					console.log(stgName+sgName+instName+imageName+roleName);
+					resultObj.push(stgName,sgName,pIp,instName,imageName,roleName);
 					resultObj1.push(resultObj);			
 				}
-			console.log(result_arr);
-			console.log(resultObj1);
+			console.log(result_arr.length);
+			console.log(resultObj1.length);
 			$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
@@ -1072,7 +1135,8 @@ function deployTemplateFunction()
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
 		        url: 'http://172.29.59.65:3000/deployTemplate',
 		        success: function(data, textStatus){
-		        	alert(data);
+		        	//alert(data);
+		        	$(".alert-temp").stop().slideDown();
 		        	//location.href="http://172.29.59.65:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
@@ -1102,8 +1166,8 @@ function deployTemplateFunction()
 				console.log(instName+imageName+roleName);
 				resultObj1.push(instName,imageName,roleName);
 			}
-			console.log(result_arr);
-			console.log(resultObj1);
+			console.log(result_arr.length);
+			console.log(resultObj1.length);
 			$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
@@ -1112,7 +1176,7 @@ function deployTemplateFunction()
 		        url: 'http://172.29.59.65:3000/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
-		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	location.href="http://172.29.59.65:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1121,4 +1185,8 @@ function deployTemplateFunction()
 		            });
 			}
 }
+
+$('.exit').click(function(){
+	location.href = "http://172.29.59.65:3000/master_2";
+})
 

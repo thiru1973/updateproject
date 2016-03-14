@@ -8,6 +8,9 @@ $(document).ready(function(){
 window.onclick=function(){
 	$(".popUpHide").hide();
 }
+$(".closeAlert").click(function(){
+	$(".alertS div.alert").stop().slideUp();
+})
 function disPlayPop(a){
 	var popHeight = $(a).parent().children("div").children("div.popover").height();
 	var topPost=-popHeight/2 - 8;
@@ -232,7 +235,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 				var nodeDe = document.getElementById('nodeDetails_'+project_id);
 
 				//console.log("getNodeDetails:::::"+this.dataOfNd);
-				//console.log(this.dataOfNd);
+				console.log(this.dataOfNd);
 				var ifNull ="--"
 				var clodSer = this.dataOfNd[clickedData].cloud_service ? this.dataOfNd[clickedData].cloud_service : ifNull ;
 							nodeDe.innerHTML='<tr>\
@@ -269,13 +272,13 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 								<tr>\
 									<td colspan="2">\
 										<div class="nodeBuT">\
-						  <button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Start</button>\
+						  <button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+'" onclick="manage.nodeServerEngine(this)">Start</button>\
 						  \
-						  <button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
+						  <button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
 						  \
-						  <button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
+						  <button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
 						  \
-						  <button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
+						  <button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
 										</div>\
 									</td>\
 								</tr>';
@@ -307,11 +310,14 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 				var inst_id = wichOne.value;
 				var arr =inst_id.split(",");
 				var action = wichOne.innerHTML;
-				console.log(arr[0]+arr[1]+action);
+				console.log(arr[0]+arr[1]+arr[2]+arr[3]+arr[4]+action);
 				var data = {};
 				data.inst_id = arr[0];
 				data.action = action;
 				data.region = arr[1];
+				data.pvd = arr[2];
+				data.cldsrvc = arr[3];
+				data.role = arr[4];
 				
 				$.ajax({
 			        type: 'POST',
@@ -320,7 +326,9 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 			        data: data,
 			        url: _ip+'/manage_env_nodes',
 			        success: function(data, textStatus){
-			        	alert(data);
+			        	//alert(data);
+			        	if(data != "Success"){$(".alert-warning").stop().slideDown();}
+			        	else{$(".alert-success").stop().slideDown();}
 			        	},
 			        	 error: function (xhr, status, error){
 			                 console.log('Failure');

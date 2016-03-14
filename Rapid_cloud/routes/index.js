@@ -520,7 +520,6 @@ exports.create_cloud_service = function(req,res){
 		 }
 	 });
 	 }, 3000);
-	
 };
 
 exports.prod_stage = function(req,res){

@@ -9,7 +9,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <body id="bg">
 <div class="alertS">
-	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-vpc" role="alert"><b>VPC</b> is successfully created<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-subnet" role="alert"><b>Subnet</b> is successfully created<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-stg" role="alert"><b>Storage</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-sg" role="alert"><b>Security Group</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-route" role="alert"><b>Route Table</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-gate" role="alert"><b>Internet GateWay</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-kp" role="alert"><b>Key Pair</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-temp" role="alert"><b>Environment</b> is deployed successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-cldsrv" role="alert"><b>Cloud Service</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-warning" role="alert"><b>Warning!</b> Better check yourself, you're not looking too good.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
@@ -286,9 +294,9 @@
 								<table class="">
 								<tbody>						
 											<tr>
-												<td><b>Route Table</b></td>												
-												<td><b>Internet Gateways</b></td>
-												
+												<td><b>Route Table</b>&nbsp<a href="#" data-toggle="tooltiproute" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a></td>												
+												<td><b>Internet Gateways</b>&nbsp<a href="#" data-toggle="tooltipgate" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a></td>
+												<td><b>Key Pair</b>&nbsp<a href="#" data-toggle="tooltipkp" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a></td>
 											</tr>
 											<!--<tr>
 												<td colspan="3">&nbsp;</td>												
@@ -313,6 +321,13 @@
 														</div>
 													</div>
 													<button id="buttonGtw" class="buttonGtw" style="margin-top: 35px;margin-left:10px;">Create</button>
+												</td>
+												<!--Key pair for template level-->
+												<td>
+													<div class="pull-left">				
+														<label class="labelTemp">Key Name</label>
+														<div class="clickRole addStoTabWid"><input id="keyPairName0" type="text" style="border:none;width:100%;"></div></div>						
+					  									<button class="keypair" id="keyPair0" style="margin-top: 35px;margin-left:10px;" onclick="createKpFunction(this.id,0)">Create</button></div>
 												</td>												
 											</tr>
 									</tbody>									
@@ -724,6 +739,7 @@
 								</table>
 				</div>
 				<div style="clear:both;">&nbsp;</div>
+				<button class="redButton pull-right countAlign exit">Cancel</button>	
 				<button class="redButton pull-right countAlign" onClick="deployFunction();">Deploy</button>				
 				<div class="roles" style="background-color:#fff;padding:0px;">
 				</div>

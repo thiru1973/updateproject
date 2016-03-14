@@ -120,6 +120,10 @@ $('#Templates2').click(function(){
 		$("[role='naviGation'] ul li dl dt").removeClass("activeLink");
 		$(this).addClass("activeLink");
 	});
+	
+	$(".warning").click(function(){
+		$(".alertS div.alert").stop().slideUp();
+	});
 });
 
 /* Create Template */
@@ -323,8 +327,7 @@ function showNode_fun(ram,appendTo){
 	for(var i=0;i<nodes.length;i++)
 	{
 		if(nodes[i].vcpu == cpu && nodes[i].memory_gib == ram)
-			{					
-				alert(nodes[i].inst_type);				
+			{							
 				tr = $('<tr class="node1" onclick="get_nodes(this.id)"/>');
 				tr.attr("id", "row"+i);
 	            tr.append("<td>" + nodes[i].inst_type+ "</td>");	
@@ -367,19 +370,13 @@ function show_images(id){
 		   });	
 }
 var save_info =[];
-/*function submit_fun(arg1){
-	
-	var str1 = "Select";
-	
-}*/
-
-
 
 $(".saveInfo").click(function(){
 	//var arr1=JSON.stringify(save_info);
 	//console.log(arr1);
 	var tm_name = document.getElementById("t_name").value;
 	var str1="Select";
+	var expTname = /^\w+$/;
 	
 	for(var i=0;i<templates.length;i++)
 	{	
@@ -403,11 +400,11 @@ $(".saveInfo").click(function(){
 				return;
 				}
 	}
-	if(tm_name == null || tm_name == "" )
-		{
-		 document.getElementById("t_name").focus();
-		 return;
-		}
+	if(!expTname.test(tm_name)){
+		$(".alert-warning").stop().slideDown();
+		document.getElementById("t_name").focus();
+		return;
+	}
 	saveInformation(tm_name);
 })
 
@@ -429,11 +426,14 @@ function saveInformation(tm_name){
 	}
 	var arr1=JSON.stringify(save_info);
 	//console.log(arr1);	
+	var a = Math.floor(100000 + Math.random() * 900000)
+	a = a.toString().substring(0, 3);
+	var t_name = tm_name+"_"+a;
 	var arr2=[];
 	arr2.push(provider);
 	arr2.push(region);
 	arr2.push(save_info.length);
-	arr2.push(tm_name);
+	arr2.push(t_name);
 	console.log(arr2);
 	console.log(save_info);
 	$.ajax({
@@ -443,7 +443,8 @@ function saveInformation(tm_name){
 	     data: "d1="+arr1+"&d2="+arr2,	     
 	     url: 'http://172.29.59.65:3000/temp_store',
 	     success: function(results) {
-	    	 location.href="//172.29.59.65:3000/deployTemplate"+"?data="+tm_name;
+	     	 $(".alert-success").stop().slideDown();
+	    	 location.href="//172.29.59.65:3000/deployTemplate"+"?data="+t_name;
 	     },
 		 error: function (xhr, status, error){
 	        console.log('Failure');
