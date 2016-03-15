@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <title>Environments</title>
 <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css_1/style.css" rel="stylesheet"/>
@@ -9,10 +9,439 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <body id="bg">
 <div class="alertS">
-	<div class="alert alert-success" role="alert"><b>Action !!!</b>Happened successfully.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
-	<div class="alert alert-warning" role="alert"><b>Alert!!!!!</b> Only "Reboot" and "Terminate" is possible with Azure<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning" role="alert"><b>Warning!</b> Better check yourself, you're not looking too good.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+</div>
+
+<div id="addEndPointID" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">EndPoints</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL" class="nodeSel">
+					<table style="width:100%;">
+						<tr>
+							<th><input type="checkbox" /></th>
+							<th>Name</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_1</td>							
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_2</td>							
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_3</td>							
+						</tr>
+					</table>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Add Selected</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="securityGroWin" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:initial">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">New Security Group</h4>
+		  </div>
+		   <div class="modal-body">
+				<div class="" style="margin-bottom:14px;">
+					<label class="labelTemp">Security Group Name</label>
+					<div class="clickRole addStoTabWid">
+						<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">	
+					</div>
+				</div>
+				<div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+				  <ul id="myTabs" class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Inbound</a></li>
+					<li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Outbound</a></li>
+				  </ul>
+				  <div id="myTabContent" class="tab-content">
+					<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+							<div id="noDEpullL" class="nodeSel padToNew">
+								<table style="width:100%;">
+									<tr>
+										<th>Type</th>
+										<th>Protocol</th>
+										<th>Port Range</th>
+										<th>Source</th>
+										<th></th>
+									</tr>
+									<tr>
+										<td>
+										 <div class="pull-left">
+											<div id="typeDro" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+												<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+												</ul>
+												<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+											</div>
+										  </div>
+										</td>
+										<td>
+											<div class="pull-left">									
+												<div class="clickRole addStoTabWid">
+													<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">	
+												</div>
+											</div>
+										</td>
+										<td>
+											<div class="pull-left">
+												<div class="clickRole addStoTabWid">
+													<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">
+												</div>
+											</div>
+										</td>
+										<td>
+										  <div class="pull-left">
+											<div id="sour" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+												<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+												</ul>
+												<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+											</div>
+										  </div>
+										  <div class="pull-left">
+												<div class="clickRole addStoTabWid">
+													<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">	
+												</div>
+										  </div>
+										</td>
+										<td>
+											<button class="redButton pull-left countAlign 1stRowAdd" id="add0" name="add_0">Add</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+					</div>
+					<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+							<div id="noDEpullL" class="nodeSel padToNew">
+								<table style="width:100%;">
+									<tr>
+										<th>Type</th>
+										<th>Protocol</th>
+										<th>Port Range</th>
+										<th>Source</th>
+										<th></th>
+									</tr>
+									<tr>
+										<td>
+										 <div class="pull-left">
+											<div id="typeDro" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+												<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+												</ul>
+												<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+											</div>
+										  </div>
+										</td>
+										<td>
+											<div class="pull-left">									
+												<div class="clickRole addStoTabWid">
+													<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">	
+												</div>
+											</div>
+										</td>
+										<td>
+											<div class="pull-left">
+												<div class="clickRole addStoTabWid">
+													<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">
+												</div>
+											</div>
+										</td>
+										<td>
+										  <div class="pull-left">
+											<div id="sour" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+												<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+												</ul>
+												<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+											</div>
+										  </div>
+										  <div class="pull-left">
+												<div class="clickRole addStoTabWid">
+													<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">
+												</div>
+										  </div>
+										</td>
+										<td>
+											<button class="redButton pull-left countAlign 1stRowAdd" id="add0" name="add_0">Add</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+					</div>
+				  </div>
+				</div>
+
+				
+				
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Create</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="addInstPopUpWin" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Instances</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL" class="nodeSel">
+					<table style="width:100%;">
+						<tr>
+							<th><input type="checkbox" /></th>
+							<th>Name</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_1</td>							
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_2</td>							
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_3</td>							
+						</tr>
+					</table>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Add Selected</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="SubnetsPoup" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Available Subnet</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL" class="nodeSel">
+					<table style="width:100%;">
+						<tr>
+							<th><input type="checkbox" /></th>
+							<th>Instance</th>
+							<th>State</th>
+							<th>Zone</th>
+							<th>Subnet CIDR</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_1</td>
+							<td>Available</td>
+							<td>South East</td>
+							<td>123.12.21.2:3210</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_1</td>
+							<td>Available</td>
+							<td>South East</td>
+							<td>123.12.21.2:3210</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_1</td>
+							<td>Available</td>
+							<td>South East</td>
+							<td>123.12.21.2:3210</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>int_live_1</td>
+							<td>Available</td>
+							<td>South East</td>
+							<td>123.12.21.2:3210</td>
+						</tr>
+					</table>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Add Selected</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="ConfigureHealthChecksAdvanced" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew">
+			<div class="modal-header">
+			<button type="button" id="ConfigureHealthpopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Configure Health Checks Advanced</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL" class="pull-left">
+					<div class="pull-left">
+						<label class="labelTemp">
+							<span>Healthy Threshold</span>
+						</label>
+						<div id="sel" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">
+							<span>Unhealthy Threshold</span>
+						</label>
+						<div id="sel1" class="clickRole addStoTabWid temp1stRowWid"><span>Select</span>
+							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">Response Time out</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">Health Check Interval</label>
+						<div class="clickRole">
+							<input type="text" id="routeName" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Create</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="volumeDetailsPopup">
+	<div class="popupData" style="display: block;position: fixed;"></div>
+	<div class="popData" style="display: block;width:66%;position: fixed;">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title" id="titleOfPopup">Create New Volume</h4>
+		</div>
+	<div>
+	   <div id="volumeCereatBlock" style="display:none;">
+		<div class="modal-body">
+				<div class="tab-pane fade  in active" id="alerts0">
+				  <div class="roleID">
+				    <div class="pull-left">
+				      <label class="labelTemp">Volume Type</label>
+				      <div id="selstg0" class="clickRole addStoTabWid"><span>Select</span>
+				        <ul id="selsstg0" class="dropDown" style="display: none;">
+				          <li onclick="selectOpt(this,0)" class="Provisioned IOPS SSD">
+				            <dl><dt></dt>
+				              <dd class="va">Provisioned IOPS SSD</dd>
+				            </dl>
+				          </li>
+				          <li onclick="selectOpt(this,1)" class="General Purpose SSD">
+				            <dl><dt></dt>
+				              <dd class="va">General Purpose SSD</dd>
+				            </dl>
+				          </li>
+				          <li onclick="selectOpt(this,2)" class="Magnetic">
+				            <dl><dt></dt>
+				              <dd class="va">Magnetic</dd>
+				            </dl>
+				          </li>
+				        </ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="operatingSys">
+				    <div class="pull-left">
+				      <label class="labelTemp">Volume Size</label>
+				      <div class="clickRole addStoTabWid">
+				        <input type="number" onchange="iopsFunction(this.value, 0)" id="stgsz0" min="1" style="border:none;width:100%;">
+				      </div>
+				    </div>
+				  </div>
+				  <div class="operatingSys">
+				    <div class="pull-left">
+				      <label class="labelTemp">IOPS</label>
+				      <div class="clickRole addStoTabWid">
+				        <input type="Text" id="stgIops0" placeholder="" style="border:none;width:100%;">
+				      </div>
+				    </div>
+				  </div>
+				  <div class="operatingSys">
+				    <div class="pull-left">
+				      <label class="labelTemp">Volume Name</label>
+				      <div class="clickRole addStoTabWid">
+				        <input id="stgName0" type="text" style="border:none;width:100%;">
+				      </div>
+				    </div>
+				  </div>
+				</div>
+		</div>
+		<br><br><br>
+		<div style="float:right;padding:10px 41px 0 0;">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton" id="storage0" onclick="createStgFunction(this.id, 0)">Create</button>
+			<button class="redButton" id="createVpc">Create & Attach</button>
+		</div>
+		</div>
+		
+		<div id="securityGrCreatBlock" style="display:none;"></div>
+		
+	  </div>
+		
+		<br><br><br>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			<h4 class="modal-title" id="existingData">Existing Volumes</h4>
+		</div>
+		<div class="modal-body">
+			<table style="width:100%" class="nodeSel">
+			  <tbody id="existingVolumesID">
+				<tr>
+					<th>Volume Name</th>
+					<th>Volume Type</th>
+					<th>Volume Size</th>
+					<th>IOPS</th>
+					<th></th>
+				</tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
 </div>
 <div class="container">
 	<div class=	"header-sec">
@@ -109,8 +538,8 @@
 													</th>
 													<th>Start Date
 													</th>
-												<!--<th>Team Size
-													</th>-->
+													<th>Team Size
+													</th>
 													<th>Nodes
 													</th>
 													<th>Actions
@@ -124,7 +553,7 @@
 													</td>
 													<td>15/01/2016
 													</td>
-												<td>2</td>
+													<td>2</td>
 													<td class="five">5 <a href="#" class="redLinks" onmouseover="disPlayPop(this)">Status</a>
 													<div style="position:relative">
 														<div class="popover fade right in" role="tooltip" style="left:48px;">

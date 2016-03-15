@@ -120,7 +120,7 @@ app.get('/attachKeyPair', manage.attachKeyPair);
 app.get('/attachSecGrp', manage.attachSecGrp);
 
 
-http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
+http.createServer(app).listen(app.get('port'), "172.25.12.23", function(){
 
   console.log('Express server listening on port ' + app.get('port'));
 });
