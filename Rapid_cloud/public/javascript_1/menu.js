@@ -7,7 +7,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$("[role='naviGation'] ul li dl").hide();
+	/* $("[role='naviGation'] ul li dl").hide();
 	$("[role='naviGation'] ul li:first-child dl").addClass("show").show();
 	
 	$("[role='naviGation'] ul li").click(function(event){
@@ -18,7 +18,7 @@ $(document).ready(function(){
 		$(this).children("a").toggleClass("activeTab");
 		$(this).children("a").find(".arrowGray").toggleClass("rotateGray");
 		$(this).children("dl").toggleClass("show");
-	});
+	}); */
 	function closeOldmenu(){
 		$(".arrowGray").removeClass("rotateGray");
 		$(".show").stop().slideUp();
@@ -27,9 +27,91 @@ $(document).ready(function(){
 		console.log("Closed Tab");
 	}	
 	
-	$("[role='naviGation'] ul li dl dt").click(function(event){
+	/* $("[role='naviGation'] ul li dl dt").click(function(event){
 		event.stopPropagation();
 		$("[role='naviGation'] ul li dl dt").removeClass("activeLink");
 		$(this).addClass("activeLink");
+	}); */
+	
+	$(window).on("load resize",function(e){
+		var h = $('[role="header"]').outerHeight(true);
+				$('[role="contentArea"] header').height(h-25);				
+	});
+	$(".link_Prime").hover(function(){
+		$(this).find(".howMe").stop().css({display:"block"});
+	},function(){
+		$(this).find(".howMe").stop().css({display:"none"});
 	});
 });
+
+var menU = {
+	open:1,
+	close:0,
+	primaryLins:{
+		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
+		level_2:["Templates","Node","Blueprint","Networks","Load Balancer"],
+		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
+		Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks", 5:"Load Balancer"},
+		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
+	},
+	createParentView: function(){
+		var navv = document.getElementById("navDiv"), i;
+		for(i=0; i<= this.primaryLins.level_1.length-1; i++ ){
+			navv.innerHTML+='<li class="link_Prime">\
+							<ul class="howMe" id="link_'+i+'"></ul>\
+							<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>'+this.primaryLins.level_1[i]+'</li>';
+		}
+		this.createSubView();
+	},
+	createSubView:function(){
+		var subL0 = document.getElementById("link_0");
+		for(i=0; i<= this.primaryLins.level_2.length-1; i++ ){
+			subL0.innerHTML+='<li>'+this.primaryLins.level_2[i]+'</li>';
+		}
+	},
+	lnav:document.getElementById("leftNavigation"),
+	aboutProject:function(){
+		this.lnav.innerHTML+='<div class="header-sec">\
+							<header role="header">\
+								<a href="#"> <img src="images_1/RapidCloud_Logo.png" /> </a> <span class="header-txt"> Manage, Govern and Optimize your Cloud Environments</span>\
+								<img src="images_1/Sonata_Logo.png" class="second-logo"/>\
+								<ul>\
+									<li><span class="glyphicon glyphicon-bell"></span></li>\
+									<li><span class="glyphicon glyphicon-envelope"></span></li>\
+									<li><span class="glyphicon glyphicon-question-sign"></span></li>\
+									<li><span class="glyphicon glyphicon-cog"></span></li>\
+								</ul>\
+							</header>\
+						</div>\
+					  <a href="#" class="moreMenu" onclick="menU.moreMenu()"><i class="fa fa-bars fa-2x"></i></a>\
+					  <section role="aboutProject">\
+						<br>\
+						<img src="images_1/profile_pic.png" />\
+						<br>\
+						<h1>Andrew  <span class="glyphicon glyphicon-chevron-down arrowRed"></span></h1>\
+						<br>\
+					  </section>\
+					  <menu role="profileLinks">\
+						<ul>\
+							<li>My Account</li>\
+							<li>Sign Out</li>\
+						</ul>\
+					  </menu>\
+					  <nav role="naviGation">\
+						<ul id="navDiv"></ul>\
+					  </nav>';
+		this.createParentView();
+	},
+	moreMenu:function(){
+		/*if(this.lnav.style.width=="34%"){
+			this.lnav.style.width="16%";
+		}else if(this.lnav.style.width="16%"){
+			this.lnav.style.width="34%";
+		}*/
+	},
+	assignIcons:function(){
+
+	}
+}
+menU.aboutProject();
+
