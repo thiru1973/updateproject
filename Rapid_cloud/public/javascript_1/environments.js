@@ -224,9 +224,9 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 	}
 	Projects.prototype.getNodes = function(env_name, project_id){
 		//console.log(env_name.innerText+"  "+project_id);
-		document.getElementById('loadBalTd').style.display="none";
-		document.getElementById('nodeTD').style.display="block";
-		document.getElementById('detailsTD').style.display="block";
+		//document.getElementById('loadBalTd').style.display="none";
+		//document.getElementById('nodeTD').style.display="block";
+		//document.getElementById('detailsTD').style.display="block";
 		
 		var elId = document.getElementById('envir_'+project_id);
 		var liArray = elId.getElementsByTagName("dt");

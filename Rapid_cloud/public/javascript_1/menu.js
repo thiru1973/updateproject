@@ -37,6 +37,7 @@ $(document).ready(function(){
 		var h = $('[role="header"]').outerHeight(true);
 				$('[role="contentArea"] header').height(h-25);				
 	});
+	
 	$(".link_Prime").hover(function(){
 		$(this).find(".howMe").stop().css({display:"block"});
 	},function(){
@@ -50,6 +51,7 @@ var menU = {
 	primaryLins:{
 		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
 		level_2:["Templates","Node","Blueprint","Networks","Load Balancer"],
+		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
 		Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks", 5:"Load Balancer"},
 		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
