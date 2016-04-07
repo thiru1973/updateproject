@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<title>Accounts</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></scr`ipt>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+<div class="alertS">
+	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning" role="alert"><b>Warning!</b> Better check yourself, you're not looking too good.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+</div>
+<div id="createAccPOP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Create New Account</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL">					
+					<div class="pull-left">
+						<label class="labelTemp">Account Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Create</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="create_Sub_POP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Create New Subscriptions</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL">					
+					<div class="pull-left">
+						<label class="labelTemp">Account Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">AWS</label>
+						<div class="">
+							<input type="radio" value="aws" checked name="a" id="" placeholder="" style="border:none;width:80%;">	
+						</div>
+					</div>
+					<div class="pull-left" style="padding-left:50px;">
+						<label class="labelTemp">Azure</label>
+						<div class="">
+							<input type="radio" value="azure" name="a" id="" placeholder="" style="border:none;width:80%;">	
+						</div>
+					</div>
+					<div style="clear:both;">&nbsp;</div>
+					<div class="awsD">
+						<div class="pull-left">
+							<label class="labelTemp">Access Key ID</label>
+							<div class="clickRole addStoTabWid">
+								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							</div>
+						</div>
+						<div class="pull-left">
+							<label class="labelTemp">Secret Access Key</label>
+							<div class="clickRole addStoTabWid">
+								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							</div>
+						</div>
+						<div class="modal-footer">
+							<!--<a class="cancelPoup">Cancel</a>&nbsp;--></br>
+							<button class="redButton">Create</button>
+						</div>
+					</div>
+					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post">
+					<div class="azureD" style="display:none;">
+						<div class="pull-left">
+							<label class="labelTemp">Subscription ID</label>
+							<div class="clickRole addStoTabWid">
+								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							</div>
+						</div>
+						<div class="pull-left">
+							<label class="labelTemp">Upload .pem file</label>
+							<div class="clickRole addStoTabWid">
+								<input type="file" name="file" id="file" placeholder="" style="border:none;width:100%;">
+							</div>
+						</div>
+						<div class="modal-footer">
+							</br><!--<a class="cancelPoup">Cancel</a>&nbsp;
+							<button class="redButton">Create</button>-->
+						<input type="submit" value="Create" name="submit">
+						</div>
+						</form>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <!--<div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Create</button>
+		  </div>-->
+		</div>
+	</div>
+</div>
+
+<div id="create_Project_POP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Create New Project</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL">					
+					<div class="pull-left">
+						<label class="labelTemp">Project Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">
+							<span>Subscriptions Name</span>
+						</label>
+						<div id="sel" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>
+					</div>
+					<div style="clear:both;">&nbsp;</div>
+					<div class="pull-left">
+						<label class="labelTemp">Start Date</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">
+							<span>Technologies</span>
+						</label>
+						<div id="sela" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">.NET</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Java</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Nodejs</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">PHP</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Create</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div id="create_Product_POP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Create New Product</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL">					
+					<div class="pull-left">
+						<label class="labelTemp">Product Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">
+							<span>Project Name</span>
+						</label>
+						<div id="sel12" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>
+					</div>
+					<div style="clear:both;">&nbsp;</div>
+					<div class="pull-left">
+						<label class="labelTemp">Start Date</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">
+							<span>Technologies</span>
+						</label>
+						<div id="sela12" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
+							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">.NET</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Java</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Nodejs</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">PHP</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton">Create</button>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div class="container">		
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<h1>Account Dashboard<a href=""></a></h1>
+				<!--<aside>
+					<input type="text" value="Search">
+				</aside>-->
+			</header>
+			<section role="createTemplate">
+				<div style="clear:both;">&nbsp;</div>
+					<div class="roles">
+						<div class="pull-left">
+							<label id="" class="labelTemp"><span>Accounts</span></label>
+							<div id="typeDro" class="clickRole temp1stRowWid"><span>Select</span>
+								<ul id="sels" class="dropDown">
+									<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li>
+									<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li>
+									<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li>
+									<li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li>
+									<li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Create New</dd></dl></li>
+								</ul>
+								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+							</div>						
+						</div>
+						<div class="pull-left" style="padding: 24px 0 0 15px;">Or <button class="redButton countAlign createAccount" id="add0" name="add_0">Create New</button></div>
+					</div>
+					
+				<div style="clear:both;">&nbsp;</div>
+				<div id="accountsDataContainer">
+					<ul>
+						<li id="acSubscriptions"></li>
+						<li id="acProjects"></li>
+						<li id="acProducts"></li>
+					</ul>
+				</div>
+				<div style="clear:both;">&nbsp;</div>
+			</section>
+		</section>
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+<script src="javascript_1/accounts.js"></script>
+<script src="javascript_1/menu.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");
+});
+</script>
+</body>
+</html>

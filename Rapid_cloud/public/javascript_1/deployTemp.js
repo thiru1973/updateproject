@@ -148,26 +148,40 @@ function selectOpt(ev, idn){
 	 var vb = v.parentNode;
 	 var idd = vb.id;
 	 //alert(idd);
-	 if(idd == "selvpc")
+	 if(idd == "selvpc"){vpcId = aTex;getSubnetName(aTex);}
+	 if(idd == "selsn"){subnetId = aTex;}
+	 if(idd == "selOs"){populate_image(aTex);}
+	 /*for(var i=0;i<node_info.length;i++)
 		 {
-		 	vpcId = aTex;
-		 	getSubnetName(aTex);
-		 }
-	 if(idd == "selsn")
-		 {
-		 	subnetId = aTex;
-		 }
-	 for(var i=0;i<node_info.length;i++)
-		 {
-			 if(idd == "selci"+i+"")
-				 {
-				 	getPublicIp(aTex,i);
-				 }
-		 }
+			 if(idd == "selci"+i+""){getPublicIp(aTex,i);}
+		 }*/
 	 document.getElementById(idd).style.border="none";
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
 }
+function populate_image(idd){
+	var pvd_name1 = pvd_name;
+	var img_data = {};
+	img_data.provider = pvd_name1;
+	img_data.os = idd;
+	$.ajax({
+	     type: 'POST',
+		 jsonpCallback: "callback",
+	     datatype: 'jsonp',
+	     data: img_data,	 
+	     url: 'http://172.29.59.65:3000/temp_image',
+	     success: function(results) {		    		 
+		    	 	var appendD = new DropdownConst();
+		    	 	appendD.appendData(results,"selImage");
+	    		 
+	     },
+		 error: function (xhr, status, error){
+	        console.log('Failure');
+			alert("failure");
+			},
+	   });		
+}
+
 function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){
 	this.createEle=createEle;
 	this.addId=addId;
@@ -207,77 +221,182 @@ window.onload = function(){
 	get_templateName();
 	get_project();
 	getVpcName();
+	get_role_os();
 	//getSubnetName();
 	getCloudService();
 }
+function get_role_os(){
+	$(function(){		
+		   $.getJSON('http://172.29.59.65:3000/org_temp', function(data) {			
+			   
+			   var idArr = [], osArr = [];
+			   
+			   idDt = data[0].types;			  
+			   for(var j=0;j<=idDt.length-1;j++){
+				   var dd = data[0].types[j].name;				   
+				   idArr.push(dd);
+			   }
+			   var appendD = new DropdownConst();
+			   	 appendD.appendData(idArr,"selRoles");
+			   
+			   var os = data[1].types;			  
+			   for(var d=0; d<=os.length-1; d++){				   
+				   var oss = data[1].types[d].name;				  
+				   osArr.push(oss);
+			   }
+			   var appendD = new DropdownConst();
+			   	 appendD.appendData(osArr,"selOps");			  
+		   });
+		 
+		});
+}
+
 var node_info;
 var pvd_name;
 var pvd_region;
 var temp_info;
+var str;
+var str2;
 function get_templateName(){
 	$(function(){	
 		var url = document.location.href,
 	     params = url.split('?')[1].split('&'),
-	     data = {}, tmp;
-		  for (var i = 0, l = params.length; i < l; i++) {
+	     params2 = url.split('?')[2].split('&'),
+	     data = {}, tmp, data2 = {}, tmp2, data3={}, tmp3, data4={}, tmp4;
+		 //http://172.29.59.63:3000/deployTemplate?data=single?data2=t2.nano
+		 //console.log(params + params2);
+		 for (var i = 0, l = params.length; i < l; i++) {
 		       tmp = params[i].split('=');
 		       data[tmp[0]] = tmp[1];
 		  }
-		  var str = data.data;
-		  var template={};
-		  template.tname=str;
-		  $.ajax({
-			     type: 'POST',
-				 jsonpCallback: "callback",
-			     datatype: 'jsonp',
-			     data: template,	 
-			     url: 'http://172.29.59.65:3000/pvd_template',
-			     success: function(results) {
-			    	 //console.log(results);
-			    	 temp_info = results[0].Instances;
-			    	 pvd_name = results[0].Cloud;
-			    	 pvd_region = results[0].Region;
-			    	 if(pvd_name == "AWS")
-			         {
-			    	 tr = $('<tr/>');
+		 for (var i = 0, l = params2.length; i < l; i++) {
+		       tmp2 = params2[i].split('=');
+		       data2[tmp[0]] = tmp2[1];
+		  }
+		 str = data.data;
+		 console.log(str);
+		 str2 = data2.data;
+		 console.log(str2);
+		 if(str == "single"){
+			 console.log("single_node_deployment");
+			 var params3 = url.split('?')[3].split('&');
+			 for (var i = 0, l = params3.length; i < l; i++) {
+			       tmp3 = params3[i].split('=');
+			       data3[tmp[0]] = tmp3[1];
+			  }
+			 var str3 = data3.data;
+			 var params4 = url.split('?')[4].split('&');
+			 for (var i = 0, l = params3.length; i < l; i++) {
+			       tmp4 = params4[i].split('=');
+			       data4[tmp[0]] = tmp4[1];
+			  }
+			 var str4 = data4.data;
+			 pvd_region = str4;
+			 console.log(str3);
+			 pvd_name = str3;
+			 	if (str3 == "AWS"){
+			 		 var tr = $('<tr/>');
 			            tr.append("<td><img src='images_1/AWS_Logo.png'/></td>");	
-			            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
+			            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+str2+"</span><br>Region : "+str4+"<br></td>");
 			            $('table.temp_info').append(tr);
-			            document.getElementById("regName").value=results[0].Region;
-			            node_info=results[0].Instances;
-			            show_nodeDetails(node_info);
+			            document.getElementById("regName").value=str4;
+			            $('td#tdkey').hide();
+			            $('td#tdkey1').hide();
+			            show_singlenode(str2);			            
 			            $('td#depClsrv').hide();
-			            if(pvd_name == "AWS")
+			            $('div.advancedOptionsDiv').hide();
+			            $('table.nodeSel').hide();
+			            $('div.advOpn').hide();
+			 	}
+			 	else{
+			 		var tr = $('<tr/>');
+		            tr.append("<td><img src='images_1/Windows_Azure_Logo.png'/></td>");	
+		            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+str2+"</span><br>Region : "+str4+"<br></td>");
+		            $('table.temp_info').append(tr);
+		            document.getElementById("regNameClsrv").value=str4;
+		            show_singlenode(str2)
+			 		$('td#depVpc').hide();
+		            $('td#depSub').hide();
+		            $('td#tdroute').hide();
+		            $('td#tdroute1').hide();
+		            $('div.advancedOptionsDiv').hide();
+		            $('td#tdgateway').hide();
+		            $('td#tdgateway1').hide();
+		            $('td#tdkey').hide();
+		            $('td#tdkey1').hide();
+		            $('div.advancedOptionsDiv').hide();
+		            $('div.advOpn').hide();
+		            $('button.1stRowAdd').hide();
+		            $('table.nodeSel').hide();
+			 	}
+		 }
+		 else{
+			 console.log("multi_node_deployment");
+			 var template={};
+			  template.tname=str2;
+			  $.ajax({
+				     type: 'POST',
+					 jsonpCallback: "callback",
+				     datatype: 'jsonp',
+				     data: template,	 
+				     url: 'http://172.29.59.65:3000/pvd_template',
+				     success: function(results) {
+				    	 //console.log(results);
+				    	 temp_info = results[0].Instances;
+				    	 pvd_name = results[0].Cloud;
+				    	 pvd_region = results[0].Region;
+				    	 // Fucntion to check AWS or Azure
+				    	 if(pvd_name == "AWS")
+				         {
+				    	 tr = $('<tr/>');
+				            tr.append("<td><img src='images_1/AWS_Logo.png'/></td>");	
+				            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
+				            $('table.temp_info').append(tr);
+				            document.getElementById("regName").value=results[0].Region;
+				            node_info=results[0].Instances;
+				            show_nodeDetails(node_info);
+				            $('td#depClsrv').hide();
+				            $('td#singlenode').hide();
+				            $('td#instname').hide();
+				            $('table.nodeSelSingle').hide();
+				            $('#roleappend').hide();
+				            $('#osappend').hide();
+							if(pvd_name == "AWS")
 			            	{
 			            		displayZones(pvd_name,pvd_region);
 			            	}
-			         }
-			    	 else
-			    	 {
-			    		 tr = $('<tr/>');
-			    		 tr.append("<td><img src='images_1/Windows_Azure_Logo.png'/></td>");	
-				            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
-				            $('table.temp_info').append(tr);
-				            document.getElementById("regNameClsrv").value=results[0].Region;
-				            node_info=results[0].Instances;
-				            show_nodeDetails(node_info);
-				            $('td#depVpc').hide();
-				            $('td#depSub').hide();
-				            $('div.routeAndGatWayConfiguration').hide();
-				            $('div.latestUpdates').hide();
-				            $('button.1stRowAdd').hide();
-				            //$('td#singlenode').hide();
-				            //$('td#instname').hide();
-				            //$('table.nodeSelSingle').hide();
-			    	 }
-			    	 },
-				 error: function (xhr, status, error){
-			        console.log('Failure');
-					alert("failure");
-					},
+				            
+				         }
+				    	 else
+				    	 {
+				    		 tr = $('<tr/>');
+				    		 tr.append("<td><img src='images_1/Windows_Azure_Logo.png'/></td>");	
+					            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
+					            $('table.temp_info').append(tr);
+					            document.getElementById("regNameClsrv").value=results[0].Region;
+					            node_info=results[0].Instances;
+					            show_nodeDetails(node_info);
+					            $('td#depVpc').hide();
+					            $('td#depSub').hide();
+					            $('div.routeAndGatWayConfiguration').hide();
+					            $('div.latestUpdates').hide();
+					            $('button.1stRowAdd').hide();
+					            $('td#singlenode').hide();
+					            $('td#instname').hide();
+					            $('table.nodeSelSingle').hide();
+				    	 }
+				    	 },
+					 error: function (xhr, status, error){
+				        console.log('Failure');
+						alert("failure");
+						},
+		 });
+		 }
+		 var template={};
+		 template.type = str;
+		 template.tname = str2;		 
 			   });
-		});
-}
+		}
 function displayZones(pname,region){
 	//alert(pname);
 	var p_name=pname;	
@@ -641,6 +760,160 @@ function show_nodeDetails(data){
 				var myName = $(this).attr("title");
 				$("#"+myName).remove();
 			}
+}
+
+function show_singlenode(data){
+	console.log(data);
+	var i =0;
+	 var tr = $('<tr/>');
+     tr.append("<td>"+data+"</td>");
+     tr.append("<td><div id='roleappend' class='pull-left'><span></span><label id='image' class='labelTemp'></label><div id='selImag' class='clickRole borderNoN temp1stRowWid'><span>Select</span><ul id='selImage' class='dropDown'></ul><span id='image' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></td>");
+     tr.append("<td><div class='input-group spinner pull-left count_1'><input type='text' class='form-control' value='1'><div class='input-group-btn-vertical'>"
+    		 +"<button class='btn btn-default up_1' type='button'><i class='fa glyphicon glyphicon-triangle-top'></i></button>"
+     		 +"<button class='btn btn-default down_1' type='button'><i class='fa glyphicon glyphicon-triangle-bottom'></i></button>"
+     		 +"</div></div><button class='redButton pull-left countAlign 1stRowAdd' name='add_"+0+"'>Add</button>"
+    		 +"</td>");
+     
+     $('table.nodeSelSingle').append(tr);
+     
+     var tr1 = $('<tr class="closeConfig add_'+i+'"/>');
+     tr1.append("<td colspan='5' style='padding: 2px 10px;'></td>");
+     $('tabel.nodeSelSingle').append(tr1);
+
+	var tr2 = $('<tr class="closeConfig add_'+i+'"/>');
+	tr2.addClass();
+	tr2.append("<td style='padding:0px;' colspan='5'>" 
+			  +"<table style='width:100%;'>"
+			  +"<tr><td style='padding:0px;width:250px;vertical-align: top;background-color:#FBFBFB;'>"
+			  +"<div class='col-lg-12 col-md-12 col-sm-12 content_box padZero padAllSides' id='latestUpdates'>"
+			  +"<ul id='latestUpdatesTab' class='nav nav-tabs hidden-xs'><li class='active addStoTab'><a href='#alerts"+0+"' data-toggle='tab'>Add Storage</a></li><li><a href='#requests"+0+"' data-toggle='tab'>Security Groups</a></li><li><a href='#svpTweet"+0+"' data-toggle='tab'>Key Pairs</a></li><li><a href='#publicIp"+0+"' data-toggle='tab'>Public IP</a></li><li class='pull-right'>"
+			  +"<button type='button' class='close redLinks closeRoleConfi' name='add_"+0+"' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>x</span></button></li>"
+			  +"</ul><div class='panel-group visible-xs' id='latestUpdatesTab-accordion'></div>"
+			  +"<div class='tab-content hidden-xs'>"
+			  
+			  +"<div class='tab-pane fade  in active alignAllsides' id='alerts"+i+"'>"
+			  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>Volume Type</label><div id='selstg"+0+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+0+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='text' id='stgsz"+0+"' placeholder='Ex: 1 to 16384GB' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='number' id='stgIops"+0+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
+			  //+"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Encryption</label><div class='checkB addStoTabWid'><input type='checkbox' style='border:none'>Yes</div></div></div>"
+			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='storage"+0+"' onclick='createStgFunction(this.id, "+0+")'>Create</button></div>"
+			  +"</div>"
+			  
+			  
+			  +"<div class='tab-pane fade alignAllsides' id='requests"+i+"'>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+0+"' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>To Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+0+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
+			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+0+")'>Create</button></div>"
+			  +"</div>"
+			  
+			  +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
+			  +"</div>"
+			  
+			  +"<div class='tab-pane fade alignAllsides' id='publicIp"+i+"'>"
+			  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><input type='radio' name='pubIp' value='Yes' style='border:none'>Yes<input name='pubIp' type='radio' value='No' style='border:none'>No</div></div></div>"
+			  +"</div>"
+			  
+			  +"</div></div>"
+			  +"</td></tr></table>"
+			  +"</td>");
+	$('table.nodeSelSingle').append(tr2);
+	//addRow(i);
+	var appendD = new DropdownConst();
+	//appendD.appendData(volumeType,"selsstg"+i+"");
+	//appendD.appendData(cidrIp,"selsci"+i+"");
+
+
+		//$(".nodeSel tr:nth-child(odd)").css({'background-color':'#f7f7f7'})
+		$(".nodeSelSingle tr:nth-child(even)").css({'background-color':'#eee'})
+		function HideAndShow_Constructor(clickedElement,hideAndShowElement){
+		this.clickedElement=clickedElement;
+		this.hideAndShowElement=hideAndShowElement;
+		}	
+		HideAndShow_Constructor.prototype.defaultHide = function(){
+			var adv = $("."+this.hideAndShowElement);
+				adv.hide();
+		}
+		/*HideAndShow_Constructor.prototype.showActionOnly = function(){
+		var sho = $("."+this.hideAndShowElement);
+			var ad = $("."+this.clickedElement);
+			
+				ad.click(function(e){
+				 e.preventDefault();
+				 sho.slideDown();
+			});
+		}*/
+		HideAndShow_Constructor.prototype.hideActionOnly = function(){
+		var sho = $("."+this.hideAndShowElement);
+			var ad = $("."+this.clickedElement);
+				ad.click(function(e){
+				 e.preventDefault();
+				 sho.slideUp();
+			});		
+		}
+		HideAndShow_Constructor.prototype.toggleHandS = function(){
+		var sho = $("."+this.hideAndShowElement);
+			var ad = $("."+this.clickedElement);
+				ad.click(function(e){
+				 e.preventDefault();
+				 sho.slideToggle();
+			});
+		}
+		var adVanOp = new HideAndShow_Constructor("advancedOptions","advancedOptionsDivCon");
+		adVanOp.defaultHide();
+		adVanOp.toggleHandS();
+		
+		var adVan = new HideAndShow_Constructor("closeAdvan","advancedOptionsDivCon");
+		adVan.hideActionOnly();
+		
+		/*var closeRoleConfi = new HideAndShow_Constructor("closeRoleConfi","closeConfig");
+		closeRoleConfi.hideActionOnly();*/
+		
+		var addRole = new HideAndShow_Constructor("1stRowAdd","closeConfig");
+		addRole.defaultHide();
+		//addRole.showActionOnly();
+		
+		/*var elesticRow = new HideAndShow_Constructor("","addClonedElements");
+		elesticRow.defaultHide();
+		
+		var elesticRow = new HideAndShow_Constructor("addMoreElastitcIP","addClonedElements");
+		elesticRow.showActionOnly();
+		
+		var hideClonedRow = new HideAndShow_Constructor("removeElastitcIP","addClonedElements");
+		hideClonedRow.hideActionOnly();*/
+		$(".1stRowAdd").click(function(){
+			var na = $(this).attr("name");
+			$("."+na).show();
+			console.log(na);
+		});
+		
+		$(".close").click(function(){
+			var na = $(this).attr("name");
+			$("."+na).hide();
+			console.log(na);
+		});
+		
+		
+		$(".up_1").click(function(e){
+			   var vv = $(this).parent().parent().children("input[type='text']");
+			   var valu = vv.val();
+			    valu == 10 ? false : valu++;   
+			    vv.val(valu);
+			  });
+		$(".down_1").click(function(e){
+			   var vv = $(this).parent().parent().children("input[type='text']");
+			   var valu = vv.val();
+			    valu == 0 ? false : valu--;
+			    vv.val(valu);
+			  });
+		$(".clickRole").click(function(){
+			$(this).find(".dropDown").slideToggle();
+		})		
 }
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
@@ -1016,37 +1289,43 @@ function deployFunction(){
 				document.getElementById("selpj").style.border="thin dashed #0099FF";
 				return;
 				}
-
-		for(var i=0;i<temp_info.length;i++)
+		if(str == "multi")
+		{	
+			alert("Multi node deployment");
+			for(var i=0;i<temp_info.length;i++)
+				{
+					var stgName = document.getElementById("stgName"+i+"").value;
+					var count = document.getElementById("count"+i+"").value;
+					var form = document.getElementById("ip"+i+"");
+					var pIp=form.elements["pubIp"].value;
+					var form1 = document.getElementById("rbtn"+i+"");
+					var selopt = form1.elements["inlineRadioOptions"].value;
+					if(selopt == "option1")
+						{
+						var sgName = document.getElementById("sgName"+i+"").value;
+						}else{
+							var sgName = document.getElementById("selsg"+i+"").innerText;
+						}
+					/*var form2 = document.getElementById("rbtnkp"+i+"");
+					var selopt2 = form2.elements["inlineRadioOptions"].value;
+					if(selopt2 == "option1")
+						{
+							var keyPairName = document.getElementById("keyPairName"+i+"").value
+						}else{
+								var keyPairName = document.getElementById("selkp"+i+"").innerText;
+						}*/
+					if(!($('#storage'+i+'').prop('disabled')) ) { 
+			            //alert('disabled');
+						document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
+						return;
+			        }else if(!($('#secGroup'+i+'').prop('disabled'))){
+			        	document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
+						return;
+			        }
+				}
+		}else
 			{
-				var stgName = document.getElementById("stgName"+i+"").value;
-				var count = document.getElementById("count"+i+"").value;
-				var form = document.getElementById("ip"+i+"");
-				var pIp=form.elements["pubIp"].value;
-				var form1 = document.getElementById("rbtn"+i+"");
-				var selopt = form1.elements["inlineRadioOptions"].value;
-				if(selopt == "option1")
-					{
-					var sgName = document.getElementById("sgName"+i+"").value;
-					}else{
-						var sgName = document.getElementById("selsg"+i+"").innerText;
-					}
-				/*var form2 = document.getElementById("rbtnkp"+i+"");
-				var selopt2 = form2.elements["inlineRadioOptions"].value;
-				if(selopt2 == "option1")
-					{
-						var keyPairName = document.getElementById("keyPairName"+i+"").value
-					}else{
-							var keyPairName = document.getElementById("selkp"+i+"").innerText;
-					}*/
-				if(!($('#storage'+i+'').prop('disabled')) ) { 
-		            //alert('disabled');
-					document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
-					return;
-		        }else if(!($('#secGroup'+i+'').prop('disabled'))){
-		        	document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
-					return;
-		        }
+				alert("Singlr node deploymnet");
 			}
 		 
 		
@@ -1093,42 +1372,73 @@ function deployTemplateFunction()
 			
 			
 			var resultObj1 = [];
-			for(var i=0;i<temp_info.length;i++)
-				{
+			if(str == "multi")
+			{
+				alert("Multi node deployment");
+				for(var i=0;i<temp_info.length;i++)
+					{
+						var resultObj = [];
+						var stgName = document.getElementById("stgName"+i+"").value;
+						var count = document.getElementById("count"+i+"").value;
+						var form = document.getElementById("ip"+i+"");
+						var pIp=form.elements["pubIp"].value;
+						var form1 = document.getElementById("rbtn"+i+"");
+						var selopt = form1.elements["inlineRadioOptions"].value;
+						if(selopt == "option1")
+							{
+							var sgName = document.getElementById("sgName"+i+"").value;
+							}else{
+								var sgName = document.getElementById("selsg"+i+"").innerText;
+							}
+						/*var form2 = document.getElementById("rbtnkp"+i+"");
+						var selopt2 = form2.elements["inlineRadioOptions"].value;
+						if(selopt2 == "option1")
+							{
+								var keyPairName = document.getElementById("keyPairName"+i+"").value
+							}else{
+									var keyPairName = document.getElementById("selkp"+i+"").innerText;
+							}*/
+						
+						var instName = temp_info[i].node;
+						var imageName = temp_info[i].image;
+						var roleName = temp_info[i].role;
+						console.log(stgName+sgName+instName+imageName+roleName);
+						resultObj.push(stgName,sgName,pIp,instName,imageName,roleName);
+						resultObj1.push(resultObj);			
+					}
+				}else{
 					var resultObj = [];
-					var stgName = document.getElementById("stgName"+i+"").value;
-					var count = document.getElementById("count"+i+"").value;
-					var form = document.getElementById("ip"+i+"");
+					var stgName = document.getElementById("stgName0").value;
+					var count = document.getElementById("count0").value;
+					var form = document.getElementById("ip0");
 					var pIp=form.elements["pubIp"].value;
-					var form1 = document.getElementById("rbtn"+i+"");
+					var form1 = document.getElementById("rbtn0");
 					var selopt = form1.elements["inlineRadioOptions"].value;
 					if(selopt == "option1")
 						{
-						var sgName = document.getElementById("sgName"+i+"").value;
+						var sgName = document.getElementById("sgName0").value;
 						}else{
-							var sgName = document.getElementById("selsg"+i+"").innerText;
+							var sgName = document.getElementById("selsg0").innerText;
 						}
-					/*var form2 = document.getElementById("rbtnkp"+i+"");
+					var form2 = document.getElementById("rbtnkp0");
 					var selopt2 = form2.elements["inlineRadioOptions"].value;
 					if(selopt2 == "option1")
 						{
-							var keyPairName = document.getElementById("keyPairName"+i+"").value
+							var keyPairName = document.getElementById("keyPairName0").value
 						}else{
-								var keyPairName = document.getElementById("selkp"+i+"").innerText;
-						}*/
+								var keyPairName = document.getElementById("selkp0").innerText;
+						}
 					
-					var instName = temp_info[i].node;
-					var imageName = temp_info[i].image;
-					var roleName = temp_info[i].role;
-					//console.log(stgName+sgName+keyPairName+instName+imageName+roleName);
-					//resultObj.push(stgName,sgName,keyPairName,pIp,instName,imageName,roleName);
+					var instName = str2;
+					var imageName = document.getElementById("selImag").innerText;
+					var roleName = document.getElementById("selRole").innerText;
 					console.log(stgName+sgName+instName+imageName+roleName);
 					resultObj.push(stgName,sgName,pIp,instName,imageName,roleName);
-					resultObj1.push(resultObj);			
+					resultObj1.push(resultObj);	
 				}
 			console.log(result_arr.length);
 			console.log(resultObj1.length);
-			$.ajax({
+			/*$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
@@ -1143,7 +1453,7 @@ function deployTemplateFunction()
 		                 console.log('Failure');
 		         		alert("failure");
 		         		},
-		            });
+		            });*/
 			
 			
 		}else
@@ -1158,17 +1468,35 @@ function deployTemplateFunction()
 			result_arr.push(pvName,region,envName,prjName,CloudName);
 			result_arr.splice(1, 0, "create_environment");
 			var resultObj1 = [];
-			for(var i=0;i<temp_info.length;i++)
+			if(envName == "Select")
 			{
-				var instName = temp_info[i].node;
-				var imageName = temp_info[i].image;
-				var roleName = temp_info[i].role;
+			document.getElementById("sel").style.border="thin dashed #0099FF";
+			return;
+			}else if(prjName == "Select")
+				{
+				document.getElementById("selpj").style.border="thin dashed #0099FF";
+				return;
+				}
+			if(str == "multi")
+			{
+				for(var i=0;i<temp_info.length;i++)
+				{
+					var instName = temp_info[i].node;
+					var imageName = temp_info[i].image;
+					var roleName = temp_info[i].role;
+					console.log(instName+imageName+roleName);
+					resultObj1.push(instName,imageName,roleName);
+				}
+			}else{
+				var instName = str2;
+				var imageName = document.getElementById("selImag").innerText;
+				var roleName = document.getElementById("selRole").innerText;
 				console.log(instName+imageName+roleName);
 				resultObj1.push(instName,imageName,roleName);
 			}
 			console.log(result_arr.length);
 			console.log(resultObj1.length);
-			$.ajax({
+			/*$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
@@ -1182,7 +1510,7 @@ function deployTemplateFunction()
 		                 console.log('Failure');
 		         		alert("failure");
 		         		},
-		            });
+		            });*/
 			}
 }
 

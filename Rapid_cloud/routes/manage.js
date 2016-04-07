@@ -775,6 +775,7 @@ exports.volumeDetails = function(req,res){
 		throw err;
 		}
 		var rows = result.rows;
+		console.log(rows)
 		res.send(rows);
 		 });
 }
@@ -804,12 +805,27 @@ exports.secGrpDetails = function(req, res){
 exports.attachVolume = function(req, res){	
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
-	var pv_name = "AWS";
-	var arr2 =[["t2.micro", "stg1"],["t3.micro","stg2"]]
-	var region = "california";
-	var obj1 = new myObject(pv_name,"attach_volume",auth[0],auth[1],region,arr2);
-	var result= obj1.attach();	
-	res.send(result);
+	    //vol = Obj.attachVol;
+	var pv_name;
+	var arr2 =[],arr1=[];//[["t2.micro", "stg1"],["t3.micro","stg2"]]
+	var region;
+	client_pg.query("SELECT * FROM volume where volume_name = ($1)",[vol], function(err, result){
+		if(err){
+		throw err;
+		}
+		var rows = result.rows;
+		console.log(rows)
+		//pv_name = rows[0].prov_id;
+		//region =  rows[0].region;
+		arr1.push(rows[0].inst_id,rows[0].volume_name);
+		arr2.push(arr1);
+		console.log(arr2);
+		var obj1 = new myObject(pv_name,"attach_volume",auth[0],auth[1],region,arr2);
+		var result= obj1.attach();	
+		res.send(result);
+		 });
+	
+	
 }
 exports.attachKeyPair = function(req, res){	
 	var result=JSON.stringify(req.body),
@@ -842,9 +858,79 @@ exports.loadBalancerCreate = function(req, res){
 	       
 		   });*/
 }
-
-//Attach security group
-
+var spawn = require("child_process").spawn,child;
+//Azure Load Balancer
+exports.azLoadBalancer = function(req, res){
+	var result = JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var cldService = Obj.cldService,
+	    LbName = Obj.LbName,
+	    protocol = Obj.protocol,
+	    locPort = parseInt(Obj.locPort,10),
+	    pubPort = parseInt(Obj.pubPort,10),
+	    epName = Obj.epName,
+	    lbSet = Obj.lbSet;
+	
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+		    console.log('Unable to connect to the mongoDB server. Error:', err);
+		  } else {		    
+		    console.log('Connection established to', url);		    
+		    var collection = db.collection('azureLoadBalancer');			
+			var list1 = {lb_id : 1, cloud_Service : cldService, LB_Name : LbName, Protocol_Name : protocol, Local_Port : locPort, Public_Port : pubPort, EpName : epName, lbSetName : lbSet}
+				
+			collection.remove(function(err, result){
+				if(err){
+					console.log(err);
+				}else{
+					console.log("Document is deleted");
+				}
+			});
+		    // Insert some users
+		    collection.insert([list1], function (err, result) {
+		      if (err) {
+		        console.log(err);
+		      } else {
+		        console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+		      }
+		      //Close connection
+		      //db.close();
+		    });
+		  } 
+		});
+	/*child = spawn("powershell.exe",["C:\\Users\\sangamesh.b\\Desktop\\scripts\\loadBalancer.ps1"]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	    res.send("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    //console.log("Powershell Errors: " + data);
+	});
+	child.on("exit",function(){
+	    //console.log("Powershell Script finished");
+	});
+	child.stdin.end(); //end input*/
+	res.send("Success");
+}
+exports.validate = function(req,res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	client_pg.query("SELECT * FROM account;", function(err, result){
+		if(err){
+		throw err;
+		}
+		var rows = result.rows;
+		var row_length = rows.length;
+		for(var i=0;i<row_length;i++)
+			{
+				if(rows[i].username == Obj.userName && rows[i].password == Obj.passWord)
+					{
+					res.send("Valid");
+					}else{res.send("Invalid")}
+			}
+		 });
+	
+}
 
 
 

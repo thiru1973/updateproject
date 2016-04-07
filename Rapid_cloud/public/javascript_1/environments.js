@@ -1,5 +1,5 @@
 /* Writen by Om Starts here */
-var _ip = "http://172.25.12.23:3000";
+var _ip = "http://172.29.59.65:3000";
 
 $(document).ready(function(){
 	var i =0;
@@ -32,6 +32,10 @@ $(document).ready(function(){
 	$("#ConfigureHealthpopupClose, .cancelPoup, #subnetsPopupClose").click(function(){
 		$("#ConfigureHealthChecksAdvanced, #SubnetsPoup, #addInstPopUpWin, #securityGroWin, #addEndPointID").hide();
 	});
+});
+$(".closeAlert").click(function(){
+	$(".alertS div.alert").stop().slideUp();
+	//location.href="http://172.29.59.65:3000/master_2"
 });
 window.onload = function(){};
 window.onclick=function(){
@@ -222,6 +226,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 		  var elId = document.getElementById('EnvntID_'+0);
 		  this.getNodes(elId, requestId);
 	}
+	var node_details = [];
 	Projects.prototype.getNodes = function(env_name, project_id){
 		//console.log(env_name.innerText+"  "+project_id);
 		//document.getElementById('loadBalTd').style.display="none";
@@ -248,6 +253,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 				url: _ip+'/node_details',
 				success: function(data, textStatus) {
 					console.log(data);
+					node_details = data;
 					manage._init(data);
 					var el = document.getElementById('node_'+project_id);
 					el.innerHTML="";
@@ -296,7 +302,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 		function insertAfter(referenceNode, newNode) {
 		    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 		}
-		document.getElementById("loadBalTDText").innerHTML="Load Balancing";
+		//document.getElementById("loadBalTDText").innerHTML="Load Balancing";
 		document.getElementById("loadBalTd").style.display="block";
 		document.getElementById("nodeTD").style.display="none";
 		document.getElementById("detailsTD").style.display="none";
@@ -307,7 +313,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 								<ul>\
 									<li class="naee"><a href="#">Load Balancing</a>\
 									<div style="padding:10px;float:left;width:100%;">\
-										<div class="pull-left">\
+										<!--<div class="pull-left">\
 											<label class="labelTemp">Load Balancer Name</label>\
 											<div class="clickRole">\
 												<input type="text" id="routeName" placeholder="Name" style="border:none;width:100%;">\
@@ -410,38 +416,48 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 										<button class="redButton countAlign" style="padding:7px 12px;font-size:16px;" onclick="deployFunction();">Cancel</button>\
 										<br><br>\
 										<br><br>\
-										<br><br>\
+										<br><br>-->\
 										\
 										\
 										\
 										<div class="pull-left">\
-											<label class="labelTemp">Load Balancer DSN Name</label>\
+											<label class="labelTemp">Load Balancer Name</label>\
 											<div class="clickRole addStoTabWid">\
-												<input type="text" id="routeName" placeholder="Name" style="border:none;width:100%;">\
+												<input type="text" id="lbName" placeholder="Must be unique" style="border:none;width:100%;">\
 											</div>\
-										</div>\
-										<div class="pull-left">\
-											<label class="labelTemp">Load Balancing Method</label>\
-											<div id="sel" style="margin-right:10px;" class="clickRole borderNoN temp1stRowWid"><span>Select</span><ul id="sels" class="dropDown" style="display: none;"><li onclick="selectOpt(this,0)" class="One"><dl><dt></dt><dd class="va">One</dd></dl></li><li onclick="selectOpt(this,1)" class="Two"><dl><dt></dt><dd class="va">Two</dd></dl></li><li onclick="selectOpt(this,2)" class="Three"><dl><dt></dt><dd class="va">Three</dd></dl></li></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div>\
 										</div>\
 										<div class="smpxDevider">&nbsp;</div>\
 										<div class="listeConfiText">Configuration</div>\
 										<div class="pull-left">\
-											<label class="labelTemp">Time to Live</label>\
-											<div class="clickRole">\
-												<input type="text" id="routeName" placeholder="Name" style="border:none;width:100%;">\
+										<label class="labelTemp">EP Name</label>\
+										<div class="clickRole addStoTabWid">\
+											<input type="text" id="epName" placeholder="Name" style="border:none;width:100%;">\
+										</div>\
+										</div>\
+										<div class="pull-left">\
+										<label class="labelTemp">Protocol</label>\
+											<div class="clickRole" style="margin-right:10px">\
+											<input type="text" id="protocol" placeholder="Like http,tcp" value = "TCP" style="border:none;width:100%;">\
+										    </div>\
+										</div>\
+										<div class="pull-left">\
+										<label class="labelTemp">Public Port</label>\
+										<div class="clickRole" style="margin-right:10px">\
+											<input type="number" id="PPort" onchange="assignport(this.value)" placeholder="Public Port" style="border:none;width:100%;">\
+										</div>\
+										</div>\
+										<div class="pull-left">\
+											<label class="labelTemp">Local Port</label>\
+											<div class="clickRole" style="margin-right:10px">\
+												<input type="number" id="LPort" placeholder="Local Port" style="border:none;width:100%;">\
 											</div>\
 										</div>\
 										<div class="smpxDevider">&nbsp;</div>\
 										<div class="listeConfiText">Settings</div>\
 										<div class="pull-left">\
-											<label class="labelTemp">Protocol</label>\
-											<div id="sel" style="margin-right:10px;" class="clickRole borderNoN temp1stRowWid"><span>Select</span><ul id="sels" class="dropDown" style="display: none;"><li onclick="selectOpt(this,0)" class="One"><dl><dt></dt><dd class="va">One</dd></dl></li><li onclick="selectOpt(this,1)" class="Two"><dl><dt></dt><dd class="va">Two</dd></dl></li><li onclick="selectOpt(this,2)" class="Three"><dl><dt></dt><dd class="va">Three</dd></dl></li></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div>\
-										</div>\
-										<div class="pull-left">\
-											<label class="labelTemp">Port</label>\
+											<label class="labelTemp">LB Set Name</label>\
 											<div class="clickRole addStoTabWid">\
-												<input type="text" id="routeName" placeholder="Name" style="border:none;width:100%;">\
+												<input type="text" id="lbsname" placeholder="Name" style="border:none;width:100%;">\
 											</div>\
 										</div>\
 										<div class="pull-left">\
@@ -451,25 +467,9 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 											</div>\
 										</div>\
 										<div class="smpxDevider">&nbsp;</div>\
-										<div class="pull-left">\
-											<label class="labelTemp">Add EndPoints</label>\
-											<div class="">\
-												<textarea rows="4" cols="60"></textarea>\
-											</div>\
-										</div>\
-										<button onclick="manage.loadBa_AdvancedPopup(this)" id="addEndPoint" class="redButton" style="margin-top:32px;margin-left:10px;">Add</button>\
-										<div class="smpxDevider">&nbsp;</div>\
-										<div class="pull-left">\
-											<label class="labelTemp">Upload Certificate</label>\
-											<div class="clickRole">\
-												<input type="text" id="upload-file-Azure" placeholder="Name" style="border:none;width:100%;">\
-											</div>\
-										</div>\
-										<button onclick="manage.loadBa_AdvancedPopup(this)" id="upload-click-handler_Azure" class="redButton" style="margin-top: 32px;margin-left:10px;">Upload</button>\
-										\
 										<input id="upload-box-Azure" style="visibility:hidden;height:0;" name="Photo" type="file" />\
 										<br><br>\
-										<button class="redButton" style="padding:7px 12px;font-size:16px;" onclick="deployFunction();">Create</button>\
+										<button class="redButton" style="padding:7px 12px;font-size:16px;" onclick="loadBalancer();">Create</button>\
 										<button class="redButton countAlign" style="padding:7px 12px;font-size:16px;" onclick="deployFunction();">Cancel</button>\
 										<br><br>\
 									</div>\
@@ -481,6 +481,60 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 	Projects.prototype._init = function(daaa){
 		this.dataOfNd = daaa; // [object Object] i dont know why??
 	}
+function assignport(port)
+{
+	document.getElementById("LPort").value=port;
+}
+	
+function loadBalancer(){
+	console.log("Inside Load Balanacer");
+	var expTname = /^\w+$/;
+	var LbName = document.getElementById("lbName").value,
+	    protocol = document.getElementById("protocol").value,
+	    locPort = document.getElementById("LPort").value,
+	    pubPort = document.getElementById("PPort").value,
+	    epName = document.getElementById("epName").value,
+	    lbSet = document.getElementById("lbsname").value,
+	    cldService = node_details[0].cloud_name;
+	if(!expTname.test(LbName)){
+		$(".dnsName").stop().slideDown();
+		document.getElementById("lbName").focus();
+		return;
+	}else if(!expTname.test(epName)){
+		$(".epName").stop().slideDown();
+		document.getElementById("epName").focus();
+		return;
+	}else if(!expTname.test(lbSet)){
+		$(".lbsName").stop().slideDown();
+		document.getElementById("lbsname").focus();
+		return;
+	} 
+	var data = {};
+	data.cldService = cldService;
+	data.LbName = LbName;
+	data.protocol = protocol;
+	data.locPort = locPort;
+	data.pubPort = pubPort;
+	data.epName = epName;
+	data.lbSet = lbSet;
+	data.cldService = cldService;
+	$.ajax({
+		type: 'POST',
+	 	jsonpCallback: "callback",
+	 	datatype: 'jsonp',
+	 	data: data,
+	 	url: _ip+'/azureLoad',
+	 	success: function(data, textStatus){
+	 		console.log(data);
+	 		$(".alert-success").stop().slideDown();
+    	},
+    	 error: function (xhr, status, error){
+             console.log('Failure');
+     		alert("failure");
+     		},
+        }); 
+}	
+	
 	Projects.prototype.getNodeDetails_Manage = function(ev, i, project_id){
 		function insertAfter(referenceNode, newNode) {
 		    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
@@ -506,6 +560,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 		this.indexOfNode = i;
 		data.inst_id = this.dataOfNd[i].inst_id;
 		var self = this;
+		
 		$.ajax({
 			type: 'POST',
 			jsonpCallback: "callback",
@@ -637,7 +692,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 								 <tr>\
 								  <td colspan="">\
 									<div>\
-										<button class="redButton" onclick="manage.showSecurityGroupSettings(this)">Volume Settings</button>\
+										<button class="redButton" onclick="manage.showSecurityGroupSettings(this)">SecGroup Settings</button>\
 									</div>\
 					               </td>\
 								</tr>';
@@ -800,7 +855,24 @@ function getPublicIp(valuee, append){
 	}
 	Projects.prototype.attachExisThis = function(ev){
 		var attachThis = ev.title;
-		console.log(attachThis);
+		//console.log(attachThis);attachVolume
+		var data= {};
+		data.attachVol = attachThis;
+		$.ajax({
+	        type: 'POST',
+	   	 	jsonpCallback: "callback",
+	        datatype: 'jsonp',
+	        data: data,
+	        url: _ip+'/attachVolume',
+	        success: function(data, textStatus){
+	        	console.log(data);
+	        	},
+	        	 error: function (xhr, status, error){
+	                 console.log('Failure');
+	         		alert("failure");
+	         		},
+	            });
+		
 	}
 	Projects.prototype.getNodeDetails = function(ev, clickedData, project_id){
 		var elId = document.getElementById('node_'+project_id);
@@ -815,7 +887,7 @@ function getPublicIp(valuee, append){
 		var ifNull ="--"
 		var clodSer = this.dataOfNd[clickedData].cloud_service ? this.dataOfNd[clickedData].cloud_service : ifNull ;
 					nodeDe.innerHTML='<tr>\
-							<td><img src="images_1/AWS_Logo.png" /></td>\
+							<td><img src="images_1/'+this.dataOfNd[clickedData].prov_id+'_Logo.png" /></td>\
 							<td>\
 								<table>\
 									<tr>\
@@ -1027,7 +1099,7 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 	for(var i=0;i<=name.length-1;i++){
 		var epn;
 		epn.innerHTML+="<li onclick='selectOpt(this,"+i+")' class='"+name[i]+"'>"
-						+"<dl>7702976730"
+						+"<dl>"
 						+"<dt></dt>"
 						+"<dd class='va'>"+name[i]+"</dd>"
 						+"</dl>"

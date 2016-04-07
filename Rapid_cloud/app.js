@@ -7,10 +7,16 @@ var express = require('express')
   , project = require('./routes/project')
   , manage_nodes = require('./routes/manage_nodes')
   , secGroups = require('./routes/secGroup')
+  , account = require('./routes/accounts')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , multer = require('multer');
+
+var fs = require('fs');
+var busboy = require('connect-busboy');
 
 var app = express();
+var multer  =   require('multer');
 
 // all environments
 app.use(bodyParser.json());
@@ -23,6 +29,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
+app.use(busboy());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
@@ -112,15 +119,60 @@ app.get('/list_cloud_service',manage.list_cloud_service)
 app.get('/manageEnv', manage.manageEnv);
 
 //Mange stg, sec, kp
-app.get('/volumeDetails', manage.volumeDetails);
-app.get('/keyPairDetails', manage.keyPairDetails);
-app.get('/secGrpDetails', manage.secGrpDetails);
-app.get('/attachVolume', manage.attachVolume);
+app.post('/volumeDetails', manage.volumeDetails);
+app.post('/keyPairDetails', manage.keyPairDetails);
+app.post('/secGrpDetails', manage.secGrpDetails);
+app.post('/attachVolume', manage.attachVolume);
 app.get('/attachKeyPair', manage.attachKeyPair);
 app.get('/attachSecGrp', manage.attachSecGrp);
+app.post('/azureLoad',manage.azLoadBalancer);
 
+//Accounts
+app.get('/accounts', account.accounts);
+app.get('/login', account.login);
+app.post('/validate', manage.validate);
 
-http.createServer(app).listen(app.get('port'), "172.25.12.23", function(){
+//var upload_path = path.resolve(__dirname + '../../../public/uploads');
+var upload_path = path.resolve(__dirname + '/uploads');
+var result = {
+    status: 0,
+    message: '',
+    data: ''
+};
+
+app.post('/fileupload', function(req, res) {
+	//console.log(req.files);
+	fs.readFile(req.files.file.path, function (err, data) {
+
+	    var imageName = Date.now() +"_"+req.files.file.name;
+
+	    /// If there's an error
+	    if(err){
+	        console.log(err)
+	    } else {
+	        var newPath = path.resolve(upload_path, imageName);
+
+	        fs.writeFile(newPath, data, function (err) {
+	            if(err) {
+	               console.log(err);
+	            } else {
+	                fs.unlink(req.files.file.path, function() {
+	                    if (err) {
+	                        result.status = -1;
+	                        result.message = err;
+	                    } else {
+	                        result.data = imageName;
+	                    }
+	                    //res.jsonp(result);
+	                    res.render('accounts');
+	                });
+	            }
+	        });
+	    }
+	});
+});
+
+http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
 
   console.log('Express server listening on port ' + app.get('port'));
 });

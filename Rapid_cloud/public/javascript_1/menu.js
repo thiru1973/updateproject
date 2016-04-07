@@ -44,7 +44,9 @@ $(document).ready(function(){
 		$(this).find(".howMe").stop().css({display:"none"});
 	});
 });
-
+$(document).on('click', 'li#Templates', function(){ 
+	
+});
 var menU = {
 	open:1,
 	close:0,
@@ -53,7 +55,7 @@ var menU = {
 		level_2:["Templates","Node","Blueprint","Networks","Load Balancer"],
 		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
-		Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks", 5:"Load Balancer"},
+		//Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks", 5:"Load Balancer"},
 		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
 	},
 	createParentView: function(){
@@ -66,9 +68,9 @@ var menU = {
 		this.createSubView();
 	},
 	createSubView:function(){
-		var subL0 = document.getElementById("link_0");
+		var subL0 = document.getElementById("link_1");
 		for(i=0; i<= this.primaryLins.level_2.length-1; i++ ){
-			subL0.innerHTML+='<li>'+this.primaryLins.level_2[i]+'</li>';
+			subL0.innerHTML+='<li id='+this.primaryLins.level_2[i]+'>'+this.primaryLins.level_2[i]+'</li>';
 		}
 	},
 	lnav:document.getElementById("leftNavigation"),

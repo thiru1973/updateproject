@@ -5,10 +5,65 @@ var cloud = [];
 var vcpu= [];
 var ram = [];
 var storage = [];
+var pvd_aws = [];
+var pvd_azure =[];
+var inst_id = [];
+
+window.onload = function(){
+	get_aws_region();
+	get_azure_region();
+	
+}
+
+function get_aws_region(){
+	var data = {};
+	var pvd_id = "AWS";
+	data.pname = pvd_id;
+	$.ajax({
+        type: 'POST',
+   	 	jsonpCallback: "callback",
+        datatype: 'jsonp',
+        data: data,
+        url: 'http://172.29.59.65:3000/temp_region',
+        success: function(data, textStatus){
+        	
+        	pvd_aws = data;
+        	console.log(pvd_aws);
+        	},
+        	 error: function (xhr, status, error){
+                 console.log('Failure');
+         		alert("failure");
+         		},
+            });	
+}
+
+function get_azure_region(){
+	var data = {};
+	var pvd_id = "Azure";
+	data.pname = pvd_id;
+	$.ajax({
+        type: 'POST',
+   	 	jsonpCallback: "callback",
+        datatype: 'jsonp',
+        data: data,
+        url: 'http://172.29.59.65:3000/temp_region',
+        success: function(data, textStatus){
+        	pvd_azure = data;
+        	},
+        	 error: function (xhr, status, error){
+                 console.log('Failure');
+         		alert("failure");
+         		},
+            });	
+}
+
+
+
 $('#Node').click(function(){
 	$("#view_temp").hide();
 	$("#single_node").show();
 	$("[role='template1']").show();
+	var aws_count = 0, azure_count = 0;
 	$.getJSON( "http://172.29.59.65:3000/all_nodes", function( data ) {		
 		for(var i=0;i<data.length;i++)
 			{
@@ -17,19 +72,25 @@ $('#Node').click(function(){
 				vcpu[i] = data[i].vcpu;
 				ram[i] = data[i].memory_gib;
 				storage[i] = data[i].storage;
+				inst_id[i] = data[i].inst_id;
 			}		
 		 for(var j=0;j<inst_type.length;j++)
 		 {
 		    if(cloud[j] == "AWS")
 		    	{
 		    		myTemplate_images1.push("AWS_Logo.png");
+		    		aws_count = aws_count+1;
+		    		
 		    	}
 		    else
 		    	{
 		    		myTemplate_images1.push("Windows_Azure_Logo.png");
+		    		azure_count = azure_count+1;
 		    	}
 		 }		
 			show_nodes();
+			assign_region(inst_id, aws_count, azure_count);
+			
 	});		
 });
 
@@ -48,13 +109,15 @@ function show_nodes(){
 				+"<li>Type: <span>"+inst_type[i]+"</span></li>"				
 				+"</ul></div>"
 				+"<div class='face back' id='"+inst_type[i]+"'><span class='"
-				+"glyphicon glyphicon-remove-circle closeTemplate'></span>Node:<input class='inPut' value='"+inst_type[i]+"' type='text' disabled='disabled' /><br><br><b>Node Deatails</b><br>" 
+				+"glyphicon glyphicon-remove-circle closeTemplate'></span>"/*"Node:<input class='inPut' value='"+inst_type[i]+"' type='text' disabled='disabled' />"*/ 
+				+"<br><div id='singReg"+inst_id[i]+"' class='clickRoleSing borderNoN'><span>Region</span><ul id='singRegg"+inst_id[i]+"' class='dropDown'></ul><span id='singReg' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div>" 
+				+"<br><b>Node Details</b><br>" 
 				+"<table>"
 				+"<tr><th>VCPU:</th><td> "+vcpu[i]+"</td></tr>"				
 				+"<tr><th>RAM:</th><td> "+ram[i]+" </td></tr>"
 				+"<tr><th>Storage:</th><td> "+storage[i]+" </td></tr>"
 				+"</table>"
-				+"<br><input type='button' name='Node_deploy' value='Deploy' onclick='nodeDeploy_function("+ inst_type[i] +")' />"
+				+"<br><input id = '"+inst_type[i]+'~'+cloud[i]+'~'+inst_id[i]+"'type='button' name='Node_deploy' value='Deploy' onclick='nodeDeploy_function(this.id)' />"
 				+"</div></div></article>";
 	}
 	var i=1;
@@ -72,6 +135,87 @@ function show_nodes(){
 		$('.card').removeClass('flipped');
 		//$(".card").removeClass();
 	})
+	
+	$(".clickRoleSing").click(function(){
+			$(this).find(".dropDown").slideToggle();
+		})
+}
+
+
+function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){
+	this.createEle=createEle;
+	this.addId=addId;
+	this.appendTo=appendTo;
+	this.labName=labName;
+	this.imageArray=imageArray;
+	this.dataSt=dataSt;
+	this.createCon = function(){
+		var apch = document.getElementById(appendTo);
+		var creAl = document.createElement(createEle);
+		creAl.innerHTML="<span>"+labName+"</span>";
+		//creAl.innerHTML="<span style='color: red' > * </span >";
+		creAl.id=addId;
+		creAl.className=addClass;
+		apch.appendChild(creAl);
+	}
+};
+
+DropdownConst.prototype.appendData = function(name,appentoWhat){	
+	var epn = document.getElementById(appentoWhat);
+	//console.log(epn);
+	epn.innerHTML="";
+	for(var i=0;i<=name.length-1;i++){
+		var epn;
+		epn.innerHTML+="<li onclick='selectOpt(this,"+i+")' class='"+name[i]+"'>"
+						+"<dl>"
+						+"<dt></dt>"
+						+"<dd class='va'>"+name[i]+"</dd>"
+						+"</dl>"
+						+"</li>"
+	}
+	epn.write = epn;
+	//console.log(epn);
+}
+
+DropdownConst.prototype.cre = function(){
+	var re = document.getElementById(this.addId);
+	re.innerHTML+="<ul id='"+this.addId+"s' class='dropDown'>"
+			+"</ul>"
+	var ulI = document.getElementById(this.addId+"s");
+	for(var i=0;i<=this.dataSt.length-1;i++){
+		ulI.innerHTML +="<li onclick='selectOpt(this,"+i+")' class='"+this.dataSt[i]+"'>"
+						+"<dl>"
+						+"<dt></dt>"
+						+"<dd class='va'>"+this.dataSt[i]+"</dd>"
+						+"</dl>"
+						+"</li>"
+						
+	}
+};
+
+function selectOpt(ev, idn){
+	
+	var aImage = ev.getElementsByTagName("dt")[0].innerHTML;
+	var aTex = ev.getElementsByTagName("dd")[0].innerText;
+	 var v = ev.parentNode;
+	 var vb = v.parentNode;
+	 var idd = vb.id
+	 console.log(idd);	 
+	 document.getElementById(idd).style.border="none";
+	 $("#"+idd+" span:first").html(aImage+aTex);
+	 $("#"+idd+" span img").css("width", "25px");
+}
+
+function assign_region(inst_id, aws, azure){
+	console.log(inst_id+aws+azure);
+	for(i=0;i<aws;i++){
+		var appendD = new DropdownConst();
+   	 appendD.appendData(pvd_aws,"singRegg"+i+"");
+	}
+	for(i=aws;i<aws+azure;i++){
+		var appendD = new DropdownConst();
+   	 appendD.appendData(pvd_azure,"singRegg"+i+"");
+	}
 }
 $('input#search1').keyup(function() {
     
@@ -91,6 +235,17 @@ $('input#search1').keyup(function() {
     });	
 });
 
+
+
 function nodeDeploy_function(value){
-	alert(value);
+	var att = value.split('~');
+	//alert(att[0]);
+	console.log(att[2]);
+	var str1 = "singReg"
+	var id = str1.concat(att[2]);
+	
+	var region = document.getElementById(id).innerText;
+	//alert(region);
+	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"single"+"?data2="+att[0]+"?data3="+att[1]+"?data4="+region;
+
 }

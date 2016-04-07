@@ -112,8 +112,9 @@ $('#Templates').click(function(){
 function pvdSpec_function(myT){	
 	var template = myT.id;
 	//alert("Disabled the functions....!");
-	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+template;
-}
+	console.log(myT);
+	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
+}	
 
 $('#manageEnv').click(function(){
 	location.href="//172.29.59.65:3000/manageEnv";

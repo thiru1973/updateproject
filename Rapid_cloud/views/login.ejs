@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="heAndW">
+<title>Login</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg" class="heAndW">
+<div class="alertS">
+	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-remove-circle closeAlert"></span><b>Heads up!</b> <summary>This alert needs your attention, but it's not super important.</summary></div>
+	<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-remove-circle closeAlert"></span><b>Warning!</b> <summary>Better check yourself, you're not looking too good.</summary></div>
+	<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-remove-circle closeAlert"></span><b>Oh snap!</b> <summary>Change a few things up and try submitting again.</summary></div>
+</div>
+<table class="heAndW">
+	<tr>
+		<td>
+			<div class="container">
+					<section class="loginContainer">
+						<header><img src="images_1/RapidCloud_Logo.png" /></header>
+						<main>
+							<h2>Login</h2>
+							<div>
+								<label class="labelTemp">User Name</label>
+								<div class="clickRole addStoTabWid">
+									<input type="text" autofocus spellcheck="false" id="userName_Input_Id" placeholder="" style="border:none;width:100%;">	
+								</div>
+							</div>
+							<div style="clear:both;">&nbsp;</div>
+							<div>
+								<label class="labelTemp">Password</label>
+								<div class="clickRole addStoTabWid">
+									<input type="password" spellcheck="false" onkeydown="dataValid(this)" id="passWord_Input_Id" placeholder="" style="border:none;width:100%;" />
+								</div>
+							</div>
+							<div style="clear:both;">&nbsp;</div>
+							<button type="submit" class="redButton countAlign pull-left createAccount" onclick="validate(this)" id="login_Button" name="add_0">Login</button>
+							<a href="#" onmouseover="disPlayPop(this)" class="redLinks pull-right" style="margin-top: 6px;font-weight: normal;font-size: 12px;">Forget password?</a>
+							<div style="clear:both;">&nbsp;</div>
+						</main>
+					</section>
+			</div>
+		</td>
+	</tr>
+</table>
+
+<script src="javascript_1/login.js"></script>
+
+</body>
+</html>
