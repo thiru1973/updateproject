@@ -63,11 +63,11 @@ $(document).ready(function(){
 	})
 	
 	 $('[data-toggle="tooltip"]').tooltip({title: "Select any of your previous project to get VPC and Subnet details. Or, You can create New VPC and Subnet for this template.", placement: "right"});
-	 $('[data-toggle="tooltipVpc"]').tooltip({title: "VPC Help content comes here..", placement: "right"});
-	 $('[data-toggle="tooltipSubnet"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
-	 $('[data-toggle="tooltiproute"]').tooltip({title: "Route table Help content comes here..", placement: "right"});
-	 $('[data-toggle="tooltipgate"]').tooltip({title: "Internet Gateway Help content comes here..", placement: "right"});
-	 $('[data-toggle="tooltipkp"]').tooltip({title: "Key Pair Help content comes here..", placement: "right"});
+	 $('[data-toggle="tooltipVpc"]').tooltip({title: "choose vpc so that you can launch your resources in dedicated virtual network", placement: "right"});
+	 $('[data-toggle="tooltipSubnet"]').tooltip({title: "It is a range of IP addresses in your VPC. Use public subnet for subnet that must be connected to internet", placement: "right"});
+	 $('[data-toggle="tooltiproute"]').tooltip({title: "Used to determine where network is directed", placement: "right"});
+	 $('[data-toggle="tooltipgate"]').tooltip({title: "To provide communication between your instances in VPC and internet", placement: "right"});
+	 $('[data-toggle="tooltipkp"]').tooltip({title: "to log into your instance create a keyapir", placement: "right"});
 	 $('[data-toggle="tooltipClsrv"]').tooltip({title: "Choose already deployed Cloud Service, Or Create a new Cloud Service", placement: "right"});
 	/* ---------------------------------------------
 		These common actions(Hide, Show, Hide and Show toggle) we can use all pages.
@@ -1438,7 +1438,7 @@ function deployTemplateFunction()
 				}
 			console.log(result_arr.length);
 			console.log(resultObj1.length);
-			/*$.ajax({
+			$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
@@ -1453,7 +1453,7 @@ function deployTemplateFunction()
 		                 console.log('Failure');
 		         		alert("failure");
 		         		},
-		            });*/
+		            });
 			
 			
 		}else
@@ -1496,7 +1496,7 @@ function deployTemplateFunction()
 			}
 			console.log(result_arr.length);
 			console.log(resultObj1.length);
-			/*$.ajax({
+			$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
@@ -1510,7 +1510,7 @@ function deployTemplateFunction()
 		                 console.log('Failure');
 		         		alert("failure");
 		         		},
-		            });*/
+		            });
 			}
 }
 

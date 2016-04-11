@@ -53,7 +53,7 @@
 		   <div class="modal-body">
 				<div id="noDEpullL">					
 					<div class="pull-left">
-						<label class="labelTemp">Account Name</label>
+						<label class="labelTemp">Subscription Name</label>
 						<div class="clickRole addStoTabWid">
 							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
 						</div>
@@ -92,9 +92,21 @@
 					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post">
 					<div class="azureD" style="display:none;">
 						<div class="pull-left">
+							<label class="labelTemp">User Name</label>
+							<div class="clickRole addStoTabWid">
+								<input type="text" id="userName" name="userName" placeholder="" style="border:none;width:100%;">	
+							</div>
+						</div>
+						<div class="pull-left">
+							<label class="labelTemp">Password</label>
+							<div class="clickRole addStoTabWid">
+								<input type="password" id="password" name="password" placeholder="" style="border:none;width:100%;">	
+							</div>
+						</div>
+						<div class="pull-left">
 							<label class="labelTemp">Subscription ID</label>
 							<div class="clickRole addStoTabWid">
-								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+								<input type="text" id="subId" name="subId" placeholder="" style="border:none;width:100%;">	
 							</div>
 						</div>
 						<div class="pull-left">
@@ -102,11 +114,14 @@
 							<div class="clickRole addStoTabWid">
 								<input type="file" name="file" id="file" placeholder="" style="border:none;width:100%;">
 							</div>
+							<div>
+								<input type="submit" value="Create" name="submit">
+							</div>
 						</div>
 						<div class="modal-footer">
 							</br><!--<a class="cancelPoup">Cancel</a>&nbsp;
-							<button class="redButton">Create</button>-->
-						<input type="submit" value="Create" name="submit">
+							<button class="redButton">Create</button>
+						<input type="submit" value="Create" name="submit">-->
 						</div>
 						</form>
 					</div>

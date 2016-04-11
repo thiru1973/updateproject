@@ -141,12 +141,10 @@ var result = {
 };
 
 app.post('/fileupload', function(req, res) {
-	//console.log(req.files);
+	var subId = req.body.subId;
+	console.log(req.body);
 	fs.readFile(req.files.file.path, function (err, data) {
-
 	    var imageName = Date.now() +"_"+req.files.file.name;
-
-	    /// If there's an error
 	    if(err){
 	        console.log(err)
 	    } else {
@@ -163,7 +161,6 @@ app.post('/fileupload', function(req, res) {
 	                    } else {
 	                        result.data = imageName;
 	                    }
-	                    //res.jsonp(result);
 	                    res.render('accounts');
 	                });
 	            }

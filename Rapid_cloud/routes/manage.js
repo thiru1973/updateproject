@@ -898,7 +898,7 @@ exports.azLoadBalancer = function(req, res){
 		    });
 		  } 
 		});
-	/*child = spawn("powershell.exe",["C:\\Users\\sangamesh.b\\Desktop\\scripts\\loadBalancer.ps1"]);
+	child = spawn("powershell.exe",["C:\\Users\\sangamesh.b\\Desktop\\scripts\\loadBalancer.ps1"]);
 	child.stdout.on("data",function(data){
 	   console.log("Powershell Data: " + data);
 	    res.send("Powershell Data: " + data);
@@ -909,7 +909,7 @@ exports.azLoadBalancer = function(req, res){
 	child.on("exit",function(){
 	    //console.log("Powershell Script finished");
 	});
-	child.stdin.end(); //end input*/
+	child.stdin.end(); //end input
 	res.send("Success");
 }
 exports.validate = function(req,res){

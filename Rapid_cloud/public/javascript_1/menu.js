@@ -61,7 +61,7 @@ var menU = {
 	createParentView: function(){
 		var navv = document.getElementById("navDiv"), i;
 		for(i=0; i<= this.primaryLins.level_1.length-1; i++ ){
-			navv.innerHTML+='<li class="link_Prime">\
+			navv.innerHTML+='<li class="link_Prime" id='+this.primaryLins.level_1[i]+'>\
 							<ul class="howMe" id="link_'+i+'"></ul>\
 							<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>'+this.primaryLins.level_1[i]+'</li>';
 		}
@@ -119,3 +119,12 @@ var menU = {
 }
 menU.aboutProject();
 
+$('#Templates').click(function(){
+	//alert("Hello");
+	location.href = "http://172.29.59.65:3000/master_2";
+});
+
+$('#Manage').click(function(){
+	//alert("Manage function");
+	location.href = "http://172.29.59.65:3000/manageEnv"
+});
