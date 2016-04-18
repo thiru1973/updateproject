@@ -87,7 +87,8 @@ var menU = {
 								</ul>\
 							</header>\
 						</div>\
-					  <a href="#" class="moreMenu" onclick="menU.moreMenu()"><i class="fa fa-bars fa-2x"></i></a>\
+					<div id="menuBox">\
+					  <a href="" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
 					  <section role="aboutProject">\
 						<br>\
 						<img src="images_1/profile_pic.png" />\
@@ -103,18 +104,21 @@ var menU = {
 					  </menu>\
 					  <nav role="naviGation">\
 						<ul id="navDiv"></ul>\
-					  </nav>';
+					  </nav></div>';
 		this.createParentView();
 	},
-	moreMenu:function(){
-		/*if(this.lnav.style.width=="34%"){
-			this.lnav.style.width="16%";
-		}else if(this.lnav.style.width="16%"){
-			this.lnav.style.width="34%";
-		}*/
+	moreMenu:function(ev){		
+		var menuB = document.getElementById("leftNavigation");
+			menuB.style.display="none";
+		var viewTemp = document.getElementById("view_temp")
+			viewTemp.style.width="100%";
+			viewTemp.innerHTML+='<a href="" onclick="menU.openMenu()" style="position:absolute;top:77px;left:0px;">Open Menu</a>';
+	},
+	openMenu:function(){
+		var menuB = document.getElementById("leftNavigation");
+			menuB.style.display="block";
 	},
 	assignIcons:function(){
-
 	}
 }
 menU.aboutProject();

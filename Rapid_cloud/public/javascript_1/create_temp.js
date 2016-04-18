@@ -86,6 +86,10 @@ $(document).ready(function(){
 	$(document).on("click", function () {
 		$(".dropDown").slideUp();
 	});*/
+	
+	$('[data-toggle="tooltip_Role"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
+	$('[data-toggle="tooltip_RoleAtt"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
+	$('[data-toggle="tooltip_OperatingSys"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
 });
 
 function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){
@@ -141,7 +145,7 @@ DropdownConst.prototype.cre = function(){
 						+"</dl>"
 						+"</li>"
 	}
-};
+}
 DropdownConst.prototype.preView = function(){
 	var prId = document.getElementById("previewTemp")
 	prId.innerHTML+="<li class='templateConta"+i+"'><div class='preImages'>"
@@ -153,6 +157,19 @@ DropdownConst.prototype.preView = function(){
 				 +"<li>Role Attribute: <span class='roleAt'></span></li>"
 				 +"<li>OS: <span class='os'></span></li>"
 				 +"</ul></div></li>";
+}
+DropdownConst.prototype.addHelp = function(){
+	console.log(this.addId);
+	if(this.addId == "roleHel"){
+		var addId = document.getElementById(this.addId);
+		addId.innerHTML+=' <a href="#" data-toggle="tooltip_Role" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>';
+	}else if(this.addId == "roleAtHel"){
+		var addId = document.getElementById(this.addId);
+		addId.innerHTML+=' <a href="#" data-toggle="tooltip_RoleAtt" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>';
+	}else if(this.addId == "operHel"){
+		var addId = document.getElementById(this.addId);
+		addId.innerHTML+=' <a href="#" data-toggle="tooltip_OperatingSys" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>';
+	}
 }
 function selectOpt(ev, idn){
 	var aImage = ev.getElementsByTagName("dt")[0].innerHTML;
@@ -267,10 +284,12 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 	var role = new DropdownConst("div","roleID","","templateConta","","","");
 	role.createCon();
 	var role = new DropdownConst("div","pullL","pull-left","roleID","","","").createCon();
-	var role = new DropdownConst("label","","labelTemp","pullL","Role","","").createCon();
+	var role = new DropdownConst("label","roleHel","labelTemp","pullL","Role","","");
+	role.createCon();
+	role.addHelp();
 	var role = new DropdownConst("div","sel0","clickRole forWid","pullL","Select","",roleImg,idArr);
 	role.createCon();
-	role.cre();	
+	role.cre();
 	var role = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel0","","","").createCon();
 
 	var roleAt1 = ["Java","asp"];
@@ -278,7 +297,9 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 	var roleAttri = new DropdownConst("div","roleAtID","","templateConta","","","");
 	roleAttri.createCon();
 	var roleAttri = new DropdownConst("div","pullLi","pull-left","roleAtID","","","").createCon();
-	var roleAttri = new DropdownConst("label","","labelTemp","pullLi","Role Attribute","","").createCon();
+	var roleAttri = new DropdownConst("label","roleAtHel","labelTemp","pullLi","Role Attribute","","");
+	roleAttri.createCon();
+	roleAttri.addHelp();
 	var roleAttri = new DropdownConst("div","sell0","clickRole forWid","pullLi","Select","","",roleAt1);
 	roleAttri.createCon();
 	roleAttri.cre();
@@ -288,7 +309,9 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 	var operatingSys = new DropdownConst("div","oSys","","templateConta","","","");
 	operatingSys.createCon();
 	var operatingSys = new DropdownConst("div","pullLii","pull-left","oSys","","","").createCon();
-	var operatingSys = new DropdownConst("label","","labelTemp","pullLii","Operating System","","").createCon();
+	var operatingSys = new DropdownConst("label","operHel","labelTemp","pullLii","Operating System","","");
+	operatingSys.createCon();
+	operatingSys.addHelp();
 	var operatingSys = new DropdownConst("div","selll0","clickRole forWid","pullLii","Select","",osImg,osArr);
 	operatingSys.createCon();
 	operatingSys.cre();
@@ -344,8 +367,7 @@ var i=0;
 var norole=[0];
 var count = 0;
 function createTem(eve)
-{	
-	
+{
 	count++;
 	norole.push(count);
 	i++;

@@ -55,11 +55,17 @@ $(document).ready(function(){
 		$(".popupData").show();
 		$(".popDataClsrv").show();
 	});
+	$(".createNewStor").click(function(){
+		$(".popupData").show();
+		$("#createAccPOP").show();
+		
+	});
 	$(".close, .cancelPoup").click(function(){
 		$(".popupData").hide();
 		$(".popData").hide();
 		$(".popData1").hide();
 		$(".popDataClsrv").hide();
+		$("#createAccPOP").hide();
 	})
 	
 	 $('[data-toggle="tooltip"]').tooltip({title: "Select any of your previous project to get VPC and Subnet details. Or, You can create New VPC and Subnet for this template.", placement: "right"});
@@ -169,7 +175,7 @@ function populate_image(idd){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: img_data,	 
-	     url: 'http://172.29.59.65:3000/temp_image',
+	     url: _ip+'/temp_image',
 	     success: function(results) {		    		 
 		    	 	var appendD = new DropdownConst();
 		    	 	appendD.appendData(results,"selImage");
@@ -250,6 +256,8 @@ function get_role_os(){
 		 
 		});
 }
+
+
 
 var node_info;
 var pvd_name;
@@ -339,7 +347,7 @@ function get_templateName(){
 					 jsonpCallback: "callback",
 				     datatype: 'jsonp',
 				     data: template,	 
-				     url: 'http://172.29.59.65:3000/pvd_template',
+				     url: _ip+'/pvd_template',
 				     success: function(results) {
 				    	 //console.log(results);
 				    	 temp_info = results[0].Instances;
@@ -374,6 +382,7 @@ function get_templateName(){
 					            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+results[0].Template_name+"</span><br>Region : "+results[0].Region+"<br>Provider : "+results[0].Cloud+"</td>");
 					            $('table.temp_info').append(tr);
 					            document.getElementById("regNameClsrv").value=results[0].Region;
+					            document.getElementById("Location_Input_Id").value = results[0].Region;
 					            node_info=results[0].Instances;
 					            show_nodeDetails(node_info);
 					            $('td#depVpc').hide();
@@ -407,7 +416,7 @@ function displayZones(pname,region){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/temp_region',
+	     url: _ip+'/temp_region',
 	     success: function(results) {
 	    	//console.log(results);
 	    	 var zones;
@@ -950,7 +959,7 @@ $('#createVpc').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/vpc',
+        url: _ip+'/vpc',
         success: function(data, textStatus){
         	console.log(data);
         	$(".popupData").hide();
@@ -1006,7 +1015,7 @@ $('#createSubnet').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/subnet',
+        url: _ip+'/subnet',
         success: function(data, textStatus){
         	console.log(data);
         	$(".popupData").hide();
@@ -1036,7 +1045,7 @@ $('#createClsrv').click(function(){
 	     datatype: 'jsonp',
 	     data: data,
 		 //contentType: 'application/json',
-	     url: 'http://172.29.59.65:3000/create_cloud_service',
+	     url: _ip+'/create_cloud_service',
 	     success: function(data, textStatus) {
 	     //alert('success');
 		   //if(!alert('Details updated succesfully!')){window.close();}
@@ -1091,7 +1100,7 @@ $('.buttonRt').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/routeTable',
+        url: _ip+'/routeTable',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-route").stop().slideDown();
@@ -1123,7 +1132,7 @@ $('.buttonGtw').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/gateWay',
+        url: _ip+'/gateWay',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-gate").stop().slideDown();
@@ -1172,7 +1181,7 @@ function createStgFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createStorage',
+        url: _ip+'/createStorage',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-stg").stop().slideDown();
@@ -1222,7 +1231,7 @@ function createSgpFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createSecGroup',
+        url: _ip+'/createSecGroup',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-sg").stop().slideDown();
@@ -1251,12 +1260,36 @@ function createKpFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createKeyPair',
+        url: _ip+'/createKeyPair',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-kp").stop().slideDown();
         	document.getElementById("keyPair"+Id+"").disabled=true;
         	
+        	},
+        	 error: function (xhr, status, error){
+                 console.log('Failure');
+         		alert("failure");
+         		},
+            });
+}
+function storageaccFun(){
+	//alert("storage function");
+	var stracc = document.getElementById("createAccount_Input_Id").value;
+	var strloc = document.getElementById("Location_Input_Id").value;
+	//alert(stracc+strloc);
+	var data = {};
+	data.stracc = stracc;
+	data.strloc = strloc;
+	$.ajax({
+        type: 'POST',
+   	 	jsonpCallback: "callback",
+        datatype: 'jsonp',
+        data: data,
+        url: _ip+'/straccount',
+        success: function(data, textStatus){
+        	console.log(data);
+        	$(".alert-stracc").stop().slideDown();        	
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -1443,7 +1476,7 @@ function deployTemplateFunction()
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        url: _ip+'/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
 		        	$(".alert-temp").stop().slideDown();
@@ -1501,10 +1534,10 @@ function deployTemplateFunction()
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        url: _ip+'/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
-		        	location.href="http://172.29.59.65:3000/master_2"
+		        	location.href=_ip+"/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1515,6 +1548,6 @@ function deployTemplateFunction()
 }
 
 $('.exit').click(function(){
-	location.href = "http://172.29.59.65:3000/master_2";
+	location.href = _ip+"/master_2";
 })
 

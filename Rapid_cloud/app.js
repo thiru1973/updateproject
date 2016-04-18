@@ -12,11 +12,9 @@ var express = require('express')
   , path = require('path')
   , multer = require('multer');
 
-var fs = require('fs');
-var busboy = require('connect-busboy');
 
 var app = express();
-var multer  =   require('multer');
+
 
 // all environments
 app.use(bodyParser.json());
@@ -29,7 +27,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(busboy());
+//app.use(busboy());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
@@ -126,48 +124,18 @@ app.post('/attachVolume', manage.attachVolume);
 app.get('/attachKeyPair', manage.attachKeyPair);
 app.get('/attachSecGrp', manage.attachSecGrp);
 app.post('/azureLoad',manage.azLoadBalancer);
+app.post('/straccount', manage.straccount);
 
 //Accounts
 app.get('/accounts', account.accounts);
 app.get('/login', account.login);
 app.post('/validate', manage.validate);
+app.post('/fileupload', manage.fileupload);
+app.get('/accountDetails', manage.accountDetails);
+app.post('/runScript', account.runScript);
 
 //var upload_path = path.resolve(__dirname + '../../../public/uploads');
-var upload_path = path.resolve(__dirname + '/uploads');
-var result = {
-    status: 0,
-    message: '',
-    data: ''
-};
 
-app.post('/fileupload', function(req, res) {
-	var subId = req.body.subId;
-	console.log(req.body);
-	fs.readFile(req.files.file.path, function (err, data) {
-	    var imageName = Date.now() +"_"+req.files.file.name;
-	    if(err){
-	        console.log(err)
-	    } else {
-	        var newPath = path.resolve(upload_path, imageName);
-
-	        fs.writeFile(newPath, data, function (err) {
-	            if(err) {
-	               console.log(err);
-	            } else {
-	                fs.unlink(req.files.file.path, function() {
-	                    if (err) {
-	                        result.status = -1;
-	                        result.message = err;
-	                    } else {
-	                        result.data = imageName;
-	                    }
-	                    res.render('accounts');
-	                });
-	            }
-	        });
-	    }
-	});
-});
 
 http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
 

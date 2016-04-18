@@ -36,7 +36,7 @@
 		   <div style="clear:both;">&nbsp;</div>
 		  <div class="modal-footer">
 			<a class="cancelPoup">Cancel</a>&nbsp;
-			<button class="redButton">Create</button>
+			<button id="createAcc" class="redButton">Create</button>
 		  </div>
 		</div>
 	</div>
@@ -149,7 +149,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Project Name</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -166,7 +166,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Start Date</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -203,7 +203,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Product Name</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -220,7 +220,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Start Date</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -260,19 +260,17 @@
 						<div class="pull-left">
 							<label id="" class="labelTemp"><span>Accounts</span></label>
 							<div id="typeDro" class="clickRole temp1stRowWid"><span>Select</span>
-								<ul id="sels" class="dropDown">
-									<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li>
+								<ul id="accounts_ID" class="dropDown">
+									<!-- <li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li>
 									<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li>
-									<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li>
-									<li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li>
-									<li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Create New</dd></dl></li>
+									<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li> -->
 								</ul>
 								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 							</div>						
 						</div>
 						<div class="pull-left" style="padding: 24px 0 0 15px;">Or <button class="redButton countAlign createAccount" id="add0" name="add_0">Create New</button></div>
 					</div>
-					
+				
 				<div style="clear:both;">&nbsp;</div>
 				<div id="accountsDataContainer">
 					<ul>

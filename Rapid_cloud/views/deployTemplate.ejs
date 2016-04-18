@@ -17,16 +17,48 @@
 	<div class="alert alert-success alert-route" role="alert"><b>Route Table</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-success alert-gate" role="alert"><b>Internet GateWay</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-success alert-kp" role="alert"><b>Key Pair</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success alert-stracc" role="alert"><b>Storage Account </b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-success alert-temp" role="alert"><b>Environment</b> is deployed successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-success alert-cldsrv" role="alert"><b>Cloud Service</b> is created successfully<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-warning" role="alert"><b>Warning!</b> Better check yourself, you're not looking too good.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 </div>
+<div id="createAccPOP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:10;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+			<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title">Create New Storage Account</h4>
+		  </div>
+		   <div class="modal-body">
+				<div id="noDEpullL" class="">
+					<div class="pull-left">
+						<label class="labelTemp">Account Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="createAccount_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">Location</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="Location_Input_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton" onclick = "storageaccFun();">Create</button>
+		  </div>
+		</div>
+	</div>
+</div>
 <div class="container">
 				<div>
 				<!-- Pop ups for add vpc and add subnet-->
-				
 				<div class="popupData"></div>
 					<div class="popData">
 						<div class="modal-header">
@@ -187,7 +219,7 @@
 					<tr>
 						<td class="">
 								<table class="tableWid">
-										<tbody>											
+										<tbody>
 											<tr>
 											
 												<td>
@@ -221,9 +253,23 @@
 													<div id="noDEpullL" class="pull-left depClsrv"><span></span><label id="" class="labelTemp"><span>Cloud Service</span>
 													<a href="#" data-toggle="tooltipClsrv" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>
 													</label><div id="selClsrv" class="clickRole borderNoN"><span>Select</span><ul id="selsClsrv" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div>
-													<button class="buttonClsrv" style="margin-top: 35px;margin-left:10px;">New</button>
+													<button class="buttonClsrv buttonSn" style="margin-top: 35px;margin-left:10px;">New</button>
 												</td>
 												<!-- td cloud service drop down ends here -->
+												<td id="stoAco">
+													<div class="pull-left">
+														<label id="" class="labelTemp"><span>Storage Accounts</span></label>
+														<div id="typeDro" class="clickRole temp1stRowWid"><span>Select</span>
+															<ul id="sels" class="dropDown">
+																<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">One</dd></dl></li>
+																<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Two</dd></dl></li>
+																<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Three</dd></dl></li>
+															</ul>
+															<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+														</div>						
+													</div>
+													<button class="createNewStor buttonSm" style="margin-top: 35px;margin-left:10px;">New</button>
+												</td>
 											</tr>
 									</tbody>
 								</table>
@@ -271,7 +317,7 @@
 													<div class="pull-left">				
 														<label class="labelTemp">Key Name</label>
 														<div class="clickRole addStoTabWid"><input id="keyPairName0" type="text" style="border:none;width:100%;"></div></div>						
-					  									<button class="keypair" id="keyPair0" style="margin-top: 35px;margin-left:10px;" onclick="createKpFunction(this.id,0)">Create</button></div>
+					  									<button class="keypair buttonSn" id="keyPair0" style="margin-top: 35px;margin-left:10px;" onclick="createKpFunction(this.id,0)">Create</button></div>
 												</td>	
 																								<td>
 													<div id="roleappend" class="pull-left"><span></span><label id="" class="labelTemp">
@@ -451,6 +497,29 @@
 						</div>
 					</div>
 				</div>-->
+				<div>&nbsp;</div>
+				<h4>Script Configuration</h4>
+				<div class="countConfigBox">
+					<table style="width:100%">
+						<tr>
+											   <td >
+											   
+												<div class="roleID"><div class="pull-left">
+													<div id="addSc" class="clickRole temp1stRowWid"><span>Select</span>
+														<ul id="accounts_ID" class="dropDown">
+															<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">one</dd></dl></li>
+															<li onclick="selectOpt(this,1)" class="Dev"><dl><dt></dt><dd class="va">two</dd></dl></li>
+														</ul>
+														<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+													  </div>
+												</div>
+												<br><br><br>
+												<textarea name="textarea" placeholder="Your script here.." class="pastYourScript" rows="10" style="width:100%"></textarea>
+												<button class="redButton" onclick="">Run Script</button>
+												</td>
+											</tr>
+					</table>
+				</div>
 				<div>&nbsp;</div>
 				<h4>Count Configuration</h4>
 				<div class="countConfigBox">

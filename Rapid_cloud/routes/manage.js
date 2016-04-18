@@ -858,6 +858,18 @@ exports.loadBalancerCreate = function(req, res){
 	       
 		   });*/
 }
+exports.straccount = function(req, res){
+	var result = JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var pv_name ="Azure";
+	var stracc = Obj.stracc,
+	    strloc = Obj.strloc,
+	    arr=[pv_name,"create_storage",stracc,strloc];
+	client.invoke("assign", arr, function(error, resq, more) {
+    
+	   });
+	res.send("success");
+}
 var spawn = require("child_process").spawn,child;
 //Azure Load Balancer
 exports.azLoadBalancer = function(req, res){
@@ -928,9 +940,94 @@ exports.validate = function(req,res){
 					res.send("Valid");
 					}else{res.send("Invalid")}
 			}
+		 });	
+}
+var path = require('path');
+var upload_path = path.resolve(__dirname + '/uploads');
+var result = {
+    status: 0,
+    message: '',
+    data: ''
+};
+var fs = require('fs');
+var busboy = require('connect-busboy');
+
+exports.fileupload = function(req, res){
+//app.post('/fileupload', function(req, res) {
+	var subId = req.body.subId;
+	console.log(req.body);
+	var imgData;
+	fs.readFile(req.files.file.path, function (err, data) {
+	    var imageName = Date.now() +"_"+req.files.file.name;
+	    if(err){
+	        console.log(err)
+	    } else {
+	        var newPath = path.resolve(upload_path, imageName);
+
+	        fs.writeFile(newPath, data, function (err) {
+	            if(err) {
+	               console.log(err);
+	            } else {
+	                fs.unlink(req.files.file.path, function() {
+	                    if (err) {
+	                        result.status = -1;
+	                        result.message = err;
+	                    } else {
+	                        result.data = imageName;
+	                    }
+	                    //res.render('accounts');
+	                    fileinsert();
+	                });
+	            }
+	        });
+	    }
+	});
+	function fileinsert(){
+	fs.readFile("C:\\Users\\sangamesh.b\\Desktop\\public\\uploads\\text3.txt", 'hex', function(err, imgData) {
+        console.log('imgData',imgData);
+        var accountid = "Sonata";
+        var pvd = "Azure";
+        client_pg.query('insert into subscription (accountid,pem_file,provider) values ($1,$2,$3)',
+                           [accountid,imgData,pvd],
+                           function(err, writeResult) {
+          console.log('err',err,'pg writeResult',writeResult);
+        });
+      });
+	res.send("success");
+	}
+}
+exports.accountDetails = function(req, res){
+	var rows,rows1,rows2;	
+	client_pg.query("SELECT * FROM subscription;", function(err, result){
+		if(err){
+		throw err;
+		}
+		rows = result.rows;	
 		 });
+	client_pg.query("SELECT * FROM project3;", function(err, result){
+		if(err){
+		throw err;
+		}
+		rows1 = result.rows;
+		 });
+	client_pg.query("SELECT * FROM product;", function(err, result){
+		if(err){
+		throw err;
+		}
+		rows2 = result.rows;
+		store();
+		 });
+	function store(){
+		var datadet = {};
+		datadet.data1 = rows;
+		datadet.data2 = rows1;
+		datadet.data3 = rows2;
+		res.send(datadet);
+		console.log(datadet);
+	}
 	
 }
+
 
 
 

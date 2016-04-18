@@ -49,7 +49,7 @@ function templateDetails(){
 					"<table class='borderspace'>"
 					+"<tr>"
 					+"<td class='tdBackground' style=''vertical-align:middle;'>"
-					+"<img src='images_1/"+img[0]+"'/>"
+					+"<img src='images_1/"+templates[i].role+".png'/>"
 					+"</td>"
 					+"<td rowspan='2' class='nodeconfigBg'>"
 					+"<table>"

@@ -1,4 +1,4 @@
-/* Writen by Om Starts here */
+/* Writen by Om Starts re */
 var _ip = "http://172.29.59.65:3000";
 
 $(document).ready(function(){
@@ -551,16 +551,71 @@ function loadBalancer(){
 									   <li onclick="manage.nodeDetailsSecurityGroup(this, '+i+', '+project_id+')">Security Group</li>\
 									   <li onclick="">Keypairs</li>\
 									   <li onclick="">Snap Shoart</li>\
+									   <li onclick="manage.addScript(this, '+i+', '+project_id+')">Add Script</li>\
 									  </ul>';
 			insertAfter(nodId, nodeListOptions);
 		}
+	}
+	
+	Projects.prototype.addScript = function(ev, i, project_id){
+		var nodeDe = document.getElementById('nodeDetails_'+project_id);
+			nodeDe.width="100%";
+		nodeDe.innerHTML='<tr>\
+				            <td colspan=""><div class="detailsDiv">Add Script</div></td>\
+				           </tr>\
+							<tr>\
+								<td><div class="roleID"><div class="pull-left">\
+									<label id="" class="labelTemp"><span></span></label>\
+									<div id="addSc" class="clickRole temp1stRowWid"><span>Select</span>\
+										<ul id="accounts_ID" class="dropDown">\
+											<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">VM_Details</dd></dl></li>\
+											<li onclick="selectOpt(this,1)" class="Dev"><dl><dt></dt><dd class="va">End_Points</dd></dl></li>\
+										</ul>\
+										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
+									</div>\
+								</div></div>\
+							  </td>\
+							</tr>\
+							<tr>\
+								<td><textarea id="scriptdata" name="textarea" placeholder="Your script here.." class="pastYourScript" rows="10" style="width:100%"></textarea>\
+							  </td>\
+							</tr>\
+							 <tr>\
+							  <td colspan="">\
+								<div>\
+									<button class="redButton" onclick="addScriptFunction();">Run Script</button>\
+								</div>\
+				            </td>\
+							</tr>';
+		this.dropDownMenu();
+	}
+	function addScriptFunction(){
+		var scriptName = document.getElementById("addSc").innerText;
+		var scriptData = document.getElementById("scriptdata").value;
+		var data = {};
+		data.scriptName = scriptName;
+		data.scriptData = scriptData;
+		$.ajax({
+		     type: 'POST',
+			 jsonpCallback: "callback",
+		     datatype: 'jsonp',
+		     data: data,	 
+		     url:  _ip+'/runScript',
+		     success: function(results) {
+		    	 alert(results);
+		     },
+			 error: function (xhr, status, error){
+		        console.log('Failure');
+				alert("failure");
+				},
+			 });
 	}
 	Projects.prototype.nodeDetailsVolume = function(ev, i, project_id){
 		var data = {};
 		this.indexOfNode = i;
 		data.inst_id = this.dataOfNd[i].inst_id;
 		var self = this;
-		
+
 		$.ajax({
 			type: 'POST',
 			jsonpCallback: "callback",
@@ -1170,5 +1225,32 @@ function createStgFunction(){
          		 alert("failure");
          		},
             });
+}
+
+Projects.prototype.dropDownMenu = function(){
+	var i =0;
+	/* Start Dropdown function */
+	function dataUpDate(e){
+		event.stopPropagation();
+		$(e).parent(".dropDown").slideUp();
+	}
+	$(".clickRole").click(function(e){		
+		e.stopPropagation();
+		if ($(this).find(".dropDown").css('display') == 'block'){
+			$(this).find(".dropDown").slideUp();
+		}else{
+			$(".dropDown").slideUp();
+			$(this).find(".dropDown").slideDown();
+		}
+	});
+	$(document).on("click", function () {
+		$(".dropDown").slideUp();
+	});
+	$("#createAcc").click(function(){
+		console.log("Input Value Account: "+$("#createAccount_Input_Id").val());
+		$("#createAccPOP").hide();
+	});
+	/* End Dropdown function */
+	
 }
 	/*-----------------------------End Table---------------------------------------------*/
