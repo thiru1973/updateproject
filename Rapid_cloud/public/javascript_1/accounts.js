@@ -62,18 +62,7 @@ function selectOpt(event, idn){
 	var aTex = $(inn).text();
 	var v = event.parentNode;
 	var vb = v.parentNode;
-	var idd = vb.id;
-	if(idd == "selvpc"){
-		 	vpcId = aTex;
-		 	getSubnetName(aTex);
-		 }
-	if(idd == "selsn"){
-		 	subnetId = aTex;
-		 }
-	if(idd == "selci1"){
-			getPublicIp(aTex,0);
-		 }
-	 //document.getElementById(idd).style.border="none";
+	var idd = vb.id;	
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
 	 account_Sub.getDetals(aTex)
