@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <body id="bg">
 <div class="alertS">
+	<div class="alert alert-success alert-accName" role="alert"><b>Account</b> name already exists or it should not include special character<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-warning" role="alert"><b>Warning!</b> Better check yourself, you're not looking too good.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
@@ -51,7 +52,8 @@
 			<h4 class="modal-title">Create New Subscriptions</h4>
 		  </div>
 		   <div class="modal-body">
-				<div id="noDEpullL">					
+				<div id="noDEpullL">
+				 <input type="hidden" id="accName"/>					
 					<div class="pull-left">
 						<label class="labelTemp">Subscription Name</label>
 						<div class="clickRole addStoTabWid">
@@ -149,7 +151,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Project Name</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="pName" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -157,7 +159,8 @@
 							<span>Subscriptions Name</span>
 						</label>
 						<div id="sel" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
-							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							<ul id="SubNameDro_ID" class="dropDown">
+								
 							</ul>
 							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 						</div>
@@ -166,7 +169,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Start Date</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							<input type="date" id="pDate" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -184,7 +187,7 @@
 		   <div style="clear:both;">&nbsp;</div>
 		  <div class="modal-footer">
 			<a class="cancelPoup">Cancel</a>&nbsp;
-			<button class="redButton">Create</button>
+			<button class="redButton" onclick = "createProject();">Create</button>
 		  </div>
 		</div>
 	</div>
@@ -203,7 +206,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Product Name</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="pdName" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -211,7 +214,8 @@
 							<span>Project Name</span>
 						</label>
 						<div id="sel12" class="clickRole temp1stRowWid addStoTabWid "><span>Select</span>
-							<ul id="sels" class="dropDown"><li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li><li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li><li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li><li onclick="selectOpt(this,3)" class="Prod"><dl><dt></dt><dd class="va">Prod</dd></dl></li><li onclick="selectOpt(this,4)" class="others"><dl><dt></dt><dd class="va">Others</dd></dl></li>
+							<ul id="ProNameDro_ID" class="dropDown">
+							
 							</ul>
 							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 						</div>
@@ -220,7 +224,7 @@
 					<div class="pull-left">
 						<label class="labelTemp">Start Date</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+							<input type="date" id="pdDate" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 					<div class="pull-left">
@@ -238,7 +242,7 @@
 		   <div style="clear:both;">&nbsp;</div>
 		  <div class="modal-footer">
 			<a class="cancelPoup">Cancel</a>&nbsp;
-			<button class="redButton">Create</button>
+			<button class="redButton" onclick="createProduct();">Create</button>
 		  </div>
 		</div>
 	</div>

@@ -133,8 +133,9 @@ app.post('/validate', manage.validate);
 app.post('/fileupload', manage.fileupload);
 app.get('/accountDetails', manage.accountDetails);
 app.post('/runScript', account.runScript);
-
-//var upload_path = path.resolve(__dirname + '../../../public/uploads');
+app.post('/createProject', manage.createProject);
+app.post('/createProduct', manage.createProduct);
+app.post('/createAccount', manage.createAccount);
 
 
 http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){

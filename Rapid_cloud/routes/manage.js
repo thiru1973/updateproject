@@ -953,11 +953,11 @@ var fs = require('fs');
 var busboy = require('connect-busboy');
 
 exports.fileupload = function(req, res){
-//app.post('/fileupload', function(req, res) {
+    var accId = req.body.accName;
 	var subId = req.body.subId;
-	console.log(req.body);
+	console.log(accId+subId);
 	var imgData;
-	fs.readFile(req.files.file.path, function (err, data) {
+	/*fs.readFile(req.files.file.path, function (err, data) {
 	    var imageName = Date.now() +"_"+req.files.file.name;
 	    if(err){
 	        console.log(err)
@@ -985,19 +985,25 @@ exports.fileupload = function(req, res){
 	function fileinsert(){
 	fs.readFile("C:\\Users\\sangamesh.b\\Desktop\\public\\uploads\\text3.txt", 'hex', function(err, imgData) {
         console.log('imgData',imgData);
-        var accountid = "Sonata";
+        var accountid = accid;
         var pvd = "Azure";
         client_pg.query('insert into subscription (accountid,pem_file,provider) values ($1,$2,$3)',
                            [accountid,imgData,pvd],
                            function(err, writeResult) {
           console.log('err',err,'pg writeResult',writeResult);
         });
-      });
+      });*/
 	res.send("success");
-	}
+	//}
 }
 exports.accountDetails = function(req, res){
-	var rows,rows1,rows2;	
+	var rows,rows1,rows2,row3;
+	client_pg.query("SELECT * FROM accountinfo;",function(err, result){
+		if(err){
+			throw err;
+		}
+		rows3 = result.rows;
+	});
 	client_pg.query("SELECT * FROM subscription;", function(err, result){
 		if(err){
 		throw err;
@@ -1022,12 +1028,44 @@ exports.accountDetails = function(req, res){
 		datadet.data1 = rows;
 		datadet.data2 = rows1;
 		datadet.data3 = rows2;
+		datadet.data4 = rows3;
 		res.send(datadet);
-		console.log(datadet);
-	}
-	
+		//console.log(datadet);
+	}	
 }
-
+exports.createAccount = function(req, res){
+	var result  = JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	//console.log(Obj);
+	client_pg.query("INSERT INTO accountinfo(accountid) values($1)", 
+			 [Obj.acc],
+					function(err, writeResult) {
+		        console.log('err',err,'pg writeResult',writeResult);
+		      });
+	res.send("Success");
+}
+exports.createProject = function(req, res){
+	var result  = JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	console.log(Obj);
+	client_pg.query("INSERT INTO project3(p_id,p_name,start_date,account,technology,budget,team_size,manager_id,end_date,accountid,subscription_name) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", 
+	 ['1003', Obj.pName, Obj.projDate, Obj.accName, Obj.pjTech, '3lakhs', '5', '1234', '2020-04-19', Obj.accName, Obj.subName],
+			function(err, writeResult) {
+        console.log('err',err,'pg writeResult',writeResult);
+      });
+	res.send("Success");
+}
+exports.createProduct = function(req, res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	console.log(Obj.pdDate);
+	
+	client_pg.query("INSERT INTO product(accountid,p_name,prod_name,start_date,technology) values($1, $2, $3, $4, $5)", [Obj.accName, Obj.pjName, Obj.pdName, Obj.pdDate, Obj.pdTech],
+			function(err, writeResult) {
+        console.log('err',err,'pg writeResult',writeResult);
+      });
+	res.send("Success");
+}
 
 
 
