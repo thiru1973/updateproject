@@ -363,59 +363,60 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 }
 
 /* New Row */
-var i=0;
+var s=0;
 var norole=[0];
 var count = 0;
 function createTem(eve)
 {
+	console.log(s);
 	count++;
 	norole.push(count);
-	i++;
+	s++;
 	var refId = document.getElementById("roleAdded");
 	var creAl = document.createElement("div");
-	creAl.id="templateConta"+i;
+	creAl.id="templateConta"+s;
 	creAl.setAttribute('style', 'float:left;width:100%;');
 	creAl.setAttribute('class', 'row');
 	refId.appendChild(creAl);
 	
-	var role = new DropdownConst("div","roleID"+i,"","templateConta"+i,"","","");
+	var role = new DropdownConst("div","roleID"+s,"","templateConta"+s,"","","");
 	role.createCon();
-	var role = new DropdownConst("div","pullL"+i,"pull-left","roleID"+i,"","","").createCon();
-	var role = new DropdownConst("label","","labelTemp","pullL"+i,"","","").createCon();
-	var role = new DropdownConst("div","sel"+i,"clickRole forWid newClickRole"+i,"pullL"+i,"Select","",roleImg,idArr);	role.createCon();
+	var role = new DropdownConst("div","pullL"+s,"pull-left","roleID"+s,"","","").createCon();
+	var role = new DropdownConst("label","","labelTemp","pullL"+s,"","","").createCon();
+	var role = new DropdownConst("div","sel"+s,"clickRole forWid newClickRole"+s,"pullL"+s,"Select","",roleImg,idArr);	role.createCon();
 	role.cre();
 	//role.preView();
-	var role = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel"+i,"","","").createCon();
+	var role = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel"+s,"","","").createCon();
 
 	var roleAt1 = ["Java","asp"];
 	/* Role Attribute */
-	var roleAttri = new DropdownConst("div","roleAtID"+i,"","templateConta"+i,"","","");
+	var roleAttri = new DropdownConst("div","roleAtID"+s,"","templateConta"+s,"","","");
 	roleAttri.createCon();
-	var roleAttri = new DropdownConst("div","pullLi"+i,"pull-left","roleAtID"+i,"","","").createCon();
-	var roleAttri = new DropdownConst("label","","labelTemp","pullLi"+i,"","","").createCon();
-	var roleAttri = new DropdownConst("div","sell"+i,"clickRole forWid newClickRole"+i,"pullLi"+i,"Select","","",roleAt1);
+	var roleAttri = new DropdownConst("div","pullLi"+s,"pull-left","roleAtID"+s,"","","").createCon();
+	var roleAttri = new DropdownConst("label","","labelTemp","pullLi"+s,"","","").createCon();
+	var roleAttri = new DropdownConst("div","sell"+s,"clickRole forWid newClickRole"+s,"pullLi"+s,"Select","","",roleAt1);
 	roleAttri.createCon();
 	roleAttri.cre();
-	var roleAttri = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sell"+i,"","","").createCon();
+	var roleAttri = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sell"+s,"","","").createCon();
 
 	/* Operating System */
-	var operatingSys = new DropdownConst("div","oSys"+i,"","templateConta"+i,"","","");
+	var operatingSys = new DropdownConst("div","oSys"+s,"","templateConta"+s,"","","");
 	operatingSys.createCon();
-	var operatingSys = new DropdownConst("div","pullLii"+i,"pull-left","oSys"+i,"","","").createCon();
-	var operatingSys = new DropdownConst("label","","labelTemp","pullLii"+i,"","","").createCon();
-	var operatingSys = new DropdownConst("div","selll"+i,"clickRole forWid newClickRole"+i,"pullLii"+i,"Select","",osImg,osArr);
+	var operatingSys = new DropdownConst("div","pullLii"+s,"pull-left","oSys"+s,"","","").createCon();
+	var operatingSys = new DropdownConst("label","","labelTemp","pullLii"+s,"","","").createCon();
+	var operatingSys = new DropdownConst("div","selll"+s,"clickRole forWid newClickRole"+s,"pullLii"+s,"Select","",osImg,osArr);
 	operatingSys.createCon();
 	operatingSys.cre();
-	var operatingSys = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selll"+i,"","","").createCon();
+	var operatingSys = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selll"+s,"","","").createCon();
 
 	/* Remove buttons */
-	var docV = document.getElementById("templateConta"+i);
+	var docV = document.getElementById("templateConta"+s);
 	docV.innerHTML+="<div class='pull-right'>"
 				+"<span class='glyphicon glyphicon-minus-sign closeRow' onclick='closeRole(this)' style='font-size:25px;' ></span>"
 				+"</div>";
 
 		/*code for dropdown click*/
-		$(document).on("click",".newClickRole"+i,function(){
+		$(document).on("click",".newClickRole"+s,function(){
 			$(this).find(".dropDown").slideToggle();
 		});
 		//return i;

@@ -55,12 +55,6 @@
 				<div id="noDEpullL">
 				 <input type="hidden" id="accName"/>					
 					<div class="pull-left">
-						<label class="labelTemp">Subscription Name</label>
-						<div class="clickRole addStoTabWid">
-							<input type="text" id="" placeholder="" style="border:none;width:100%;">	
-						</div>
-					</div>
-					<div class="pull-left">
 						<label class="labelTemp">AWS</label>
 						<div class="">
 							<input type="radio" value="aws" checked name="a" id="" placeholder="" style="border:none;width:80%;">	
@@ -74,6 +68,12 @@
 					</div>
 					<div style="clear:both;">&nbsp;</div>
 					<div class="awsD">
+					<div class="pull-left">
+						<label class="labelTemp">Subscription Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="awsSub" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
 						<div class="pull-left">
 							<label class="labelTemp">Access Key ID</label>
 							<div class="clickRole addStoTabWid">
@@ -86,13 +86,19 @@
 								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
 							</div>
 						</div>
-						<div class="modal-footer">
+						<div class="pull-left">
 							<!--<a class="cancelPoup">Cancel</a>&nbsp;--></br>
-							<button class="redButton">Create</button>
+							<button class="redButton" id="awsSubscription">Create</button>
 						</div>
 					</div>
 					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post">
 					<div class="azureD" style="display:none;">
+					<div class="pull-left">
+						<label class="labelTemp">Subscription Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="azureSub" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
 						<div class="pull-left">
 							<label class="labelTemp">User Name</label>
 							<div class="clickRole addStoTabWid">
@@ -115,16 +121,16 @@
 							<label class="labelTemp">Upload .pem file</label>
 							<div class="clickRole addStoTabWid">
 								<input type="file" name="file" id="file" placeholder="" style="border:none;width:100%;">
-							</div>
-							<div>
+							</div>							
+						</div>
+						<div class="pull-left">
 								<input type="submit" value="Create" name="submit">
-							</div>
 						</div>
-						<div class="modal-footer">
-							</br><!--<a class="cancelPoup">Cancel</a>&nbsp;
+						<!--<div class="modal-footer">
+							</br><a class="cancelPoup">Cancel</a>&nbsp;
 							<button class="redButton">Create</button>
-						<input type="submit" value="Create" name="submit">-->
-						</div>
+						<input type="submit" value="Create" name="submit">
+						</div>-->
 						</form>
 					</div>
 				</div>

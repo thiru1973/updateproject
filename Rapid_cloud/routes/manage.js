@@ -927,11 +927,13 @@ exports.azLoadBalancer = function(req, res){
 exports.validate = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
+	console.log(Obj);
 	client_pg.query("SELECT * FROM account;", function(err, result){
 		if(err){
 		throw err;
 		}
 		var rows = result.rows;
+		console.log(rows);
 		var row_length = rows.length;
 		for(var i=0;i<row_length;i++)
 			{
@@ -953,9 +955,14 @@ var fs = require('fs');
 var busboy = require('connect-busboy');
 
 exports.fileupload = function(req, res){
-    var accId = req.body.accName;
-	var subId = req.body.subId;
-	console.log(accId+subId);
+    var accId = req.body.accName
+	,subId = req.body.subId
+	,azureSub = req.body.azureSub
+	,userName = req.body.userName
+	,password = req.body.password;
+
+	
+	console.log(accId+subId+azureSub+userName+password);
 	var imgData;
 	/*fs.readFile(req.files.file.path, function (err, data) {
 	    var imageName = Date.now() +"_"+req.files.file.name;

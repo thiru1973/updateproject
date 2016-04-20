@@ -364,11 +364,13 @@ function get_templateName(){
 				            node_info=results[0].Instances;
 				            show_nodeDetails(node_info);
 				            $('td#depClsrv').hide();
+				            $('td#stoAco').hide();
 				            $('td#singlenode').hide();
 				            $('td#instname').hide();
 				            $('table.nodeSelSingle').hide();
 				            $('#roleappend').hide();
 				            $('#osappend').hide();
+				            $('div.countConfigBox').hide();
 							if(pvd_name == "AWS")
 			            	{
 			            		displayZones(pvd_name,pvd_region);

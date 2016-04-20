@@ -30,8 +30,8 @@ $(document).ready(function(){
 		if(!expTname.test(acc)){
 			$(".alert-accName").stop().slideDown();
 			document.getElementById("createAccount_Input_Id").focus();
-			return;
-		}else if(acc != null)
+			return true;
+		}else if(acc)
 			{
 			$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
 				console.log(data);
@@ -42,25 +42,26 @@ $(document).ready(function(){
 						 return;
 					}
 				}
+				var data = {};
+				data.acc = acc;
+				console.log(data);
+				$.ajax({
+				     type: 'POST',
+					 jsonpCallback: "callback",
+				     datatype: 'jsonp',
+				     data: data,	 
+				     url:  _ip+'/createAccount',
+				     success: function(results) {
+				    	 alert(results);
+				     },
+					 error: function (xhr, status, error){
+				        console.log('Failure');
+						alert("failure");
+						},
+					 });
+				$("#createAccPOP").hide();
 			})
-			}
-		var data = {};
-		data.acc = acc;
-		/*$.ajax({
-		     type: 'POST',
-			 jsonpCallback: "callback",
-		     datatype: 'jsonp',
-		     data: data,	 
-		     url:  _ip+'/createAccount',
-		     success: function(results) {
-		    	 alert(results);
-		     },
-			 error: function (xhr, status, error){
-		        console.log('Failure');
-				alert("failure");
-				},
-			 });
-		$("#createAccPOP").hide();*/
+			}			
 	});
 
 	
@@ -196,7 +197,7 @@ AccountsConst.prototype.create = function(ev){
 	ev.id == "titleID_Products" ? $('#create_Product_POP').show() : $('#create_Product_POP').hide();
 }
 AccountsConst.prototype.getDetals = function(accId){
-	alert(accId);
+	//alert(accId);
 	$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
 		//console.log(data);
 		
@@ -253,74 +254,122 @@ $(function(){
 
 //Add project function
 function createProject(){
+	var expTname = /^\w+$/;
 	var accName = document.getElementById("typeDro").innerText
 		,pName = document.getElementById("pName").value
 		,subName = document.getElementById("sel").innerText
 		,projDate = document.getElementById("pDate").value
 		,pjTech = document.getElementById("sela").innerText;
 	
-	alert(accName+pName+subName+projDate+pjTech);
-	
-	var data = {};
-	data.accName = accName;
-	data.pName = pName;
-	data.subName = subName;
-	data.projDate = projDate;
-	data.pjTech = pjTech;
-	$.ajax({
-	     type: 'POST',
-		 jsonpCallback: "callback",
-	     datatype: 'jsonp',
-	     data: data,	 
-	     url:  _ip+'/createProject',
-	     success: function(results) {
-	    	 alert(results);
-	    	 $("#create_Project_POP").hide();
-	    	 var acnt = document.getElementById("typeDro").innerText;
-	    	 account_Sub.getDetals(acnt);
-	     },
-		 error: function (xhr, status, error){
-	        console.log('Failure');
-			alert("failure");
-			},
-		 });
+	if(!expTname.test(pName)){
+		$(".alert-accName").stop().slideDown();
+		document.getElementById("pName").focus();
+		return;
+	}else if(pName){
+		$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+			console.log(data);
+			for(var i =0; i < data.data2.length; i++){
+				if(data.data2[i].p_name == pName){
+					 $(".alert-accName").stop().slideDown();
+					 document.getElementById("pName").focus();
+					 return;
+				}
+			}validateProj();
+		})
+		}
+			function validateProj(){
+							if(subName == "Select")
+							{
+								document.getElementById("sel").style.border="thin dashed #E24B4B";
+								return;
+							}else if(projDate == "" || projDate == null)
+								{document.getElementById("pDate").focus();return;}
+							else if(pjTech == "Select")
+								{document.getElementById("sela").style.border="thin dashed #E24B4B";return;}
+							
+							console.log(accName+pName+subName+projDate+pjTech);
+							
+							var data = {};
+							data.accName = accName;
+							data.pName = pName;
+							data.subName = subName;
+							data.projDate = projDate;
+							data.pjTech = pjTech;
+							$.ajax({
+							     type: 'POST',
+								 jsonpCallback: "callback",
+							     datatype: 'jsonp',
+							     data: data,	 
+							     url:  _ip+'/createProject',
+							     success: function(results) {
+							    	 alert(results);
+							    	 $("#create_Project_POP").hide();
+							    	 var acnt = document.getElementById("typeDro").innerText;
+							    	 account_Sub.getDetals(acnt);
+							     },
+								 error: function (xhr, status, error){
+							        console.log('Failure');
+									alert("failure");
+									},
+								 });
+					}
 }
 function createProduct(){
+	var expTname = /^\w+$/;
 	var accName = document.getElementById("typeDro").innerText
 		,pdName = document.getElementById("pdName").value
 		,pjName = document.getElementById("sel12").innerText
 		,pdDate = document.getElementById("pdDate").value
-		,pdTech = document.getElementById("sela12").innerText;
-	
-	alert(accName+pdName+pjName+pdDate+pdTech);
-	
-	var data = {};
-	data.accName = accName;
-	data.pdName = pdName;
-	data.pjName = pjName;
-	data.pdDate = pdDate;
-	data.pdTech = pdTech;
-	
-	$.ajax({
-	     type: 'POST',
-		 jsonpCallback: "callback",
-	     datatype: 'jsonp',
-	     data: data,	 
-	     url:  _ip+'/createProduct',
-	     success: function(results) {
-	    	 alert(results);
-	    	 $("#create_Product_POP").hide();
-	    	 var acnt = document.getElementById("typeDro").innerText;
-	    	 account_Sub.getDetals(acnt);
-	     },
-		 error: function (xhr, status, error){
-	        console.log('Failure');
-			alert("failure");
-			},
-		 });
+		,pdTech = document.getElementById("sela12").innerText;	
+	if(!expTname.test(pdName)){
+		$(".alert-accName").stop().slideDown();
+		document.getElementById("pdName").focus();
+		return;
+	}else if(pdName){
+		$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+			console.log(data);
+			for(var i =0; i < data.data3.length; i++){
+				if(data.data3[i].prod_name == pdName){
+					 $(".alert-accName").stop().slideDown();
+					 document.getElementById("pdName").focus();
+					 return;
+				}
+			}validateProd();
+		})
+		}
+	function validateProd()
+	{
+		if(pjName == "Select"){document.getElementById("sel12").style.border="thin dashed #E24B4B";return;}
+		else if(pdDate == "" || pdDate == null){document.getElementById("pdDate").focus();return}
+		else if(pdTech == "Select"){document.getElementById("sela12").style.border="thin dashed #E24B4B";return;}	
+		console.log(accName+pdName+pjName+pdDate+pdTech);	
+		var data = {};
+		data.accName = accName;
+		data.pdName = pdName;
+		data.pjName = pjName;
+		data.pdDate = pdDate;
+		data.pdTech = pdTech;
+		
+		$.ajax({
+		     type: 'POST',
+			 jsonpCallback: "callback",
+		     datatype: 'jsonp',
+		     data: data,	 
+		     url:  _ip+'/createProduct',
+		     success: function(results) {
+		    	 alert(results);
+		    	 $("#create_Product_POP").hide();
+		    	 var acnt = document.getElementById("typeDro").innerText;
+		    	 account_Sub.getDetals(acnt);
+		     },
+			 error: function (xhr, status, error){
+		        console.log('Failure');
+				alert("failure");
+				},
+			 });
+	}
 }
 function checkAccountName(value){
-	alert(value);
 	$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
 		console.log(data);
 		for(var i =0; i < data.data4.length; i++){
