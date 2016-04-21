@@ -953,18 +953,18 @@ var result = {
 };
 var fs = require('fs');
 var busboy = require('connect-busboy');
-
+var validator = require('express-validator');
 exports.fileupload = function(req, res){
-    var accId = req.body.accName
+    var accId = req.body.accName1
 	,subId = req.body.subId
 	,azureSub = req.body.azureSub
 	,userName = req.body.userName
 	,password = req.body.password;
-
-	
-	console.log(accId+subId+azureSub+userName+password);
+console.log(req.body.accName1);
+  
+	console.log(accId,subId,azureSub,userName,password);
 	var imgData;
-	/*fs.readFile(req.files.file.path, function (err, data) {
+	fs.readFile(req.files.file.path, function (err, data) {
 	    var imageName = Date.now() +"_"+req.files.file.name;
 	    if(err){
 	        console.log(err)
@@ -992,16 +992,16 @@ exports.fileupload = function(req, res){
 	function fileinsert(){
 	fs.readFile("C:\\Users\\sangamesh.b\\Desktop\\public\\uploads\\text3.txt", 'hex', function(err, imgData) {
         console.log('imgData',imgData);
-        var accountid = accid;
+        var accountid = accId;
         var pvd = "Azure";
-        client_pg.query('insert into subscription (accountid,pem_file,provider) values ($1,$2,$3)',
-                           [accountid,imgData,pvd],
+        client_pg.query('insert into subscription (accountid,pem_file,provider,subscription_name) values ($1,$2,$3,$4)',
+                           [accountid,imgData,pvd,azureSub],
                            function(err, writeResult) {
           console.log('err',err,'pg writeResult',writeResult);
         });
-      });*/
-	res.send("success");
-	//}
+      });
+	res.render('accounts');
+	}
 }
 exports.accountDetails = function(req, res){
 	var rows,rows1,rows2,row3;

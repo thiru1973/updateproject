@@ -112,6 +112,8 @@ var roleImg=["database.png","database.png","database.png"];
 //var attImg=["empty.png"];
 var osImg=["windows.png","windows.png","windows.png"];
 
+var projects = ["CloudOps","DevOps","Demoproj"];
+var products = ["CloudOps","DevOps","demoprod"];
 
 DropdownConst.prototype.appendData = function(name,appentoWhat){
 	console.log(appentoWhat);
@@ -274,7 +276,7 @@ function data(){
 				    tec_ngy [d] = data[d].technology;				   
 			   }
 
-			   objectData(pj_Na, pr_Na, tec_ngy);
+			   objectData(projects, products, tec_ngy);
 		   })
 		});
 }

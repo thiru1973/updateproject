@@ -370,7 +370,6 @@ function get_templateName(){
 				            $('table.nodeSelSingle').hide();
 				            $('#roleappend').hide();
 				            $('#osappend').hide();
-				            $('div.countConfigBox').hide();
 							if(pvd_name == "AWS")
 			            	{
 			            		displayZones(pvd_name,pvd_region);

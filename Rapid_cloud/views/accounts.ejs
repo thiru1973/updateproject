@@ -90,13 +90,14 @@
 							<!--<a class="cancelPoup">Cancel</a>&nbsp;--></br>
 							<button class="redButton" id="awsSubscription">Create</button>
 						</div>
-					</div>
-					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post">
+					</div><!--onsubmit="return validateSubscriptionForm()"-->
+					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post" onsubmit="return validateSubscriptionForm()" >
 					<div class="azureD" style="display:none;">
+					 <input type="hidden" id="accName1" name="accName1"/>
 					<div class="pull-left">
 						<label class="labelTemp">Subscription Name</label>
 						<div class="clickRole addStoTabWid">
-							<input type="text" id="azureSub" placeholder="" style="border:none;width:100%;">	
+							<input type="text" id="azureSub" name="azureSub" placeholder="" style="border:none;width:100%;">	
 						</div>
 					</div>
 						<div class="pull-left">

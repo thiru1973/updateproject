@@ -107,6 +107,7 @@ function selectOpt(event, idn, con){
 	 if(con == "account"){
 		 account_Sub.getDetals(aTex)
 		 document.getElementById("accName").value=aTex;
+		 document.getElementById("accName1").value=aTex;
 	 }
 }
 
@@ -369,7 +370,7 @@ function createProduct(){
 			 });
 	}
 }
-function checkAccountName(value){
+/*function checkAccountName(value){
 	$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
 		console.log(data);
 		for(var i =0; i < data.data4.length; i++){
@@ -378,5 +379,37 @@ function checkAccountName(value){
 			}
 		}
 	})
+}*/
+function validateSubscriptionForm(){
+	var azureSub = document.getElementById("azureSub").value
+	    ,userName = document.getElementById("userName").value
+	    ,password = document.getElementById("password").value
+	    ,subId = document.getElementById("subId").value;
+	
+	if(azureSub){
+		$(function(){
+				$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+					for(var i =0; i < data.data1.length; i++){
+						console.log("number"+i);
+						if(data.data1[i].subscription_name == azureSub){
+							alert("name already exists");
+							document.getElementById("azureSub").focus();
+							return false;
+						}
+					}
+				});
+		});
+		        var cond = formvalidate();
+			return cond;
+	}else{document.getElementById("azureSub").focus();return false;}
+	function formvalidate(){
+		if(userName == "" || userName == null)
+			{document.getElementById("userName").focus();return false;}
+		else if(password == "" || password == null)
+			{document.getElementById("password").focus();return false;}
+		else if(subId == "" || subId == null)
+			{document.getElementById("subId").focus();return false;}
+		else{return true;}
+	}
+			
 }
-

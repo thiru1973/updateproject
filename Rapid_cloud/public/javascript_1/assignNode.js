@@ -444,7 +444,8 @@ function saveInformation(tm_name){
 	     url: 'http://172.29.59.65:3000/temp_store',
 	     success: function(results) {
 	     	 $(".alert-success").stop().slideDown();
-	    	 location.href="//172.29.59.65:3000/deployTemplate"+"?data="+t_name;
+	    	 //location.href="//172.29.59.65:3000/deployTemplate"+"?data="+t_name;
+	    	 location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+t_name;
 	     },
 		 error: function (xhr, status, error){
 	        console.log('Failure');

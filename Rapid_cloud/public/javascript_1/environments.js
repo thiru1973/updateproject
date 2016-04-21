@@ -1014,7 +1014,8 @@ function getPublicIp(valuee, append){
 	Projects.prototype.createTableData = function(dataSource){
 		//console.log("createTableData:::"+dataSource);
 			var manageTable = document.getElementById("manageTable");
-			for(var j=0;j<=dataSource.length-1;j++){
+			//for(var j=0;j<=dataSource.length-1;j++){
+			for(var j=11;j<13;j++){
 				var createTr = document.createElement("tr");
 					createTr.id = dataSource[j].p_id;
 					manageTable.appendChild(createTr);
