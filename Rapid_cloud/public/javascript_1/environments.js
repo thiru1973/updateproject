@@ -602,7 +602,9 @@ function loadBalancer(){
 		     data: data,	 
 		     url:  _ip+'/runScript',
 		     success: function(results) {
-		    	 alert(results);
+		    	 //alert(results);
+		    	 var myWindow = window.open("", "MsgWindow", "width=907,height=400");
+		    	    myWindow.document.write("<p>"+results+"</p>");
 		     },
 			 error: function (xhr, status, error){
 		        console.log('Failure');

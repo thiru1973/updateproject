@@ -315,6 +315,7 @@ function get_templateName(){
 			            $('div.advancedOptionsDiv').hide();
 			            $('table.nodeSel').hide();
 			            $('div.advOpn').hide();
+			            $('#scriptConfig').hide();
 			 	}
 			 	else{
 			 		var tr = $('<tr/>');
@@ -370,6 +371,7 @@ function get_templateName(){
 				            $('table.nodeSelSingle').hide();
 				            $('#roleappend').hide();
 				            $('#osappend').hide();
+				            $('#scriptConfig').hide();
 							if(pvd_name == "AWS")
 			            	{
 			            		displayZones(pvd_name,pvd_region);

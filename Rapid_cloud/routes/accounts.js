@@ -32,7 +32,7 @@ exports.runScript = function(req, res){
 	    scriptName = Obj.scriptName,
 	    scriptData = Obj.scriptData;
 	
-	fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
+	/*fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
 	  if (err) return res.send(err);
 	  console.log('creating file');
 	  
@@ -41,9 +41,6 @@ exports.runScript = function(req, res){
 	  child = spawn("powershell.exe",[script_path]);
 		child.stdout.on("data",function(data){
 		   console.log("Powershell Data: " + data);	
-		   /*setTimeout(function() {
-			   res.send("Powershell Data: " + data);
-			}, 5000);*/
 		   
 		});
 		child.stderr.on("data",function(data){
@@ -53,11 +50,12 @@ exports.runScript = function(req, res){
 		child.on("exit",function(){
 		console.log("Powershell Script finished");
 		res.send("Powershell script is finished");
-		/*var file = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\VMDetails-15-Apr-2016-03-53-32.csv';
-		res.download(file);*/
+		
 		//res.send("success");
 		});
 		child.stdin.end(); //end input	  
-	});
+	});*/
+	var file = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\VMDetails-18-Apr-2016-10-09-05.csv';
+	res.download(file, 'VMDetails-18-Apr-2016-10-09-05.csv');
 	
 }
