@@ -33,7 +33,7 @@ $(document).ready(function(){
 			return true;
 		}else if(acc)
 			{
-			$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+			$.getJSON(_ip+'/accountDetails', function(data){
 				console.log(data);
 				for(var i =0; i < data.data4.length; i++){
 					if(data.data4[i].accountid == acc){
@@ -52,16 +52,22 @@ $(document).ready(function(){
 				     data: data,	 
 				     url:  _ip+'/createAccount',
 				     success: function(results) {
-				    	 alert(results);
+				    	console.log('Created');
+						 $.getJSON(_ip+'/accountDetails', function(data){
+							for(var i =0; i < data.data4.length; i++){
+								var tT = document.getElementById("accounts_ID");
+									tT.innerHTML+='<li onclick="account_Sub.getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data.data4[i].accountid+'</dd></dl></li>';
+							}
+						});
 				     },
 					 error: function (xhr, status, error){
 				        console.log('Failure');
-						alert("failure");
+						
 						},
 					 });
 				$("#createAccPOP").hide();
 			})
-			}			
+		}			
 	});
 
 	
@@ -79,7 +85,6 @@ $(document).ready(function(){
 	$('.createAccount').click(function(){
 		$('#createAccount_Input_Id').val("");
 		$('#createAccPOP').show();
-		
 	});
 	$('[name="a"]').on("click", function(){
 		if(this.value =="azure"){
@@ -91,9 +96,11 @@ $(document).ready(function(){
 		}
 	})
 });
+
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
 })
+
 function selectOpt(event, idn, con){
 	var aImage = event.getElementsByTagName("dt")[0].innerHTML;
 	var inn = event.getElementsByTagName("dd")[0];
@@ -104,16 +111,20 @@ function selectOpt(event, idn, con){
 	//alert(aTex+"-"+con);
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
-	 if(con == "account"){
+	 /*if(con == "account"){
 		 account_Sub.getDetals(aTex)
 		 document.getElementById("accName").value=aTex;
-		 document.getElementById("accName1").value=aTex;
-	 }
+	 }*/
 }
 
-function AccountsConst(){}
+function AccountsConst(){
+	this._1 = [];
+	this._2 = [];
+	this._3 = [];
+	//console.log(this._1);
+	//console.log(this._2);
+}
 AccountsConst.prototype.getData = function(id,i,titleText,columnLength,columText,columData,accountIDReq){
-	//alert(accountIDReq);
 	var _id  = document.getElementById(id);
 	_id.innerHTML+='<table class="accountsTable">\
 						<tr id="title_'+i+'">\
@@ -125,71 +136,220 @@ AccountsConst.prototype.getData = function(id,i,titleText,columnLength,columText
 	var tT = document.getElementById("tableText_"+i)
 	   ,tD = document.getElementById("tableData_"+i);
 
+	  
 	for(var q=0; q < columnLength; q++){
 		tT.innerHTML+='<th>'+columText[q]+'</th>';
 	}
 	function insertAfter(referenceNode, newNode){
-		referenceNode.parentNode.insertBefore(newNode, referenceNode);		
+		referenceNode.parentNode.insertBefore(newNode, referenceNode);
 	}
 	if(columData == null){
 		tD.innerHTML+='<td colspan="'+columnLength+'" style="background-color:#eee;"><div class="noAccountSelected">Select one of the account to see details.</div></td>';
 	}else{
 		if(columnLength == 2){
-			var d=[];
-			for(var i =0; i < columData.data1.length; i++){
-				//if(columData.data1[i].accountid == accountIDReq || accountIDReq.toLowerCase()){	
+			var d=[], c = 0, len = columData.data1.length;
+			this._1 = columData.data1;
+			this._2 = columData.data2;
+			this._3 = columData.data3;
+			
+			for(var i =0; i < len; i++){
 				if(columData.data1[i].accountid == accountIDReq){
-					console.log(columData.data1);
-					
 					var datat = document.createElement("tr");
-					datat.innerHTML +='<tr><td>'+columData.data1[i].subscription_name+'</td><td><a href="#" onclick="account_Sub.viewMore(this)" class="viewLink" id="'+columData.data1[i].subscription_id+'">View</a></td></tr>';
+					datat.innerHTML +='<tr><td>'+columData.data1[i].subscription_name+'</td><td><a href="#" onclick="account_Sub.viewMore(this,1,'+i+')" class="viewLink" id="'+columData.data1[i].subscription_name+'">View</a></td></tr>';
 					d.push(columData.data1[i].subscription_name);
 					insertAfter(tD, datat);
-				}//else{alert("No datas");return;}
+				}else{
+					c++;					
+					if(c == len){						
+						var noDat = document.createElement("tr");
+						noDat.innerHTML+='<td colspan="'+columnLength+'" style="background-color:#eee;"><div class="noAccountSelected">Details are not Avilable for selected Account.</div></td>';
+						insertAfter(tD, noDat);
+					}
+					/*var noDat = document.createElement("tr");
+					noDat.innerHTML+='<td colspan="'+columnLength+'" style="background-color:#eee;"><div class="noAccountSelected">Details are not Avilable for selected Account.</div></td>';
+					insertAfter(tD, noDat);*/
+				}
 			}
 			this.dropDownDat(d,"SubNameDro_ID");
-			
 		}else if(columnLength == 3){
 			if(id == "acProjects"){
-				var e=[];
-				for(var i =0; i < columData.data2.length; i++){
-				//if(columData.data2[i].accountid == accountIDReq || accountIDReq.toLowerCase()){
+				var e=[], c = 0, len = columData.data2.length;
+			for(var i =0; i < columData.data2.length; i++){
 				if(columData.data2[i].accountid == accountIDReq){
 					var datat = document.createElement("tr");
 					datat.innerHTML +='<td>'+columData.data2[i].p_name+'</td>\
 										<td>'+columData.data2[i].subscription_name+'</td>\
-										<td><a href="#" onclick="account_Sub.viewMore(this)" id="'+columData.data2[i].p_id+'" class="viewLink">View</a></td>';
+										<td><a href="#" onclick="account_Sub.viewMore(this,2,'+i+')" id="'+columData.data2[i].p_id+'" class="viewLink">View</a></td>';
 					e.push(columData.data2[i].p_name);
 					insertAfter(tD, datat);
-					}//else{alert("No data");return}
+					}else{
+					c++;					
+					if(c == len){						
+						var noDat = document.createElement("tr");
+						noDat.innerHTML+='<td colspan="'+columnLength+'" style="background-color:#eee;"><div class="noAccountSelected">Details are not Avilable for selected Account.</div></td>';
+						insertAfter(tD, noDat);
+						}
+					}
 				}
 				this.dropDownDat(e,"ProNameDro_ID");
-			}else if(id == "acProducts"){				
-				for(var r =0; r < columData.data3.length; r++){					
-				//if(columData.data3[r].accountid == accountIDReq || accountIDReq.toLowerCase()){
-					if(columData.data3[r].accountid == accountIDReq){
+			}else if(id == "acProducts"){
+				//this._3 = columData.data3;
+				var c = 0, len = columData.data3.length;
+				for(var r =0; r < columData.data3.length; r++){
+				if(columData.data3[r].accountid == accountIDReq){
 					var datat = document.createElement("tr");
-					datat.innerHTML +='<td>'+columData.data3[r].prod_name+'</td>\
+					datat.innerHTML +='<td><a href="#" class="viewLink" onclick="account_Sub.viewProDetail(this)" id="'+columData.data3[r].p_name+'" title="'+accountIDReq+'">'+columData.data3[r].prod_name+'</a></td>\
 										<td>'+columData.data3[r].p_name+'</td>\
-										<td><a href="#" onclick="account_Sub.viewMore(this)" id="'+columData.data3[i].prod_name+'" class="viewLink">View</a></td>';
+										<td><a href="#" onclick="account_Sub.viewMore(this,3,'+i+')" id="'+columData.data3[i].prod_name+'" class="viewLink">View</a></td>';
 					insertAfter(tD, datat);
-				  }//else{alert("No data");return;}
+				  }else{
+					c++;
+					if(c == len){						
+						var noDat = document.createElement("tr");
+						noDat.innerHTML+='<td colspan="'+columnLength+'" style="background-color:#eee;"><div class="noAccountSelected">Details are not Avilable for selected Account.</div></td>';
+						insertAfter(tD, noDat);
+						}
+					}
 				}
-				
 			}
-			
 		}
-	}	
+	}
 }
-AccountsConst.prototype.viewMore = function(ev){
-	console.log(ev.id);
-	
+AccountsConst.prototype.clo = function(ev){
+	var i = document.getElementById("viDatPOP")
+		i.id=""; i.innerHTML="";
+}
+AccountsConst.prototype.viewProDetail = function(ev){
+	event.preventDefault();
+	localStorage.setItem('Account', ev.title);
+	localStorage.setItem('Project Name', ev.id);
+	localStorage.setItem('Product Name', ev.innerHTML);
+}
+AccountsConst.prototype.viewMore = function(ev,from,requestDat){
+	if(from == 1){
+	var dd = document.getElementById("pop");
+		dd.innerHTML+='<div id="viDatPOP">\
+					<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>\
+					  <div class="balance">\
+						<div class="popDataNew" style="width:34%;">\
+							<div class="modal-header">\
+							<button type="button" id="subnetsPopuplose" onclick="account_Sub.clo(this)" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>\
+							<h4 class="modal-title">Detailed Subscription View</h4>\
+						  </div>\
+						   <div class="modal-body" id="_subD">\
+						   </div>\
+						   <div style="clear:both;">&nbsp;</div>\
+						  <div class="modal-footer">\
+							<a class="cancelPoup" onclick="account_Sub.clo(this)">Close</a>&nbsp;\
+						  </div>\
+						</div>\
+					</div>\
+				</div>';
+	var _su = document.getElementById("_subD");
+		_su.innerHTML+='<table class="accountsTable">\
+							<tr>\
+								<th>Name</th>\
+								<th>Value</th>\
+							</tr>\
+							<tr>\
+								<td>Subscription Name</td>\
+								<td>'+this._1[requestDat].subscription_name+'</td>\
+							</tr>\
+							<tr>\
+								<td>Account ID</td>\
+								<td>'+this._1[requestDat].accountid+'</td>\
+							</tr>\
+							<tr>\
+								<td>Provider</td>\
+								<td>'+this._1[requestDat].provider+'</td>\
+							</tr>\
+						</table>';
+	}else if(from == 2){
+	var _dd = document.getElementById("pop");
+		_dd.innerHTML+='<div id="viDatPOP">\
+					<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>\
+					  <div class="balance">\
+						<div class="popDataNew" style="width:34%;">\
+							<div class="modal-header">\
+							<button type="button" id="subnetsPopuplose" onclick="account_Sub.clo(this)" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>\
+							<h4 class="modal-title">Detailed Project View</h4>\
+						  </div>\
+						   <div class="modal-body" id="_subD">\
+						   </div>\
+						   <div style="clear:both;">&nbsp;</div>\
+						  <div class="modal-footer">\
+							<a class="cancelPoup" onclick="account_Sub.clo(this)">Close</a>&nbsp;\
+						  </div>\
+						</div>\
+					</div>\
+				</div>';
+	var _pr = document.getElementById("_subD");
+		_pr.innerHTML+='<table class="accountsTable">\
+							<tr>\
+								<th>Name</th>\
+								<th>Value</th>\
+							</tr>\
+							<tr>\
+								<td>Project Name</td>\
+								<td>'+this._2[requestDat].p_name+'</td>\
+							</tr>\
+							<tr>\
+								<td>Technology</td>\
+								<td>'+this._2[requestDat].technology+'</td>\
+							</tr>\
+							<tr>\
+								<td>Team Size</td>\
+								<td>'+this._2[requestDat].team_size+'</td>\
+							</tr>\
+							<tr>\
+								<td>Subscription Name</td>\
+								<td>'+this._2[requestDat].subscription_name+'</td>\
+							</tr>\
+						</table>';
+	}else if(from == 3){
+	var dd = document.getElementById("pop");
+		dd.innerHTML+='<div id="viDatPOP">\
+					<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>\
+					  <div class="balance">\
+						<div class="popDataNew" style="width:34%;">\
+							<div class="modal-header">\
+							<button type="button" id="subnetsPopuplose" onclick="account_Sub.clo(this)" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>\
+							<h4 class="modal-title">Detailed Product View</h4>\
+						  </div>\
+						   <div class="modal-body" id="_subD">\
+						   </div>\
+						   <div style="clear:both;">&nbsp;</div>\
+						  <div class="modal-footer">\
+							<a class="cancelPoup" onclick="account_Sub.clo(this)">Close</a>&nbsp;\
+						  </div>\
+						</div>\
+					</div>\
+				</div>';
+	var _pr = document.getElementById("_subD");
+		_pr.innerHTML+='<table class="accountsTable">\
+							<tr>\
+								<th>Name</th>\
+								<th>Value</th>\
+							</tr>\
+							<tr>\
+								<td>Product Name</td>\
+								<td>'+this._3[requestDat].prod_name+'</td>\
+							</tr>\
+							<tr>\
+								<td>Account ID</td>\
+								<td>'+this._3[requestDat].accountid+'</td>\
+							</tr>\
+							<tr>\
+								<td>Technology</td>\
+								<td>'+this._3[requestDat].technology+'</td>\
+							</tr>\
+						</table>';
+	}
 }
 AccountsConst.prototype.dropDownDat = function(data, idOfDropdown){
 	for(var i =0; i < data.length; i++){
 		var tT = document.getElementById(idOfDropdown);
-			tT.innerHTML+='<li onclick="selectOpt(this)" class="Dev"><dl><dt></dt><dd class="va">'+data[i]+'</dd></dl></li>';
-		console.log(i);
+			tT.innerHTML+='<li onclick="selectOpt(this)" class="Dev"><dl><dt></dt><dd class="va">'+data[i]+'</dd></dl></li>';		
 	}
 }
 AccountsConst.prototype.create = function(ev){
@@ -198,14 +358,15 @@ AccountsConst.prototype.create = function(ev){
 	ev.id == "titleID_Products" ? $('#create_Product_POP').show() : $('#create_Product_POP').hide();
 }
 AccountsConst.prototype.getDetals = function(accId){
-	//alert(accId);
-	$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
-		//console.log(data);
-		
+	$.getJSON(_ip+'/accountDetails', function(data){
+
 		var _subid  = document.getElementById("acSubscriptions"),
 			_subd  = document.getElementById("SubNameDro_ID");
+			_sub  = document.getElementById("ProNameDro_ID");
+			
 			_subid.innerHTML='';
 			_subd.innerHTML='';
+			_sub.innerHTML='';
 		
 		account_Sub.getData("acSubscriptions","1","Subscriptions",2,SubscriptionsColumnText,data,accId);
 		
@@ -223,6 +384,22 @@ AccountsConst.prototype.getDetals = function(accId){
 		
 	});
 }
+AccountsConst.prototype.getAccounts = function(event, idn){
+	var aImage = event.getElementsByTagName("dt")[0].innerHTML;
+	var inn = event.getElementsByTagName("dd")[0];
+	var aTex = $(inn).text();
+	var v = event.parentNode;
+	var vb = v.parentNode;
+	var idd = vb.id;
+	//alert(aTex+"-"+con);
+	 $("#"+idd+" span:first").html(aImage+aTex);
+	 $("#"+idd+" span img").css("width", "25px");
+	 
+		 this.getDetals(aTex)
+		 console.log(aTex);
+		// document.getElementById("accName").value=aTex;	 
+	 
+}
 var SubscriptionsColumnText = ["Subscription Name", "Action"]
 	,ProjectColumnText = ["Project Name", "Subscription Name", "Action"]
 	,ProductColumnText = ["Product Name", "Project Name", "Action"]
@@ -239,19 +416,19 @@ var SubscriptionsColumnText = ["Subscription Name", "Action"]
 	//a_Proj.prototype = AccountsConst.prototype;
 
 	//var account_Proj = new a_Proj;
-		//account_Proj.getData("acProjects","2","Projects",3,ProjectColumnText,null);
+	//account_Proj.getData("acProjects","2","Projects",3,ProjectColumnText,null);
 var account = "account";
 $(function(){
-	$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
-		console.log(data);
+	$.getJSON(_ip+'/accountDetails', function(data){
 		for(var i =0; i < data.data4.length; i++){
 			var tT = document.getElementById("accounts_ID");
-				tT.innerHTML+='<li onclick="selectOpt(this,0,'+account+')" class="Dev"><dl><dt></dt><dd class="va">'+data.data4[i].accountid+'</dd></dl></li>';
+				tT.innerHTML+='<li onclick="account_Sub.getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data.data4[i].accountid+'</dd></dl></li>';
 		}
 	})
-})
+});
 
 /*-----------------------------End Table---------------------------------------------*/
+
 
 //Add project function
 function createProject(){
@@ -370,16 +547,7 @@ function createProduct(){
 			 });
 	}
 }
-/*function checkAccountName(value){
-	$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
-		console.log(data);
-		for(var i =0; i < data.data4.length; i++){
-			if(data.data4[i].accountid == value){
-				 $(".alert-accName").stop().slideDown();
-			}
-		}
-	})
-}*/
+
 function validateSubscriptionForm(){
 	var azureSub = document.getElementById("azureSub").value
 	    ,userName = document.getElementById("userName").value
@@ -410,6 +578,6 @@ function validateSubscriptionForm(){
 		else if(subId == "" || subId == null)
 			{document.getElementById("subId").focus();return false;}
 		else{return true;}
-	}
-			
+	}			
 }
+

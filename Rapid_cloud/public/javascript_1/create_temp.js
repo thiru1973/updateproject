@@ -195,9 +195,6 @@ function selectOpt(ev, idn){
 	 document.getElementById(idd).style.border="none";
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");	
-	 //event.stopPropagation();
-	 //$(ev).parent(".dropDown").slideUp();
-
 }
 function addValues(data, toWhat){
 		var appendD = new DropdownConst();
@@ -242,6 +239,13 @@ function closeRole(ev){
 
 window.onload = function(){
 	data();
+	getStorageData();
+}
+function getStorageData(){
+	var accountName = localStorage.getItem("AccountName")
+	,projName = localStorage.getItem("projectName")
+	,prodName = localStorage.getItem("productName");
+	console.log(accountName+projName+prodName);
 }
 //var idArr=[];
 //var osArr=[];

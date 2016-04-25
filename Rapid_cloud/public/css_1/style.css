@@ -197,7 +197,7 @@ display:none;
 .nodeSel,.nodeSelSingle{width:100%;}
 .nodeSel tr td{font-size:12px;padding:5px 10px;vertical-align:middle}
 .spinner {width: 60px;}
-.spinner input{text-align: right;}
+.spinner input{text-align:right;}
 .input-group-btn-vertical {position:relative;white-space:nowrap;width:1%;vertical-align:middle;display:table-cell;}
 .input-group-btn-vertical > .btn {display:block;float:none;width:100%;max-width:100%;padding:8px;margin-left:-1px;position:relative; border-radius:0;}
 .input-group-btn-vertical > .btn:first-child {border-top-right-radius:4px;}
@@ -318,6 +318,7 @@ button:disabled {background-color:#DDDDDD;padding:5px 10px;color:#AAAAAA;border:
 .titleTe{background-color: #EEEEEE}
 #accountsDataContainer ul li{display:inline-block;width:32.94%;vertical-align:top;}
 .noAccountSelected{background-color:#EEEEEE;text-align:center;padding-top:100px;height:340px;}
+.viewLink{color:#E1685C;font-size:12px;}
 
 /* Login page */
 .loginContainer {width:360px;margin:-100px auto 0;}
@@ -327,14 +328,25 @@ button:disabled {background-color:#DDDDDD;padding:5px 10px;color:#AAAAAA;border:
 .loginContainer > main > div > div.clickRole{width:inherit !important; margin-right:0px;}
 .heAndW{height:100%;width:100%;}
 
+/* DevOps Setup */
+.standardTools{padding:10px;}
+.standardTools > li{display: inline-bloack;float:left;border:solid 1px #DEDEDE;margin-right:10px;text-align:center; padding:10px;}
+.standardTools > li > span{clear:both; display:block;padding-top:10px; font-size:12px; color:#4E4848;}
+.standardTools > li > os{clear:both; display:block;margin-top:10px;padding:10px; font-size:13px; color:#E8E6E6; font-weight:bold; background-color:#424143;}
+
+
 @media (min-width: 768px) {
-  .container {width: 100%;/*width: 750px;*/}
+  .container {width: 100%;/*width:750px;*/}
 }
 @media (min-width: 992px) {
-  .container {width: 100%;/*width: 970px;*/}
+  .container {width: 100%;/*width:970px;*/}
+  .col-md-2 {width: 10.666667%;}
+  .col-md-10 {width: 89.333333%;}
 }
 @media (min-width: 1200px) {
   .container {width: 100%;/*width: 1170px;*/}
 }
 .container {padding-right:0; padding-left:0;margin-right: auto;margin-left: auto;}
 aside > .col-xs-12, .col-sm-2, .col-md-2, .col-lg-2{padding:0px;}
+
+.box{display:inline-block;padding:10px;background-color:#ccc;color:#000;margin:5px;cursor:pointer;}

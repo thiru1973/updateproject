@@ -17,6 +17,14 @@ $('#Templates').click(function(){
 	$("#view_temp").show();
 	//$("#single_node").hide();
 });
+var accountName,projName,prodName;
+
+function getStorageData(){
+	accountName = localStorage.getItem("AccountName")
+	,projName = localStorage.getItem("projectName")
+	,prodName = localStorage.getItem("productName");
+	console.log(accountName+projName+prodName);
+}
 var tempName = [];
 var region = [];
 var tempType = [];
@@ -24,7 +32,8 @@ var nodes = [];
 var cloud = [];
 var myTemplate_images = [];
 $.getJSON( "http://172.29.59.65:3000/my_view", function( data ) {	
-               result=data;              
+               result=data; 
+               getStorageData();
 		for(var j=0;j<data.length;j++)
 			{		
 				tempName[j] = data[j].Template_name;

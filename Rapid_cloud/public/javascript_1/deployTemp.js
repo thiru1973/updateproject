@@ -54,6 +54,7 @@ $(document).ready(function(){
 	$(".buttonClsrv").click(function(){		
 		$(".popupData").show();
 		$(".popDataClsrv").show();
+		$(".popData1").hide();
 	});
 	$(".createNewStor").click(function(){
 		$(".popupData").show();
