@@ -1,6 +1,7 @@
 var pg = require("pg");
 var fs = require('fs');
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
+//var conString = "pg://postgres@mongoclone.cloudapp.net:5432/abrahamdevilliers";
 var client_pg = new pg.Client(conString);
 var spawn = require("child_process").spawn,child;
 
@@ -32,12 +33,11 @@ exports.runScript = function(req, res){
 	    scriptName = Obj.scriptName,
 	    scriptData = Obj.scriptData;
 	
-	/*fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
+	fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
 	  if (err) return res.send(err);
 	  console.log('creating file');
 	  
 	  var script_path = './scripts/'+scriptName+'.ps1';
-	  //console.log(script_path);
 	  child = spawn("powershell.exe",[script_path]);
 		child.stdout.on("data",function(data){
 		   console.log("Powershell Data: " + data);	
@@ -49,13 +49,27 @@ exports.runScript = function(req, res){
 		});
 		child.on("exit",function(){
 		console.log("Powershell Script finished");
-		res.send("Powershell script is finished");
-		
-		//res.send("success");
+		res.send("Success");
 		});
 		child.stdin.end(); //end input	  
-	});*/
-	var file = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\VMDetails-18-Apr-2016-10-09-05.csv';
-	res.download(file, 'VMDetails-18-Apr-2016-10-09-05.csv');
+	});	
+}
+var _ = require("underscore");
+exports.download = function(req,res){
+	function getMostRecentFileName(dir) {
+	    var files = fs.readdirSync(dir);
+
+	    // use underscore for max()
+	    return _.max(files, function (f) {
+	        var fullpath = path.join(dir, f);
+
+	        // ctime = creation time is used
+	        // replace with mtime for modification time
+	        return fs.statSync(fullpath).ctime;
+	    });
+	}
+	var fpath = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\result\\'
+	var filepath = getMostRecentFileName(fpath);
+	res.download(fpath+filepath,filepath);
 	
 }

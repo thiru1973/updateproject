@@ -28,7 +28,7 @@ function get_aws_region(){
         success: function(data, textStatus){
         	
         	pvd_aws = data;
-        	console.log(pvd_aws);
+        	//console.log(pvd_aws);
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
@@ -110,9 +110,14 @@ function show_nodes(){
 				+"</ul></div>"
 				+"<div class='face back' id='"+inst_type[i]+"'><span class='"
 				+"glyphicon glyphicon-remove-circle closeTemplate'></span>"/*"Node:<input class='inPut' value='"+inst_type[i]+"' type='text' disabled='disabled' />"*/ 
-				+"<br><div id='singReg"+inst_id[i]+"' class='clickRoleSing borderNoN'><span>Region</span><ul id='singRegg"+inst_id[i]+"' class='dropDown'></ul><span id='singReg' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div>" 
-				+"<br><b>Node Details</b><br>" 
+				+"<div id='noDEpullL' class='pull-left'><span></span>"
+				+"<label id='' class='labelTemp'><span>Region </span>"
+				+"<a href='#' data-toggle='tooltip' title='' data-original-title=''><span class='infoSignColor glyphicon glyphicon-info-sign'></span></a>"
+				+"</label>"
+				+"<div id='sel"+inst_id[i]+"' class='clickRole borderNoN'><span>Select</span><ul id='sels"+inst_id[i]+"' class='dropDown'><li onclick='selectOpt(this,0)' class='Dev'><dl><dt></dt><dd class='va'>Dev</dd></dl></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span>"
+				+"</div></div>"
 				+"<table>"
+				+"<tr><th>Node Details</th></tr>" 
 				+"<tr><th>VCPU:</th><td> "+vcpu[i]+"</td></tr>"				
 				+"<tr><th>RAM:</th><td> "+ram[i]+" </td></tr>"
 				+"<tr><th>Storage:</th><td> "+storage[i]+" </td></tr>"
@@ -136,7 +141,10 @@ function show_nodes(){
 		//$(".card").removeClass();
 	})
 	
-	$(".clickRoleSing").click(function(){
+		/*$(".clickRoleSing").click(function(){
+			$(this).find(".dropDown").slideToggle();
+		})*/
+		$(".clickRole").click(function(){
 			$(this).find(".dropDown").slideToggle();
 		})
 }
@@ -193,8 +201,7 @@ DropdownConst.prototype.cre = function(){
 	}
 };
 
-function selectOpt(ev, idn){
-	
+function selectOpt(ev, idn){	
 	var aImage = ev.getElementsByTagName("dt")[0].innerHTML;
 	var aTex = ev.getElementsByTagName("dd")[0].innerText;
 	 var v = ev.parentNode;
@@ -207,15 +214,28 @@ function selectOpt(ev, idn){
 }
 
 function assign_region(inst_id, aws, azure){
-	console.log(inst_id+aws+azure);
-	for(i=0;i<aws;i++){
+	//console.log(inst_id+aws+azure);
+	//console.log(pvd_aws[0].region_name);
+	//console.log(pvd_azure);
+	var reg1 = [], reg2 = [];
+	//Loop to get the aws regions and store it in reg1 = [] variable
+	for(var i=0;i<pvd_aws.length;i++){
+		reg1[i] = pvd_aws[i].region_name;
+		}
+	//Loop to append the region data to all aws instances 
+	for(var j=0;j<aws;j++){
 		var appendD = new DropdownConst();
-   	 appendD.appendData(pvd_aws,"singRegg"+i+"");
+   	 	appendD.appendData(reg1,"sels"+j+"");
 	}
-	for(i=aws;i<aws+azure;i++){
+	//Loop to get azure regions and store it in reg2 = [] variable
+	for(var k=0;k<pvd_azure.length;k++){
+		reg2[k] = pvd_azure[k].region_name;
+	}
+	for(var l=0;l<aws+azure;l++){
 		var appendD = new DropdownConst();
-   	 appendD.appendData(pvd_azure,"singRegg"+i+"");
+		appendD.appendData(reg2,"sels"+l+"");
 	}
+	
 }
 $('input#search1').keyup(function() {
     
@@ -241,9 +261,9 @@ function nodeDeploy_function(value){
 	var att = value.split('~');
 	//alert(att[0]);
 	console.log(att[2]);
-	var str1 = "singReg"
+	var str1 = "sel"
 	var id = str1.concat(att[2]);
-	
+	console.log(id);
 	var region = document.getElementById(id).innerText;
 	//alert(region);
 	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"single"+"?data2="+att[0]+"?data3="+att[1]+"?data4="+region;

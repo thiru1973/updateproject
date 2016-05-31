@@ -18,6 +18,8 @@ span.name{font-weight:600;}
 ::-webkit-scrollbar-thumb {-webkit-border-radius:10px;border-radius:10px;background:#bbb;}
 ::-webkit-scrollbar-thumb:window-inactive{background:#bbb;}
 
+div#data{ color:white;}
+
 /* Layout */
 [role="header"]{width:100%;margin:0px 0px;height:auto;background-color:#EAEAEA;width:100%;float:left;padding: 5px 3px 16px;text-align:center;}
 [role="header"] a{text-decoration:none;}
@@ -109,10 +111,11 @@ footer{width:100%;float:left;padding:10px 0;}
 .flip .card .back {-webkit-transform: rotatey(-180deg);transform: rotatey(-180deg);background: blue;background:white;
 color: black;cursor: pointer;padding:10px;border:solid 1px #ccc;}
 .inPut{width:150px;font-size:12px;}
-[value='Modify'], [value='Deploy']{background:#E24B4B;padding:5px;border:none;margin:5px 0;color:#fff;font-size:12px;}
+[value='Modify'], [value='Deploy'], [value='Add DevOps']{background:#E24B4B;padding:5px;border:none;margin:5px 0;color:#fff;font-size:12px;}
 [value='Deploy1']{background:#E24B4B;padding:5px;border:none;margin-left:50px;color:#fff;font-size:12px;}
 .closeTemplate{position:absolute;top:-5px;right:-5px;background-color:#fff;font-size:15px;padding:1px;}
 footer{clear:both;border-top:solid 1px #ccc;}
+.my_info, .gen_info{overflow: auto; height: 104px; display: block;}
 
 /* Create Template */
 [role="createTemplate"]{width:100%;clear:both;}

@@ -125,6 +125,10 @@ app.get('/attachKeyPair', manage.attachKeyPair);
 app.get('/attachSecGrp', manage.attachSecGrp);
 app.post('/azureLoad',manage.azLoadBalancer);
 app.post('/straccount', manage.straccount);
+app.post('/azureEndPoint', manage.azureEndPoint);
+app.post('/trafficManage', manage.trafficManage);
+app.post('/blobUpload', manage.blobUpload);
+app.get('/getAzureStg', manage.getAzureStg);
 
 //Accounts
 app.get('/accounts', account.accounts);
@@ -136,6 +140,9 @@ app.post('/runScript', account.runScript);
 app.post('/createProject', manage.createProject);
 app.post('/createProduct', manage.createProduct);
 app.post('/createAccount', manage.createAccount);
+app.get('/download', account.download);
+app.post('/storeAwsSub', manage.storeAwsSub);
+
 
 
 http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){

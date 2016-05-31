@@ -222,8 +222,9 @@ AccountsConst.prototype.clo = function(ev){
 AccountsConst.prototype.viewProDetail = function(ev){
 	event.preventDefault();
 	localStorage.setItem('Account', ev.title);
-	localStorage.setItem('Project Name', ev.id);
-	localStorage.setItem('Product Name', ev.innerHTML);
+	localStorage.setItem('ProjectName', ev.id);
+	localStorage.setItem('ProductName', ev.innerHTML);
+	location.href = _ip+'/master_2';
 }
 AccountsConst.prototype.viewMore = function(ev,from,requestDat){
 	if(from == 1){
@@ -397,7 +398,8 @@ AccountsConst.prototype.getAccounts = function(event, idn){
 	 
 		 this.getDetals(aTex)
 		 console.log(aTex);
-		// document.getElementById("accName").value=aTex;	 
+		 document.getElementById("accName").value=aTex;
+		 document.getElementById("accName1").value=aTex;
 	 
 }
 var SubscriptionsColumnText = ["Subscription Name", "Action"]
@@ -420,6 +422,7 @@ var SubscriptionsColumnText = ["Subscription Name", "Action"]
 var account = "account";
 $(function(){
 	$.getJSON(_ip+'/accountDetails', function(data){
+		console.log(data);
 		for(var i =0; i < data.data4.length; i++){
 			var tT = document.getElementById("accounts_ID");
 				tT.innerHTML+='<li onclick="account_Sub.getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data.data4[i].accountid+'</dd></dl></li>';
@@ -580,4 +583,59 @@ function validateSubscriptionForm(){
 		else{return true;}
 	}			
 }
+function addAwsSubscription(){
+	var awsSub = document.getElementById("awsSub").value
+	    ,accName = document.getElementById("accName").value
+	    ,accKey = document.getElementById("accKey").value
+	    ,secKey = document.getElementById("secKey").value;
+	
+	if(awsSub){
+		$(function(){
+				$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+					for(var i =0; i < data.data1.length; i++){
+						if(data.data1[i].subscription_name == awsSub){
+							alert("name already exists");
+							document.getElementById("awsSub").focus();
+							return false;
+						}
+					}
+				});
+		});
+		        var cond = awsformvalidate();
+			if(cond == true){
+				saveAwsCredentials(accName,awsSub,accKey,secKey);
+				}
+	}else{document.getElementById("awsSub").focus();return false;}
+	function awsformvalidate(){
+		if(accKey == "" || accKey == null)
+			{document.getElementById("accKey").focus();return false;}
+		else if(secKey == "" || secKey == null)
+			{document.getElementById("secKey").focus();return false;}
+		else{return true;}
+	}
+}
+function saveAwsCredentials(accName, awsSub, accKey, secKey){
+	console.log(accName+awsSub+accKey+secKey);
+	var awsData = {};
+	awsData.accName = accName;
+	awsData.awsSub = awsSub;
+	awsData.awsKey = accKey;
+	awsData.secKey = secKey;
+	$.ajax({
+	     type: 'POST',
+		 jsonpCallback: "callback",
+	     datatype: 'jsonp',
+	     data: awsData,	 
+	     url: _ip+'/storeAwsSub',
+	     success: function(results) {
+		 alert(results);
+		 $('#create_Sub_POP').hide();
+		 },
+		 error: function (xhr, status, error){
+	        console.log('Failure');
+			alert("failure");
+			},
+});
+}
+
 

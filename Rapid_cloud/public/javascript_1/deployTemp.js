@@ -139,6 +139,14 @@ $(document).ready(function(){
 		
 
 })
+var accountName,projName,prodName;
+function setStorageData(){
+	accountName = localStorage.getItem("Account")
+	,projName = localStorage.getItem("ProjectName")
+	,prodName = localStorage.getItem("ProductName");
+	var theDiv = document.getElementById("data");
+	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
+}
 var cidrIp = ["Anywhere", "My IP", "Custom IP"];
 var volumeType = ["Provisioned IOPS SSD", "General Purpose SSD", "Magnetic"];
 var rule = ["In Bound", "Out Bound"];
@@ -226,11 +234,27 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 
 window.onload = function(){
 	get_templateName();
-	get_project();
+	//get_project();
 	getVpcName();
 	get_role_os();
 	//getSubnetName();
 	getCloudService();
+	setStorageData();
+	getAzureStorage();
+}
+function getAzureStorage(){
+	$(function(){
+		$.getJSON('http://172.29.59.65:3000/getAzureStg', function(data){
+			console.log(data+"typeDro");
+			var stgAcc = [];
+			for(i=0;i<data.length;i++)
+				{
+					stgAcc[i] = data[i].storagename; 
+				}
+			var appendD = new DropdownConst();
+			appendD.appendData(stgAcc, "stgacc");
+		})
+	})
 }
 function get_role_os(){
 	$(function(){		
@@ -443,7 +467,7 @@ function displayZones(pname,region){
 	   });
 }
 
-function get_project(){
+/*function get_project(){
 	$(function(){
 		  $.getJSON('http://172.29.59.65:3000/project', function(data){
 			   var proje = data;
@@ -455,7 +479,7 @@ function get_project(){
 				appendD.appendData(pj_Na,"selspj");
 		  });
 	});
-}
+}*/
 
 function getVpcName(){
 	$(function(){
@@ -951,6 +975,9 @@ $('#createVpc').click(function(){
 				return;
 				}
 	var data={};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.region = region;
 	data.cidr = cidr;
 	data.vpc = vpc;
@@ -1007,6 +1034,9 @@ $('#createSubnet').click(function(){
 				}
 	
 	var data={};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.cidrBlkSn = cidrBlkSn;
@@ -1037,12 +1067,15 @@ $('#createClsrv').click(function(){
 	//alert("In cloud page");
 	var cloudname = document.getElementById("cloudName").value;
 	var region = document.getElementById("regNameClsrv").value;
-	var prjName = document.getElementById("selpj").innerText;
-	console.log(cloudname+region+prjName);
+	//var prjName = document.getElementById("selpj").innerText;
+	console.log(cloudname+region);
 	var data = {};
 	data.name = cloudname;
 	data.location = region;
-	data.project = prjName;
+	data.account = localStorage.getItem("Account");
+	data.project = localStorage.getItem("ProjectName");
+	data.product = localStorage.getItem("ProductName");
+	
 	      $.ajax({
 	     type: 'POST',
 		 jsonpCallback: "callback",
@@ -1063,7 +1096,7 @@ $('#createClsrv').click(function(){
 		   }
 		   else
 		   {
-		   //alert(data);
+		   alert(data);
 		   //window.location.reload();
 		   }
 	     },
@@ -1093,6 +1126,9 @@ $('.buttonRt').click(function(){
 					return;
 				}
 	var data = {};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.routeName = routeName;
@@ -1126,6 +1162,9 @@ $('.buttonGtw').click(function(){
 		return;
 		}
 	var data = {};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.gtWayName = gtWayName;
@@ -1172,6 +1211,9 @@ function createStgFunction(buttonId, Id){
 					return;
 				}
 	var data = {};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.vType = vType;
@@ -1222,6 +1264,9 @@ function createSgpFunction(buttonId, Id){
 				}
 	
 	var data = {};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.sgName = sgName;
@@ -1255,6 +1300,9 @@ function createKpFunction(buttonId, Id){
 		return;
 		}
 	var data = {};
+	data.accountName = accountName;
+	data.projName = projName;
+	data.prodName = prodName;
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.keyPair = keyPair;
@@ -1285,6 +1333,9 @@ function storageaccFun(){
 	var data = {};
 	data.stracc = stracc;
 	data.strloc = strloc;
+	data.account = localStorage.getItem("Account");
+	data.project = localStorage.getItem("ProjectName");
+	data.product = localStorage.getItem("ProductName");
 	$.ajax({
         type: 'POST',
    	 	jsonpCallback: "callback",
@@ -1293,6 +1344,8 @@ function storageaccFun(){
         url: _ip+'/straccount',
         success: function(data, textStatus){
         	console.log(data);
+        	 $(".popupData").hide();
+        	 $(".popDataNew").hide();
         	$(".alert-stracc").stop().slideDown();        	
         	},
         	 error: function (xhr, status, error){
@@ -1370,7 +1423,7 @@ function deployFunction(){
 		{
 		console.log("This is Azure template");
 		var envName = document.getElementById("sel").innerText;
-		var prjName = document.getElementById("selpj").innerText;
+		//var prjName = document.getElementById("selpj").innerText;
 		var CloudName = document.getElementById("selClsrv").innerText;		
 		}
 	deployTemplateFunction();
@@ -1499,10 +1552,13 @@ function deployTemplateFunction()
 			var result_arr = [];
 			var region = pvd_region;
 			var envName = document.getElementById("sel").innerText;
-			var prjName = document.getElementById("selpj").innerText;
+			//var prjName = document.getElementById("selpj").innerText;
+			var accName = localStorage.getItem("Account");
+			var prjName = localStorage.getItem("ProjectName");
+			var prdName = localStorage.getItem("ProductName");
 			var CloudName = document.getElementById("selClsrv").innerText;
 			console.log(pvName+region+envName+prjName+CloudName);
-			result_arr.push(pvName,region,envName,prjName,CloudName);
+			result_arr.push(pvName,region,envName,accName,prjName,prdName,CloudName);
 			result_arr.splice(1, 0, "create_environment");
 			var resultObj1 = [];
 			if(envName == "Select")

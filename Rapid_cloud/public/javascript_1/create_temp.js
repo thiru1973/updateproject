@@ -72,24 +72,10 @@ $(document).ready(function(){
 		$(this).addClass("activeLink");
 	});
 	
-	var i =0;
-	/*$(".clickRole").click(function(e){
-		e.stopPropagation();		
-		if ($(this).find(".dropDown").css('display') == 'block'){
-			$(this).find(".dropDown").slideUp();
-		}else{
-			$(".dropDown").slideUp();
-			$(this).find(".dropDown").slideDown();
-		}
-	});
-
-	$(document).on("click", function () {
-		$(".dropDown").slideUp();
-	});*/
-	
 	$('[data-toggle="tooltip_Role"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
 	$('[data-toggle="tooltip_RoleAtt"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
 	$('[data-toggle="tooltip_OperatingSys"]').tooltip({title: "Subnet Help content comes here..", placement: "right"});
+
 });
 
 function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){
@@ -180,7 +166,10 @@ function selectOpt(ev, idn){
 	 var vb = v.parentNode;
 	 var idd = vb.id;
 	 var roleAt;
-	 console.log(idd);
+	 //alert(idd);
+	 var dId = idd.charAt(idd.length - 1);
+	 //alert(dId);
+	 console.log(norole);
 	 for (var i=0;i<norole.length;i++)
 		 {		 		
 		 			for(var j=0;j<idDt.length;j++)
@@ -226,6 +215,7 @@ function closeRole(ev){
 	ev.remove();
 	var i = ev.id;
 	var delRoleNo = i.charAt(i.length-1);
+	//alert(delRoleNo);
 	for(var j = 0;j<norole.length;j++) 
 	{
         if(norole[j] == delRoleNo) 
@@ -242,25 +232,27 @@ window.onload = function(){
 	getStorageData();
 }
 function getStorageData(){
-	var accountName = localStorage.getItem("AccountName")
-	,projName = localStorage.getItem("projectName")
-	,prodName = localStorage.getItem("productName");
+	var accountName = localStorage.getItem("Account")
+	,projName = localStorage.getItem("ProjectName")
+	,prodName = localStorage.getItem("ProductName");
 	console.log(accountName+projName+prodName);
+	var theDiv = document.getElementById("data");
+	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
 }
 //var idArr=[];
 //var osArr=[];
-var idArr = ["Database", "WebServer", "ApplicationServer", "Integration", "Test Server", "Build Server", "Proxy Server", "Mail Server"];
+var idArr = ["Database", "WebServer", "ApplicationServer", "Integration", "Test Server", "Build Server", "Proxy Server", "Mail Server", "Apache Solr Server","Caching Server", "NAT Server","RDP Server"];
 var osArr = ["Ubuntu", "Debian", "SUSE", "CentOS", "RHEL(AWS)", "Windows", "Gentoo(AWS)","Debian"];
 var idDt;
 function data(){
 	$(function(){		
 		   $.getJSON('http://172.29.59.65:3000/org_temp', function(data) {			
-			   
+			   console.log(data);
 			   idDt = data[0].types;			  
-			   for(var j=0;j<=idDt.length-1;j++){
+			   /*for(var j=0;j<=idDt.length-1;j++){
 				   var dd = data[0].types[j].name;				   
 				   idArr.push(dd);
-			   }
+			   }*/
 			   
 			   var os = data[1].types;			  
 			   for(var d=0; d<os.length-1; d++){				   
@@ -323,7 +315,7 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 	operatingSys.cre();
 	var operatingSys = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selll0","","","").createCon();
 
-	/* Project Name*/	
+	/* Project Name	
 	var projectName = new DropdownConst("div","pnameId","","templateConta1","","","");
 	projectName.createCon();
 	var projectName = new DropdownConst("div","pullLiii","pull-left","pnameId","","","").createCon();
@@ -331,9 +323,9 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 	var projectName = new DropdownConst("div","sellll","clickRole forWid1","pullLiii","Select","","",pj_Na);
 	projectName.createCon();
 	projectName.cre();
-	var projectName = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sellll","","","").createCon();
+	var projectName = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sellll","","","").createCon();*/
 	
-	/* Product Name*/	
+	/* Product Name
 	var productName = new DropdownConst("div","pdname","","templateConta1","","","");
 	productName.createCon();
 	var productName = new DropdownConst("div","pullLiiii","pull-left","pdname","","","").createCon();
@@ -341,16 +333,16 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 	var productName = new DropdownConst("div","selllll","clickRole forWid1","pullLiiii","Select","","",pr_Na);
 	productName.createCon();
 	productName.cre();
-	var productName = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selllll","","","").createCon();
+	var productName = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","selllll","","","").createCon();*/
 	/* Technology */
-	var technology = new DropdownConst("div","tname","","templateConta1","","","");
+	/*var technology = new DropdownConst("div","tname","","templateConta1","","","");
 	technology.createCon();
 	var technology = new DropdownConst("div","pullLiiiii","pull-left","tname","","","").createCon();
 	var technology = new DropdownConst("label","","labelTemp","pullLiiiii","Technology","","").createCon();
 	var technology = new DropdownConst("div","sellllll","clickRole forWid1","pullLiiiii","Select","","",tec_ngy);
 	technology.createCon();
 	technology.cre();
-	var technology = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sellllll","","","").createCon();
+	var technology = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sellllll","","","").createCon();*/
 	
 	/* Remove buttons */
 	var docV = document.getElementById("templateConta");
@@ -366,6 +358,18 @@ function objectData(pj_Na, pr_Na, tec_ngy){
 			//$(".card").removeClass();
 		});
 	});
+	/*$(".clickRole").click(function(e){		
+		e.stopPropagation();
+		if ($(this).find(".dropDown").css('display') == 'block'){
+			$(this).find(".dropDown").slideUp();
+		}else{
+			$(".dropDown").slideUp();
+			$(this).find(".dropDown").slideDown();
+		}
+	});
+	$(document).on("click", function () {
+		$(".dropDown").slideUp();
+	});*/
 }
 
 /* New Row */
@@ -374,10 +378,10 @@ var norole=[0];
 var count = 0;
 function createTem(eve)
 {
-	console.log(s);
-	count++;
-	norole.push(count);
-	s++;
+	console.log("s="+s);
+	count++,s++;
+	norole.push(s);
+	
 	var refId = document.getElementById("roleAdded");
 	var creAl = document.createElement("div");
 	creAl.id="templateConta"+s;
@@ -425,8 +429,18 @@ function createTem(eve)
 		$(document).on("click",".newClickRole"+s,function(){
 			$(this).find(".dropDown").slideToggle();
 		});
-		//return i;
+		//return i;	
+	/*$(".clickRole").click(function(e){		
+		e.stopPropagation();
+		if ($(this).find(".dropDown").css('display') == 'block'){
+			$(this).find(".dropDown").slideUp();
+		}else{
+			$(".dropDown").slideUp();
+			$(this).find(".dropDown").slideDown();
+		}
+	});*/ 
 }
+
 
 var select_result = [];
 function saveTemplateInformation(buttonId){
@@ -453,15 +467,16 @@ function saveTemplateInformation(buttonId){
 							}
 			}
 		
-	var pj_name = document.getElementById("sellll").innerText;
-	var pd_name = document.getElementById("selllll").innerText;
-	var tc_gy = document.getElementById("sellllll").innerText;
+	//var pj_name = document.getElementById("sellll").innerText;
+	//var pd_name = document.getElementById("selllll").innerText;
+	var pj_name = localStorage.getItem("ProjectName");
+	//var tc_gy = document.getElementById("sellllll").innerText;
 	var tm_name = document.getElementById("t_name").value;
 	var tm_desc = document.getElementById("t_desc").value;
 	var expTname = /^\w+$/;
 	var expDesc =  /^[A-Za-z\d\s\.\()]+$/;
 	
-	if(pj_name == str)
+	/*if(pj_name == str)
 		{
 		document.getElementById("sellll").style.border="thin dashed #E24B4B";
 		return;
@@ -473,7 +488,7 @@ function saveTemplateInformation(buttonId){
 			{
 			document.getElementById("sellllll").style.border="thin dashed #E24B4B";
 			return;
-			}else if(!expTname.test(tm_name)){
+			}else*/ if(!expTname.test(tm_name)){
 				$(".alert-warning").stop().slideDown();
 				document.getElementById("t_name").focus();
 				return;
@@ -485,7 +500,7 @@ function saveTemplateInformation(buttonId){
 					}
 	var a = Math.floor(100000 + Math.random() * 900000)
 	a = a.toString().substring(0, 3);
-	var te_name=pj_name+"_"+tc_gy+"_"+tm_name+"_"+a;
+	var te_name=pj_name+"_"+tm_name+"_"+a;
 	alert("Template saved with "+te_name+" name!!!!!!!!");
 	saveTemplateFunction(id,te_name);
 }
@@ -504,12 +519,15 @@ function saveTemplateFunction(id, te_name){
 				select_result.push(role_info);
 	}
 	var ary1=JSON.stringify(select_result); 
+	var acName = localStorage.getItem("Account")
+	    ,pjName = localStorage.getItem("ProjectName")
+	    ,pdName = localStorage.getItem("ProductName");
 	console.log(ary1);
 	$.ajax({
 	     type: 'POST',
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
-	     data: "d1="+ary1+"&d2="+te_name,
+	     data: "d1="+ary1+"&d2="+te_name+"&d3="+acName+"&d4="+pjName+"&d5="+pdName,
 	     url: 'http://172.29.59.65:3000/node_store',
 	     success: function(results) {
 	    	 if(id == "save_exit")
@@ -518,7 +536,7 @@ function saveTemplateFunction(id, te_name){
 	    	 }else if(id == "create_exit")
 	    	 		 {
 				    	 $(".alert-success").stop().slideDown();
-				    	 //location.href="http://172.29.59.65:3000/master_2"
+				    	 location.href="http://172.29.59.65:3000/master_2"
 	    	 		 }
 	     },
 		 error: function (xhr, status, error){
@@ -527,4 +545,5 @@ function saveTemplateFunction(id, te_name){
 			},
 		 });
 }
+
 

@@ -78,20 +78,20 @@
 						<div class="pull-left">
 							<label class="labelTemp">Access Key ID</label>
 							<div class="clickRole addStoTabWid">
-								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+								<input type="text" id="accKey" placeholder="" style="border:none;width:100%;">	
 							</div>
 						</div>
 						<div class="pull-left">
 							<label class="labelTemp">Secret Access Key</label>
 							<div class="clickRole addStoTabWid">
-								<input type="text" id="" placeholder="" style="border:none;width:100%;">	
+								<input type="text" id="secKey" placeholder="" style="border:none;width:100%;">	
 							</div>
 						</div>
 						<div class="pull-left">
 							<!--<a class="cancelPoup">Cancel</a>&nbsp;--></br>
-							<button class="redButton" id="awsSubscription">Create</button>
+							<button class="redButton" id="awsSubscription" onclick="addAwsSubscription();">Create</button>
 						</div>
-					</div><!--onsubmit="return validateSubscriptionForm()"-->
+					</div>
 					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post" onsubmit="return validateSubscriptionForm()" >
 					<div class="azureD" style="display:none;">
 					 <input type="hidden" id="accName1" name="accName1"/>

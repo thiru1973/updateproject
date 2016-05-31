@@ -164,6 +164,7 @@ exports.filter = function(req, res){
 			  var instance = db.collection('instance');
 			  var region = db.collection('region');		  
 			 region.findOne(({$and: [{"region_name": region1},{"prov_id": pname}]}), function(err, result){
+			  //region.findOne(({$and: [{"prov_id": pname}]}), function(err, result){
 			  if(err){
 			  throw(err);
 			  }
@@ -352,7 +353,7 @@ exports.temp_store=function(req,res){
 	var Obj = JSON.parse(result);	
 	var d1 = Obj.d1;
 	var d1_obj = JSON.parse(d1);	
-	var d2 = Obj.d2;	
+	var d2 = Obj.d2, d3 = Obj.d3, d4 = Obj.d4, d5 = Obj.d5;
 	res_store = d2.split(",");
 	var p_name = res_store[0];		
 	var t_region = res_store[1];
@@ -366,9 +367,11 @@ exports.temp_store=function(req,res){
 		  } else {    
 		    console.log('Connection established to');    
 			var collection=db.collection('pvd_template_information');
-		    var DB_data = {Template_name:t_name, Template_type:t_type, Instances : d1_obj, Cloud : p_name, Region : t_region, VMSs: t_vms,
+		    var DB_data = {Template_name:t_name, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type:t_type, Instances : d1_obj, Cloud : p_name, Region : t_region, VMSs: t_vms,
 		    		Created_at : c_date};
-
+//			var DB_data = {Template_name:t_name, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type:t_type, Instances : d1_obj, Cloud : p_name, VMSs: t_vms,
+//		    		Created_at : c_date};
+			console.log(DB_data);
 		    collection.insert([DB_data], function (err, result) {
 		      if (err) {
 		        console.log(err);
@@ -489,13 +492,15 @@ client_pg.connect();
 exports.create_cloud_service = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
-	var name=Obj.name;
-	var location = Obj.location;
-	var project=Obj.project;
-	console.log(name);
-	console.log(location);
-	console.log(project);
-	var arr=["Azure","create_cloud_service",name,location,project];
+	var name=Obj.name
+	    ,location = Obj.location
+	    ,Account = Obj.account
+	    ,Project = Obj.project
+	    ,Product = Obj.product;
+	
+	console.log(name+location);
+	var arr=["Azure","create_cloud_service",name,location,Account,Project,Product];
+	console.log(arr);
 	 var client = new zerorpc.Client();
 	client.connect("tcp://172.29.93.97:4242");
 	 client.invoke("assign", arr, function(error, res, more) {

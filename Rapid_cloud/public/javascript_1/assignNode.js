@@ -1,6 +1,13 @@
 window.onload = function(){
 	getTemplateName();
-	
+	setStorageData();
+}
+function setStorageData(){
+	var accountName = localStorage.getItem("Account")
+	,projName = localStorage.getItem("ProjectName")
+	,prodName = localStorage.getItem("ProductName");
+	var theDiv = document.getElementById("data");
+	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
 }
 var templates = [];
 var os= []
@@ -218,11 +225,10 @@ function selectOpt(ev, idn){
 	 if(idd == "sel")
 		 {
 		 	provider = aTex;
-		 	region_fun(aTex);	 	
+		 	region_fun(aTex);
+		 	//node_filter(aTex);
 		 }
-	 if(idd == "sell"){
-		 node_filetr(provider,aTex);			 
-		 }
+	 if(idd == "sell"){node_filter(provider,aTex);}
 	 for(var i=0;i<templates.length;i++)
 		 {
 		 	if(idd == "sel"+i+"")
@@ -266,7 +272,7 @@ function region_fun(reg){
 var images = [];
 var nodes = [];
 var region;
-function node_filetr(pvd,reg){	
+function node_filter(pvd,reg){	
 	region = reg;	
 	var data={};
 	data.pname=pvd;
@@ -409,7 +415,10 @@ $(".saveInfo").click(function(){
 })
 
 function saveInformation(tm_name){
-
+	var acName = localStorage.getItem("Account")
+	    ,pjName = localStorage.getItem("ProjectName")
+	    ,pdName = localStorage.getItem("ProductName");
+	
 	for(var i=0;i<templates.length;i++)
 	{	
 		var node_role = templates[i].role;
@@ -440,7 +449,7 @@ function saveInformation(tm_name){
 	     type: 'POST',
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
-	     data: "d1="+arr1+"&d2="+arr2,	     
+	     data: "d1="+arr1+"&d2="+arr2+"&d3="+acName+"&d4="+pjName+"&d5="+pdName,	     
 	     url: 'http://172.29.59.65:3000/temp_store',
 	     success: function(results) {
 	     	 $(".alert-success").stop().slideDown();

@@ -18,85 +18,103 @@ $('#Templates').click(function(){
 	//$("#single_node").hide();
 });
 var accountName,projName,prodName;
-
 function getStorageData(){
-	accountName = localStorage.getItem("AccountName")
-	,projName = localStorage.getItem("projectName")
-	,prodName = localStorage.getItem("productName");
-	console.log(accountName+projName+prodName);
+	accountName = localStorage.getItem("Account")
+	,projName = localStorage.getItem("ProjectName")
+	,prodName = localStorage.getItem("ProductName");
+	//console.log(accountName+projName+prodName);
+	 var theDiv = document.getElementById("data");
+		theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
 }
-var tempName = [];
-var region = [];
-var tempType = [];
-var nodes = [];
-var cloud = [];
-var myTemplate_images = [];
-$.getJSON( "http://172.29.59.65:3000/my_view", function( data ) {	
-               result=data; 
-               getStorageData();
-		for(var j=0;j<data.length;j++)
-			{		
-				tempName[j] = data[j].Template_name;
-				region[j] = data[j].Region;
-				tempType[j] = data[j].Template_type;
-				nodes[j] = (data[j].Instances).length;
-				cloud[j] = data[j].Cloud;					
-			}
-		
-		 for(var j=0;j<cloud.length;j++)
-		 {
-		    if(cloud[j] == "AWS")
-		    	{
-		    		myTemplate_images.push("AWS_Logo.png");
-		    	}
-		    else
-		    	{
-		    		myTemplate_images.push("Windows_Azure_Logo.png");
-		    	}
-		 }		 
-		assign_myTemplate();
-		myTemp_details();
-	});
 
-$.getJSON( "http://172.29.59.65:3000/gen_view", function( data ) {	
-	result1=data;
-	tempName.splice(0,tempName.length);
-	region.splice(0,region.length);
-	tempType.splice(0,tempType);
-	nodes.splice(0,nodes.length);
-	for(var j=0;j<data.length;j++)
-		{		
-			tempName[j] = data[j].Template_name;
-			region[j] = data[j].Region;
-			tempType[j] = data[j].Template_type;
-			nodes[j] = (data[j].Template_Role).length;	
-		}
-	assign_generic();
-	generic_details();
+var myTemplate_images = [];
+$(function(){		
+		$.getJSON( "http://172.29.59.65:3000/my_view", function( data ) {	
+		              var result=data;
+		              var tempName = [], region = [], tempType = [], nodes = [], cloud = [];
+		              getStorageData();
+		              var acc = localStorage.getItem("Account");
+		              var prj = localStorage.getItem("ProjectName");
+				for(var j=0;j<result.length;j++)
+					{		
+					if(result[j].Account_Name == acc && result[j].Project_Name == prj)
+						{
+							//console.log(j);
+							//console.log(result[j].Template_name);
+							tempName[j] = result[j].Template_name;
+							region[j] = result[j].Region;
+							tempType[j] = result[j].Template_type;
+							nodes[j] = (result[j].Instances).length;
+							cloud[j] = result[j].Cloud;
+						}else{console.log("No");}
+					}
+				
+				 for(var j=0;j<cloud.length;j++)
+				 {
+				    if(cloud[j] == "AWS")
+				    	{
+				    		myTemplate_images.push("AWS_Logo.png");
+				    	}
+				    else
+				    	{
+				    		myTemplate_images.push("Windows_Azure_Logo.png");
+				    	}
+				 }	
+				
+				assign_myTemplate(tempName,region,tempType,nodes,cloud);
+				myTemp_details(result);
+			});
+});	
+		
+$(function(){
+		$.getJSON( "http://172.29.59.65:3000/gen_view", function( data ) {	
+			var result1=data;
+			//console.log(data);
+			var tempName1 = [], region1 = [], tempType1 = [], nodes1 = [];
+			var stg = localStorage.getItem("Account");
+			var prj = localStorage.getItem("ProjectName");
+			for(var k=0;k<result1.length;k++)
+				{	
+				//console.log(k);
+				if(result1[k].Account_Name == stg && result1[k].Project_Name == prj)
+					{
+						//console.log(k);
+						//console.log(result1[k].Template_name);
+						tempName1[k] = result1[k].Template_name;
+						region1[k] = result1[k].Region;
+						tempType1[k] = result1[k].Template_type;
+						nodes1[k] = (result1[k].Template_Role).length;
+					}else{console.log("no")}
+				}
+			//console.log(tempName1+tempName1.length);
+			assign_generic(tempName1,region1,tempType1,nodes1);
+			generic_details(result1);			
+		});
 });
 
-
-function assign_myTemplate(){
+function assign_myTemplate(tempName,region,tempType,nodes,cloud){
 	var qu = document.querySelector("[role='template']");
-	for(var i=0;i<=tempName.length-1;i++){		
-	qu.innerHTML+=
-	            "<div id='gen_div' class='col-xs-12 col-sm-4 col-md-4 col-lg-3 "+tempType[i]+" '>"
-				+"<article class='flip'>"
-				+"<div class='card'>"
-				+"<div class='face front'>"
-				+"<figure><img src='images_1/"+ myTemplate_images[i] +"' /></figure>"
-				+"<summary>"+ tempName[i] +"</summary>"
-				+"<ul>"
-				+"<li>Cloud: "+cloud[i]+"</li>"
-				+"<li>Region: "+region[i]+"</li>"
-				+"<li>Type: <span>"+tempType[i]+"</span></li>"
-				+"<li>Node: "+nodes[i]+"</li>"
-				+"</ul></div>"
-				+"<div class='face back' id='"+tempName[i]+"'><span class='"
-				+"glyphicon glyphicon-remove-circle closeTemplate'></span>Nodes:<input class='inPut' value='"+nodes[i]+"' type='text' disabled='disabled' /><br><br><b>Role Deatails</b>" +
-						"<table border='0' class='my_info'><thead><tr><th>Node </th><th>Role </th></tr></thead><tbody></tbody></table>"
-				+"<br><input type='button' value='Modify'/>&nbsp;<input type='button' value='Deploy' onclick='pvdSpec_function("+tempName[i]+")' />"
-				+"</div></div></article>";
+	for(var i=0;i<=tempName.length-1;i++){
+		if(tempName[i] != undefined){
+						qu.innerHTML+=
+						            "<div id='gen_div' class='col-xs-12 col-sm-4 col-md-4 col-lg-3 "+tempType[i]+" '>"
+									+"<article class='flip'>"
+									+"<div class='card'>"
+									+"<div class='face front'>"
+									+"<figure><img src='images_1/"+ myTemplate_images[i] +"' /></figure>"
+									+"<summary>"+ tempName[i] +"</summary>"
+									+"<ul>"
+									+"<li>Cloud: "+cloud[i]+"</li>"
+									+"<li>Region: "+region[i]+"</li>"
+									+"<li>Type: <span>"+tempType[i]+"</span></li>"
+									+"<li>Node: "+nodes[i]+"</li>"
+									+"</ul></div>"
+									+"<div class='face back' id='"+tempName[i]+"'><span class='"
+									+"glyphicon glyphicon-remove-circle closeTemplate'></span>Nodes:<input class='inPut' value='"+nodes[i]+"' type='text' disabled='disabled' /><br><br><b>Role Deatails</b>" +
+											"<table border='0' class='my_info'><thead><tr><th>Node </th><th>Role </th></tr></thead><tbody></tbody></table>"
+									+"<br><input type='button' value='Modify'/>&nbsp;<input type='button' value='Deploy' onclick='pvdSpec_function("+tempName[i]+")' />"
+									+"</div></div></article>";
+						}
 	}
 	var i=1;
 	$('.flip').click(function(event){
@@ -130,7 +148,7 @@ $('#manageEnv').click(function(){
 })
 
 
-function myTemp_details(){
+function myTemp_details(result){
 	for (var i=0;i<result.length;i++)
 	{	
 		var tr;
@@ -146,28 +164,29 @@ function myTemp_details(){
 	}
 }
 
-function assign_generic(){
+function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 	var qu1 = document.querySelector("[role='template']");
-	//console.log(tempName);
-	var img=["generic_Template.png"];		
-	
-	for(var i=0;i<=tempName.length-1;i++){
-		qu1.innerHTML+=
-		            "<div id='gen_div' class='col-xs-12 col-sm-4 col-md-4 col-lg-3 "+tempType[i]+" '>"
-					+"<article class='flip'>"
-					+"<div class='card'>"
-					+"<div class='face front'>"
-					+"<figure><img src='images_1/"+ img[0] +"' /></figure>"
-					+"<summary>"+ tempName[i] +"</summary>"
-					+"<ul>"
-					+"<li>Type: <span>"+tempType[i]+"</span></li>"
-					+"<li>Roles: "+nodes[i]+"</li>"
-					+"</ul></div>"
-					+"<div class='face back' id='"+tempName[i]+"'><span class='"
-					+"glyphicon glyphicon-remove-circle closeTemplate'></span>Roles:<input class='inPut' value='"+nodes[i]+"' type='text' disabled='disabled'/><br><br><b>Role Details</b>"+
-					"<table border='0' class='gen_info'><thead><tr><th>Role </th></tr></thead><tbody></tbody></table>"
-					+"<br><input type='button' value='Modify' />&nbsp;<input type='button' onclick='genereic_function("+tempName[i]+")' value='Deploy' />"
-					+"</div></div></article>";
+	var img=["generic_Template.png"];
+	for(var i=0;i<=tempName1.length-1;i++){
+		if(tempName1[i] != undefined){
+			//console.log(tempName1[i]);
+				qu1.innerHTML+=
+				            "<div id='gen_div' class='col-xs-12 col-sm-4 col-md-4 col-lg-3 "+tempType1[i]+" '>"
+							+"<article class='flip'>"
+							+"<div class='card'>"
+							+"<div class='face front'>"
+							+"<figure><img src='images_1/"+ img[0] +"' /></figure>"
+							+"<summary>"+ tempName1[i] +"</summary>"
+							+"<ul>"
+							+"<li>Type: <span>"+tempType1[i]+"</span></li>"
+							+"<li>Roles: "+nodes1[i]+"</li>"
+							+"</ul></div>"
+							+"<div class='face back' id='"+tempName1[i]+"'><span class='"
+							+"glyphicon glyphicon-remove-circle closeTemplate'></span>Roles:<input class='inPut' value='"+nodes1[i]+"' type='text' disabled='disabled'/><br><br><b>Role Details</b>"+
+							"<table border='0' class='gen_info'><thead><tr><th>Role </th></tr></thead><tbody></tbody></table>"
+							+"<br><input type='button' value='Modify' />&nbsp;<input type='button' onclick='genereic_function("+tempName1[i]+")' value='Deploy' />"
+							+"</div></div></article>";
+				}
 		}
 
 		var i=1;
@@ -193,7 +212,7 @@ function genereic_function(genT){
 	location.href ="http://172.29.59.65:3000/assignNode"+"?data="+genTemplate;
 }
 
-function generic_details(){
+function generic_details(result1){
 	for (var i=0;i<result1.length;i++)
 	{	
 		var tr;

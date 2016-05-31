@@ -35,7 +35,7 @@ $(document).ready(function(){
 	
 	$(window).on("load resize",function(e){
 		var h = $('[role="header"]').outerHeight(true);
-				$('[role="contentArea"] header').height(h-25);				
+				$('[role="contentArea"] header').height(h-25);
 	});
 	
 	$(".link_Prime").hover(function(){
@@ -47,9 +47,10 @@ $(document).ready(function(){
 $(document).on('click', 'li#Templates', function(){ 
 	
 });
+
 var menU = {
-	open:1,
-	close:0,
+	open:true,
+	close:0,	
 	primaryLins:{
 		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
 		level_2:["Templates","Node","Blueprint","Networks","Load Balancer"],
@@ -63,7 +64,7 @@ var menU = {
 		for(i=0; i<= this.primaryLins.level_1.length-1; i++ ){
 			navv.innerHTML+='<li class="link_Prime" id='+this.primaryLins.level_1[i]+'>\
 							<ul class="howMe" id="link_'+i+'"></ul>\
-							<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>'+this.primaryLins.level_1[i]+'</li>';
+							<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i><span class="myTe">'+this.primaryLins.level_1[i]+'</span></li>';
 		}
 		this.createSubView();
 	},
@@ -73,7 +74,7 @@ var menU = {
 			subL0.innerHTML+='<li id='+this.primaryLins.level_2[i]+'>'+this.primaryLins.level_2[i]+'</li>';
 		}
 	},
-	lnav:document.getElementById("leftNavigation"),
+	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){
 		this.lnav.innerHTML+='<div class="header-sec">\
 							<header role="header">\
@@ -88,7 +89,7 @@ var menU = {
 							</header>\
 						</div>\
 					<div id="menuBox">\
-					  <a href="" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
+					  <a href="#" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
 					  <section role="aboutProject">\
 						<br>\
 						<img src="images_1/profile_pic.png" />\
@@ -107,16 +108,22 @@ var menU = {
 					  </nav></div>';
 		this.createParentView();
 	},
-	moreMenu:function(ev){		
-		var menuB = document.getElementById("leftNavigation");
-			menuB.style.display="none";
-		var viewTemp = document.getElementById("view_temp")
-			viewTemp.style.width="100%";
-			viewTemp.innerHTML+='<a href="" onclick="menU.openMenu()" style="position:absolute;top:77px;left:0px;">Open Menu</a>';
+	moreMenu:function(ev){
+		if(this.open){
+			this.lnav.style.width="5.66667%"
+			$('[role="contentArea"]').css("width", "94.333333%");
+			$(".link_Prime span.myTe").css("display", "none");
+			this.open = false;
+		}else{
+			this.lnav.style.width="";
+			$('[role="contentArea"]').css("width", "");
+			$(".link_Prime span.myTe").css("display", "");
+			this.open = true;
+		}
 	},
 	openMenu:function(){
-		var menuB = document.getElementById("leftNavigation");
-			menuB.style.display="block";
+		var lnav = document.getElementById("leftNavigation");
+			lnav.style.display="block";
 	},
 	assignIcons:function(){
 	}
@@ -132,3 +139,18 @@ $('#Manage').click(function(){
 	//alert("Manage function");
 	location.href = "http://172.29.59.65:3000/manageEnv"
 });
+$('#Dashboard').click(function(){
+	location.href = "http://172.29.59.65:3000/accounts"
+})
+
+
+
+
+
+
+
+
+
+
+
+

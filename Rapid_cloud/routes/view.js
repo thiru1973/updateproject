@@ -111,11 +111,11 @@ exports.node_store=function(req,res){
 	var result=JSON.stringify(req.body);	
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
+	var d2 = Obj.d2, d3 = Obj.d3, d4 = Obj.d4, d5 = Obj.d5;
 	console.log(d1);
-	var d2 = Obj.d2;
 	var d1_obj = JSON.parse(d1);
 	console.log(d1_obj);
-	//console.log(d2);
+	console.log(d2+d3+d4+d5);
 	var c_date = Date();
 	var tt_type="Generic Template";
 	MongoClient.connect(url, function (err, db) {
@@ -124,7 +124,7 @@ exports.node_store=function(req,res){
 		  } else {    
 		    console.log('Connection established to');    
 			var collection=db.collection('generic_template_information');
-		    var DB_data = {Template_name : d2, Template_type : tt_type, Created_at : c_date, Template_Role:d1_obj };
+		    var DB_data = {Template_name : d2, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type : tt_type, Created_at : c_date, Template_Role:d1_obj };
 
 		   collection.insert([DB_data], function (err, result) {
 

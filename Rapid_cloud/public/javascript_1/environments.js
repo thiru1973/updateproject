@@ -1,4 +1,6 @@
-/* Writen by Om Starts re */
+/* ************************************
+	Create by: Omprakash Ramanadham	
+*************************************** */
 var _ip = "http://172.29.59.65:3000";
 
 $(document).ready(function(){
@@ -70,6 +72,54 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function(){
 	});
 });*/
 
+var account = "account";
+$(function(){
+	$.getJSON(_ip+'/accountDetails', function(data){
+		for(var i =0; i < data.data4.length; i++){
+			var tT = document.getElementById("accounts_ID");
+				tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data.data4[i].accountid+'</dd></dl></li>';
+		}
+	})
+});
+var trIDs = [];
+function getAccounts(event, idn){
+	var aImage = event.getElementsByTagName("dt")[0].innerHTML;
+	var inn = event.getElementsByTagName("dd")[0];
+	var aTex = $(inn).text();
+	var v = event.parentNode;
+	var vb = v.parentNode;
+	var idd = vb.id;
+	//alert(aTex);
+	
+	$(function(){
+		   $.getJSON( _ip + '/accountDetails', function (data){
+					console.log(data);
+					var d = [];
+					for(var bb=0; bb <= data.data3.length-1; bb++){
+						if(aTex == data.data3[bb].accountid){
+							console.log(aTex);
+							d.push(data.data3[bb])
+						}
+					}
+					if(trIDs.length !== 0){
+						for(var tt=0; tt<= trIDs.length-1; tt++){
+							document.getElementById(trIDs[tt]).remove();
+							if(document.getElementById("dataOf"+trIDs[tt]))
+							{
+								document.getElementById("dataOf"+trIDs[tt]).remove();
+							}
+						}
+					}
+					manage.createTableData(d);
+					console.log(d);
+				});
+			});
+			
+	
+	 $("#"+idd+" span:first").html(aImage+aTex);
+	 $("#"+idd+" span img").css("width", "25px");
+		 //this.getDetals(aTex)	 
+}
 /* ---------------------------------------------
 		These common actions(Hide, Show, Hide and Show toggle) we can use all pages.
 	------------------------------------------------*/
@@ -111,21 +161,15 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 /* ---------------------END------------------------*/
 		/*---------- Table ------------------*/
 	function Projects(){
-		  $(function(){
-		   $.getJSON( _ip + '/manage_env', function (data){
-				//console.log("1st Url Data  : "+data);
-					manage.createTableData(data);
-					//console.log("DATA:::::::::"+data);
-				});
-			});
 			this.volumeSettingsData = [];
 			this.securityGroupSettingsData = [];
 			this.popupTitle = document.getElementById('titleOfPopup');
 			this.popupExistingTitle = document.getElementById('existingData');
+			//this.trIDs = [];
 	}
-	
 	Projects.prototype.getEnvironments = function(self, id){
 		//self.preventDefault();
+		console.log(id);
 		this.id = id;
 		var sel = this;
 		createEle(id, sel)
@@ -139,7 +183,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 			//getExis.innerHTML="";
 			//getExis.id="";
 			return false;
-		}
+			}
 			var manageTable = document.getElementById(id);
 			var crTr = document.createElement("tr");
 				crTr.id ="dataOf"+id;
@@ -221,17 +265,17 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 				//console.log(requestData.length);
 			var dt = document.createElement("dt");
 			var temesArr = requestData[enTem].env_name;
-				elId.innerHTML+='<dt id="EnvntID_'+enTem+'" onclick="manage.getNodes(this, '+requestId+')">'+temesArr+'<span onclick="manage.enviromentMoreLinks(this, '+enTem+')" class="glyphicon glyphicon-chevron-down arrowGray enviromentMoreLinks rotateGray"></span></dt>';
+				elId.innerHTML+='<dt id="EnvntID_'+enTem+'" onclick="manage.getNodes(this, '+requestId+')">'+temesArr+'<span onclick="manage.enviromentMoreLinks(this, '+enTem+', '+requestId+')" class="glyphicon glyphicon-chevron-down arrowGray enviromentMoreLinks rotateGray"></span></dt>';
 		  }
 		  var elId = document.getElementById('EnvntID_'+0);
-		  this.getNodes(elId, requestId);
+		  this.getNodes(elId, requestId);		  
 	}
 	var node_details = [];
-	Projects.prototype.getNodes = function(env_name, project_id){
+	Projects.prototype.getNodes = function(env_name, project_id){		
 		//console.log(env_name.innerText+"  "+project_id);
-		//document.getElementById('loadBalTd').style.display="none";
-		//document.getElementById('nodeTD').style.display="block";
-		//document.getElementById('detailsTD').style.display="block";
+		document.getElementById('loadBalTd').style.display="none";
+		document.getElementById('nodeTD').style.display="block";
+		document.getElementById('detailsTD').style.display="block";
 		
 		var elId = document.getElementById('envir_'+project_id);
 		var liArray = elId.getElementsByTagName("dt");
@@ -265,7 +309,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 							cloud = data[i].prov_id,
 							vpcNa = data[i].vpc_name;
 							var dd = JSON.stringify(nodeDat);
-							el.innerHTML+='<dt id="nodeDt_'+project_id+'_'+i+'" onclick="manage.getNodeDetails(this, '+i+', '+project_id+')">'+nodeNa+'<span onclick="manage.getNodeDetails_Manage(this, '+i+', '+project_id+')" class="glyphicon glyphicon-chevron-down arrowGray node_Details rotateGray"></span></dt>';
+							el.innerHTML+='<dt id="nodeDt_'+project_id+'_'+i+'" onclick="manage.getNodeDetails(this, '+i+', '+project_id+')">'+nodeNa+'<span onclick="manage.getNodeDetails_Manage(this, '+i+', '+project_id+')" title="'+cloud+'" class="glyphicon glyphicon-chevron-down arrowGray node_Details rotateGray"></span></dt>';
 							self.getNodeDetails("", 0, project_id);
 					}
 			 },
@@ -292,21 +336,17 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 			$("#upload-box-Azure").click();
 			$("#upload-box-Azure").change(function(){
 				$("#upload-file-Azure").val($(this).val());
-				//400/800 300/600 300/700  7 to 8 per day
 			});
 		}else if(ev.id =="addEndPoint"){
 			document.getElementById("addEndPointID").style.display="block";
 		}
 	}
-	Projects.prototype.enviromentMoreLinks = function(ev, i){
-		function insertAfter(referenceNode, newNode) {
-		    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-		}
+	Projects.prototype.disPlayLoadBalancer = function(){
 		//document.getElementById("loadBalTDText").innerHTML="Load Balancing";
 		document.getElementById("loadBalTd").style.display="block";
 		document.getElementById("nodeTD").style.display="none";
 		document.getElementById("detailsTD").style.display="none";
-
+		
 		var addLoadBa = document.getElementById("loadBal");
 		addLoadBa.innerHTML='<td style="padding:0px;width:250px;vertical-align:top;background-color:#DDDDDD;">\
 							<nav role="noDes">\
@@ -413,7 +453,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 										<label><input type="checkbox">Create Internal Load Balancer</label>\
 										<br><br>\
 										<button class="redButton" style="padding:7px 12px;font-size:16px;" onclick="deployFunction();">Create</button>\
-										<button class="redButton countAlign" style="padding:7px 12px;font-size:16px;" onclick="deployFunction();">Cancel</button>\
+										<button class="redButton countAlign" style="padding:7px 12px;font-size:16px;" onclick="manage.CancelFun(this);">Cancel</button>\
 										<br><br>\
 										<br><br>\
 										<br><br>-->\
@@ -478,6 +518,203 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 							</nav>\
 						</td>\ ';
 	}
+	Projects.prototype.traficManagerDetails = function(){
+		//document.getElementById("loadBalTDText").innerHTML="Load Balancing";
+		document.getElementById("loadBalTd").style.display="block";
+		document.getElementById("nodeTD").style.display="none";
+		document.getElementById("detailsTD").style.display="none";
+		var addLoadBa = document.getElementById("loadBal");
+		addLoadBa.innerHTML='<td style="padding:0px;width:250px;vertical-align:top;background-color:#DDDDDD;">\
+							<nav role="noDes">\
+								<ul>\
+									<li class="naee"><a href="#">Traffic Manager</a>\
+									<div style="padding:10px;float:left;width:100%;">\
+										<div class="pull-left">\
+											<label class="labelTemp">Profile Name</label>\
+											<div class="clickRole addStoTabWid">\
+												<input type="text" id="pfName" placeholder="Any Name" style="border:none;width:100%;">\
+											</div>\
+										</div>\
+										<div class="pull-left">\
+											<label class="labelTemp">Domain Name</label>\
+											<div class="clickRole addStoTabWid">\
+												<input type="text" id="dmName" placeholder="Any Name" style="border:none;width:100%;">\
+											</div>\
+										</div>\
+										<div class="pull-left">\
+											<label id="" class="labelTemp"><span>Load Balanacer Method</span></label>\
+											<div id="typeo11" class="clickRole addStoTabWid"><span>Select</span>\
+												<ul id="ba_Me_ID" class="dropDown" style="display: none;">\
+												<li onclick="selectOpt(this,0)" class="Dev"><dl><dt style="padding:0px;"></dt><dd class="va">Performance</dd></dl></li>\
+												<li onclick="selectOpt(this,1)" class="Dev"><dl><dt style="padding:0px;"></dt><dd class="va">RoundRobin</dd></dl></li>\
+												<li onclick="selectOpt(this,2)" class="Dev"><dl><dt style="padding:0px;"></dt><dd class="va">Failover</dd></dl></li>\
+												</ul>\
+												<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
+											</div>\
+										</div>\
+										<div class="smpxDevider">&nbsp;</div>\
+										<div class="listeConfiText">Configuration</div>\
+										<div class="pull-left" style="visibility:hidden;height:0;">\
+										<label class="labelTemp">Monitor Port</label>\
+										<div class="clickRole addStoTabWid">\
+											<input type="text" id="epName" placeholder="Name" style="border:none;width:100%;">\
+										</div>\
+										</div>\
+										<div class="pull-left">\
+											<label id="" class="labelTemp"><span>Monitor Protocol</span></label>\
+											<div id="typeDro12" class="clickRole addStoTabWid"><span>Select</span>\
+												<ul id="as_ID" class="dropDown" style="display: none;">\
+												<li onclick="selectOpt(this,0)" class="Dev"><dl><dt style="padding:0px;"></dt><dd class="va">Http</dd></dl></li>\
+												<li onclick="selectOpt(this,1)" class="Dev"><dl><dt style="padding:0px;"></dt><dd class="va">Https</dd></dl></li>\
+												</ul>\
+												<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
+											</div>\
+										</div>\
+										<div class="pull-left" >\
+										<label class="labelTemp">Monitor Port</label>\
+										<div class="clickRole" style="margin-right:10px">\
+											<input type="number" id="mPort" placeholder="Public Port" style="border:none;width:100%;">\
+										</div>\
+										</div>\
+										<div class="smpxDevider">&nbsp;</div>\
+										<input id="upload-box-Azure" style="visibility:hidden;height:0;" name="Photo" type="file" />\
+										<button class="redButton" style="padding:7px 12px;font-size:16px;" onclick="trafficManager(\''+this.dataOfNd[0].cloud_name+'\');">Create</button>\
+										<button class="redButton countAlign" style="padding:7px 12px;font-size:16px;">Cancel</button>\
+									</div>\
+									</li>\
+								</ul>\
+							</nav>\
+						</td>\ ';
+		this.dropDownMenu();
+	}
+	Projects.prototype.uploadBlobToStorage = function(){
+		document.getElementById("loadBalTd").style.display="block";
+		document.getElementById("nodeTD").style.display="none";
+		document.getElementById("detailsTD").style.display="none";
+		
+		var addLoadBa = document.getElementById("loadBal");
+		addLoadBa.innerHTML='<td style="padding:0px;width:250px;vertical-align:top;background-color:#DDDDDD;">\
+					<nav role="noDes">\
+					<form id="uploadForm1" enctype="multipart/form-data" action="/blobUpload" method="post" onsubmit="return validateBlobForm()">\
+					<ul>\
+						<li class="naee"><a href="#">Upload Blob File</a>\
+						<div style="padding:10px;float:left;width:100%;">\
+								<div class="pull-left">\
+								<label class="labelTemp">Container Name</label>\
+								<div class="clickRole addStoTabWid">\
+									<input type="text" id="cName" name="cName" placeholder="Any Name" style="border:none;width:100%;">\
+								</div>\
+							    </div>\
+			                    <div class="pull-left">\
+								<label class="labelTemp">Blob Name</label>\
+								<div class="clickRole addStoTabWid">\
+									<input type="text" id="bName" name="bName" placeholder="Any Name" style="border:none;width:100%;">\
+								</div>\
+							    </div>\
+								<div class="pull-left">\
+								<label class="labelTemp">Upload Blob File</label>\
+								<div class="clickRole addStoTabWid">\
+									<input type="file" name="bfile" id="file" placeholder="" style="border:none;width:100%;">\
+								</div></div>\
+								<div class="smpxDevider">&nbsp;</div>\
+								<input type="submit" style="padding:7px 12px;font-size:16px;background-color:#E24B4B;" value="Upload" name="submit">\
+						</div>\
+						</li>\
+					</ul>\
+				</nav>\
+			</td>\ ';
+			this.dropDownMenu();
+	}
+	function validateBlobForm(){
+		alert("hi");
+		var exp = /^\w+$/;
+		var contName = document.getElementById("cName").value 
+		    ,blobName = document.getElementById("bName").value;
+		if(!exp.test(contName)){
+			alert("Enetr the container Name");
+			document.getElementById("cName").focus();
+			return false;
+		}else if(!exp.test(blobName)){
+			alert("Enter the blob Name");
+			document.getElementById("bName").focus();
+			return false;
+		}else{return true;}
+	}
+	
+	
+	
+	function trafficManager(obj){
+		alert(obj);
+		var expTname = /^\w+$/;
+		var cldService = obj
+		    ,pfName = document.getElementById("pfName").value
+		    ,dmName = document.getElementById("dmName").value
+		    ,lbMethod = document.getElementById("typeo11").innerText
+		    ,mnProtocol = document.getElementById("typeDro12").innerText
+		    ,mPort = document.getElementById("mPort").value;
+		if(!expTname.test(pfName)){
+			alert("Enter the profile name");
+			document.getElementById("pfName").focus();
+			return;
+		}else if(!expTname.test(dmName)){
+			alert("Enter domain name and it should be unique..!");
+			document.getElementById("dmName").focus();
+			return;
+		}else if(lbMethod == "Select"){
+			document.getElementById("typeo11").style.border="thin dashed #E24B4B";
+			return;
+		}else if(mnProtocol == "Select"){
+			document.getElementById("typeDro12").style.border="thin dashed #E24B4B";
+			return;
+		}
+		
+		
+		console.log(cldService,pfName,dmName,lbMethod,mnProtocol,mPort);
+		var data = {};
+		data.cldService = cldService;
+		data.pfName = pfName;
+		data.dmName = dmName;
+		data.lbMethod = lbMethod;
+		data.mnProtocol = mnProtocol;
+		data.mPort = mPort;
+		$.ajax({
+			type: 'POST',
+		 	jsonpCallback: "callback",
+		 	datatype: 'jsonp',
+		 	data: data,
+		 	url: _ip+'/trafficManage',
+		 	success: function(data, textStatus){
+		 		alert(data);		 		
+	    	},
+	    	 error: function (xhr, status, error){
+	             console.log('Failure');
+	     		alert("failure");
+	     		},
+	        });
+	}
+	
+	
+	Projects.prototype.enviromentMoreLinks = function(ev, i, project_id){
+		function insertAfter(referenceNode, newNode) {
+		    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+		}
+		event.stopPropagation();
+		var envOptionsID = document.getElementById("envLinks_"+project_id+"_"+i);
+		var nodId = document.getElementById("EnvntID_"+i);
+		if(envOptionsID){
+			envOptionsID.remove();
+		}else{
+			var nodeListOptions = document.createElement("ul");
+			nodeListOptions.id="envLinks_"+project_id+"_"+i;
+			nodeListOptions.className="nodeSettings";
+			nodeListOptions.innerHTML='\
+			<li onclick="manage.disPlayLoadBalancer(this)">Load Balanacer</li>\
+			<li onclick="manage.traficManagerDetails(this, '+i+', '+project_id+')">Traffic Manager</li>\
+			<li onclick="manage.uploadBlobToStorage(this, '+i+', '+project_id+')">Upload Blob To Azure</li>\
+			</ul>';
+			insertAfter(nodId, nodeListOptions);
+		}
+	}
 	Projects.prototype._init = function(daaa){
 		this.dataOfNd = daaa; // [object Object] i dont know why??
 	}
@@ -536,30 +773,125 @@ function loadBalancer(){
 }	
 	
 	Projects.prototype.getNodeDetails_Manage = function(ev, i, project_id){
+		event.stopPropagation();
 		function insertAfter(referenceNode, newNode) {
 		    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 		}
 		var nodeListOptionsID = document.getElementById("nLinks_"+project_id+"_"+i);
 		var nodId = document.getElementById("nodeDt_"+project_id+"_"+i);
+		console.log("prov_id: "+ev.title);
 		if(nodeListOptionsID){
 			nodeListOptionsID.remove();
 		}else{
-			var nodeListOptions = document.createElement("ul");
-			nodeListOptions.id="nLinks_"+project_id+"_"+i;
-			nodeListOptions.className="nodeSettings";
-			nodeListOptions.innerHTML='<li onclick="manage.nodeDetailsVolume(this, '+i+', '+project_id+')">Volumes</li>\
-									   <li onclick="manage.nodeDetailsSecurityGroup(this, '+i+', '+project_id+')">Security Group</li>\
-									   <li onclick="">Keypairs</li>\
-									   <li onclick="">Snap Shoart</li>\
-									   <li onclick="manage.addScript(this, '+i+', '+project_id+')">Add Script</li>\
-									  </ul>';
-			insertAfter(nodId, nodeListOptions);
+			if(ev.title == "AWS"){
+				var nodeListOptions = document.createElement("ul");
+				nodeListOptions.id="nLinks_"+project_id+"_"+i;
+				nodeListOptions.className="nodeSettings";
+				nodeListOptions.innerHTML='<li onclick="manage.nodeDetailsVolume(this, '+i+', '+project_id+')">Volumes</li>\
+										   <li onclick="manage.nodeDetailsSecurityGroup(this, '+i+', '+project_id+')">Security Group</li>\
+										   <li onclick="">Keypairs</li>\
+										   <li onclick="">Snap Shoart</li>\
+										  </ul>';
+				insertAfter(nodId, nodeListOptions);
+			}else if(ev.title == "Azure"){
+				var nodeListOptions = document.createElement("ul");
+				nodeListOptions.id="nLinks_"+project_id+"_"+i;
+				nodeListOptions.className="nodeSettings";
+				nodeListOptions.innerHTML='\
+				<li onclick="manage.addScript(this, '+i+', '+project_id+')">Add Script</li>\
+				<li onclick="manage.endPoints_Azure(this, '+i+', '+project_id+')">End points</li>\</ul>';
+				insertAfter(nodId, nodeListOptions);
+			}
+			
 		}
+	}
+	Projects.prototype.endPoints_Azure = function(ev, i, project_id){
+		var nodeDe = document.getElementById('nodeDetails_'+project_id);
+			nodeDe.width="70%";
+		nodeDe.innerHTML='<tr>\
+				            <td colspan=""><div class="detailsDiv">End Points</div></td>\
+				           </tr>\
+							<tr>\
+								<td>\
+									<div class="pull-left">\
+										<label class="labelTemp">End Point Name</label>\
+										<div class="clickRole" style="margin-right:10px">\
+											<input type="text" id="endpoint" placeholder="Name" style="border:none;width:100%;">\
+										</div>\
+									</div>\
+									<div class="pull-left">\
+										<label class="labelTemp">Local Port</label>\
+										<div class="clickRole" style="margin-right:10px">\
+											<input type="number" id="lclPort" placeholder="Port Number" onchange="setpbPort(this.value);" style="border:none;width:100%;">\
+										</div>\
+									</div>\
+									<div class="pull-left">\
+										<label class="labelTemp">Public Port</label>\
+										<div class="clickRole" style="margin-right:10px">\
+											<input type="number" id="pbPort" placeholder="Port Number" style="border:none;width:100%;">\
+										</div>\
+									</div>\
+							  </td>\
+							</tr>\
+							 <tr>\
+							  <td colspan="">\
+								<div>\
+									<button class="redButton" onclick="createAzureEndpoints(\''+this.dataOfNd[i].cloud_name+'\', \''+this.dataOfNd[i].role+'\')">Create</button>\
+									<button class="redButton" onclick="">Cancel</button>\
+								</div>\
+				            </td>\
+							</tr>';
+		this.dropDownMenu();
+	}
+	/*==================Create End Point==================*/
+	function setpbPort(num){
+		document.getElementById("pbPort").value = num;
+	}
+	function createAzureEndpoints(cldSrvName,vmName){
+		var endpoint = document.getElementById("endpoint").value
+		    ,lclPort = document.getElementById("lclPort").value
+		    ,pbPort = document.getElementById("pbPort").value;
+		var exp = /^\w+$/;
+		if(!exp.test(endpoint)){
+			alert("Name not valid");
+			document.getElementById("endpoint").focus();
+			return;
+		}else if(lclPort == "" || lclPort == null){
+			alert("Should not be empty");
+			document.getElementById("lclPort").focus();
+			return;
+		}else if(pbPort == "" || pbPort == null){
+			alert("Should not be empty");
+			document.getElementById("pbPort").focus();
+			return;
+		}
+		console.log(endpoint+lclPort+pbPort);
+		var data = {};
+		data.cldSrvName = cldSrvName;
+		data.vmName = vmName;
+		data.endpoint = endpoint;
+		data.lclPort = lclPort;
+		data.pbPort = pbPort;
+		$.ajax({
+		     type: 'POST',
+			 jsonpCallback: "callback",
+		     datatype: 'jsonp',
+		     data: data,	 
+		     url:  _ip+'/azureEndPoint',
+		     success: function(results) {
+		    	 alert(results);
+		     },
+			 error: function (xhr, status, error){
+		        console.log('Failure');
+				alert("failure");
+				},
+			 });
+		
 	}
 	
 	Projects.prototype.addScript = function(ev, i, project_id){
 		var nodeDe = document.getElementById('nodeDetails_'+project_id);
-			nodeDe.width="100%";
+			nodeDe.width="70%";
 		nodeDe.innerHTML='<tr>\
 				            <td colspan=""><div class="detailsDiv">Add Script</div></td>\
 				           </tr>\
@@ -568,8 +900,8 @@ function loadBalancer(){
 									<label id="" class="labelTemp"><span></span></label>\
 									<div id="addSc" class="clickRole temp1stRowWid"><span>Select</span>\
 										<ul id="accounts_ID" class="dropDown">\
-											<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">VM_Details</dd></dl></li>\
-											<li onclick="selectOpt(this,1)" class="Dev"><dl><dt></dt><dd class="va">End_Points</dd></dl></li>\
+											<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">one</dd></dl></li>\
+											<li onclick="selectOpt(this,1)" class="Dev"><dl><dt></dt><dd class="va">two</dd></dl></li>\
 										</ul>\
 										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
 									</div>\
@@ -577,7 +909,7 @@ function loadBalancer(){
 							  </td>\
 							</tr>\
 							<tr>\
-								<td><textarea id="scriptdata" name="textarea" placeholder="Your script here.." class="pastYourScript" rows="10" style="width:100%"></textarea>\
+								<td><textarea name="textarea" placeholder="Your script here.." class="pastYourScript" rows="10" style="width:100%"></textarea>\
 							  </td>\
 							</tr>\
 							 <tr>\
@@ -602,9 +934,9 @@ function loadBalancer(){
 		     data: data,	 
 		     url:  _ip+'/runScript',
 		     success: function(results) {
-		    	 //alert(results);
-		    	 var myWindow = window.open("", "MsgWindow", "width=907,height=400");
-		    	    myWindow.document.write("<p>"+results+"</p>");
+		    	 if(results == "Success")
+		    		 {window.open(_ip+'/download');}
+		    	 else{alert(results);}
 		     },
 			 error: function (xhr, status, error){
 		        console.log('Failure');
@@ -612,6 +944,7 @@ function loadBalancer(){
 				},
 			 });
 	}
+	
 	Projects.prototype.nodeDetailsVolume = function(ev, i, project_id){
 		var data = {};
 		this.indexOfNode = i;
@@ -932,6 +1265,7 @@ function getPublicIp(valuee, append){
 		
 	}
 	Projects.prototype.getNodeDetails = function(ev, clickedData, project_id){
+		event.stopPropagation();
 		var elId = document.getElementById('node_'+project_id);
 		var liArray = elId.getElementsByTagName("dt");
 			for (var i = 0; i < liArray.length; i++)
@@ -1014,30 +1348,31 @@ function getPublicIp(valuee, append){
 		console.log(wichOne.value, wichOne.innerHTML);
 	}
 	Projects.prototype.createTableData = function(dataSource){
-		//console.log("createTableData:::"+dataSource);
-			var manageTable = document.getElementById("manageTable");
-			//for(var j=0;j<=dataSource.length-1;j++){
-			for(var j=11;j<13;j++){
+		console.log(dataSource);
+				trIDs = [];
+			for(var j=0;j<=dataSource.length-1;j++){
 				var createTr = document.createElement("tr");
-					createTr.id = dataSource[j].p_id;
+					createTr.id = dataSource[j].pd_id;
+					trIDs.push(dataSource[j].pd_id);
 					manageTable.appendChild(createTr);
-				var manageTr = document.getElementById(dataSource[j].p_id);
-				manageTr.innerHTML+='<td>'+dataSource[j].p_name+'</td>'
-								   +'<td>'+dataSource[j].technology+'</td>'
-								   +'<td>'+dataSource[j].start_date+'</td>'
-								   +'<td>'+dataSource[j].team_size+'</td>'
+				var manageTr = document.getElementById(dataSource[j].pd_id);
+					manageTr.innerHTML+='<td>'+dataSource[j].p_name+'</td>'
+								+'<td>'+dataSource[j].prod_name+'</td>'
+								+'<td>'+dataSource[j].technology+'</td>'
+								+'<td>'+dataSource[j].start_date+'</td>'
+								// +'<td>'+dataSource[j].team_size+'</td>'
 								   +'<td><a href="#" onmouseover="disPlayPop(this)" class="redLinks">Status</a>'
 								   +'<div style="position:relative">'
-									+'<div id="Status_'+dataSource[j].p_id+'" class="popover fade right in" role="tooltip" style="left:48px;">'
+									+'<div id="Status_'+dataSource[j].pd_id+'" class="popover fade right in" role="tooltip" style="left:48px;">'
 										+'<div class="arrow" style="top:50%;"></div>'
 											+'<h3 class="popover-title statusOfNodeH3 tempBg">Status of Nodes</h3>'
 											+'</div>'
 										+'</div>'
 								   +'</td>'
-								   +'<td><a href="#" onclick="manage.getEnvironments(this,'+dataSource[j].p_id+')" class="redLinks">Actions</a></td>';
-					this.dataStore_For_Popup(dataSource[j].p_id);
+								   +'<td><a href="#" onclick="manage.getEnvironments(this,'+dataSource[j].pd_id+')" class="redLinks">Actions</a></td>';
+					this.dataStore_For_Popup(dataSource[j].pd_id);
 					//manage.getEnvironments("",dataSource[j].p_id); //it is for default display of all data.
-					}
+					}					
 		//this.createPopupStatus(dataSource);
 	}
 	Projects.prototype.dataStore_For_Popup = function(project_Id){
@@ -1074,6 +1409,9 @@ function getPublicIp(valuee, append){
 								+'</div>';
 		  this.createPopupStatusNodes(_template_Name, project_Id, j);
 		}
+	}
+	Projects.prototype.CancelFun = function(ev){
+		
 	}
 	Projects.prototype.createPopupStatusNodes = function(_template_Name, project_Id, j){
 		var data = {};
@@ -1120,19 +1458,18 @@ function selectOpt(event, idn){
 	var v = event.parentNode;
 	var vb = v.parentNode;
 	var idd = vb.id;
-	if(idd == "selvpc"){
-		 	vpcId = aTex;
-		 	getSubnetName(aTex);
-		 }
-	if(idd == "selsn"){
-		 	subnetId = aTex;
-		 }
-	if(idd == "selci1"){
-			getPublicIp(aTex,0);
-		 }
-	 //document.getElementById(idd).style.border="none";
+	//alert(idd);
+	if(idd == "selci1"){getPublicIp(aTex,0);}
+	if(idd == "typeDro12"){setMonitorPort_AzureTraffic(aTex);}
+	 
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
+}
+function setMonitorPort_AzureTraffic(val){
+	alert(val);
+	if(val == "Http"){document.getElementById("mPort").value ="80";}
+	else if(val == "Https"){document.getElementById("mPort").value = "443";}
+	else{alert("Something went wrong");}
 }
 function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){
 	this.createEle=createEle;
@@ -1156,7 +1493,7 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 	epn.innerHTML="";
 	for(var i=0;i<=name.length-1;i++){
 		var epn;
-		epn.innerHTML+="<li onclick='selectOpt(this,"+i+")' class='"+name[i]+"'>"
+		epn.innerHTML+="<li onclick='selectOpt(this,"+i+")' class='"+nme[i]+"'>"
 						+"<dl>"
 						+"<dt></dt>"
 						+"<dd class='va'>"+name[i]+"</dd>"
@@ -1257,3 +1594,37 @@ Projects.prototype.dropDownMenu = function(){
 	
 }
 	/*-----------------------------End Table---------------------------------------------*/
+
+
+// Warn if overriding existing method
+if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time 
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;       
+        }           
+        else if (this[i] != array[i]) { 
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;   
+        }           
+    }       
+    return true;
+}
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+
+
+
