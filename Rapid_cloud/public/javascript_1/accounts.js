@@ -615,11 +615,11 @@ function addAwsSubscription(){
 	}
 }
 function saveAwsCredentials(accName, awsSub, accKey, secKey){
-	console.log(accName+awsSub+accKey+secKey);
+	//console.log(accName+awsSub+accKey+secKey);
 	var awsData = {};
 	awsData.accName = accName;
 	awsData.awsSub = awsSub;
-	awsData.awsKey = accKey;
+	awsData.accKey = accKey;
 	awsData.secKey = secKey;
 	$.ajax({
 	     type: 'POST',
@@ -635,7 +635,7 @@ function saveAwsCredentials(accName, awsSub, accKey, secKey){
 	        console.log('Failure');
 			alert("failure");
 			},
-});
+	});
 }
 
 

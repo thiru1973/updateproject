@@ -8,6 +8,7 @@ var express = require('express')
   , manage_nodes = require('./routes/manage_nodes')
   , secGroups = require('./routes/secGroup')
   , account = require('./routes/accounts')
+  , resources = require('./routes/resource')
   , http = require('http')
   , path = require('path')
   , multer = require('multer');
@@ -27,7 +28,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-//app.use(busboy());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
@@ -51,6 +52,9 @@ app.get('/create', routes.create);
 app.get('/tmplt_pg', routes.tmplt_pg);
 app.get('/tmplt_create', routes.tmplt_create);
 app.get('/all_nodes', routes.all_nodes);
+
+//controller for schedule VM's
+app.post('/scheduleService', routes.scheduleService);
 
 app.get('/manage', manage.manage);
 app.get('/deploy', manage.deploy);
@@ -143,6 +147,8 @@ app.post('/createAccount', manage.createAccount);
 app.get('/download', account.download);
 app.post('/storeAwsSub', manage.storeAwsSub);
 
+//resource group services
+app.get('/createGroup', resources.createGroup);
 
 
 http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){

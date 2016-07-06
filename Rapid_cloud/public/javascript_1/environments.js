@@ -789,8 +789,8 @@ function loadBalancer(){
 				nodeListOptions.className="nodeSettings";
 				nodeListOptions.innerHTML='<li onclick="manage.nodeDetailsVolume(this, '+i+', '+project_id+')">Volumes</li>\
 										   <li onclick="manage.nodeDetailsSecurityGroup(this, '+i+', '+project_id+')">Security Group</li>\
-										   <li onclick="">Keypairs</li>\
-										   <li onclick="">Snap Shoart</li>\
+										   <!--<li onclick="">Keypairs</li>\
+										   <li onclick="">Snap Shoart</li>-->\
 										  </ul>';
 				insertAfter(nodId, nodeListOptions);
 			}else if(ev.title == "Azure"){
@@ -1307,18 +1307,27 @@ function getPublicIp(valuee, append){
 								<span class="statusText">&nbsp;&nbsp;<span class="'+this.dataOfNd[clickedData].status+'"></span>'+this.dataOfNd[clickedData].status+'</span>\
 							  </p>\
 							</td>\
+							<td colspan = "2" style="text-align:center;">\
+							<div>\
+							<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStop</button>\
+							<input type="date" id="user_date" name="date">\
+							<select id="user_hr"></select>\
+							<select id="user_min"></select>\
+							<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStart</button>\
+							</div>\
+							</td>\
 						</tr>\
 						<tr>\
 							<td colspan="2">\
-								<div class="nodeBuT">\
-				  <button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+', '+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Start</button>\
-				  \
-				  <button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+', '+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
-				  \
-				  <button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+', '+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
-				  \
-				  <button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+', '+this.dataOfNd[clickedData].region+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
-								</div>\
+							<div class="nodeBuT">\
+							<button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Start</button>\
+							\
+							<button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
+							\
+							<button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
+							\
+							<button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
+							</div>\
 							</td>\
 						</tr>';
 			var _StatusOfNode = this.dataOfNd[clickedData].status;
@@ -1343,9 +1352,82 @@ function getPublicIp(valuee, append){
 
 		//console.log("re::::"+ JSON.stringify(re));
 		//console.log("nodeNa++++  "+nodeNa);
+			for(var i = 0; i < 24; i++)
+			{
+			  $('#user_hr').append("<option value='"+i+"'>"+i+"</option>");
+			}
+			for(var j = 0; j < 60; j++){
+				$('#user_min').append("<option value='"+j+"'>"+j+"</option>");
+			}
+	}
+	Projects.prototype.nodeSchedule = function(data){
+		var scheduleData = data.value
+			,arrData = scheduleData.split(",")
+			,accName = document.getElementById("typeDro1").innerText
+			,user_hr = document.getElementById("user_hr").value
+			,user_min = document.getElementById("user_min").value
+			,user_date = document.getElementById("user_date").value;
+			
+		var scData = {};
+		scData.inst_id = arrData[0];
+		scData.region = arrData[1];
+		scData.pvd = arrData[2];
+		scData.cldsrvc = arrData[3];
+		scData.role = arrData[4];
+		scData.projName = arrData[5];
+		scData.action = data.innerHTML;
+		scData.user_hr = user_hr;
+		scData.user_min = user_min;
+		scData.user_date = user_date;
+		console.log(scData);
+		$.ajax({
+	        type: 'POST',
+	   	 	jsonpCallback: "callback",
+	        datatype: 'jsonp',
+	        data: scData,
+	        url: _ip+'/scheduleService',
+	        success: function(data, textStatus){
+	        	alert(data);	        	
+	        	},
+	        	 error: function (xhr, status, error){	                 
+	         		alert("failure");
+	         		},
+	            });
+		 
 	}
 	Projects.prototype.nodeServerEngine = function(wichOne){
 		console.log(wichOne.value, wichOne.innerHTML);
+		var inst_id = wichOne.value;
+		var arr =inst_id.split(",");
+		var action = wichOne.innerHTML;
+		var accName = document.getElementById("typeDro1").innerText;
+		alert(accName);
+		var data = {};
+		data.accName = accName;
+		data.projName = arr[5];
+		data.inst_id = arr[0];
+		data.action = action;
+		data.region = arr[1];
+		data.pvd = arr[2];
+		data.cldsrvc = arr[3];
+		data.role = arr[4];
+		console.log(data);
+		$.ajax({
+	        type: 'POST',
+	   	 	jsonpCallback: "callback",
+	        datatype: 'jsonp',
+	        data: data,
+	        url: _ip+'/manage_env_nodes',
+	        success: function(data, textStatus){
+	        	//alert(data);
+	        	if(data != "Success"){$(".alert-warning").stop().slideDown();}
+	        	else{$(".alert-success").stop().slideDown();}
+	        	},
+	        	 error: function (xhr, status, error){
+	                 console.log('Failure');
+	         		alert("failure");
+	         		},
+	            });
 	}
 	Projects.prototype.createTableData = function(dataSource){
 		console.log(dataSource);

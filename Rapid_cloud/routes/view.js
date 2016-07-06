@@ -3,8 +3,8 @@ var zerorpc = require("zerorpc");
 var app     = express();
 var MongoClient = require('mongodb').MongoClient;
 
-var url = 'mongodb://172.29.59.62:27017/test';
-
+//var url = 'mongodb://172.29.59.62:27017/test';
+var url = 'mongodb://172.29.59.100:27017/test';
 exports.preview = function(req, res){
 
 	MongoClient.connect(url, function (err, db) {

@@ -5,6 +5,7 @@ var http = require('http');
 var express = require('express');
 var app     = express();
 var zerorpc = require("zerorpc");
+var path = require("path");
 
 var region_name=[];
 var os=[];
@@ -25,7 +26,8 @@ var dec;
 var dec2;
 var access_key;
 var secret_key;
-var url = 'mongodb://172.29.59.62:27017/test';
+//var url = 'mongodb://172.29.59.62:27017/test';
+var url = 'mongodb://172.29.59.100:27017/test';
 
 var pg = require("pg");
 
@@ -156,7 +158,7 @@ exports.filter = function(req, res){
 		var region1=Obj.region;
 		var pname=Obj.pname;		
 		console.log(region1+" "+pname);
-		MongoClient.connect("mongodb://172.29.59.62:27017/test", function(err, db) {
+		MongoClient.connect("mongodb://172.29.59.100:27017/test", function(err, db) {
 
 			if(err) { return console.dir(err); }
 			   else {
@@ -177,7 +179,7 @@ exports.filter = function(req, res){
 			  else{
 				  	//console.log(resultn);
 				  	res.send(resultn);
-			  }
+			  		}
 			  });
 			 }
 			  });			  
@@ -628,5 +630,72 @@ exports.create_deploy_slot = function(req,res){
 	 client.invoke("assign", arr, function(error, res, more) {
 	 });
 	 res.send("Created");
+};
+var cron = require('cron');
+var spawn = require("child_process").spawn,child;
+exports.scheduleService = function(req, res){
+	var reqResult = req.body
+		,cloudSer = reqResult.cldsrvc
+		,region = reqResult.region
+		,instName = reqResult.inst_id
+		,role = reqResult.role
+		,provider = reqResult.pvd
+		,action = reqResult.action
+		,user_hr = reqResult.user_hr
+		,user_min = reqResult.user_min
+		,user_date = reqResult.user_date;
+	var dt = user_date.split("-");
+		
+	var scdtime = '00 '+user_min+' '+user_hr+' '+dt[2]+' '+"*"+' '+"*"+' ';
+	
+	if(provider == "Azure"){
+    var loc = './scripts/'+provider+"_"+action+'.ps1'
+    	,scheduleLoc = './scheduleScripts/'+cloudSer+"_"+role+"_"+action+'.ps1'
+    	,fileName = cloudSer+"_"+role+"_"+action+'.ps1';
+	}else{
+		var loc = './scripts/'+provider+"_"+action+'.ps1'
+    	,scheduleLoc = './scheduleScripts/'+instName+"_"+region+"_"+action+'.ps1'
+    	,fileName = instName+"_"+region+"_"+action+'.ps1';
+	}
+    fs.readFile(loc, function(err,data){
+		if(err){
+			return err;
+			}else{
+				fs.writeFile(scheduleLoc, data, function (err) {
+        			if(err) {
+           				return err;
+        			} else {
+            				var op = createJob(fileName,scdtime);
+            				var obj = {"data" : op};
+            				res.send(obj);
+        					}
+    				});
+			}
+		    });
+    
+    function createJob(scLoc,scd){
+    	console.log(scLoc+"="+scd);
+    	var cronJob = cron.job(scd, function(){
+    		console.log(scLoc);
+    		var script_path = 'C:\\Users\\sangamesh.b\\Desktop\\release-2\\Rapid_cloud\\scheduleScripts\\'+scLoc;
+    		console.log(script_path);
+    		child = spawn("powershell.exe", [script_path]);
+	    	child.stdout.on("data",function(data){
+	    	   console.log("Powershell Data: " + data);
+	    	});
+	    	child.stderr.on("data",function(data){
+	    	    console.log("Powershell Errors: " + data);
+	    	    //res.send(data);
+	    	});
+	    	child.on("exit",function(){
+	    	   console.log("Powershell Script finished");
+	    	   //res.send("Script finished");
+	    	});
+	    	child.stdin.end(); //end input
+    	});
+    	cronJob.start();
+    	return "OK";
+    }
+    //res.send("Success");
 };
 

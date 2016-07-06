@@ -508,15 +508,16 @@ function getSubnetName(vpcid){
 			  console.log(data);
 			  
 			 for(var x=0;x<data.length;x++)
-				 {	//alert(data[x].vpc_id);			 
+				 {
 				 	if(data[x].vpc_id == id)
 				 		{
-				 			
+				 			alert(data[x].subnet_id);
 				 			subNetName1[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
-				 			//alert(subNetName1[x]);
+				 			//var appendD = new DropdownConst();
+							//appendD.appendData(subNetName1[x],"selssn");
 				 		}
 				 }
-			   console.log(subNetName1.length+subNetName1);
+			   //console.log(subNetName1.length+subNetName1);
 			   var appendD = new DropdownConst();
 			   appendD.appendData(subNetName1,"selssn");
 		  });
@@ -1220,7 +1221,8 @@ function createStgFunction(buttonId, Id){
 	data.vSize = vSize;
 	data.vIops = vIops;
 	data.vName = vName;
-	data.vZone = zone;
+	//data.vZone = zone;
+	data.vZone = "us-east-1d";
 	//console.log(data);
 	$.ajax({
         type: 'POST',
@@ -1365,7 +1367,8 @@ function deployFunction(){
 		var pvName = pvd_name;
 		var region = pvd_region;
 		var envName = document.getElementById("sel").innerText;
-		var prjName = document.getElementById("selpj").innerText;
+		//var prjName = document.getElementById("selpj").innerText;
+		var prjName = localStorage.getItem("ProjectName");
 		var vpcId = document.getElementById("selvpc").innerText;
 		var subnetId = document.getElementById("selsn").innerText;
 		var routeName = document.getElementById("routeName").value;
@@ -1443,11 +1446,13 @@ function deployTemplateFunction()
 			var pvName = pvd_name;
 			var region = pvd_region;
 			var envName = document.getElementById("sel").innerText;
-			var prjName = document.getElementById("selpj").innerText;
+			//var prjName = document.getElementById("selpj").innerText;
+			var prjName = localStorage.getItem("ProductName");
 			var vpcId = document.getElementById("selvpc").innerText;
 			var subnetId = document.getElementById("selsn").innerText;
 			var routeName = document.getElementById("routeName").value;
 			var gateName = document.getElementById("gateWayName").value;
+			var keyPairName = document.getElementById("keyPairName0").value
 			if(envName == "Select")
 				{
 				document.getElementById("sel").style.border="thin dashed #0099FF";
@@ -1458,7 +1463,7 @@ function deployTemplateFunction()
 					return;
 					}
 			console.log(pvName+region+envName+prjName+vpcId+subnetId+routeName+gateName);
-			result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName);
+			result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName,keyPairName);
 			
 			
 			var resultObj1 = [];
@@ -1537,7 +1542,7 @@ function deployTemplateFunction()
 		        success: function(data, textStatus){
 		        	//alert(data);
 		        	$(".alert-temp").stop().slideDown();
-		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	location.href="http://172.29.59.65:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');

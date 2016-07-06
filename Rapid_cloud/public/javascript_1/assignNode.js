@@ -30,7 +30,7 @@ function getTemplateName(){
 			     datatype: 'jsonp',
 			     data: template,	 
 			     url: 'http://172.29.59.65:3000/gen_template',
-			     success: function(results) {
+			     success: function(results) {	
 			    	 templates = results[0].Template_Role;
 			    	 os = results[0].os
 			    	 //console.log(templates[0].role);
@@ -421,11 +421,13 @@ function saveInformation(tm_name){
 	
 	for(var i=0;i<templates.length;i++)
 	{	
-		var node_role = templates[i].role;
+		var node_role = templates[i].role
+			,node_os = templates[i].os;
 		var x = document.getElementById("sel"+i+"").innerText;
 		var y = document.getElementById("sell"+i+"").innerText;
 		var z = document.getElementById("selll"+i+"").innerText;
 		var role_info={};
+		role_info.os = node_os;
 		role_info.node=node;
 		role_info.image=z;
 		role_info.role=node_role;			

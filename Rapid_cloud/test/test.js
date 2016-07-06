@@ -1,5 +1,6 @@
 var should = require("should")
     , routes = require("../routes");
+var supertest = require("supertest");
 
 var request = {};
 var response = {
@@ -81,3 +82,27 @@ describe("Routing", function(){
 
     });
 });
+
+var server = supertest.agent("http://172.29.59.65:3000");
+
+describe("AWS script test",function(){
+	it("Run the script",function(done){
+		var data = [{cldsrvc : "null", region : "us-east-1", inst_id : "i-0074c3aaa6a0340f2", role : "Database", pvd : "AWS", action : "ScheduleStop", user_hr : "18", user_min : "45", user_date :"2016-06-22"},
+					{cldsrvc : "null", region : "us-east-1", inst_id : "i-0074c3aaa6a0340f2", role : "Database", pvd : "AWS", action : "ScheduleStart", user_hr : "18", user_min : "50", user_date :"2016-06-22"},
+					];
+		//for(var i=0;i<data.length;i++){	
+			server
+			.post('/scheduleService')
+			.send(data[1])
+			.expect("Content-type",/json/)
+			.expect(200)
+			.end(function(err,res){
+				res.status.should.equal(200);
+				res.body.data.should.equal("OK");
+				done();
+			});
+		//}
+		
+	});
+});
+

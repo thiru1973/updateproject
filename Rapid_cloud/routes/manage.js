@@ -33,7 +33,8 @@ var busboy = require('connect-busboy');
 var validator = require('express-validator');
 
 
-var url = 'mongodb://172.29.59.62:27017/test';
+//var url = 'mongodb://172.29.59.62:27017/test';
+var url = 'mongodb://172.29.59.100:27017/test';
 var MongoClient = require('mongodb').MongoClient;
 var action;
 var res1;
@@ -99,6 +100,8 @@ exports.manage_env_nodes = function(req,res){
 	var Obj = JSON.parse(result);	
 	//console.log(Obj);
 	var inst_id=Obj.inst_id,
+	    accName = Obj.accName,
+	    projName = Obj.projName,
 	    action = Obj.action,
 	    region = Obj.region,
 	    pvd_name = Obj.pvd,
@@ -106,17 +109,20 @@ exports.manage_env_nodes = function(req,res){
 	    role = Obj.role;
 	if(pvd_name == "AWS")
 		{
-			var arr=["AWS","manage_node",auth[0], auth[1],region,inst_id,action];
-			//console.log(arr);
-			client.invoke("assign", arr, function(error, res, more) {});			
-			 //res.send("Success");
+		 	getAwsCred.getAwsMethod(accName,projName,"");
+		 	setTimeout(function(){	
+			var arr=["AWS","manage_node",auth1, auth2,region,inst_id,action];
+			console.log(arr);
+			 client.invoke("assign", arr, function(error, res, more) {});			
+			 res.send("Success");
+		 	 }, 2000);
 		}else{
 			if(action == "Reboot"){action = "Reboot";}
 			else if(action == "Terminate"){action = "Terminate";}
 			else{return;}
 			var arr = ["Azure", "manage_node", action, role, cldsrvc];
 			console.log(arr);
-			client.invoke("assign", arr, function(error, res, more) {});			
+			//client.invoke("assign", arr, function(error, res, more) {});			
 			 res.send("Success");
 		}	
 };
@@ -361,8 +367,8 @@ exports.deployTemplate = function(req, res){
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
 	if(d1arr[0] == 'AWS'){
-			d1arr.splice(2, 0, auth[0]);
-			d1arr.splice(3, 0, auth[1]);
+			d1arr.splice(2, 0, auth1);
+			d1arr.splice(3, 0, auth2);
 			for(var i=0;i<d1arr.length;i++)
 				{
 					arr.push(d1arr[i]);
@@ -734,6 +740,7 @@ fs.readFile('new.txt', 'utf-8', function(err,data){
      //console.log(access+secret);
      auth.push(access);
      auth.push(secret);
+     //console.log(auth[0],auth[1]);
      //var arr = ["aws", "create_vpc",access, secret, region , cidr, vpc, tenancy];
     // console.log(arr);
 
@@ -1316,7 +1323,7 @@ exports.storeAwsSub = function(req, res){
 	var result = JSON.stringify(req.body)
 	    ,Obj = JSON.parse(result)
 	    ,pvd = "AWS";
-	console.log(Obj);
+	console.log(Obj.accKey);
 	 client_pg.query('insert into subscription (accountid,provider,subscription_name,accesskey,secretkey) values ($1,$2,$3,$4,$5)',
              [Obj.accName,pvd, Obj.awsSub, Obj.accKey, Obj.secKey],
              function(err, writeResult) {
