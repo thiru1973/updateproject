@@ -85,7 +85,7 @@ describe("Routing", function(){
 
 var server = supertest.agent("http://172.29.59.65:3000");
 
-describe("AWS script test",function(){
+/*describe("AWS script test",function(){
 	it("Run the script",function(done){
 		var data = [{cldsrvc : "null", region : "us-east-1", inst_id : "i-0074c3aaa6a0340f2", role : "Database", pvd : "AWS", action : "ScheduleStop", user_hr : "18", user_min : "45", user_date :"2016-06-22"},
 					{cldsrvc : "null", region : "us-east-1", inst_id : "i-0074c3aaa6a0340f2", role : "Database", pvd : "AWS", action : "ScheduleStart", user_hr : "18", user_min : "50", user_date :"2016-06-22"},
@@ -103,6 +103,72 @@ describe("AWS script test",function(){
 			});
 		//}
 		
+	});
+});*/
+describe("Azure create resource group test", function(){
+	it("create resorce group", function(done){
+		server
+			.get('/createGroup')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	
+	it("create virtual network", function(done){
+		server
+			.get('/createVnet')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	it("create subnet", function(done){
+		server
+			.get('/createSubnet')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	it("create security group", function(done){
+		server
+			.get('/createSecGrp')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	it("create route table", function(done){
+		server
+			.get('/createRtTable')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	it("create local network gateway", function(done){
+		server
+			.get('/createLclNetGtWay')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	it("create DNS", function(done){
+		server
+			.get('/createDns')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
 	});
 });
 

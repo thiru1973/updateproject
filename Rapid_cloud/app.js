@@ -149,6 +149,12 @@ app.post('/storeAwsSub', manage.storeAwsSub);
 
 //resource group services
 app.get('/createGroup', resources.createGroup);
+app.get('/craeteVnet', resources.createVnet);
+app.get('/createSubnet', resources.createSubnet);
+app.get('/createSecGrp', resources.createSecGrp);
+app.get('/createRtTable', resources.createRtTable);
+app.get('/createLclNetGtWay', resources.createLclNetGtWay);
+app.get('/createDns', resources.createDns);
 
 
 http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
