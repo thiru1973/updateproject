@@ -161,7 +161,7 @@ describe("Azure create resource group test", function(){
         done()
       });
 	});
-	it("create DNS", function(done){
+	it("create DNS Zone", function(done){
 		server
 			.get('/createDns')
 			.expect(200)
