@@ -619,6 +619,7 @@ function show_nodeDetails(data){
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, "+i+")' id='stgsz"+i+"' min='1' style='border:none;width:100%;'/></div></div></div>"
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+i+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"<a href='' style='margin-top: 33px;display: inline-block;'><span class='glyphicon glyphicon-plus-sign addMoreVolumes' id='addRole' style='font-size:23px;color:#999999;'></span></a>"
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='storage"+i+"' onclick='createStgFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
 					  
@@ -799,7 +800,9 @@ function show_nodeDetails(data){
 				$("#"+myName).remove();
 			}
 }
-
+function createVol(){
+	alert("Volume 1");
+}
 function show_singlenode(data){
 	console.log(data);
 	var i =0;
@@ -1542,7 +1545,7 @@ function deployTemplateFunction()
 		        success: function(data, textStatus){
 		        	//alert(data);
 		        	$(".alert-temp").stop().slideDown();
-		        	location.href="http://172.29.59.65:3000/master_2"
+		        	//location.href="http://172.29.59.65:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1563,7 +1566,7 @@ function deployTemplateFunction()
 			var prdName = localStorage.getItem("ProductName");
 			var CloudName = document.getElementById("selClsrv").innerText;
 			console.log(pvName+region+envName+prjName+CloudName);
-			result_arr.push(pvName,region,envName,accName,prjName,prdName,CloudName);
+			result_arr.push(pvName,region,envName,accName,prjName,prdName,CloudName,"mystock");
 			result_arr.splice(1, 0, "create_environment");
 			var resultObj1 = [];
 			if(envName == "Select")
@@ -1601,8 +1604,8 @@ function deployTemplateFunction()
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
 		        url: _ip+'/deployTemplate',
 		        success: function(data, textStatus){
-		        	//alert(data);
-		        	location.href=_ip+"/master_2"
+		        	alert(data);
+		        	//location.href=_ip+"/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');

@@ -113,6 +113,7 @@ function assign_myTemplate(tempName,region,tempType,nodes,cloud){
 									+"glyphicon glyphicon-remove-circle closeTemplate'></span>Nodes:<input class='inPut' value='"+nodes[i]+"' type='text' disabled='disabled' /><br><br><b>Role Deatails</b>" +
 											"<table border='0' class='my_info'><thead><tr><th>Node </th><th>Role </th></tr></thead><tbody></tbody></table>"
 									+"<br><input type='button' value='Modify'/>&nbsp;<input type='button' value='Deploy' onclick='pvdSpec_function("+tempName[i]+")' />"
+									+"&nbsp<input type='button' value='Add DevOps' title='"+tempName[i]+"' onclick='addDevOps(this)'/>"
 									+"</div></div></article>";
 						}
 	}
@@ -146,7 +147,10 @@ function pvdSpec_function(myT){
 $('#manageEnv').click(function(){
 	location.href="//172.29.59.65:3000/manageEnv";
 })
-
+function addDevOps(ev){	
+	localStorage.setItem("InfraId",ev.title)
+	location.pathname="/devopsTemp"
+}
 
 function myTemp_details(result){
 	for (var i=0;i<result.length;i++)

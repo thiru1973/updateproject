@@ -72,20 +72,15 @@ function getAwsCred(){
 				rows4 = result.rows;
 				auth1 = rows4[0].accesskey;
 				auth2 = rows4[0].secretkey;
+				//console.log(auth1+auth2);
 			});
 		});
 		//return rows3;
 	}
 }
 var getAwsCred = new getAwsCred();
-/*getAwsCred.getAwsMethod("Hybris","testhyb","");
-setTimeout(function(){
-    console.log(auth1+auth2);	
-}, 2000);*/
 
 exports.manage = function(req, res){
-	/*var client_pg = new pg.Client(conString);
-	client_pg.connect();*/
 	client_pg.query("SELECT * FROM azure_details where status <> 'terminated';", function(err, result){
 	if(err){
 	throw err;
@@ -128,8 +123,6 @@ exports.manage_env_nodes = function(req,res){
 };
 exports.manage_env = function(req, res){
 	var proj_name = [];
-	/*var client_pg = new pg.Client(conString);
-	client_pg.connect();*/
 	client_pg.query("SELECT * FROM project3;", function(err, result){
 	if(err){
 	throw err;
@@ -141,14 +134,10 @@ exports.manage_env = function(req, res){
 		proj_name[i] = rows[i].p_name;
 	}
 	res.send(rows);
-	//console.log(proj_name);
-	//res.render('manage_env', {data : rows});
 	 });	 
 };
 
 exports.deploy=function(req,res){
-	//var pid=req.query.prov_id;
-	//console.log(pid);
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -216,11 +205,13 @@ exports.vpc=function(req,res){
 	      ,cidr = Obj.cidr
 	      ,vpc = Obj.vpc
 	      ,tenancy = Obj.tenancy
-	      ,pvd = Obj.provider;              
+	      ,pvd = Obj.provider; 
+	  console.log(Obj);
 	  getAwsCred.getAwsMethod(accountName,projName,prodName);
 	  setTimeout(function(){		     
 	     var arr = ["AWS", "create_vpc",auth1, auth2, region , cidr, vpc, tenancy];	      
 	     client.invoke("assign", arr, function(error, resq, more){});
+	     console.log(arr);
 	     res.send("Success");
 	  }, 2000);
 };

@@ -115,7 +115,6 @@ color: black;cursor: pointer;padding:10px;border:solid 1px #ccc;}
 [value='Deploy1']{background:#E24B4B;padding:5px;border:none;margin-left:50px;color:#fff;font-size:12px;}
 .closeTemplate{position:absolute;top:-5px;right:-5px;background-color:#fff;font-size:15px;padding:1px;}
 footer{clear:both;border-top:solid 1px #ccc;}
-.my_info, .gen_info{overflow: auto; height: 104px; display: block;}
 
 /* Create Template */
 [role="createTemplate"]{width:100%;clear:both;}
@@ -148,7 +147,7 @@ footer{clear:both;border-top:solid 1px #ccc;}
 .tempalteNote span{float:right;font-size:12px;color:#ccc;}
 .templateCreateButtons{padding-top:30px;float:right;clear:both;text-align:right;width:100%;padding-right:0px!important;}
 .templateCreateButtons button{background-color: #E24B4B;padding: 5px 10px;color: #fff;border: none;margin-top: -90%;}
-.buttonSm,.buttonVpc,.buttonSn,.buttonRt,.buttonGtw,.buttonkp{background-color: #E24B4B;padding: 2px 5px;color: #fff;border: none;margin-top: -90%;}
+.buttonSm,.buttonVpc,.buttonSn,.buttonRt,.buttonGtw{background-color: #E24B4B;padding: 2px 5px;color: #fff;border: none;margin-top: -90%;}
 .operatingSys{padding-right:0px!important;}
 #osVe{padding:0px!important;}
 
@@ -336,6 +335,32 @@ button:disabled {background-color:#DDDDDD;padding:5px 10px;color:#AAAAAA;border:
 .standardTools > li{display: inline-bloack;float:left;border:solid 1px #DEDEDE;margin-right:10px;text-align:center; padding:10px;}
 .standardTools > li > span{clear:both; display:block;padding-top:10px; font-size:12px; color:#4E4848;}
 .standardTools > li > os{clear:both; display:block;margin-top:10px;padding:10px; font-size:13px; color:#E8E6E6; font-weight:bold; background-color:#424143;}
+
+.gapForDiv > div.pull-left{margin-right:10px;}
+._ci{background-color:#424143; float: left; width: 100%;}
+._ci h2{font-size:18px;color:#fff;padding:10px; margin:0px;}
+.cndt_bold{font-weight:bold;clear:both;color:#666666;}
+.addVM{background-color:#DDDDDD; height:96px; width:96px; display: table-cell;text-decoration:initial; color:#555454; vertical-align: middle;
+text-align:center;}
+.addVM:hover{text-decoration:initial; background-color:#ccc; color:#777;}
+.addVM i{text-align:center; font-size:16px;padding-top:6px;}
+
+.addPG{background-color: #DDDDDD;width: 55px;display: inline-block;text-decoration: initial;color: #555454;
+vertical-align: middle;text-align: center;padding: 7px;margin-right: 7px;margin-bottom: 7px;}
+
+#infra_List_CD > li, #infra_List_CT > li, #infra_List_CI > li{float:left; margin-right: 15px; background-color: #ddd; 
+font-size:12px; margin-bottom: 15px; width: 217px;}
+.tempRadio{padding-right: 25px;}
+#packages_List_CI li, #packages_List_CT li, #packages_List_CD li{float:left; margin-right:20px;margin-bottom:5px; background-color: #FFF;
+padding: 5px;text-align: center;}
+#packages_List_CI li img, #packages_List_CT li img, #packages_List_CD li img{display:block;}
+.my_info, .gen_info{overflow: auto; height: 104px; display: block;}
+.vmtemCre{padding:0;background-color:#F7F7F7;}
+.packageBox{background-color:#B2C1BC; padding:15px;}
+.notAllowed, .notAllowed input{cursor:not-allowed!important;background-color:#FFF;}
+.packageBox > ul{margin-top:8px;}
+.vmDetails{overflow: auto;height:170px;padding:15px}
+
 
 
 @media (min-width: 768px) {

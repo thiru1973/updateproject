@@ -170,5 +170,23 @@ describe("Azure create resource group test", function(){
         done()
       });
 	});
+	it("create End Points", function(done){
+		server
+			.get('/createEndPoints')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+	it("create virtual network gateway", function(done){
+		server
+			.get('/createVnetGWay')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
 });
 

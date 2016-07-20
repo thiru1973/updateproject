@@ -50,6 +50,14 @@ exports.createDns = function(req, res){
 	var retVal = executeScript("dns.ps1");
 	res.send(retVal);
 }
+exports.createEndPoint = function(req, res){
+	var retVal = executeScript("endpoint.ps1");
+	res.send(retVal);
+}
+exports.createVnetGWay = function(req,res){
+	var retVal = executeScripts("VNetGWay.ps1");
+	res.send(retVal);
+}
 function executeScript(scriptName){
 	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
 	child = spawn("powershell.exe", [cmd]);
@@ -65,4 +73,51 @@ function executeScript(scriptName){
 	   return "Script finished";
 	});
 	child.stdin.end(); //end input
+}
+
+exports.devopsTemplate = function(req,res){
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+						console.log('Unable to connect to the mongoDB server. Error:', err);
+				   } else {
+					console.log('Connection established');
+					var instance=db.collection('devops_tools');									
+					instance.find().toArray(function(err,result){
+					if(err){
+							throw err
+							}
+						else{								
+								res.send(result);
+							}
+					 db.close();					
+					});					
+				}		 
+			});	
+}
+
+exports.devopsTemp = function(req, res){
+	res.render("devops");
+}
+exports.saveDevopsTemplate = function(req,res){
+
+	var result=JSON.stringify(req.body);	
+	var Obj = JSON.parse(result);
+	//console.log(Obj);
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+						console.log('Unable to connect to the mongoDB server. Error:', err);
+				   } else {
+					console.log('Connection established');
+					var instance=db.collection('devops_template_save');									
+					instance.insert([Obj], function (err, result) {
+		      				if (err) {
+		        					console.log(err);
+		     					 } else {
+		        		console.log('Inserted values sucess fully');
+						res.send("Saved DevOps template");
+		      			}
+		      			db.close();
+		    			});					
+				}		 
+			});	
 }

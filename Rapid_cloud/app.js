@@ -149,7 +149,7 @@ app.post('/storeAwsSub', manage.storeAwsSub);
 
 //resource group services
 app.get('/createGroup', resources.createGroup);
-app.get('/craeteVnet', resources.createVnet);
+app.get('/createVnet', resources.createVnet);
 app.get('/createSubnet', resources.createSubnet);
 app.get('/createSecGrp', resources.createSecGrp);
 app.get('/createRtTable', resources.createRtTable);
@@ -157,7 +157,25 @@ app.get('/createLclNetGtWay', resources.createLclNetGtWay);
 app.get('/createDns', resources.createDns);
 
 
-http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
+//DevOps
+app.get('/devopsTemplate', resources.devopsTemplate);
+app.get('/devopsTemp', resources.devopsTemp);
+app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 
+var url = "http://172.29.59.65:3001/add";
+
+/*http.get(url, function(response) {
+	var finalData = '';
+	  response.on("data", function (data) {
+	    finalData += data.toString();
+	  });
+	  response.on("end", function() {
+	    console.log(finalData.length);
+	    console.log(finalData.toString());
+	  });
+
+	});*/
+
+http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
