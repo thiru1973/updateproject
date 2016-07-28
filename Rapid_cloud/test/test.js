@@ -104,7 +104,7 @@ var server = supertest.agent("http://172.29.59.65:3000");
 		//}
 		
 	});
-});*/
+});
 describe("Azure create resource group test", function(){
 	it("create resorce group", function(done){
 		server
@@ -182,6 +182,18 @@ describe("Azure create resource group test", function(){
 	it("create virtual network gateway", function(done){
 		server
 			.get('/createVnetGWay')
+			.expect(200)
+			.end(function(err, res){
+        if (err) return done(err)
+        done()
+      });
+	});
+});*/
+
+describe("Azure Attach disk test", function(){
+	it("Attach diak", function(done){
+		server
+			.get('/attachDisk')
 			.expect(200)
 			.end(function(err, res){
         if (err) return done(err)

@@ -58,6 +58,11 @@ exports.createVnetGWay = function(req,res){
 	var retVal = executeScripts("VNetGWay.ps1");
 	res.send(retVal);
 }
+
+exports.attachDisk = function(req,res){
+	var retVal = executeScript("stg.ps1");
+	res.send(retVal);
+}
 function executeScript(scriptName){
 	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
 	child = spawn("powershell.exe", [cmd]);

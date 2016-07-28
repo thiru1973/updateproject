@@ -561,20 +561,20 @@ function getPublicIp(value, append){
 		}
 }
 function iopsFunction(value,Id){
-	//alert(value+""+Id);
-	var vType = document.getElementById("selstg"+Id+"").innerText;
+	var idNum = Id.substr(Id.length-3);
+	var vType = document.getElementById("selstg"+idNum+"").innerText;
 	if(vType == "General Purpose SSD")
 		{	
 			if(value >= 1 && value <= 3333)
 				{
 					var iops=value*3;
-					document.getElementById("stgIops"+Id+"").value=iops;
+					document.getElementById("stgIops"+idNum+"").value=iops;
 				}else{
-					document.getElementById("stgIops"+Id+"").value="10000";
+					document.getElementById("stgIops"+idNum+"").value="10000";
 				}
 		}else if(vType == "Magnetic")
 			{
-				document.getElementById("stgIops"+Id+"").value="NA";
+				document.getElementById("stgIops"+idNum+"").value="NA";
 			}
 }
 function fortCheckFunction(value, Id){
@@ -615,13 +615,16 @@ function show_nodeDetails(data){
 					  +"<div class='tab-content hidden-xs'>"
 					  
 					  +"<div class='tab-pane fade  in active alignAllsides' id='alerts"+i+"'>"
-					  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>Volume Type</label><div id='selstg"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, "+i+")' id='stgsz"+i+"' min='1' style='border:none;width:100%;'/></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+i+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
-					  +"<a href='' style='margin-top: 33px;display: inline-block;'><span class='glyphicon glyphicon-plus-sign addMoreVolumes' id='addRole' style='font-size:23px;color:#999999;'></span></a>"
-					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='storage"+i+"' onclick='createStgFunction(this.id, "+i+")'>Create</button></div>"
+					  +"<div class='roleID '><div class='pull-left'><label class='labelTemp'>Volume Type</label><div id='selstg"+i+"_0' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, this.id)' id='stgsz"+i+"_0' min='1' style='border:none;width:100%;'/></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+i+"_0' placeholder='' style='border:none;width:100%;'></div></div></div>"
+					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+i+"_0' type='text' style='border:none;width:100%;'></div></div></div>"
+					  +"<span class='glyphicon glyphicon-plus-sign' onclick='createVol("+i+");' id='addRole' style='color:#999999;'></span></a>"
 					  +"</div>"
+					  +"<div class='tab-pane fade in active alignAllsides' id='dup"+i+"'><br></br></div>"
+					  //+"</div>"
+					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign disk"+i+"' id='storage"+i+"_0' onclick='createStgFunction(this.id, "+i+")'>Create</button></div>"
+					  //+"</div>"
 					  
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='requests"+i+"'>"
@@ -800,9 +803,37 @@ function show_nodeDetails(data){
 				$("#"+myName).remove();
 			}
 }
-function createVol(){
-	alert("Volume 1");
+var inc = 1;
+function createVol(num){
+	var id = num;
+	alert(id);
+	var epn = document.getElementById("dup"+id+"");
+	epn.innerHTML+="<div id = 'attach"+id+"_"+inc+"'><div class='roleID '><div class='pull-left'><div id='selstg"+id+"_"+inc+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+id+"_"+inc+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+					+"<div class='operatingSys'><div class='pull-left'><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, this.id)' id='stgsz"+id+"_"+inc+"' min='1' style='border:none;width:100%;'/></div></div></div>"
+					+"<div class='operatingSys'><div class='pull-left'><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+id+"_"+inc+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
+					+"<div class='operatingSys'><div class='pull-left'><div class='clickRole addStoTabWid'><input id='stgName"+id+"_1' type='text' style='border:none;width:100%;'></div></div></div>"
+					+"<span class='glyphicon glyphicon-minus-sign' onclick='deleteVol(this,"+id+");' id='addRole' style='color:#999999;'></span>"
+					+"</div>"
+					
+					
+	var appendD = new DropdownConst();				
+	appendD.appendData(volumeType,"selsstg"+id+"_"+inc+"");
+	document.getElementById("storage"+id+"_"+(inc-1)+"").id = "storage"+id+"_"+inc+"";
+	inc++;
+	$(".clickRole").click(function(){
+			$(this).find(".dropDown").slideToggle();
+		})	
 }
+function deleteVol(row, n){
+	var pn = row.parentNode;
+	var id = pn.id;
+	alert(n);
+	$("#"+id).remove();
+	inc--;
+	document.getElementById("storage"+n+"_"+(inc)+"").id = "storage"+n+"_"+(inc-1)+"";
+	
+}
+
 function show_singlenode(data){
 	console.log(data);
 	var i =0;
@@ -1193,40 +1224,49 @@ $('.buttonGtw').click(function(){
 })
 
 function createStgFunction(buttonId, Id){
-	var vType = document.getElementById("selstg"+Id+"").innerText;
-	var vSize = document.getElementById("stgsz"+Id+"").value;
-	var vIops = document.getElementById("stgIops"+Id+"").value;
-	var vName = document.getElementById("stgName"+Id+"").value
-	if(vType == "Select")
-		{
-		document.getElementById("selstg"+Id+"").style.border="thin dashed #0099FF";
-		return;
-		}else if(vSize == null || vSize == "" || vSize > 16384)
+	
+	var str = buttonId
+	    ,finalData = {};
+	var idNum = str.substr(str.length-3);
+	var res = idNum.split("_");
+	for(var i=0;i<=res[1];i++)
+	{
+		alert(i);
+		var vType = document.getElementById("selstg"+res[0]+"_"+i+"").innerText;
+		var vSize = document.getElementById("stgsz"+res[0]+"_"+i+"").value;
+		var vIops = document.getElementById("stgIops"+res[0]+"_"+i+"").value;
+		var vName = document.getElementById("stgName"+res[0]+"_"+i+"").value
+		if(vType == "Select")
 			{
-				$('#stgsz'+Id+'').attr("placeholder", "1-16384 GiB").val("").focus().blur();
-				return;
-			}else if(vType =="Magnetic" && (vSize == null || vSize == "" || vSize > 1024))
+			document.getElementById("selstg"+res[i]+"_"+i+"").style.border="thin dashed #0099FF";
+			return;
+			}else if(vSize == null || vSize == "" || vSize > 16384)
 				{
-					$('#stgsz'+Id+'').attr("placeholder", "1-1024 GiB").val("").focus().blur();
+					$('#stgsz'+Id+'_'+i+'').attr("placeholder", "1-16384 GiB").val("").focus().blur();
 					return;
-				}else if(vName == "" || vName == null)
-				{
-					$('#stgName'+Id+'').focus();
-					return;
-				}
-	var data = {};
-	data.accountName = accountName;
-	data.projName = projName;
-	data.prodName = prodName;
-	data.provider = pvd_name;
-	data.region = pvd_region;
-	data.vType = vType;
-	data.vSize = vSize;
-	data.vIops = vIops;
-	data.vName = vName;
-	//data.vZone = zone;
-	data.vZone = "us-east-1d";
-	//console.log(data);
+				}else if(vType =="Magnetic" && (vSize == null || vSize == "" || vSize > 1024))
+					{
+						$('#stgsz'+Id+'_'+i+'').attr("placeholder", "1-1024 GiB").val("").focus().blur();
+						return;
+					}else if(vName == "" || vName == null)
+					{
+						$('#stgName'+Id+'_'+i+'').focus();
+						return;
+					}
+		var data = {};
+		data.accountName = accountName;
+		data.projName = projName;
+		data.prodName = prodName;
+		data.provider = pvd_name;
+		data.region = pvd_region;
+		data.vType = vType;
+		data.vSize = vSize;
+		data.vIops = vIops;
+		data.vName = vName;
+		//data.vZone = zone;
+		data.vZone = "us-east-1d";
+	
+	console.log(data);
 	$.ajax({
         type: 'POST',
    	 	jsonpCallback: "callback",
@@ -1236,13 +1276,15 @@ function createStgFunction(buttonId, Id){
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-stg").stop().slideDown();
-        	document.getElementById("storage"+Id+"").disabled=true;
+        	//document.getElementById("storage"+Id+"").disabled=true;
+			inc = 1;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
          		alert("failure");
          		},
             });
+	}	
 }
 function createSgpFunction(buttonId, Id){
 	var sgName = document.getElementById("sgName"+Id+"").value;
@@ -1390,7 +1432,17 @@ function deployFunction(){
 			alert("Multi node deployment");
 			for(var i=0;i<temp_info.length;i++)
 				{
-					var stgName = document.getElementById("stgName"+i+"").value;
+					//var stgName = document.getElementById("stgName"+i+"").value;
+					var dsk = document.querySelector('.disk'+i+'').id;
+					var dskNo = dsk.substr(dsk.length-3),
+					    dskLoop = dskNo.split("_");
+						alert(dskLoop.length)
+						for(j=0;j<=dskLoop[1];j++)
+						{
+							//var stgName = document.getElementById("stgName"+dskLoop[0]+"_"+i+"").value
+						}
+					
+					//var stgName = document.getElementById("stgName0_0").value;
 					var count = document.getElementById("count"+i+"").value;
 					var form = document.getElementById("ip"+i+"");
 					var pIp=form.elements["pubIp"].value;
@@ -1410,14 +1462,14 @@ function deployFunction(){
 						}else{
 								var keyPairName = document.getElementById("selkp"+i+"").innerText;
 						}*/
-					if(!($('#storage'+i+'').prop('disabled')) ) { 
+					/*if(!($('#storage'+i+'').prop('disabled')) ) { 
 			            //alert('disabled');
 						document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
 						return;
 			        }else if(!($('#secGroup'+i+'').prop('disabled'))){
 			        	document.getElementById("add"+i+"").style.border="thin dashed #0099FF";
 						return;
-			        }
+			        }*/
 				}
 		}else
 			{
@@ -1469,14 +1521,26 @@ function deployTemplateFunction()
 			result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName,keyPairName);
 			
 			
-			var resultObj1 = [];
+			var resultObj1 = [],disks1 = [];
 			if(str == "multi")
 			{
 				alert("Multi node deployment");
 				for(var i=0;i<temp_info.length;i++)
 					{
-						var resultObj = [];
-						var stgName = document.getElementById("stgName"+i+"").value;
+						var resultObj = [],disks = [];
+						var dsk = document.querySelector('.disk'+i+'').id;
+						var dskNo = dsk.substr(dsk.length-3),
+					    dskLoop = dskNo.split("_");
+						console.log(dskLoop);
+						for(j=0;j<=dskLoop[1];j++)
+						{
+							var stgName = document.getElementById("stgName"+dskLoop[0]+"_"+j+"").value;
+							alert(stgName);
+							disks.push(stgName);
+						}
+						disks1.push(disks);
+						//var stgName = document.getElementById("stgName"+i+"").value;stgName0_0
+						//var stgName = document.getElementById("stgName0_0").value;
 						var count = document.getElementById("count"+i+"").value;
 						var form = document.getElementById("ip"+i+"");
 						var pIp=form.elements["pubIp"].value;
@@ -1501,7 +1565,7 @@ function deployTemplateFunction()
 						var imageName = temp_info[i].image;
 						var roleName = temp_info[i].role;
 						console.log(stgName+sgName+instName+imageName+roleName);
-						resultObj.push(stgName,sgName,pIp,instName,imageName,roleName);
+						resultObj.push((disks.length),sgName,pIp,instName,imageName,roleName);
 						resultObj1.push(resultObj);			
 					}
 				}else{
@@ -1534,13 +1598,13 @@ function deployTemplateFunction()
 					resultObj.push(stgName,sgName,pIp,instName,imageName,roleName);
 					resultObj1.push(resultObj);	
 				}
-			console.log(result_arr.length);
-			console.log(resultObj1.length);
+			console.log(result_arr);
+			console.log(resultObj1);
 			$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
-		        datatype: 'jsonp',
-		        data:  "d1="+result_arr+"&d2="+resultObj1,
+		        datatype: 'jsonp',    
+		        data:  "d1="+result_arr+"&d2="+resultObj1+"&d4="+disks1,
 		        url: _ip+'/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);

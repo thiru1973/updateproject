@@ -292,8 +292,7 @@ exports.createStorage = function(req, res){
 	     setTimeout(function(){
 			   var arr = [pvd, "create_volume",auth1, auth2, vRegion , vZone, vName, vSize, vIops, vType];
 			   console.log(arr);
-			   client.invoke("assign", arr, function(error, resq, more) {        
-			   });
+			   client.invoke("assign", arr, function(error, resq, more) {});
 			  res.send("Success");
 	     }, 2000);
 };
@@ -355,6 +354,7 @@ exports.deployTemplate = function(req, res){
 	var arr=[];
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
+	console.log(Obj);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
 	if(d1arr[0] == 'AWS'){
@@ -367,8 +367,24 @@ exports.deployTemplate = function(req, res){
 			
 			var d2 = Obj.d2;
 			var d3 = d2.split(',');
-			console.log(d3.length);
-			
+			console.log(d3);
+			var d4 = Obj.d4;
+			var dsks = d4.split(',');
+			for(var a=0;a<d3.length;a++)
+			{
+				if(a%6 == 0)
+				{
+					var len = d3[a],dsk = [];
+					console.log(len);
+					for(b=0;b<len;b++)
+					{
+						dsk[b] = dsks[b];
+					}
+					d3[a] = dsk;
+					dsks.splice(0,len);
+				}
+			}
+			console.log(d3);
 			if(d3.length>6)
 				{
 					var results = [];
@@ -381,7 +397,7 @@ exports.deployTemplate = function(req, res){
 						  }
 				}else{arr.push(d3);}
 			  console.log(arr);
-			  client.invoke("assign", arr, function(error, resq, more) {});
+			  //client.invoke("assign", arr, function(error, resq, more) {});
 			res.send("Success");
 	}else{
 			for(var i=0;i<d1arr.length;i++)
@@ -405,7 +421,7 @@ exports.deployTemplate = function(req, res){
 						  }
 				}else{arr.push(d3);}
 			  console.log(arr);
-			 client.invoke("assign", arr, function(error, resq, more) {});
+			 //client.invoke("assign", arr, function(error, resq, more) {});
 			res.send("Success");
 			}
 }

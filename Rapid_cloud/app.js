@@ -155,6 +155,7 @@ app.get('/createSecGrp', resources.createSecGrp);
 app.get('/createRtTable', resources.createRtTable);
 app.get('/createLclNetGtWay', resources.createLclNetGtWay);
 app.get('/createDns', resources.createDns);
+app.get('/attachDisk', resources.attachDisk)
 
 
 //DevOps
