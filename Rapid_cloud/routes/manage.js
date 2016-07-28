@@ -354,7 +354,6 @@ exports.deployTemplate = function(req, res){
 	var arr=[];
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
-	console.log(Obj);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
 	if(d1arr[0] == 'AWS'){
