@@ -3,7 +3,7 @@
 <title>RapidCloud</title>
 <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-<link href="css_1/style.css" rel="stylesheet"/>
+<link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 <script src="javascript_1/bootstrap.min.js"></script>
@@ -34,10 +34,11 @@
 			
 		</aside>
 			<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
 			<header>
 				<h1>Create Templates <a href=""><span class="glyphicon glyphicon-plus-sign" onclick="createTem(this)" id="addRole" style="color:#999999;"></span></a></h1>
-				<aside></br><div id="data"></data></aside>
-			</header>			
+				<aside><div id="data"></data></aside>
+			</header>
 			<section role="createTemplate">
 				<div class="roles" id="roleAdded">
 					<div class="row" id="templateConta">					
@@ -69,9 +70,9 @@
 										  <dd>Microsoft</dd>
 										</dl>
 									</li>									
-								</ul>							
+								</ul>
 								<span class="glyphicon glyphicon-chevron-down pull-right" style="padding-top:3px;"></span>
-								</div>						
+								</div>
 							</div>
 						</div>
 						

@@ -1,9 +1,18 @@
 var spawn = require("child_process").spawn,child;
 var mongodb = require('mongodb');
+var pg = require("pg");
 var MongoClient = mongodb.MongoClient;
 var url = 'mongodb://172.29.59.100/test';
 
+var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
+var client_pg = new pg.Client(conString);
+
 exports.createGroup = function(req,res){
+	var account = "Rezopia_Acc",
+	    project = "Rezopa_proj",
+	    resourceGroup = "TestRG1",
+		region = "West US";
+		
 	/*MongoClient.connect(url, function (err, db) {
 		  if (err) {
 		    console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -22,9 +31,10 @@ exports.createGroup = function(req,res){
 		      db.close();
 		    });
 		  } 
-		});*/
-	var retVal = executeScript("resource.ps1");
-	res.send(retVal);	
+		});
+	var retVal = executeScript("resource.ps1");*/
+	//client_pg.query("INSERT INTO resources(Account,project,resourceGroup,region) values($1, $2, $3, $4)", [account, project, resourceGroup, region]);	
+	//res.send("retVal");
 }
 exports.createVnet = function(req,res){
 	var retVal = executeScript("VNet.ps1");

@@ -12,6 +12,7 @@ var inst_id = [];
 window.onload = function(){
 	get_aws_region();
 	get_azure_region();
+	getDetails();
 	
 }
 
@@ -58,11 +59,11 @@ function get_azure_region(){
 }
 
 
-
-$('#Node').click(function(){
-	$("#view_temp").hide();
-	$("#single_node").show();
-	$("[role='template1']").show();
+function getDetails(){
+//$('#Node').click(function(){
+	//$("#view_temp").hide();
+	//$("#single_node").show();
+	//$("[role='template1']").show();
 	var aws_count = 0, azure_count = 0;
 	$.getJSON( "http://172.29.59.65:3000/all_nodes", function( data ) {		
 		for(var i=0;i<data.length;i++)
@@ -92,7 +93,8 @@ $('#Node').click(function(){
 			assign_region(inst_id, aws_count, azure_count);
 			
 	});		
-});
+//});
+}
 
 function show_nodes(){	
 	$(qu1).empty();

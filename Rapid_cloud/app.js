@@ -40,6 +40,21 @@ app.get('/master_2', routes.master_2);
 app.get('/create_template', routes.create_template);
 app.get('/assignNode', routes.assignNode);
 app.get('/deployTemplate', routes.deployTemplate);
+app.get('/views/index1.html', routes.index1);
+app.get('/vpc', routes.vpc);
+app.get('/subnet', routes.subnet);
+app.get('/keyPair', routes.keyPair);
+app.get('/localNetworkGateWay', routes.localNetworkGateWay);
+app.get('/internetGateWay', routes.internetGateWay);
+app.get('/vpnConnection', routes.vpnConnection);
+app.get('/DNSZone', routes.DNSZone);
+app.get('/endPoint', routes.endPoint);
+app.get('/virtualNetworkGatway', routes.virtualNetworkGatway);
+
+app.get('/securityGroup', routes.securityGroup);
+app.get('/routeTable', routes.routeTable);
+
+app.get('/myAccount', routes.myAccount);
 
 //Old page functions
 app.get('/master', routes.master);
@@ -103,8 +118,10 @@ app.get('/org_temp', view.org_temp);
 //app.get('/org_temp', view.org_temp);
 app.get('/vpc_deploy',manage.vpc_deploy);
 app.post('/filter_env',manage.filter_env);
+app.post('/filter_env2',manage.filter_env2);
 app.post('/popup_nodes',manage.popup_nodes);
 app.post('/node_details',manage.node_details);
+app.post('/node_detailsManage',manage.node_detailsManage);
 app.post('/manage_env_nodes',manage.manage_env_nodes);
 app.get('/cloud_service',routes.cloud_service);
 app.get('/prod_stage',routes.prod_stage);
@@ -118,12 +135,19 @@ app.post('/filter_slot',manage.filter_slot);
 app.get('/list_cloud_service',manage.list_cloud_service)
 
 //New manage screen
+//app.get('/manageEnv', manage.manageEnv);
 app.get('/manageEnv', manage.manageEnv);
+app.get('/loadBalance', manage.loadBalance);
+app.get('/manageVolumes', manage.manageVolumes);
+app.get('/securityGroupManage', manage.securityGroupManage);
+app.get('/trafficManager', manage.trafficManager);
+app.get('/nodeTemplates', routes.nodeTemplates);
+app.get('/accountTemplates', routes.accountTemplates);
 
-//Mange stg, sec, kp
-app.post('/volumeDetails', manage.volumeDetails);
+//Manage stg, sec, kp
+app.get('/volumeDetails', manage.volumeDetails);
 app.post('/keyPairDetails', manage.keyPairDetails);
-app.post('/secGrpDetails', manage.secGrpDetails);
+app.get('/secGrpDetails', manage.secGrpDetails);
 app.post('/attachVolume', manage.attachVolume);
 app.get('/attachKeyPair', manage.attachKeyPair);
 app.get('/attachSecGrp', manage.attachSecGrp);
@@ -133,7 +157,10 @@ app.post('/azureEndPoint', manage.azureEndPoint);
 app.post('/trafficManage', manage.trafficManage);
 app.post('/blobUpload', manage.blobUpload);
 app.get('/getAzureStg', manage.getAzureStg);
-
+app.get('/getSecurity', manage.getSecurity);
+app.get('/getRouteTable', manage.getRouteTable);
+app.get('/getInetGateWay', manage.getInetGateWay);
+app.get('/getKeypair', manage.getKeypair);
 //Accounts
 app.get('/accounts', account.accounts);
 app.get('/login', account.login);
@@ -146,18 +173,24 @@ app.post('/createProduct', manage.createProduct);
 app.post('/createAccount', manage.createAccount);
 app.get('/download', account.download);
 app.post('/storeAwsSub', manage.storeAwsSub);
-
+app.post('/loadBalancerCreate', manage.loadBalancerCreate);
 //resource group services
-app.get('/createGroup', resources.createGroup);
-app.get('/createVnet', resources.createVnet);
-app.get('/createSubnet', resources.createSubnet);
-app.get('/createSecGrp', resources.createSecGrp);
-app.get('/createRtTable', resources.createRtTable);
-app.get('/createLclNetGtWay', resources.createLclNetGtWay);
-app.get('/createDns', resources.createDns);
-app.get('/attachDisk', resources.attachDisk)
+app.post('/createGroup', manage.createGroup);
+app.get('/createVnet', manage.createVnet);
+app.post('/createSubnet', manage.createSubnet);
+app.post('/createSecGrp', manage.createSecGrp);
+app.post('/createRtTable', manage.createRtTable);
+app.post('/createLclNetGtWay', manage.createLclNetGtWay);
+app.post('/createDns', manage.createDns);
+app.post('/createEndPoint', manage.createEndPoint);
+app.post('/createVnetGWay', manage.createVnetGWay);
+app.get('/attachDisk', resources.attachDisk);
+app.get('/getResource', manage.getResource);
+app.get('/getVnet', manage.getVnet);
+app.get('/getSubnet', manage.getSubnet);
+app.post('/deployResource', manage.deployResource);
 
-
+app.get('/multicloud', routes.multicloud);
 //DevOps
 app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);

@@ -1,5 +1,4 @@
-
-
+var _ip = "http://172.29.59.65:3000";
 function isIE () {	
   var myNav = navigator.userAgent.toLowerCase();
   ieVer = (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
@@ -23,13 +22,13 @@ function getStorageData(){
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
 	//console.log(accountName+projName+prodName);
-	 var theDiv = document.getElementById("data");
-		theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
+	 //var theDiv = document.getElementById("data");
+		//theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
 }
 
 var myTemplate_images = [];
 $(function(){		
-		$.getJSON( "http://172.29.59.65:3000/my_view", function( data ) {	
+		$.getJSON( _ip+"/my_view", function( data ) {	
 		              var result=data;
 		              var tempName = [], region = [], tempType = [], nodes = [], cloud = [];
 		              getStorageData();
@@ -67,7 +66,7 @@ $(function(){
 });	
 		
 $(function(){
-		$.getJSON( "http://172.29.59.65:3000/gen_view", function( data ) {	
+		$.getJSON(_ip+"/gen_view", function( data ) {	
 			var result1=data;
 			//console.log(data);
 			var tempName1 = [], region1 = [], tempType1 = [], nodes1 = [];
@@ -145,7 +144,7 @@ function pvdSpec_function(myT){
 }	
 
 $('#manageEnv').click(function(){
-	location.href="//172.29.59.65:3000/manageEnv";
+	location.href="//172.29.59.65/manageEnv";
 })
 function addDevOps(ev){	
 	localStorage.setItem("InfraId",ev.title)
@@ -213,7 +212,7 @@ function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 function genereic_function(genT){
 	//alert("Disabled the functions....!");
 	var genTemplate = genT.id
-	location.href ="http://172.29.59.65:3000/assignNode"+"?data="+genTemplate;
+	location.href =_ip+"/assignNode"+"?data="+genTemplate;
 }
 
 function generic_details(result1){
@@ -249,7 +248,7 @@ $('input#search').keyup(function() {
 });
 
 $('button#create_temp').click(function(){
-	location.href="http://172.29.59.65:3000/create_template"
+	location.href=_ip+"/create_template"
 });
 
 var fadeSpped="speed";
@@ -329,16 +328,3 @@ $(document).ready(function(){
 		valu == "GTemplates"?gTemp1():false;		
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<title>Networks - Multi Cloud Template</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
+<link rel="stylesheet" href="../theme/futuristic-style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+<div class="alertS">
+	<div class="alert alert-success alert-accName" role="alert"><b>Account</b> name already exists or it should not include special character<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning" role="alert"><b>Warning!</b> 
+		<span class="aw"></span>
+		<span class="glyphicon glyphicon-remove-circle closeAlert"></span>
+	</div>
+	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> 
+		<span class="ad"></span>
+		<span class="glyphicon glyphicon-remove-circle closeAlert"></span>
+	</div>
+</div>
+
+<div class="container">
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<h1>Multi Cloud Template<a href=""></a></h1>
+			</header>
+			<section role="createTemplate">
+				<div class="roles gapForDiv">
+					<div class="pull-left" style="width:190px;">
+						<label class="labelTemp">Template Name</label>
+						<div class="clickRole temp1stRowWid" id="">
+							<input type="text" placeholder="Ex: Name" id="RM_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp" style="padding-left:0px;padding-bottom:5px;">Add Tiers to Template</label><br>
+						<div class="input-group spinner pull-left count_1">
+							<input id="count0" type="text" class="form-control" value="1">
+							<div class="input-group-btn-vertical">
+								<button class="btn btn-default up_1" onclick="template.addConfig(1)" type="button">
+								<i class="fa glyphicon glyphicon-triangle-top"></i></button>
+								<button class="btn btn-default down_1" onclick="template.addConfig(0)" type="button">
+								<i class="fa glyphicon glyphicon-triangle-bottom"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="confi"></div>
+				<!--
+				<div class="template_con">
+					<div class="configTire">Configure Tier 1</div>
+					<table class="table table-bordered">
+						<thead class="thead-inverse">							
+							<th colspan="4" class="configTitle">Tier Name : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="simpleInputTxt" style="border:solid 1px #acadac;" /></th>
+						</thead>
+						<tbody>
+							<td>Server Name : <input type="text" class="simpleInputTxt" /></td>
+							<td>Operating System : <input type="text" class="simpleInputTxt" /></td>
+							<td>
+								<div class="input-group spinner pull-left count_1">
+									<input id="count0" type="text" class="form-control" value="1">
+									<div class="input-group-btn-vertical">
+										<button class="btn btn-default up_1" type="button">
+										<i class="fa glyphicon glyphicon-triangle-top"></i></button>
+										<button class="btn btn-default down_1" type="button">
+										<i class="fa glyphicon glyphicon-triangle-bottom"></i>
+										</button>
+									</div>
+								</div>
+							</td>
+							<td>+</td>
+						</tbody>
+					</table>
+				</div>
+				-->
+				<div class="templateCreateButtons">
+					<button id="cTA_Create">Cancel</button>
+					<button id="cTA_CreateAndDeploy" onclick="template.saveRecord();">Create</button>
+					<br><br>
+				</div>
+			</section>
+		</section>
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+<script src="javascript_1/menu.js"></script>
+<script src="javascript_1/multicloud.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");  
+});
+</script>
+</body>
+</html>

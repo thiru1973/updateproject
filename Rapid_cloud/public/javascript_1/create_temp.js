@@ -236,8 +236,8 @@ function getStorageData(){
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
 	console.log(accountName+projName+prodName);
-	var theDiv = document.getElementById("data");
-	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
+	//var theDiv = document.getElementById("data");
+	//theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
 }
 //var idArr=[];
 //var osArr=[];

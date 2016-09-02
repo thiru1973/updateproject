@@ -32,7 +32,7 @@ $(document).ready(function(){
 	
 	
 	
-	$(".popupData").hide();
+	$(".proDiv ,.popupData").hide();
 	$(".popData").hide();
 	$(".buttonVpc").click(function(){		
 		$(".popupData").show();
@@ -163,7 +163,7 @@ function selectOpt(ev, idn){
 	 var vb = v.parentNode;
 	 var idd = vb.id;
 	 //alert(idd);
-	 if(idd == "selvpc"){vpcId = aTex;getSubnetName(aTex);}
+	 if(idd == "selvpc"){vpcId = aTex;getSubnetName(aTex);getSecurity(aTex);getRouteTable(aTex);getInetGWay(aTex);getKeyPair();}
 	 if(idd == "selsn"){subnetId = aTex;}
 	 if(idd == "selOs"){populate_image(aTex);}
 	 /*for(var i=0;i<node_info.length;i++)
@@ -241,11 +241,13 @@ window.onload = function(){
 	getCloudService();
 	setStorageData();
 	getAzureStorage();
+	getResources();
+	getVnet();
+	getSubnet();
 }
 function getAzureStorage(){
 	$(function(){
 		$.getJSON('http://172.29.59.65:3000/getAzureStg', function(data){
-			console.log(data+"typeDro");
 			var stgAcc = [];
 			for(i=0;i<data.length;i++)
 				{
@@ -282,7 +284,73 @@ function get_role_os(){
 		});
 }
 
-
+function getSecurity(vpcName){
+	var secName = [];
+	$(function(){
+		  $.getJSON(_ip+'/getSecurity', function(data){
+			  //console.log(data);			  
+			 for(var x=0;x<data.length;x++)
+				 {
+				 	if(data[x].vpc_id == vpcName)
+				 		{
+				 			secName[x] = data[x].sg_name;
+				 		}
+				 }
+			   var appendD = new DropdownConst();
+			   appendD.appendData(secName,"selsgn0");
+		  });		 
+	});
+}
+function getRouteTable(vpcName){
+	var routeName = [];
+	$(function(){
+		  $.getJSON(_ip+'/getRouteTable', function(data){
+			 console.log(data);			  
+			 for(var x=0;x<data.length;x++)
+				 {
+				 	if(data[x].vpc_name == vpcName)
+				 		{
+							var tT = document.getElementById("rtTable");
+								tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].route_name+'</dd></dl></li>';					
+				 		}
+				 }
+		  });		 
+	});
+}
+function getInetGWay(vpcName){
+	var gWay = [];
+	$(function(){
+		  $.getJSON(_ip+'/getInetGateWay', function(data){
+			 console.log(data);			  
+			 for(var x=0;x<data.length;x++)
+				 {
+				 	if(data[x].vpc_name == vpcName)
+				 		{
+				 			gWay[x] = data[x].igateway_name;
+							var tT = document.getElementById("gtWay");
+								tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].igateway_name;+'</dd></dl></li>';					
+				 		}
+				 }
+			   //var appendD = new DropdownConst();
+			   //appendD.appendData(gWay,"gtWay");
+		  });		 
+	});
+}
+function getKeyPair(){
+	var kp = [];
+	$(function(){
+		  $.getJSON(_ip+'/getKeypair', function(data){
+			 console.log(data);		
+			 for(var y=0;y<data.length;y++)
+			 {
+				 kp[y] = data[y].key_name;
+			 }	
+		var appendD = new DropdownConst();
+		appendD.appendData(kp,"kpair");
+		  });		 
+	});
+	
+}
 
 var node_info;
 var pvd_name;
@@ -307,9 +375,7 @@ function get_templateName(){
 		       data2[tmp[0]] = tmp2[1];
 		  }
 		 str = data.data;
-		 console.log(str);
 		 str2 = data2.data;
-		 console.log(str2);
 		 if(str == "single"){
 			 console.log("single_node_deployment");
 			 var params3 = url.split('?')[3].split('&');
@@ -341,6 +407,7 @@ function get_templateName(){
 			            $('table.nodeSel').hide();
 			            $('div.advOpn').hide();
 			            $('#scriptConfig').hide();
+						$('#resGorup').hide();
 			 	}
 			 	else{
 			 		var tr = $('<tr/>');
@@ -397,6 +464,7 @@ function get_templateName(){
 				            $('#roleappend').hide();
 				            $('#osappend').hide();
 				            $('#scriptConfig').hide();
+							$('#resGorup').hide();
 							if(pvd_name == "AWS")
 			            	{
 			            		displayZones(pvd_name,pvd_region);
@@ -455,7 +523,7 @@ function displayZones(pname,region){
 	    		 			zones = results[i].availability_zones;
 	    		 		}
 	    		 }
-	    	 console.log(zones);
+	    	 //console.log(zones);
 	    	 var appendD = new DropdownConst();
 				appendD.appendData(zones,"selsZn");
 	    	
@@ -490,7 +558,6 @@ function getVpcName(){
 				 {
 				 	vpc_Name[x] = /*data[x].vpc_name+"/"+*/data[x].vpc_id;
 				 }
-			 	console.log(vpc_Name);
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"selsvpc");
 			   appendD.appendData(vpc_Name,"selsVpcSn");	
@@ -504,22 +571,18 @@ function getSubnetName(vpcid){
 	var id=vpcid;
 	var subNetName1 = [];
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){
-			  console.log(data);
-			  
+		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){			  
 			 for(var x=0;x<data.length;x++)
 				 {
 				 	if(data[x].vpc_id == id)
 				 		{
-				 			alert(data[x].subnet_id);
-				 			subNetName1[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
-				 			//var appendD = new DropdownConst();
-							//appendD.appendData(subNetName1[x],"selssn");
+				 			//subNetName1[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
+							var tT = document.getElementById("selssn");
+								tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].subnet_id+'</dd></dl></li>';					
 				 		}
 				 }
-			   //console.log(subNetName1.length+subNetName1);
-			   var appendD = new DropdownConst();
-			   appendD.appendData(subNetName1,"selssn");
+			   //var appendD = new DropdownConst();
+			   //appendD.appendData(subNetName1,"selssn");
 		  });
 		 
 	});
@@ -584,6 +647,61 @@ function fortCheckFunction(value, Id){
 			$('#'+Id+'').val("");
 		}
 }
+
+/*-------------Azure resource group functions-----------------*/
+//Get the Azure resource groups
+function getResources(){
+	$(function(){
+		  $.getJSON(_ip+'/getResource', function(data){
+			 //console.log(data);
+			 var resGp = [];
+			 for(var resG=0;resG<data.length;resG++)
+			 {
+				 resGp[resG] = data[resG].resourcegroup;
+			 }
+			 var appendD = new DropdownConst();
+			 appendD.appendData(resGp,"resgs");
+			 
+			 
+		  });
+	});
+}
+//Get virtual network
+function getVnet(){
+	$(function(){
+		$.getJSON(_ip+'/getVnet', function(data){
+			//console.log(data);
+			var vNetwork = [];
+			for(vNet=0;vNet<data.length;vNet++)
+			{
+				vNetwork[vNet] = data[vNet].vnetname;
+			}
+			var appendD = new DropdownConst();
+			appendD.appendData(vNetwork,"vnets");
+		});
+	});
+}
+//Get the subnet of the resource group
+function getSubnet(){
+	$(function(){
+		$.getJSON(_ip+'/getSubnet', function(data){
+			var subnet = [];
+			for(snet=0;snet<data.length;snet++)
+			{
+				subnet[snet] = data[snet].subnet_conf_name;
+			}
+			var appendD = new DropdownConst();
+			appendD.appendData(subnet,"snets");
+		});
+	});
+}
+
+
+$('#clsc_check, #rsg_check').on('change', function(){
+		console.log(this.id);
+		if(this.id == "clsc_check"){$('#classic').show();$('#resource').hide();
+		}else{$('#resource').show();$('#classic').hide();}
+	})
 function show_nodeDetails(data){
 	for(var i=0;i<data.length;i++)
 		{
@@ -620,27 +738,27 @@ function show_nodeDetails(data){
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+i+"_0' placeholder='' style='border:none;width:100%;'></div></div></div>"
 					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+i+"_0' type='text' style='border:none;width:100%;'></div></div></div>"
 					  +"<span class='glyphicon glyphicon-plus-sign' onclick='createVol("+i+");' id='addRole' style='color:#999999;'></span></a>"
-					  +"</div>"
+					  //+"</div>"
 					  +"<div class='tab-pane fade in active alignAllsides' id='dup"+i+"'><br></br></div>"
 					  //+"</div>"
 					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign disk"+i+"' id='storage"+i+"_0' onclick='createStgFunction(this.id, "+i+")'>Create</button></div>"
-					  //+"</div>"
+					  +"</div>"
 					  
 					  
 					  +"<div class='tab-pane fade alignAllsides' id='requests"+i+"'>"
-					  +"<div><form class='' id='rbtn"+i+"'><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
+					  //+"<div><form class='' id='rbtn"+i+"'><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' checked='checked' id='inlineRadio1"+i+"' value='option1'>Create New </label><label class='radio-inline'> <input type='radio' name='inlineRadioOptions' id='inlineRadio2"+i+"' value='option2'>Use Old </label></form></div>"
 					  +"<div class='CreateNewSecurity CreateSec"+i+"' ><div class='roleId'><div class='pull-left'><div id='selsg"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsgn"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div></div>"
-					  +"<div style='' class='securityGr' id='securityGrIDD"+i+"'><div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+i+"' style='border:none;width:100%;'></div></div></div>"
+					  //+"<div style='' class='securityGr' id='securityGrIDD"+i+"'><div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+i+"' style='border:none;width:100%;'></div></div></div>"
 					  //+"<div class='roleID'><div class='pull-left'><label class='labelTemp'>Rule</label><div id='selrl"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selrle"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-      				  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
-					  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-					  +"<div class='operatingSys"+i+"'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+i+"' type='text' style='border:none;width:100%;'></div></div>"
+      				  //+"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
+					  //+"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+i+"' type='number' min='0' placeholder='0 - 65535' onchange='fortCheckFunction(this.value, this.id)' style='border:none;width:100%;'></div></div></div>"
+					  //+"<div class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+					  //+"<div class='operatingSys"+i+"'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+i+"' type='text' style='border:none;width:100%;'></div></div>"
 					  //+"<a href='#' style='margin-top: 26px;display: inline-block;'><span class='glyphicon glyphicon-plus-sign addMoreSecuGro' id='"+i+"' style='font-size:23px;color:#999999;'></span></a>"
-					  +"</div>"					 
-					  +"</div>"
-					  +"<div class='addMorehere"+i+"'></div>"
-					  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+i+")'>Create</button></div>"
+					  //+"</div>"					 
+					  //+"</div>"
+					  //+"<div class='addMorehere"+i+"'></div>"
+					  //+"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+i+")'>Create</button></div>"
 					  +"</div>"
 	
 					 /* +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
@@ -661,7 +779,7 @@ function show_nodeDetails(data){
 			//addRow(i);
 			var appendD = new DropdownConst();
 			appendD.appendData(volumeType,"selsstg"+i+"");
-			appendD.appendData(cidrIp,"selsci"+i+"");
+			//appendD.appendData(cidrIp,"selsci"+i+"");
 			//appendD.appendData(rule,"selrle"+i+"");
 		}
 	
@@ -725,7 +843,7 @@ function show_nodeDetails(data){
 		$(".1stRowAdd").click(function(){
 			var na = $(this).attr("name");
 			$("."+na).show();
-			console.log(na);
+			//console.log(na);
 		});
 		
 		$(".close").click(function(){
@@ -753,7 +871,7 @@ function show_nodeDetails(data){
 	
 		
 		
-		$(".CreateNewSecurity").hide();
+		/*$(".CreateNewSecurity").hide();
 	$('[name="inlineRadioOptions"]').click(function(){
 		var th = $(this).attr("id");
 		//console.log(th);
@@ -767,9 +885,9 @@ function show_nodeDetails(data){
 			$(".CreateSec"+pos+"").hide();
 			$("#secGroup"+pos+"").show();
 		}
-	})
+	})*/
 	
-		$(".CreateNewSecurity").hide();
+		/*$(".CreateNewSecurity").hide();
 			$('[name="inlineRadioOptions"]').click(function(){
 				var th = $(this).attr("id")
 				//console.log(th);
@@ -796,7 +914,7 @@ function show_nodeDetails(data){
 				cl.find(".glyphicon-plus-sign").attr("title", "securityGrIDD_"+i);
 				cl.find(".glyphicon-plus-sign").on("click", closeThis);
 				$(".addMorehere"+this.id+"").append(cl);
-			});
+			});*/
 			function closeThis(e){
 				e.preventDefault();
 				var myName = $(this).attr("title");
@@ -1287,6 +1405,7 @@ function createStgFunction(buttonId, Id){
 	}	
 }
 function createSgpFunction(buttonId, Id){
+	
 	var sgName = document.getElementById("sgName"+Id+"").value;
 	var sgFPort = document.getElementById("sgFPort"+Id+"").value;
 	var sgTPort = document.getElementById("sgTPort"+Id+"").value;
@@ -1304,6 +1423,7 @@ function createSgpFunction(buttonId, Id){
 			}else if(sgTPort == "" || sgTPort == null)
 				{
 					$('#sgTPort'+Id+'').focus();
+					return;
 				}else if(cidr == "Select")
 				{
 					document.getElementById("selci"+Id+"").style.border="thin dashed #0099FF";
@@ -1413,20 +1533,18 @@ function deployFunction(){
 		var region = pvd_region;
 		var envName = document.getElementById("sel").innerText;
 		//var prjName = document.getElementById("selpj").innerText;
-		var prjName = localStorage.getItem("ProjectName");
+		var prdName = localStorage.getItem("ProjectName");
 		var vpcId = document.getElementById("selvpc").innerText;
 		var subnetId = document.getElementById("selsn").innerText;
-		var routeName = document.getElementById("routeName").value;
-		var gateName = document.getElementById("gateWayName").value;
+		//var routeName = document.getElementById("routeName").value;
+		//var gateName = document.getElementById("gateWayName").value;
+		var routeName = document.getElementById("rtTab").innerText;
+		var gateName = document.getElementById("gtw").innerText;
 		if(envName == "Select")
 			{
 			document.getElementById("sel").style.border="thin dashed #0099FF";
 			return;
-			}else if(prjName == "Select")
-				{
-				document.getElementById("selpj").style.border="thin dashed #0099FF";
-				return;
-				}
+			}
 		if(str == "multi")
 		{	
 			alert("Multi node deployment");
@@ -1446,14 +1564,14 @@ function deployFunction(){
 					var count = document.getElementById("count"+i+"").value;
 					var form = document.getElementById("ip"+i+"");
 					var pIp=form.elements["pubIp"].value;
-					var form1 = document.getElementById("rbtn"+i+"");
-					var selopt = form1.elements["inlineRadioOptions"].value;
-					if(selopt == "option1")
-						{
-						var sgName = document.getElementById("sgName"+i+"").value;
-						}else{
+					//var form1 = document.getElementById("rbtn"+i+"");
+					//var selopt = form1.elements["inlineRadioOptions"].value;
+					//if(selopt == "option1")
+						//{
+						//var sgName = document.getElementById("sgName"+i+"").value;
+						//}else{
 							var sgName = document.getElementById("selsg"+i+"").innerText;
-						}
+						//}
 					/*var form2 = document.getElementById("rbtnkp"+i+"");
 					var selopt2 = form2.elements["inlineRadioOptions"].value;
 					if(selopt2 == "option1")
@@ -1502,23 +1620,24 @@ function deployTemplateFunction()
 			var region = pvd_region;
 			var envName = document.getElementById("sel").innerText;
 			//var prjName = document.getElementById("selpj").innerText;
-			var prjName = localStorage.getItem("ProductName");
+			var accName = localStorage.getItem("Account");
+			var prjName = localStorage.getItem("ProjectName");
+			var prdName = localStorage.getItem("ProductName");
 			var vpcId = document.getElementById("selvpc").innerText;
 			var subnetId = document.getElementById("selsn").innerText;
-			var routeName = document.getElementById("routeName").value;
-			var gateName = document.getElementById("gateWayName").value;
-			var keyPairName = document.getElementById("keyPairName0").value
+			//var routeName = document.getElementById("routeName").value;
+			//var gateName = document.getElementById("gateWayName").value;
+			//var keyPairName = document.getElementById("keyPairName0").value
+			var routeName = document.getElementById("rtTab").innerText;
+			var gateName = document.getElementById("gtw").innerText;
+			var keyPairName = document.getElementById("kp").innerText;
 			if(envName == "Select")
 				{
 				document.getElementById("sel").style.border="thin dashed #0099FF";
 				return;
-				}else if(prjName == "Select")
-					{
-					document.getElementById("selpj").style.border="thin dashed #0099FF";
-					return;
-					}
-			console.log(pvName+region+envName+prjName+vpcId+subnetId+routeName+gateName);
-			result_arr.push(pvName,"create_env", region,envName,prjName,vpcId,subnetId,routeName,gateName,keyPairName);
+				}
+			console.log(pvName+region+envName+prdName+vpcId+subnetId+routeName+gateName);
+			result_arr.push(pvName,"create_env", region,envName,accName,prjName,prdName,vpcId,subnetId,routeName,gateName,keyPairName);
 			
 			
 			var resultObj1 = [],disks1 = [];
@@ -1544,14 +1663,14 @@ function deployTemplateFunction()
 						var count = document.getElementById("count"+i+"").value;
 						var form = document.getElementById("ip"+i+"");
 						var pIp=form.elements["pubIp"].value;
-						var form1 = document.getElementById("rbtn"+i+"");
-						var selopt = form1.elements["inlineRadioOptions"].value;
-						if(selopt == "option1")
-							{
-							var sgName = document.getElementById("sgName"+i+"").value;
-							}else{
+						//var form1 = document.getElementById("rbtn"+i+"");
+						//var selopt = form1.elements["inlineRadioOptions"].value;
+						//if(selopt == "option1")
+							//{
+							//var sgName = document.getElementById("sgName"+i+"").value;
+							//}else{
 								var sgName = document.getElementById("selsg"+i+"").innerText;
-							}
+							//}
 						/*var form2 = document.getElementById("rbtnkp"+i+"");
 						var selopt2 = form2.elements["inlineRadioOptions"].value;
 						if(selopt2 == "option1")
@@ -1576,12 +1695,12 @@ function deployTemplateFunction()
 					var pIp=form.elements["pubIp"].value;
 					var form1 = document.getElementById("rbtn0");
 					var selopt = form1.elements["inlineRadioOptions"].value;
-					if(selopt == "option1")
-						{
-						var sgName = document.getElementById("sgName0").value;
-						}else{
+					//if(selopt == "option1")
+						//{
+						//var sgName = document.getElementById("sgName0").value;
+						//}else{
 							var sgName = document.getElementById("selsg0").innerText;
-						}
+						//}
 					var form2 = document.getElementById("rbtnkp0");
 					var selopt2 = form2.elements["inlineRadioOptions"].value;
 					if(selopt2 == "option1")
@@ -1609,7 +1728,7 @@ function deployTemplateFunction()
 		        success: function(data, textStatus){
 		        	//alert(data);
 		        	$(".alert-temp").stop().slideDown();
-		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	location.href="http://172.29.59.65:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1621,65 +1740,130 @@ function deployTemplateFunction()
 		}else
 			{
 			console.log("This is Azure template");
-			var result_arr = [];
-			var region = pvd_region;
-			var envName = document.getElementById("sel").innerText;
-			//var prjName = document.getElementById("selpj").innerText;
-			var accName = localStorage.getItem("Account");
-			var prjName = localStorage.getItem("ProjectName");
-			var prdName = localStorage.getItem("ProductName");
-			var CloudName = document.getElementById("selClsrv").innerText;
-			console.log(pvName+region+envName+prjName+CloudName);
-			result_arr.push(pvName,region,envName,accName,prjName,prdName,CloudName,"mystock");
-			result_arr.splice(1, 0, "create_environment");
-			var resultObj1 = [];
-			if(envName == "Select")
-			{
-			document.getElementById("sel").style.border="thin dashed #0099FF";
-			return;
-			}else if(prjName == "Select")
+			var form2 = document.getElementById("resgp");
+			var selopt1 = form2.elements["rsg"].value;
+			if(selopt1 == "Resource Group"){
+				ressourceFunction();
+			}else{
+				var result_arr = [];
+				var region = pvd_region;
+				var envName = document.getElementById("sel").innerText;
+				//var prjName = document.getElementById("selpj").innerText;
+				var accName = localStorage.getItem("Account");
+				var prjName = localStorage.getItem("ProjectName");
+				var prdName = localStorage.getItem("ProductName");
+				var CloudName = document.getElementById("selClsrv").innerText;
+				console.log(pvName+region+envName+prjName+CloudName);
+				result_arr.push(pvName,region,envName,accName,prjName,prdName,CloudName,"mystock");
+				result_arr.splice(1, 0, "create_environment");
+				var resultObj1 = [];
+				if(envName == "Select")
 				{
-				document.getElementById("selpj").style.border="thin dashed #0099FF";
+				document.getElementById("sel").style.border="thin dashed #0099FF";
 				return;
-				}
-			if(str == "multi")
-			{
-				for(var i=0;i<temp_info.length;i++)
+				}else if(prjName == "Select")
+					{
+					document.getElementById("selpj").style.border="thin dashed #0099FF";
+					return;
+					}
+				if(str == "multi")
 				{
-					var instName = temp_info[i].node;
-					var imageName = temp_info[i].image;
-					var roleName = temp_info[i].role;
+					for(var i=0;i<temp_info.length;i++)
+					{
+						var instName = temp_info[i].node;
+						var imageName = temp_info[i].image;
+						var roleName = temp_info[i].role;
+						console.log(instName+imageName+roleName);
+						resultObj1.push(instName,imageName,roleName);
+					}
+				}else{
+					var instName = str2;
+					var imageName = document.getElementById("selImag").innerText;
+					var roleName = document.getElementById("selRole").innerText;
 					console.log(instName+imageName+roleName);
 					resultObj1.push(instName,imageName,roleName);
 				}
-			}else{
-				var instName = str2;
-				var imageName = document.getElementById("selImag").innerText;
-				var roleName = document.getElementById("selRole").innerText;
-				console.log(instName+imageName+roleName);
-				resultObj1.push(instName,imageName,roleName);
-			}
-			console.log(result_arr.length);
-			console.log(resultObj1.length);
-			$.ajax({
-		        type: 'POST',
-		   	 	jsonpCallback: "callback",
-		        datatype: 'jsonp',
-		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: _ip+'/deployTemplate',
-		        success: function(data, textStatus){
-		        	alert(data);
-		        	//location.href=_ip+"/master_2"
-		        	},
-		        	 error: function (xhr, status, error){
-		                 console.log('Failure');
-		         		alert("failure");
-		         		},
-		            });
+				console.log(result_arr.length);
+				console.log(resultObj1.length);
+				$.ajax({
+					type: 'POST',
+					jsonpCallback: "callback",
+					datatype: 'jsonp',
+					data:  "d1="+result_arr+"&d2="+resultObj1,
+					url: _ip+'/deployTemplate',
+					success: function(data, textStatus){
+						alert(data);
+						location.href=_ip+"/master_2"
+						},
+						 error: function (xhr, status, error){
+							 console.log('Failure');
+							alert("failure");
+							},
+						});
+				}
 			}
 }
 
 $('.exit').click(function(){
 	location.href = _ip+"/master_2";
 })
+function ressourceFunction(){
+	alert("Inside resource group");
+	var resultObj2 = [], result_arr1 = [];
+	var region = pvd_region;
+	var accName = localStorage.getItem("Account");
+	var prjName = localStorage.getItem("ProjectName");
+	var prdName = localStorage.getItem("ProductName");
+	var env = document.getElementById("sele").innerText,
+	    resgroup = document.getElementById("resg").innerText,
+		virtNet = document.getElementById("vnet").innerText,
+		subnet = document.getElementById("snet").innerText;
+	if(env == "Select")
+	{
+		document.getElementById("sele").style.border="thin dashed #0099FF";
+		return;
+	}else if(resgroup == "Select")
+		{
+			document.getElementById("resg").style.border="thin dashed #0099FF";
+			return;
+		}else if(virtNet == "Select")
+			{
+				document.getElementById("vnet").style.border="thin dashed #0099FF";
+				return;
+			}else if(subnet == "Select")
+				{
+					document.getElementById("snet").style.border="thin dashed #0099FF";
+					return;
+				}
+		result_arr1.push(accName,prjName,prdName,env,resgroup,virtNet,subnet,region);
+	for(var i=0;i<temp_info.length;i++)
+	{
+		
+		var instName = temp_info[i].node;
+		var os = temp_info[i].os;
+		var roleName = temp_info[i].role;
+		var role_info = {};
+		role_info.instName = instName;
+		role_info.os = os;
+		role_info.roleName = roleName;
+		resultObj2.push(role_info);
+	}
+	var arr1=JSON.stringify(resultObj2);
+	console.log(result_arr1);
+	console.log(arr1);
+			$.ajax({
+					type: 'POST',
+					jsonpCallback: "callback",
+					datatype: 'jsonp',
+					data:  "d1="+result_arr1+"&d2="+arr1,
+					url: _ip+'/deployResource',
+					success: function(data, textStatus){
+						alert(data);
+						},
+						 error: function (xhr, status, error){
+							 console.log('Failure');
+							alert("failure");
+							},
+				});
+}
 

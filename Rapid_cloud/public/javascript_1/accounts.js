@@ -200,7 +200,7 @@ AccountsConst.prototype.getData = function(id,i,titleText,columnLength,columText
 					var datat = document.createElement("tr");
 					datat.innerHTML +='<td><a href="#" class="viewLink" onclick="account_Sub.viewProDetail(this)" id="'+columData.data3[r].p_name+'" title="'+accountIDReq+'">'+columData.data3[r].prod_name+'</a></td>\
 										<td>'+columData.data3[r].p_name+'</td>\
-										<td><a href="#" onclick="account_Sub.viewMore(this,3,'+i+')" id="'+columData.data3[i].prod_name+'" class="viewLink">View</a></td>';
+										<td><a href="#" onclick="account_Sub.viewMore(this,3,'+i+')" id="'+columData.data3[r].prod_name+'" class="viewLink">View</a></td>';
 					insertAfter(tD, datat);
 				  }else{
 					c++;

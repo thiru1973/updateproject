@@ -68,6 +68,49 @@ exports.assignNode = function(req,res){
 exports.deployTemplate = function(req, res){
 	res.render('deployTemplate');
 }
+exports.index1 = function(req, res){
+	res.render('index1');
+}
+
+exports.myAccount = function(req, res){
+	res.render('myAccount');
+}
+exports.vpc = function(req, res){
+	res.render('vpc');
+}
+exports.subnet = function(req, res){
+	res.render('subnet');
+}
+exports.keyPair = function(req, res){
+	res.render('keyPair');
+}
+exports.localNetworkGateWay = function(req, res){
+	res.render('localNetworkGateWay');
+}
+exports.internetGateWay = function(req, res){
+	res.render('internetGateWay');
+}
+exports.DNSZone = function(req, res){ res.render('DNSZone'); }
+exports.endPoint = function(req, res){ res.render('endPoint'); }
+exports.virtualNetworkGatway = function(req, res){ res.render('virtualNetworkGatway'); }
+exports.vpnConnection = function(req, res){ res.render('vpnConnection'); }
+exports.securityGroup = function(req, res){
+	res.render('securityGroup');
+}
+exports.routeTable = function(req, res){
+	res.render('routeTable');
+}
+exports.multicloud = function(req, res){
+	res.render('multiCloud');
+}
+
+exports.accountTemplates = function(req,res){
+	res.render('accountTemplates');
+};
+
+exports.nodeTemplates = function(req, res){
+	res.render('nodeTemplates');
+}
 
 
 /*Old page functions*/
@@ -385,8 +428,7 @@ exports.temp_store=function(req,res){
 		  } 
 		});	
 
-	res.send("success");
-	
+	res.send("success");	
 }
 
 exports.nodes_details=function(req,res){
@@ -634,6 +676,7 @@ exports.create_deploy_slot = function(req,res){
 var cron = require('cron');
 var spawn = require("child_process").spawn,child;
 exports.scheduleService = function(req, res){
+	console.log(req.body);
 	var reqResult = req.body
 		,cloudSer = reqResult.cldsrvc
 		,region = reqResult.region

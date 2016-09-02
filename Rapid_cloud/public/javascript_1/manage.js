@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	localStorage.setItem("Theme", "Futuristic");
 	if(localStorage.getItem("Theme") == "Classic"){
 		var th = document.getElementById("myTheme");
 			th.href="css_1/style.css";
@@ -19,13 +18,12 @@ $(document).ready(function(){
 				theme2.aboutProject();
 	}
 	$(".alert").hide();
-	//$("[role='profileLinks']").hide();
-	
-	/*$("[role='aboutProject']").click(function(){
+	$("[role='profileLinks']").hide();
+	$("[role='aboutProject']").click(function(){
 		$(".arrowRed").toggleClass('rotate', 1000).promise().done(function(){
 			$("[role='profileLinks']").stop().slideToggle();
 		});
-	});*/
+	});
 	/*
 	 * $("[role='naviGation'] ul li dl").hide(); $("[role='naviGation'] ul
 	 * li:first-child dl").addClass("show").show();
@@ -43,7 +41,7 @@ $(document).ready(function(){
 		$(".show").removeClass();
 		$(".activeTab").removeClass();
 		console.log("Closed Tab");
-	}	
+	}
 	
 	/*
 	 * $("[role='naviGation'] ul li dl dt").click(function(event){
@@ -68,18 +66,7 @@ $(document).ready(function(){
 		$(this).find("#link_1_0").stop().css({display:"none"});
 	});
 	
-	
-	//$(".container").append().html("<p>All new content. <em>You bet!</em></p>");
-	var i = $('[role="contentArea"]')
-		i.prepend("<div class='userName'>Jason Statham || <a href='/login' class='userNa'>SignOut</a></div>");
-	
-	var accountName = localStorage.getItem("Account")
-	,projName = localStorage.getItem("ProjectName")
-	,prodName = localStorage.getItem("ProductName");
-	var theDiv = document.getElementById("data");
-	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName;	
 });
-
 $(document).on('click', 'li#Templates', function(){ 
 	
 });
@@ -114,7 +101,6 @@ LayOut1.prototype = {
 		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
 		level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
 		level_2_1:["VPC","Subnet","Security Gruop","Route Table","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
-		//level_2_2:["View Templates","Create Templat"],
 		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
 		// Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks",
@@ -164,6 +150,8 @@ LayOut1.prototype = {
 		
 		$('#3rdSecurity').click(function(){location.href = location.origin+"/securityGroup"});
 		$('#3rdRoute').click(function(){location.href = location.origin+"/routeTable"});
+		
+		
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){
@@ -229,16 +217,10 @@ function LayOut(){
 }
 LayOut.prototype = {
 	primaryLins:{
-		level_1:["Accounts","Design","Deploy","Manage","Monitor","Projects"],
-								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
-								level_2:["Networks","Templates"],
-														level_2_2:["View Templates","Create Templat"],
-										  level_2a:["Node", "Templates"],
-														level_2a1:["Single Node"],
-														level_2a2:["Account Templates"],
-		level_2_1:["VPC","Subnet","Security Gruop","Route Table","VPN Connection","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
+		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
+		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers"],
+		level_2_1:["dsd"],
 		
-
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
 		// Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks",
 		// 5:"Load Balancer"},
@@ -261,18 +243,8 @@ LayOut.prototype = {
 			return false;
 		}else{
 			for(i=0; i<= this.primaryLins.level_2.length-1; i++ ){
-			subL0_1.innerHTML+='<li id='+this.primaryLins.level_2[i]+'>\
+			subL0_1.innerHTML+='<li id='+[i]+''+this.primaryLins.level_2[i]+'>\
 							<span class="myTe">'+this.primaryLins.level_2[i]+'</span>\
-							</li>';
-			}
-		}
-		var pt = location.pathname;
-		if(pt === "/nodeTemplates" || pt === "/accountTemplates"){
-			$("#link_1_0").hide();
-			subL0_1.innerHTML="";
-			for(i=0; i<= this.primaryLins.level_2a.length-1; i++ ){
-			subL0_1.innerHTML+='<li id=p'+i+this.primaryLins.level_2a[i]+'>\
-							<span class="myTe">'+this.primaryLins.level_2a[i]+'</span>\
 							</li>';
 			}
 		}
@@ -281,8 +253,8 @@ LayOut.prototype = {
 	createSubView3:function(){
 		var subL0 = document.getElementById("link_1_0");
 		for(i=0; i<= this.primaryLins.level_2_1.length-1; i++ ){
-			if(this.primaryLins.level_2_1[i] == "Key Pair" || this.primaryLins.level_2_1[i] == "Internet Gate Way" || this.primaryLins.level_2_1[i] == "VPN Connection"){
-				subL0.innerHTML+='<li role="forAWS" id='+"3rd"+this.primaryLins.level_2_1[i]+'>'+this.primaryLins.level_2_1[i]+'</li>';
+			if(this.primaryLins.level_2_1[i] == "dsd" || this.primaryLins.level_2_1[i] == "Internet Gate Way" || this.primaryLins.level_2_1[i] == "VPN Connection"){
+				subL0.innerHTML+='<li style="display:none;" role="forAWS" id='+"3rd"+this.primaryLins.level_2_1[i]+'>'+this.primaryLins.level_2_1[i]+'</li>';
 			}
 			else if(this.primaryLins.level_2_1[i] == "Local Network Gate Way" || this.primaryLins.level_2_1[i] == "DNS Zone" || this.primaryLins.level_2_1[i] == "Virtual Network Gateway"){
 				subL0.innerHTML+='<li role="forAzure" id='+"3rd"+this.primaryLins.level_2_1[i]+'>'+this.primaryLins.level_2_1[i]+'</li>';
@@ -291,50 +263,29 @@ LayOut.prototype = {
 				subL0.innerHTML+='<li id='+"3rd"+this.primaryLins.level_2_1[i]+'>'+this.primaryLins.level_2_1[i]+'</li>';
 			}
 		}
-		var pt = location.pathname;
-		if(pt === "/master_2" || pt === "/create_template" || pt === "/addData"){
-			var subL0 = document.getElementById("link_1_0");
-				subL0.innerHTML="";
-			for(i=0; i<= this.primaryLins.level_2_2.length-1; i++ ){
-				subL0.innerHTML+='<li id='+"3rd"+[i]+this.primaryLins.level_2_2[i]+'>'+this.primaryLins.level_2_2[i]+'</li>';
-			}
-			//$("#themeNav").css("margin-bottom", "6px");
-		}else if(pt === "/nodeTemplates"){
-			subL0.innerHTML="";
-			$("#link_1_0").hide();
-			/*for(i=0; i<= this.primaryLins.level_2a1.length-1; i++ ){
-				subL0.innerHTML+='<li id='+"3rd"+[i]+this.primaryLins.level_2a1[i]+'>'+this.primaryLins.level_2a1[i]+'</li>';
-			}*/
-		}
 	},
 	activeTab:function(){
 		var pt = location.pathname;
 			pt === "/accounts" ? $("#Accounts").addClass("active") : false ;
-		
-			pt === "/vpc" ? $("#3rdVPC, #Networks, #Design").addClass("active") : false ;
-			pt === "/subnet" ? $("#3rdSubnet, #Networks, #Design").addClass("active") : false ;
-			pt === "/keyPair" ? $("#3rdKey, #Networks, #Design").addClass("active") : false ;
-			
-			pt === "/localNetworkGateWay" ? $("#3rdLocal, #Networks, #Design").addClass("active") : false ;
-			pt === "/internetGateWay" ? $("#3rdInternet, #Networks, #Design").addClass("active") : false ;
-			
-			pt === "/vpnConnection" ? $("#3rdVPN, #Networks, #Design").addClass("active") : false ;
-			pt === "/DNSZone" ? $("#3rdDNS, #Networks, #Design").addClass("active") : false ;
-			pt === "/endPoint" ? $("#3rdEnd, #Networks, #Design").addClass("active") : false ;
-			pt === "/virtualNetworkGatway" ? $("#3rdVirtual, #Networks, #Design").addClass("active") : false ;
-			
-			pt === "/securityGroup" ? $("#3rdSecurity, #Networks, #Design").addClass("active") : false ;
-			pt === "/routeTable" ? $("#3rdRoute, #Networks, #Design").addClass("active") : false ;
-			pt === "/master_2" ? $("#Templates, #Design, #3rd0View").addClass("active") : false ;
-			pt === "/create_template" ? $("#Templates, #Design, #3rd1Create").addClass("active") : false ;
-			pt === "/addData" ? $("#Templates, #Design, #3rd2addData").addClass("active") : false ;
-			pt === "/manageEnv" ? $("#Manage").addClass("active") : false ;
+			pt === "/manageEnv" ? $("#Manage, #0Nodes").addClass("active") : false ;
+			pt === "/loadBalance" ? $("#Manage, #2Load").addClass("active") : false ;
+			pt === "/manageVolumes" ? $("#Manage, #3Volumes").addClass("active") : false ;
+			pt === "/schedulingNode" ? $("#Manage, #1Scheduling").addClass("active") : false ;
+			pt === "/securityGroupManage" ? $("#Manage, #4Security").addClass("active") : false ;
+			pt === "/trafficManager" ? $("#Manage, #5Traffic").addClass("active") : false ;
 			
 			pt === "/nodeTemplates" ? $("#p0Node, #3rd0Single, #Deploy").addClass("active") : false ;
-			pt === "/accountTemplates" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 	},
 	pagNav:function(){
+		$('#1Scheduling').hide();
 		$('#Accounts').click(function(){location.href = location.origin+"/accounts";});
+		
+		$('#0Nodes').click(function(){location.href = location.origin+"/manageEnv";});
+		$('#2Load').click(function(){location.href = location.origin+"/loadBalance";});
+		$('#3Volumes').click(function(){location.href = location.origin+"/manageVolumes";});
+		$('#1Scheduling').click(function(){location.href = location.origin+"/schedulingNode";});
+		$('#4Security').click(function(){location.href = location.origin+"/securityGroupManage";});
+		$('#5Traffic').click(function(){location.href = location.origin+"/trafficManager";});
 		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});
@@ -355,12 +306,7 @@ LayOut.prototype = {
 		$('#3rdSecurity').click(function(){location.href = location.origin+"/securityGroup"});
 		$('#3rdRoute').click(function(){location.href = location.origin+"/routeTable"});
 		
-		$('#3rd0View').click(function(){location.href = location.origin+"/master_2"});
-		$('#3rd1Create').click(function(){location.href = location.origin+"/create_template"});
-		$('#3rd2addData').click(function(){location.href = location.origin+"/addData"});
-		
-		$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/nodeTemplates"});
-		$('#p1Templates').click(function(){location.href = location.origin+"/accountTemplates"});
+		$('#Deploy').click(function(){location.href = location.origin+"/nodeTemplates"});
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){
@@ -378,16 +324,16 @@ LayOut.prototype = {
 						</div>\
 					<div id="menuBox">\
 					  <a href="#" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
-					  <section role="aboutProject" style="display:none;">\
+					  <section role="aboutProject">\
 						<!-- <br>\
 						<img src="images_1/profile_pic.png" />\
 						<br> -->\
-						<h1>Andrew <span class="glyphicon glyphicon-chevron-down arrowRed"></span></h1>\
+						<h1>Andrew  <span class="glyphicon glyphicon-chevron-down arrowRed"></span></h1>\
 					  </section>\
 					  <menu role="profileLinks">\
 						<ul>\
-							<!-- <li><a href="/myAccount">My Account</a></li>\
-							<li><a href="/login">Sign Out</a></li>-->\
+							<li><a href="/myAccount">My Account</a></li>\
+							<li><a href="/login">Sign Out</a></li>\
 						</ul>\
 					  </menu>\
 					  <nav role="naviGation">\
@@ -450,27 +396,8 @@ $('#3rdSecurity').click(function(){location.href = location.origin+"/securityGro
 $('#3rdRoute').click(function(){location.href = location.origin+"/routeTable"});
 
 // hideMenu
-
-
-$("#cTA_Next").click(function(){
-	var paTh = location.pathname;
-	if(sessionStorage.getItem("chooseUrCloud") == "AWS"){
-		console.log("aws");
-		paTh == "/vpc" ? location.href = location.origin+"/subnet" : true;
-		paTh == "/subnet" ? location.href = location.origin+"/securityGroup" : true;
-		paTh == "/securityGroup" ? location.href = location.origin+"/routeTable" : true;
-		paTh == "/routeTable" ? location.href = location.origin+"/vpnConnection" : true;
-		paTh == "/vpnConnection" ? location.href = location.origin+"/keyPair" : true;
-		paTh == "/keyPair" ? location.href = location.origin+"/internetGateWay" : true;
-		paTh == "/internetGateWay" ? location.href = location.origin+"/endPoint" : true;
-	}else if(sessionStorage.getItem("chooseUrCloud") == "Azure"){
-		console.log("Azure");
-		paTh == "/vpc" ? location.href = location.origin+"/subnet" : true;
-		paTh == "/subnet" ? location.href = location.origin+"/securityGroup" : true;
-		paTh == "/securityGroup" ? location.href = location.origin+"/routeTable" : true;
-		paTh == "/routeTable" ? location.href = location.origin+"/localNetworkGateWay" : true;
-		paTh == "/localNetworkGateWay" ? location.href = location.origin+"/DNSZone" : true;
-		paTh == "/DNSZone" ? location.href = location.origin+"/endPoint" : true;
-		paTh == "/endPoint" ? location.href = location.origin+"/virtualNetworkGatway" : true;		
-	}
-});
+var pt = location.pathname;
+	if(pt === "/master_2"){
+		$("#link_1_0").hide();
+		$("#themeNav").css("margin-bottom", "6px");
+}

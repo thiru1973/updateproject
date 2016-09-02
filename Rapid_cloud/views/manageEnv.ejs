@@ -3,7 +3,7 @@
 <title>Environments</title>
 <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-<link href="css_1/style.css" rel="stylesheet"/>
+<link href="theme/theme1.css" id="myTheme" rel="stylesheet"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 <script src="javascript_1/bootstrap.min.js"></script>
@@ -449,14 +449,16 @@
 		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
 		</aside>
 		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			 <nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
 			<header>
 				<h1>Manage Nodes<a href=""></a></h1>
+				<aside><div id="data"></data></aside>
 				<!--<aside>
 					<input type="text" value="Search">
 				</aside>-->
 			</header>
 			<div style="clear:both;">&nbsp;</div>
-			<div class="roles">
+			<div class="roles" style="display:none">
 				<div class="pull-left">
 					<label id="" class="labelTemp"><span>Accounts</span></label>
 					<div id="typeDro1" class="clickRole temp1stRowWid"><span>Select</span>
@@ -540,7 +542,7 @@
 		</footer>
 	</div>
 <script src="javascript_1/environments.js"></script>
-<script src="javascript_1/menu.js"></script>
+<script src="javascript_1/manage.js"></script>
 <script>
 $(document).ready(function()
 {

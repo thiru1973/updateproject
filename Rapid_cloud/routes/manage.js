@@ -11,18 +11,15 @@ var SSH = require('simple-ssh');
 var myObject =  require("./manage_nodes.js");
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
-//var conString = "pg://postgres@mongoclone.cloudapp.net:5432/postgres";
 var client_pg = new pg.Client(conString);
 
 var rpcConString = "tcp://172.29.93.97:4242";
-//var rpcConString = "tcp://172.29.59.65:4242"
 var client = new zerorpc.Client();
 client.connect(rpcConString);
 
-//var conString = "pg://postgres:admin@localhost:5432/Rapid";
 var path = require('path');
 var upload_path = path.resolve(__dirname + '/uploads');
-//var upload_path = path.resolve('172.29.93.97:/tmp');
+
 var result = {
     status: 0,
     message: '',
@@ -32,8 +29,6 @@ var fs = require('fs');
 var busboy = require('connect-busboy');
 var validator = require('express-validator');
 
-
-//var url = 'mongodb://172.29.59.62:27017/test';
 var url = 'mongodb://172.29.59.100:27017/test';
 var MongoClient = require('mongodb').MongoClient;
 var action;
@@ -53,7 +48,8 @@ exports.manageEnv = function(req, res){
 	res.render('manageEnv');
 }
 var auth1,auth2;
-var rows3,rows4;
+var rows3,rows4,rows5,rows6;
+var uName,pWord;
 function getAwsCred(){	
 	
 	this.getAwsMethod = function(acName, pjName, pdName){	
@@ -72,13 +68,35 @@ function getAwsCred(){
 				rows4 = result.rows;
 				auth1 = rows4[0].accesskey;
 				auth2 = rows4[0].secretkey;
-				//console.log(auth1+auth2);
 			});
 		});
-		//return rows3;
+	}
+	this.getAzureCred = function(acName,pjName, pdName){
+		client_pg.query("SELECT * from project3 where account = ($1) and p_name = ($2)",[acName,pjName],function(err, result){
+			if(err){
+				throw err;
+			}
+			rows5 = result.rows;
+			var subsc = rows5[0].subscription_name;
+			
+			client_pg.query("SELECT * from subscription where accountid = ($1) and subscription_name = ($2)",[acName,subsc],function(err, result){
+				if(err){
+					throw err;
+				}
+				rows6 = result.rows;
+				uName = rows6[0].username;
+				pWord = rows6[0].password;
+			});
+		});
 	}
 }
 var getAwsCred = new getAwsCred();
+
+exports.loadBalance = function(req, res){res.render('loadBalance'); }
+exports.manageVolumes = function(req, res){res.render('manageVolumes'); }
+exports.securityGroupManage = function(req, res){res.render('securityGroupManage'); }
+exports.trafficManager = function(req, res){res.render('trafficManager'); }
+exports.schedulingNode = function(req, res){res.render('schedulingNode'); }
 
 exports.manage = function(req, res){
 	client_pg.query("SELECT * FROM azure_details where status <> 'terminated';", function(err, result){
@@ -297,26 +315,69 @@ exports.createStorage = function(req, res){
 	     }, 2000);
 };
 exports.createSecGroup = function(req, res){
-	 var result=JSON.stringify(req.body)
-	      ,Obj = JSON.parse(result)
-	      ,accountName = Obj.accountName
-	      ,projName = Obj.projName
-	  	  ,prodName = Obj.prodName
-	      ,pvd = Obj.provider
-	      ,sgRegion = Obj.region
-	      ,sgName = Obj.sgName
-	      ,sgFPort = Obj.sgFPort
-	      ,sgTPort = Obj.sgTPort
-	      ,sgCidrIp = Obj.sgCidrIp
-	      ,sgVpcId = Obj.vpcId;
-		  getAwsCred.getAwsMethod(accountName,projName,prodName);
+		  var d1arr = (req.body.d1).split(','); 
+		  var d2arr = (req.body.d2).split(',');
+		  console.log(d1arr);
+		  console.log(d2arr);
+		  
+		  getAwsCred.getAwsMethod(d1arr[0],d1arr[1],d1arr[2]);
 		  setTimeout(function(){
-			   var arr = [pvd, "create_sg",auth1, auth2, sgRegion , sgName, sgVpcId, sgFPort, sgTPort, sgCidrIp];
-			   console.log(arr);
-			   client.invoke("assign", arr, function(error, resq, more) {        
-			   });
-			  res.send("Success");
-		  }, 2000);
+			   var arr = [];
+			  arr.push(d1arr[3],"create_sg", auth1,auth2, d1arr[4],d1arr[5],d1arr[6]);
+			  var results = [];
+			  while (d2arr.length) 
+			  {				  
+				  results.push(d2arr.splice(0, 4));
+			  }
+			  for(var i=0;i<results.length;i++)
+			  {
+				arr.push(results[i]);
+			  }
+				   console.log(arr);
+				   client.invoke("assign", arr, function(error, resq, more) {        
+				   });
+				  res.send("Success");
+			  }, 2000);
+}
+exports.getSecurity = function(req, res){
+	var rows1 = [];
+	client_pg.query("SELECT * FROM security_group;",function(err, result){
+		if(err){
+			throw err;
+		}
+		rows1 = result.rows;
+		res.send(rows1);
+	});
+}
+exports.getRouteTable = function(req, res){
+	var rows1 = [];
+	client_pg.query("SELECT * FROM route_table;",function(err, result){
+		if(err){
+			throw err;
+		}
+		rows1 = result.rows;
+		res.send(rows1);
+	});
+}
+exports.getInetGateWay = function(req, res){
+	var rows1 = [];
+	client_pg.query("SELECT * FROM internet_gateway;",function(err, result){
+		if(err){
+			throw err;
+		}
+		rows1 = result.rows;
+		res.send(rows1);
+	});
+}
+exports.getKeypair = function(req, res){
+	var rows1 = [];
+	client_pg.query("SELECT * FROM key_pair;",function(err, result){
+		if(err){
+			throw err;
+		}
+		rows1 = result.rows;
+		res.send(rows1);
+	});
 }
 exports.createKeyPair = function(req, res){
 	 var result=JSON.stringify(req.body)
@@ -356,7 +417,11 @@ exports.deployTemplate = function(req, res){
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
+	console.log(req.body);
 	if(d1arr[0] == 'AWS'){
+			getAwsCred.getAwsMethod(d1arr[4],d1arr[5],d1arr[6]);
+		 setTimeout(function(){	
+			d1arr.splice(4,2)
 			d1arr.splice(2, 0, auth1);
 			d1arr.splice(3, 0, auth2);
 			for(var i=0;i<d1arr.length;i++)
@@ -391,13 +456,15 @@ exports.deployTemplate = function(req, res){
 					    results.push(d3.splice(0, 6));
 					  }
 					  for(var i=0;i<results.length;i++)
+					  for(var i=0;i<results.length;i++)
 						  {
 						  	arr.push(results[i]);
 						  }
 				}else{arr.push(d3);}
 			  console.log(arr);
-			  //client.invoke("assign", arr, function(error, resq, more) {});
+			  client.invoke("assign", arr, function(error, resq, more) {});
 			res.send("Success");
+		 }, 2000);
 	}else{
 			for(var i=0;i<d1arr.length;i++)
 			{
@@ -420,7 +487,7 @@ exports.deployTemplate = function(req, res){
 						  }
 				}else{arr.push(d3);}
 			  console.log(arr);
-			 //client.invoke("assign", arr, function(error, resq, more) {});
+			 client.invoke("assign", arr, function(error, resq, more) {});
 			res.send("Success");
 			}
 }
@@ -640,18 +707,36 @@ exports.filter_env = function(req,res){
 	 var result=JSON.stringify(req.body);
 	 var Obj = JSON.parse(result); 
 	 var proj_id=Obj.id;
-	 console.log(proj_id);
-	 console.log("Project before Index.js:  "+proj_id);
-
-	
-	  client_pg.query("SELECT env_name FROM deployment_env where p_id = ($1) GROUP BY env_name", [proj_id], function(err,result){
+	 client_pg.query("SELECT env_name FROM deployment_env where p_id = ($1) GROUP BY env_name", [proj_id], function(err,result){
 		  if(err){
 		   throw err;
-	  }
+		  }
 		  var rows = result.rows;
 		  console.log(rows);
 		  res.send(rows);
 	 });
+};
+exports.filter_env2 = function(req,res){
+	 var result=JSON.stringify(req.body);
+	 var Obj = JSON.parse(result); 
+	 var proj_name=Obj.id;
+	 console.log(req.body);
+	 client_pg.query("SELECT pd_id FROM product where prod_name = ($1)", [proj_name], function(err,result){
+		  if(err){
+		   throw err;
+		  }
+		  var proj_id = result.rows;
+		  client_pg.query("SELECT env_name,cloud_name FROM deployment_env where p_id = ($1) GROUP BY env_name,cloud_name", [proj_id[0].pd_id], function(err,result){
+			  if(err){
+			   throw err;
+			  }
+			  var rows = result.rows;
+			  res.send(rows);
+			});
+		  
+		 
+	 });
+	 
 };
 
 exports.popup_nodes = function(req,res){
@@ -709,6 +794,22 @@ exports.node_details = function(req,res){
 	  }
 	  var rows = result.rows;
 	  //console.log(rows);
+	  res.send(rows);
+	 });
+	 
+	};
+exports.node_detailsManage = function(req,res){
+	 var result=JSON.stringify(req.body);
+	 var Obj = JSON.parse(result);
+	 console.log(Obj);
+	 var t_name=Obj.env_name;
+	 var proj_name = Obj.proj_id;
+	 client_pg.query("Select * from deployment_env where env_name = ($1) AND p_name = ($2)", [t_name, proj_name], function(err,result){
+	  if(err){
+	   throw err;
+	  }
+	  var rows = result.rows;
+		//console.log(rows);
 	  res.send(rows);
 	 });
 	 
@@ -832,6 +933,17 @@ exports.volumeDetails = function(req,res){
 	var Obj = JSON.parse(result);
 	var inst_id = "i-f9491f79";
 	client_pg.query("SELECT * FROM volume where inst_id = ($1)",[inst_id], function(err, result){
+	//client_pg.query("SELECT * FROM volume ",function(err, result){
+		if(err){
+		throw err;
+		}
+		var rows = result.rows;
+		console.log(rows)
+		res.send(rows);
+		 });
+}
+exports.volumeDetails1 = function(req,res){
+	client_pg.query("SELECT * FROM volume ",function(err, result){
 		if(err){
 		throw err;
 		}
@@ -912,13 +1024,33 @@ exports.attachSecGrp = function(req,res){
 exports.loadBalancerCreate = function(req, res){
 	var result = JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
-	var pv_name ="AWS";
-	var region = "us_east_1";
+	var arr1 = Obj.d2;
+	var instances = [];
+	if (arr1.indexOf(",") !=-1) {
+			instances = arr1.split(',');
+		}else{
+			instances.push(arr1);
+		}
 	
-	var arr = [pvd, "create_load_bal",auth[0], auth[1], Region , loadName, port, protocol, algorithem, members];	
-		/*client.invoke("assign", arr, function(error, resq, more) {
-	       
-		   });*/
+	var d1arr = Obj.d1.split(',');
+	console.log(d1arr);
+	var region = d1arr[3]
+	   ,lbName = d1arr[4]
+	   ,protocol = d1arr[5]
+	   ,port1 = d1arr[6]
+	   ,port2 = d1arr[7]
+	var subnet = [], secGrp = [];
+	subnet.push(d1arr[9]);
+	secGrp.push(d1arr[8]);
+	getAwsCred.getAwsMethod(d1arr[0],d1arr[1],d1arr[2]);
+		 setTimeout(function(){	
+			var arr = ["AWS", "create_load_bal",auth1, auth2, region, lbName, protocol, port1, port2, subnet,secGrp, instances];	
+			console.log(arr);
+				/*client.invoke("assign", arr, function(error, resq, more) {				   
+				   });*/
+			res.send("Success");
+		 }, 2000);
+	
 }
 exports.straccount = function(req, res){
 	var result = JSON.stringify(req.body);
@@ -1337,4 +1469,268 @@ exports.storeAwsSub = function(req, res){
 	 });
 	 res.send("Success");
 }
+
+
+
+//services for Azure resource group function
+exports.createGroup = function(req,res){
+	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+	 setTimeout(function(){
+				var list1 = {rg_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGrp, region : req.body.region, vpcName : req.body.vpc, addPrefix : req.body.cidr};
+			    var msg = saveObject(list1, "resourcegroup");
+				if(msg == true){
+					var retVal = executeScript("resource.ps1");						
+					var account = req.body.accountName,
+						project = req.body.projName,
+						resourceGroup = req.body.resGrp,
+						region = req.body.region,
+						vnetname = req.body.vpc,
+						addressprefix = req.body.cidr;
+						client_pg.query('INSERT INTO resources(account,project,resourcegroup,region) values($1, $2, $3, $4)', [account, project, resourceGroup, region]);	
+						client_pg.query('INSERT INTO virtualnetwork(account,project,resourcegroup,vnetname,address_prefix,location) values($1, $2, $3, $4, $5, $6)', [account, project, resourceGroup, vnetname, addressprefix, region]);	
+						res.send("success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);		 
+}
+
+function executeScript(scriptName){
+	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
+	child = spawn("powershell.exe", [cmd]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    console.log("Powershell Errors: " + data);
+	    return data;
+	});
+	child.on("exit",function(){
+	   console.log("Powershell Script finished");
+	   return "Script finished";
+	});
+	child.stdin.end(); //end input
+}
+
+function saveObject(list, cname){
+	console.log(list,cname);
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+		    console.log('Unable to connect to the mongoDB server. Error:', err);
+		  } else {
+		    
+		    console.log('Connection established to', url);    
+		    var collection = db.collection(cname);
+			
+			collection.remove(function(err, result){
+					if(err){
+						console.log(err);
+					}else{
+						console.log("Document is deleted");
+					}
+				});
+			
+		    collection.insert([list], function (err, result) {
+		      if (err) {
+		        console.log(err);
+		      } else {
+		        console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+				return true;
+			  }
+		      db.close();
+		    });
+		  } 
+		});
+	
+	
+}
+exports.getResource = function(req, res){
+		client_pg.query("SELECT * FROM resources;", function(err, result){
+		if(err){
+		throw err;
+		}
+		rows2 = result.rows;
+		res.send(rows2);
+		});
+}
+exports.createVnet = function(req, res){
+	var account = "Rezopia_Acc1",
+	    project = "Rezopa_proj",
+	    resourceGroup = "TestRG1",
+		vnetname = "TestVNet",
+		addressprefix = "192.168.0.0/16",
+		region = "West US";
+		client_pg.query('INSERT INTO virtualnetwork(account,project,resourcegroup,vnetname,address_prefix,location) values($1, $2, $3, $4, $5, $6)', [account, project, resourceGroup, vnetname, addressprefix, region]);	
+		res.send("success"); 
+}
+exports.getVnet = function(req, res){
+		client_pg.query("SELECT * FROM virtualnetwork;", function(err, result){
+		if(err){
+		throw err;
+		}
+		rows2 = result.rows;
+		res.send(rows2);
+		});
+}
+exports.createSubnet = function(req, res){
+		getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+		setTimeout(function(){
+				var list1 = {sn_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetname, addPrefix : req.body.cidrBlkSn, confName : req.body.confName};
+			    var msg = saveObject(list1, "subnet");
+				if(msg == true){
+					var retVal = executeScript("subnet.ps1");	
+					var account = req.body.accName,
+						project = req.body.projName,
+						resourceGroup = req.body.resGp,
+						vnetname = req.body.vnetname,
+						subnet_config_name = req.body.confName,
+						addressprefix = req.body.cidrBlkSn;
+						client_pg.query('INSERT INTO res_subnet(account,project,resourcegroup,vnetname,subnet_conf_name,address_prefix) values($1, $2, $3, $4, $5, $6)', [account, project, resourceGroup, vnetname, subnet_config_name, addressprefix]);			
+						res.send("success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);		
+		
+}
+exports.getSubnet = function(req, res){
+		client_pg.query("SELECT * FROM res_subnet;", function(err, result){
+		if(err){
+		throw err;
+		}
+		rows2 = result.rows;
+		res.send(rows2);
+		});
+}
+exports.createRtTable = function(req, res){
+	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+	setTimeout(function(){
+				var list1 = {rt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetname, routeTable : req.body.routTable, routeConf : req.body.routeConf, addPrefix : req.body.addPrefix,
+				             nextHop : req.body.nextHop, nextHopIp : req.body.nextHopIp};
+			    var msg = saveObject(list1, "routeTable");
+				if(msg == true){
+					res.send("Success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);		
+	
+}
+exports.createLclNetGtWay = function(req, res){
+	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+	setTimeout(function(){
+				var list1 = {gt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, gWayName : req.body.gwName, gateWayIpAdd : req.body.gwIpAdd, addPrefix : req.body.addPfx};
+			    var msg = saveObject(list1, "localNwGway");
+				if(msg == true){
+					res.send("Success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);	
+}
+exports.createSecGrp = function(req,res){
+	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+	setTimeout(function(){
+				var list1 = {sg_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region,
+				             rule1 : req.body.rule1, ruleName1 : req.body.ruleName1, access1 : req.body.access1, protocol1 : req.body.protocol1, priority1 : req.body.priority1, prefix1 : req.body.prefix1,
+							 rule2 : req.body.rule2, ruleName2 : req.body.ruleName2, access2 : req.body.access2, protocol2 : req.body.protocol2, priority2 : req.body.priority2, prefix2 : req.body.prefix2,
+							 sgName : req.body.sgName, vNet : req.body.vNet, subNet : req.body.subNet, cidr : req.body.cidr};
+			    var msg = saveObject(list1, "securityGrp");
+				if(msg == true){
+					res.send("Success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);	
+	
+}
+
+exports.createDns = function(req, res){
+	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+	setTimeout(function(){
+				var list1 = {dns_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, dnsName : req.body.dnsName};
+			    var msg = saveObject(list1, "dns");
+				if(msg == true){
+					res.send("Success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);	
+}
+exports.createEndPoint = function(req, res){
+	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+	setTimeout(function(){
+				var list1 = {ep_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, pfName : req.body.pfName, rtMethod : req.body.rtMethod,
+								dnsName : req.body.dnsName, ttl : req.body.ttl, protocol : req.body.protocol, port : req.body.port, path : req.body.path,
+								epName : req.body.epName, epType : req.body.epType, epStatus : req.body.epStatus, webAppName : req.body.webAppName};
+			    var msg = saveObject(list1, "resGpEndpoint");
+				if(msg == true){
+					res.send("Success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);
+}
+exports.createVnetGWay = function(req, res){
+		getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
+		setTimeout(function(){
+				var list1 = {gw_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, pipName : req.body.pip, alMethod : req.body.alMethod,
+				             vnet : req.body.vnet, snet : req.body.snet, gwType : req.body.gwType, vpnType : req.body.vpnType, gwSku : req.body.gwSku};
+			    var msg = saveObject(list1, "createVnetGWay");
+				if(msg == true){
+					res.send("Success");
+				}else{res.send("Error in saving data");}
+	     }, 2000);
+		
+}
+
+//Deployment of template in resource group
+exports.deployResource = function(req, res){
+	var result=JSON.stringify(req.body);	
+	var Obj = JSON.parse(result);	
+	var d1 = Obj.d1,
+	    d2 = Obj.d2;
+	var d2_obj = JSON.parse(d2);
+	var resource = d1.split(","),
+		account = resource[0],
+		project = resource[1],
+		product = resource[2],
+		environment = resource[3],
+		resGroup = resource[4],
+		vnet = resource[5],
+		subnet = resource[6],
+		region = resource[7];
+		
+		MongoClient.connect(url, function (err, db) {
+		  if (err) {
+		    console.log('Unable to connect to the mongoDB server. Error:', err);
+		  } else {    
+		    console.log('Connection established to');    
+			var collection=db.collection('deploy_resources');
+		    var data_obj = {rs_id : 1, AccoutName:account, ProjectName:project, ProductName:product, userName : "test@rapiddirectory.onmicrosoft.com", pwd : "Boron12#4", Environment:environment, Region:region, ResourceName:resGroup, VirtualNet:vnet, Subnet:subnet, Instances:d2_obj};
+		    collection.insert([data_obj], function (err, result) {
+		      if (err) {
+		        console.log(err);
+		      } else {
+		        console.log('Inserted values sucess fully');
+		      }
+		      db.close();
+		    });
+		  } 
+		});
+		
+	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\deploy.ps1';
+	child = spawn("powershell.exe", [cmd]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    console.log("Powershell Errors: " + data);
+	});
+	child.on("exit",function(){
+	   console.log("Powershell Script finished");
+	   for(var i=0;i<d2_obj.length;i++)
+		{
+		var prod_id = 106;
+		client_pg.query("INSERT INTO deployment_env(prov_id,region,env_name,p_name,p_id,vpc_name,subnet_name,inst_type,inst_id,image,role,status,cloud_name,accountid,product_name) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)", 
+		 ['AWS', region, environment, project, prod_id, vnet, subnet, d2_obj[i].instName, d2_obj[i].instName,d2_obj[i].os, d2_obj[i].roleName, "running", resGroup, account, product],
+				function(err, writeResult) {
+			console.log('err',err,'pg writeResult',writeResult);
+		  });
+		}
+	   
+	});
+	child.stdin.end(); //end input	
+	
+	res.send("Success");
+}
+
+
+
 

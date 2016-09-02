@@ -436,7 +436,6 @@ function saveInformation(tm_name){
 		console.log(provider);
 	}
 	var arr1=JSON.stringify(save_info);
-	//console.log(arr1);	
 	var a = Math.floor(100000 + Math.random() * 900000)
 	a = a.toString().substring(0, 3);
 	var t_name = tm_name+"_"+a;

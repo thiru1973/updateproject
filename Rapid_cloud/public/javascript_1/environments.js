@@ -39,7 +39,9 @@ $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
 	//location.href="http://172.29.59.65:3000/master_2"
 });
-window.onload = function(){};
+window.onload = function(){
+	showEnvironment();
+};
 window.onclick=function(){
 	$(".popUpHide").hide();
 }
@@ -81,6 +83,14 @@ $(function(){
 		}
 	})
 });
+/*$(function(){
+	$.getJSON(_ip+'/accountDetails', function(data){
+		for(var i =0; i < data.data2.length; i++){
+			var tT = document.getElementById("pro_ID");
+				tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data.data2[i].p_name+'</dd></dl></li>';
+		}
+	})
+});*/
 var trIDs = [];
 function getAccounts(event, idn){
 	var aImage = event.getElementsByTagName("dt")[0].innerHTML;
@@ -91,7 +101,7 @@ function getAccounts(event, idn){
 	var idd = vb.id;
 	//alert(aTex);
 	
-	$(function(){
+	/*$(function(){
 		   $.getJSON( _ip + '/accountDetails', function (data){
 					console.log(data);
 					var d = [];
@@ -113,12 +123,38 @@ function getAccounts(event, idn){
 					manage.createTableData(d);
 					console.log(d);
 				});
-			});
+			});*/
 			
 	
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
 		 //this.getDetals(aTex)	 
+}
+function showEnvironment(){
+	$(function(){
+		   $.getJSON( _ip + '/accountDetails', function (data){
+					console.log(data);
+					var d = [];
+					var accountName = localStorage.getItem("Account");
+					for(var bb=0; bb <= data.data3.length-1; bb++){
+						if(accountName == data.data3[bb].accountid){
+							console.log(accountName);
+							d.push(data.data3[bb])
+						}
+					}
+					if(trIDs.length !== 0){
+						for(var tt=0; tt<= trIDs.length-1; tt++){
+							document.getElementById(trIDs[tt]).remove();
+							if(document.getElementById("dataOf"+trIDs[tt]))
+							{
+								document.getElementById("dataOf"+trIDs[tt]).remove();
+							}
+						}
+					}
+					manage.createTableData(d);
+					console.log(d);
+				});
+			});
 }
 /* ---------------------------------------------
 		These common actions(Hide, Show, Hide and Show toggle) we can use all pages.
@@ -677,7 +713,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 		data.lbMethod = lbMethod;
 		data.mnProtocol = mnProtocol;
 		data.mPort = mPort;
-		$.ajax({
+		/*$.ajax({
 			type: 'POST',
 		 	jsonpCallback: "callback",
 		 	datatype: 'jsonp',
@@ -690,7 +726,7 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 	             console.log('Failure');
 	     		alert("failure");
 	     		},
-	        });
+	        });*/
 	}
 	
 	
@@ -704,12 +740,13 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 		if(envOptionsID){
 			envOptionsID.remove();
 		}else{
+			// Load Balanacer and Traffic Manager are commented because moved to new pages.
 			var nodeListOptions = document.createElement("ul");
 			nodeListOptions.id="envLinks_"+project_id+"_"+i;
 			nodeListOptions.className="nodeSettings";
 			nodeListOptions.innerHTML='\
-			<li onclick="manage.disPlayLoadBalancer(this)">Load Balanacer</li>\
-			<li onclick="manage.traficManagerDetails(this, '+i+', '+project_id+')">Traffic Manager</li>\
+			<!--<li onclick="manage.disPlayLoadBalancer(this)">Load Balanacer</li>\
+			<li onclick="manage.traficManagerDetails(this, '+i+', '+project_id+')">Traffic Manager</li>-->\
 			<li onclick="manage.uploadBlobToStorage(this, '+i+', '+project_id+')">Upload Blob To Azure</li>\
 			</ul>';
 			insertAfter(nodId, nodeListOptions);
@@ -1306,20 +1343,18 @@ function getPublicIp(valuee, append){
 								<span class="st">Status: </span>\
 								<span class="statusText">&nbsp;&nbsp;<span class="'+this.dataOfNd[clickedData].status+'"></span>'+this.dataOfNd[clickedData].status+'</span>\
 							  </p>\
-							</td>\
-							<td colspan = "2" style="text-align:center;">\
-							<div>\
-							<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStop</button>\
-							<input type="date" id="user_date" name="date">\
-							<select id="user_hr"></select>\
-							<select id="user_min"></select>\
-							<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStart</button>\
-							</div>\
+							  <div class="nodeScheduleBox">\
+								<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStop</button>\
+								<input type="date" id="user_date" name="date">\
+								<select id="user_hr"></select>\
+								<select id="user_min"></select>\
+								<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStart</button>\
+								</div>\
 							</td>\
 						</tr>\
 						<tr>\
 							<td colspan="2">\
-							<div class="nodeBuT">\
+							<div class="nodeBuT" style="border-top:solid 1px #ccc;">\
 							<button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Start</button>\
 							\
 							<button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
@@ -1361,6 +1396,10 @@ function getPublicIp(valuee, append){
 			}
 	}
 	Projects.prototype.nodeSchedule = function(data){
+		var accountName = localStorage.getItem("Account")
+	    ,projName = localStorage.getItem("ProjectName")
+	    ,prodName = localStorage.getItem("ProductName");
+		
 		var scheduleData = data.value
 			,arrData = scheduleData.split(",")
 			,accName = document.getElementById("typeDro1").innerText
@@ -1397,14 +1436,17 @@ function getPublicIp(valuee, append){
 	}
 	Projects.prototype.nodeServerEngine = function(wichOne){
 		console.log(wichOne.value, wichOne.innerHTML);
+		var accountName = localStorage.getItem("Account")
+	    ,projName = localStorage.getItem("ProjectName")
+	    ,prodName = localStorage.getItem("ProductName");
 		var inst_id = wichOne.value;
 		var arr =inst_id.split(",");
 		var action = wichOne.innerHTML;
 		var accName = document.getElementById("typeDro1").innerText;
 		alert(accName);
 		var data = {};
-		data.accName = accName;
-		data.projName = arr[5];
+		data.accName = accountName;
+		data.projName = projName;
 		data.inst_id = arr[0];
 		data.action = action;
 		data.region = arr[1];
@@ -1673,7 +1715,6 @@ Projects.prototype.dropDownMenu = function(){
 		$("#createAccPOP").hide();
 	});
 	/* End Dropdown function */
-	
 }
 	/*-----------------------------End Table---------------------------------------------*/
 
@@ -1708,5 +1749,83 @@ Array.prototype.equals = function (array) {
 // Hide method from for-in loops
 Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
-
-
+var n = 0;
+function createVol(num){
+	var id = num, nn;
+	n++;
+	if(id ==0){
+		nn = "inB1";
+	}else if(id == 1){
+		nn = "outB1"
+	}else if(id == 2){
+		nn = "volumes1"
+	var dd = document.getElementById(nn);
+		dd.innerHTML+='<div id="r_'+n+'">\
+					<div class="pull-left padRit">\
+							<label class="labelTemp">Volume Type</label>\
+							<div class="clickRole temp1stRowWid" id="">\
+								<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
+							</div>\
+						</div>\
+						<div class="pull-left" >\
+							<label class="labelTemp">Volume Size</label>\
+							<div class="clickRole" style="margin-right:10px">\
+								<input type="number" id="mPort" placeholder="Public Port" style="border:none;width:100%;">\
+							</div>\
+						</div>\
+						<div class="pull-left padRit">\
+							<label class="labelTemp">IOPS</label>\
+							<div class="clickRole temp1stRowWid" id="">\
+								<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
+							</div>\
+						</div>\
+						<div class="pull-left padRit">\
+							<label class="labelTemp">Volume Name</label>\
+							<div class="clickRole temp1stRowWid" id="">\
+								<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
+							</div>\
+						</div>\
+						<div class="pull-left padRit" style="padding-top: 32px;">\
+							<span class="glyphicon glyphicon-minus-sign" onclick="removeRow(this,'+n+');" id="addRole" style="color:#999999;"></span>\
+						</div>\
+						<div style="clear:both;">&nbsp;</div></div>';
+				return;
+	}
+	var epn = document.getElementById(nn);
+		epn.innerHTML+='<div id="r_'+n+'"><div class="pull-left padBot padRit">\
+						<label class="labelTemp">From Port</label>\
+						<div class="clickRole temp1stRowWid" id="">\
+							<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
+						</div>\
+					</div>\
+					<div class="pull-left padBot padRit">\
+						<label class="labelTemp">To Port</label>\
+						<div class="clickRole temp1stRowWid" id="">\
+							<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
+						</div>\
+					</div>\
+					<div class="pull-left padBot padRit">\
+						<label id="" class="labelTemp"><span> CIDR IP</span></label>\
+						<div id="vnT12_" class="clickRole temp1stRowWid"><span>Select</span>\
+							<ul id="vnT12_Drop" class="dropDown" style="display: none;">\
+								<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Anywhere</dd></dl></li>\
+								<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">My IP</dd></dl></li>\
+								<li onclick="selectOpt(this,2)" class="Test"><dl><dt></dt><dd class="va">Custom IP</dd></dl></li>\
+							</ul>\
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
+						</div>\
+					</div>\
+					<div class="pull-left padBot padRit">\
+						<label class="labelTemp">&nbsp;</label>\
+						<div class="clickRole temp1stRowWid" id="">\
+							<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
+						</div>\
+					</div>\
+					<div class="pull-left padBot padRit" style="padding-top: 34px;">\
+						<span class="glyphicon glyphicon-minus-sign" onclick="removeRow(this,'+n+');" id="addRole" style="color:#999999;"></span>\
+					</div>\
+					<div style="clear:both;">&nbsp;</div></div>';
+}
+function removeRow(ev, n){
+	$("#r_"+n).remove();
+}

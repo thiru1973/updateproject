@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<title>My Account</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+<div class="alertS">
+	<div class="alert alert-success" role="alert"><b>Load Balancer</b> is created successfully. <span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning dnsName" role="alert"><b>Warning!</b> Enter the Name OR Don't include special character to Load Balancer name and must be unique .<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning epName" role="alert"><b>Warning!</b> Enter the name OR Don't include special character to End point name<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning lbsName" role="alert"><b>Warning!</b> Enter the name OR Don't include special character to Load Balanacer Set name<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+</div>
+
+<div class="container">		
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<h1>My Account<a href=""></a></h1>
+				<!--<aside>
+					<input type="text" value="Search">
+				</aside>-->
+			</header>
+			<div style="clear:both;">&nbsp;</div>
+			<div class="roles">
+				<div class="pull-left">
+					<label id="" class="labelTemp"><span>Themes</span></label>
+					<ul class="thmeUl">
+						<li><label><input id="classic" type="radio" onclick="themeChange(this)" value="Classic" name="themes" />Default</label></li>
+						<li><label><input id="futuristic" type="radio"  onclick="themeChange(this)" value="Futuristic" name="themes"/>Futuristic</label></li>
+					</ul>
+				</div>
+			</div>
+			<section role="createTemplate">
+				<div style="clear:both;">&nbsp;</div>
+				<div class="countConfigBox">
+					
+					
+					
+				</div>				
+				<div style="clear:both;">&nbsp;</div>
+				<div class="roles" style="background-color:#fff;padding:0px;">
+				</div>
+				<div style="clear:both;">&nbsp;</div>
+			</section>
+		</section>
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+<script src="javascript_1/menu.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");
+});
+</script>
+</body>
+</html>

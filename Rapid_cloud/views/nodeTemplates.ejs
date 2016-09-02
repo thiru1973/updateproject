@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html ng-app>
-<title>RapidCloud</title>
+<title>Node Templates</title>
 <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 <link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
@@ -26,44 +26,20 @@
 			
 		</aside>
 		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="view_temp">
-		<nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
+			<nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
+			<div>&nbsp;</div>
 			<header>
-				<h1>View Templates</h1>
-				
-				<aside>
+				<h1>Single Node</h1>
+				<aside style="display:none;">
 					<input type="text" placeholder="Search Template" id="search" name="q">
-					<!--<button id="create_temp" onclick="http://172.29.59.65:3000/create_template">Create Template</button></br>-->
-					<!--<h1></h1><div id="data"></div>-->
+					<button id="create_temp" onclick="http://172.29.59.65:3000/create_template">Create Template</button>
 				</aside>
-				<aside><div id="data" style="margin-right: 5px"></data></aside>
-			</header>		
-			<section role="templatesFilter">
-				<ul>
-					<li><label><input type="radio" checked="checked" name="filter" value="ATemplates" />All</label></li>
-					<li><label><input type="radio" name="filter" value="MTemplates" />Account Templates</label></li>
-					<li><label><input type="radio" value="GTemplates"  name="filter" />Multicloud Templates</label></li>
-					<!--<li><label><input type="radio" value="STemplates" name="filter" />System Templates</label></li>-->
-				</ul>
-			</section>
-			<section role="template">
+				<aside><div id="data"></data></aside>
+			</header>
 			
-			</section>
 		</section>
-		
-		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="single_node">
-			<header>
-				<h1>View Nodes</h1>
-				<aside>
-					<input type="text" placeholder="Search Nodes" id="search1">					
-				</aside>
-			</header>		
-			<section role="templatesFilter">
-				<ul>
-					<li><label><input type="radio" checked="checked" name="filter1" value="ATemplates" />All</label></li>
-					<li><label><input type="radio" name="filter1" value="MTemplates" />AWS</label></li>
-					<li><label><input type="radio" value="GTemplates"  name="filter1" />Azure</label></li>
-				</ul>
-			</section>
+		<div>&nbsp;</div>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="" id="single_node">	
 			<section role="template1">
 			
 			</section>
@@ -75,8 +51,7 @@
 		</footer>
 	</div>
 </body>
-<script src="javascript_1/js.js"></script>
+<!--<script src="javascript_1/js.js"></script>-->
 <script src="javascript_1/menu.js"></script>
-<script src="javascript_1/vpc.js"></script>
 <script src="javascript_1/node.js"></script>
 </html>
