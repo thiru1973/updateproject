@@ -107,6 +107,7 @@ function createRoute()
 						url: _ip+'/routeTable',
 						success: function(data, textStatus){
 							console.log(data);
+							document.getElementById("cTA_CreateAndDeploy").disabled=true;
 							},
 							 error: function (xhr, status, error){
 								 console.log('Failure');

@@ -26,7 +26,8 @@ function createKeyPair(){
         data: data,
         url: _ip+'/createKeyPair',
         success: function(data, textStatus){
-        	alert("Success");        	      	
+        	alert("Success");    
+			document.getElementById("cTA_CreateAndDeploy").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
