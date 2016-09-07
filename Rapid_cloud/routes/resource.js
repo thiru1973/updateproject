@@ -128,7 +128,7 @@ exports.saveDevopsTemplate = function(req,res){
 			});	
 }
 
-//Create Project
+//Create Project data
 
 exports.createProject = function(req, res){
 	res.render("create_project");
