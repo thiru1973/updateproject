@@ -39,7 +39,7 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 }*/
 function getVpcName(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/vpc_deploy', function(data){
+		  $.getJSON(_ip+'/vpc_deploy', function(data){
 			 //console.log(data);
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
@@ -154,7 +154,8 @@ function createSubnet()
         data: data,
         url: _ip+'/subnet',
         success: function(data, textStatus){
-        	alert("Success");
+        	alert("Success");			
+			document.getElementById("cTA_CreateAndDeploy").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');

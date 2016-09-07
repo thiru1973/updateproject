@@ -144,7 +144,7 @@ function getRegion(cloud){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/temp_region',
+	     url: _ip+'/temp_region',
 	     success: function(results) {
 	    	 for(var i=0;i<results.length;i++)
 				{
@@ -208,6 +208,7 @@ function createVpc()
         success: function(data, textStatus){
         	console.log(data);
 			alert("Success");
+			document.getElementById("cTA_CreateAndDeploy").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');

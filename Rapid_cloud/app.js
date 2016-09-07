@@ -198,7 +198,7 @@ app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 
 var url = "http://172.29.59.65:3001/add";
-
+//Outside service
 /*http.get(url, function(response) {
 	var finalData = '';
 	  response.on("data", function (data) {

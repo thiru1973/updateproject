@@ -1,3 +1,5 @@
+
+var _ip = "http://172.29.59.65:3000";
 window.onload = function(){
 	getVnet();
 	getVpcName();
@@ -5,35 +7,35 @@ window.onload = function(){
 var n = 0;
 var m = 0;
 $(document).on("click", ".clickRole",function(e){
-						e.stopPropagation();
-						if ($(this).find(".dropDown").css('display') == 'block'){
-							$(this).find(".dropDown").slideUp();
-						}else{
-							$(".dropDown").slideUp();
-							$(this).find(".dropDown").slideDown();
-						}
-						});
-						$(document).delegate(".closeAlert", "click", function (){
-								$(this).parent().hide()
-						});
-						$(document).delegate(".addStoTab", "click", function (){
-							event.preventDefault();
-							var te = $(this).find("a").text();
-							if(te == "Infrastructure"){
-								$(this).parent().find(".active").removeClass("active");
-								$(this).addClass("active");
-								$(this).parent().parent().find(".tab1").addClass("active");
-								$(this).parent().parent().find(".tab2").removeClass("active");
-							}else if(te == "Packages"){
-								$(this).parent().find(".active").removeClass("active");
-								$(this).addClass("active");
-								$(this).parent().parent().find(".tab2").addClass("active");
-								$(this).parent().parent().find(".tab1").removeClass("active");
-							}
-						});
-						$(document).on("click", function (){
-							$(".dropDown").slideUp();
-						});	
+	e.stopPropagation();
+	if ($(this).find(".dropDown").css('display') == 'block'){
+		$(this).find(".dropDown").slideUp();
+	}else{
+		$(".dropDown").slideUp();
+		$(this).find(".dropDown").slideDown();
+		}
+});
+$(document).delegate(".closeAlert", "click", function (){
+	$(this).parent().hide()
+});
+$(document).delegate(".addStoTab", "click", function (){
+	event.preventDefault();
+	var te = $(this).find("a").text();
+	if(te == "Infrastructure"){
+		$(this).parent().find(".active").removeClass("active");
+		$(this).addClass("active");
+		$(this).parent().parent().find(".tab1").addClass("active");
+		$(this).parent().parent().find(".tab2").removeClass("active");
+		}else if(te == "Packages"){
+		$(this).parent().find(".active").removeClass("active");
+		$(this).addClass("active");
+		$(this).parent().parent().find(".tab2").addClass("active");
+		$(this).parent().parent().find(".tab1").removeClass("active");
+		}
+});
+$(document).on("click", function (){
+	$(".dropDown").slideUp();
+});	
 function selectOpt(event, idn, con){
 	var aImage = event.getElementsByTagName("dt")[0].innerHTML;
 	var inn = event.getElementsByTagName("dd")[0];
@@ -120,38 +122,6 @@ function createVol(num){
 						<span class="glyphicon glyphicon-minus-sign" onclick="removeRow(this,'+n+');" id="addRole" style="color:#999999;"></span>\
 						</div>\
 						<div style="clear:both;">&nbsp;</div></div>';
-						
-					/*$(".clickRole").click(function(e){
-						e.stopPropagation();
-						if ($(this).find(".dropDown").css('display') == 'block'){
-							$(this).find(".dropDown").slideUp();
-						}else{
-							$(".dropDown").slideUp();
-							$(this).find(".dropDown").slideDown();
-						}
-						});
-						$(".closeAlert").click(function(){
-								$(this).parent().hide()
-						});
-						$(".addStoTab").click(function(event){
-							event.preventDefault();
-							var te = $(this).find("a").text();
-							if(te == "Infrastructure"){
-								$(this).parent().find(".active").removeClass("active");
-								$(this).addClass("active");
-								$(this).parent().parent().find(".tab1").addClass("active");
-								$(this).parent().parent().find(".tab2").removeClass("active");
-							}else if(te == "Packages"){
-								$(this).parent().find(".active").removeClass("active");
-								$(this).addClass("active");
-								$(this).parent().parent().find(".tab2").addClass("active");
-								$(this).parent().parent().find(".tab1").removeClass("active");
-							}
-						});
-						$(document).on("click", function (){
-							$(".dropDown").slideUp();
-						});	
-				return;*/
 	}else if(id == 2){
 		m++;
 		nn = "volumes1"
@@ -190,38 +160,6 @@ function createVol(num){
 						<span class="glyphicon glyphicon-minus-sign" onclick="removeRow(this,'+m+');" id="addRole" style="color:#999999;"></span>\
 					</div>\
 					<div style="clear:both;">&nbsp;</div></div>';
-		
-						/*$(".clickRole").click(function(e){
-							e.stopPropagation();
-							if ($(this).find(".dropDown").css('display') == 'block'){
-								$(this).find(".dropDown").slideUp();
-							}else{
-								$(".dropDown").slideUp();
-								$(this).find(".dropDown").slideDown();
-							}
-					});
-					$(".closeAlert").click(function(){
-							$(this).parent().hide()
-					});
-					$(".addStoTab").click(function(event){
-						event.preventDefault();
-						var te = $(this).find("a").text();
-						if(te == "Infrastructure"){
-							$(this).parent().find(".active").removeClass("active");
-							$(this).addClass("active");
-							$(this).parent().parent().find(".tab1").addClass("active");
-							$(this).parent().parent().find(".tab2").removeClass("active");
-						}else if(te == "Packages"){
-							$(this).parent().find(".active").removeClass("active");
-							$(this).addClass("active");
-							$(this).parent().parent().find(".tab2").addClass("active");
-							$(this).parent().parent().find(".tab1").removeClass("active");
-						}
-					});
-					$(document).on("click", function (){
-						$(".dropDown").slideUp();
-					});
-				return;*/
 	}
 }
 function removeRow(ev, n){
@@ -242,7 +180,7 @@ function getVnet(){
 }
 function getVpcName(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/vpc_deploy', function(data){
+		  $.getJSON(_ip+'/vpc_deploy', function(data){
 			 //console.log(data);
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
@@ -338,6 +276,7 @@ function createSecGroup()
         url: _ip+'/createSecGroup',
         success: function(data, textStatus){
         	console.log(data);
+			document.getElementById("cTA_CreateAndDeploy").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
