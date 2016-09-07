@@ -34,6 +34,12 @@ $(document).ready(function(){
 	$("#ConfigureHealthpopupClose, .cancelPoup, #subnetsPopupClose").click(function(){
 		$("#ConfigureHealthChecksAdvanced, #SubnetsPoup, #addInstPopUpWin, #securityGroWin, #addEndPointID").hide();
 	});
+	
+	var accountName = localStorage.getItem("Account")
+	,projName = localStorage.getItem("ProjectName")
+	,prodName = localStorage.getItem("ProductName");
+	var theDiv = document.getElementById("data");
+	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName;
 });
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();

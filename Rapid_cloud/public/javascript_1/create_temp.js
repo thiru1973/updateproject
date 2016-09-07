@@ -242,7 +242,7 @@ function getStorageData(){
 //var idArr=[];
 //var osArr=[];
 var idArr = ["Database", "WebServer", "ApplicationServer", "Integration", "Test Server", "Build Server", "Proxy Server", "Mail Server", "Apache Solr Server","Caching Server", "NAT Server","RDP Server"];
-var osArr = ["Ubuntu", "Debian", "SUSE", "CentOS", "RHEL(AWS)", "Windows", "Gentoo(AWS)","Debian"];
+var osArr = ["Ubuntu", "Debian", "SUSE", "CentOS", "RHEL(AWS)", "Windows","Debian"];
 var idDt;
 function data(){
 	$(function(){		
@@ -254,11 +254,11 @@ function data(){
 				   idArr.push(dd);
 			   }*/
 			   
-			   var os = data[1].types;			  
+			   /*var os = data[1].types;			  
 			   for(var d=0; d<os.length-1; d++){				   
 				   var oss = data[1].types[d].name;				  
 				   osArr.push(oss);
-			   }			   
+			   }*/			   
 			   //roleAt = data[0].types[1].subrole;
 			   //var opeSys = data[0].types[2].subrole;		  
 		   });

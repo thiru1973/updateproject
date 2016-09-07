@@ -71,7 +71,7 @@ $(document).ready(function(){
 	
 	//$(".container").append().html("<p>All new content. <em>You bet!</em></p>");
 	var i = $('[role="contentArea"]')
-		i.prepend("<div class='userName'>Jason Statham || <a href='/login' class='userNa'>SignOut</a></div>");
+		i.prepend("<div class='userName'>Jason Statham | <a href='/login' class='userNa'>SignOut</a></div>");
 	
 	var accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
@@ -232,11 +232,12 @@ LayOut.prototype = {
 		level_1:["Accounts","Design","Deploy","Manage","Monitor","Projects"],
 								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
 								level_2:["Networks","Templates"],
-														level_2_2:["View Templates","Create Templat"],
+														level_2_2:["View Templates","Create Template"],
 										  level_2a:["Node", "Templates"],
 														level_2a1:["Single Node"],
 														level_2a2:["Account Templates"],
-		level_2_1:["VPC","Subnet","Security Gruop","Route Table","VPN Connection","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
+		//level_2_1:["VPC","Subnet","Security Gruop","Route Table","VPN Connection","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
+		level_2_1:["VPC","Subnet","Security Gruop","Route Table","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","Virtual Network Gateway"],
 		
 
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],

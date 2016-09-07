@@ -1,6 +1,6 @@
 window.onload = function(){
 	getTemplateName();
-	setStorageData();
+	//setStorageData();
 }
 function setStorageData(){
 	var accountName = localStorage.getItem("Account")
@@ -221,7 +221,6 @@ function selectOpt(ev, idn){
 	 var v = ev.parentNode;
 	 var vb = v.parentNode;
 	 var idd = vb.id
-	 console.log(idd);	 
 	 if(idd == "sel")
 		 {
 		 	provider = aTex;
@@ -346,10 +345,10 @@ function showNode_fun(ram,appendTo){
 	show_images(id);
 }
 
-var node;
+var node = [];
 function get_nodes(el){		
-	 node = $('tr#'+el).closest("tr").find('td:eq(0)').text();
-	 console.log(node);
+	 node1= $('tr#'+el).closest("tr").find('td:eq(0)').text();
+	 node.push(node1);
 }
 
 function show_images(id){
@@ -358,12 +357,13 @@ function show_images(id){
 		var img_data = {};
 		img_data.provider = pvd_name;
 		img_data.os = templates[id].os;
+		img_data.region = region;
 		$.ajax({
 		     type: 'POST',
 			 jsonpCallback: "callback",
 		     datatype: 'jsonp',
 		     data: img_data,	 
-		     url: 'http://172.29.59.65:3000/temp_image',
+		     url: 'http://172.29.59.65:3000/temp_image1',
 		     success: function(results) {		    		 
 			    	 	var appendD = new DropdownConst();
 			    	 	appendD.appendData(results,"sellls"+id);
@@ -428,7 +428,7 @@ function saveInformation(tm_name){
 		var z = document.getElementById("selll"+i+"").innerText;
 		var role_info={};
 		role_info.os = node_os;
-		role_info.node=node;
+		role_info.node=node[i];
 		role_info.image=z;
 		role_info.role=node_role;			
 		save_info.push(role_info);

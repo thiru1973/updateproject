@@ -417,7 +417,7 @@ exports.deployTemplate = function(req, res){
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
-	console.log(req.body);
+	//console.log(req.body);
 	if(d1arr[0] == 'AWS'){
 			getAwsCred.getAwsMethod(d1arr[4],d1arr[5],d1arr[6]);
 		 setTimeout(function(){	
@@ -431,7 +431,7 @@ exports.deployTemplate = function(req, res){
 			
 			var d2 = Obj.d2;
 			var d3 = d2.split(',');
-			console.log(d3);
+			//console.log(d3);
 			var d4 = Obj.d4;
 			var dsks = d4.split(',');
 			for(var a=0;a<d3.length;a++)
@@ -448,7 +448,7 @@ exports.deployTemplate = function(req, res){
 					dsks.splice(0,len);
 				}
 			}
-			console.log(d3);
+			//console.log(d3);
 			if(d3.length>6)
 				{
 					var results = [];
@@ -473,7 +473,7 @@ exports.deployTemplate = function(req, res){
 		
 			var d2 = Obj.d2;
 			var d3 = d2.split(',');
-			console.log(d3.length);
+			//console.log(d3.length);
 			
 			if(d3.length>3)
 				{

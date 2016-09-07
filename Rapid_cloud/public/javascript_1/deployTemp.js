@@ -29,7 +29,36 @@ $(document).ready(function(){
 	function dataUpDate(){
 		$(this).parent(".dropDown").slideUp();
 	}*/
-	
+	$(document).on("click", ".clickRole",function(e){
+	e.stopPropagation();
+	if ($(this).find(".dropDown").css('display') == 'block'){
+		$(this).find(".dropDown").slideUp();
+	}else{
+		$(".dropDown").slideUp();
+		$(this).find(".dropDown").slideDown();
+	}
+	});
+	$(document).delegate(".closeAlert", "click", function (){
+			$(this).parent().hide()
+	});
+	$(document).delegate(".addStoTab", "click", function (){
+		event.preventDefault();
+		var te = $(this).find("a").text();
+		if(te == "Infrastructure"){
+			$(this).parent().find(".active").removeClass("active");
+			$(this).addClass("active");
+			$(this).parent().parent().find(".tab1").addClass("active");
+			$(this).parent().parent().find(".tab2").removeClass("active");
+		}else if(te == "Packages"){
+			$(this).parent().find(".active").removeClass("active");
+			$(this).addClass("active");
+			$(this).parent().parent().find(".tab2").addClass("active");
+			$(this).parent().parent().find(".tab1").removeClass("active");
+		}
+	});
+	$(document).on("click", function (){
+		$(".dropDown").slideUp();
+	});	
 	
 	
 	$(".proDiv ,.popupData").hide();
@@ -139,13 +168,17 @@ $(document).ready(function(){
 		
 
 })
+$(document).on("click", "#doneDeploy", function(){
+	$(".popupData, .proDiv").hide();
+	location.href = _ip+"/manageEnv";
+})
 var accountName,projName,prodName;
 function setStorageData(){
 	accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
-	var theDiv = document.getElementById("data");
-	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
+	//var theDiv = document.getElementById("data");
+	//theDiv.innerHTML += accountName+">>"+projName+">>"+prodName; 
 }
 var cidrIp = ["Anywhere", "My IP", "Custom IP"];
 var volumeType = ["Provisioned IOPS SSD", "General Purpose SSD", "Magnetic"];
@@ -296,8 +329,12 @@ function getSecurity(vpcName){
 				 			secName[x] = data[x].sg_name;
 				 		}
 				 }
-			   var appendD = new DropdownConst();
-			   appendD.appendData(secName,"selsgn0");
+			for(var y=0;y<temp_info.length;y++){
+				var tT = document.getElementById("selsgn"+y+"");
+								tT.innerHTML+='<li onclick="selectOpt(this,'+y+')" class="Dev"><dl><dt></dt><dd class="va">'+secName+'</dd></dl></li>';					
+			}
+			   //var appendD = new DropdownConst();
+			   //appendD.appendData(secName,"selsgn0");
 		  });		 
 	});
 }
@@ -311,7 +348,7 @@ function getRouteTable(vpcName){
 				 	if(data[x].vpc_name == vpcName)
 				 		{
 							var tT = document.getElementById("rtTable");
-								tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].route_name+'</dd></dl></li>';					
+								tT.innerHTML+='<li onclick="selectOpt(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].route_name+'</dd></dl></li>';					
 				 		}
 				 }
 		  });		 
@@ -328,7 +365,7 @@ function getInetGWay(vpcName){
 				 		{
 				 			gWay[x] = data[x].igateway_name;
 							var tT = document.getElementById("gtWay");
-								tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].igateway_name;+'</dd></dl></li>';					
+								tT.innerHTML+='<li onclick="selectOpt(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].igateway_name;+'</dd></dl></li>';					
 				 		}
 				 }
 			   //var appendD = new DropdownConst();
@@ -566,7 +603,7 @@ function getVpcName(){
 	});
 	
 }
-
+var zone;
 function getSubnetName(vpcid){
 	var id=vpcid;
 	var subNetName1 = [];
@@ -577,8 +614,9 @@ function getSubnetName(vpcid){
 				 	if(data[x].vpc_id == id)
 				 		{
 				 			//subNetName1[x] = /*data[x].subnet_name+"/"+*/data[x].subnet_id;
+							zone = data[x].availability_zone;
 							var tT = document.getElementById("selssn");
-								tT.innerHTML+='<li onclick="getAccounts(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].subnet_id+'</dd></dl></li>';					
+								tT.innerHTML+='<li onclick="selectOpt(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+data[x].subnet_id+'</dd></dl></li>';					
 				 		}
 				 }
 			   //var appendD = new DropdownConst();
@@ -865,9 +903,9 @@ function show_nodeDetails(data){
 			    valu == 0 ? false : valu--;
 			    vv.val(valu);
 			  });
-		$(".clickRole").click(function(){
+		/*$(".clickRole").click(function(){
 			$(this).find(".dropDown").slideToggle();
-		})
+		})*/
 	
 		
 		
@@ -926,7 +964,7 @@ function createVol(num){
 	var id = num;
 	alert(id);
 	var epn = document.getElementById("dup"+id+"");
-	epn.innerHTML+="<div id = 'attach"+id+"_"+inc+"'><div class='roleID '><div class='pull-left'><div id='selstg"+id+"_"+inc+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+id+"_"+inc+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+	epn.innerHTML+="<div style='clear:both;'>&nbsp;</div><div id = 'attach"+id+"_"+inc+"'><div class='roleID '><div class='pull-left'><div id='selstg"+id+"_"+inc+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+id+"_"+inc+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
 					+"<div class='operatingSys'><div class='pull-left'><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, this.id)' id='stgsz"+id+"_"+inc+"' min='1' style='border:none;width:100%;'/></div></div></div>"
 					+"<div class='operatingSys'><div class='pull-left'><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+id+"_"+inc+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
 					+"<div class='operatingSys'><div class='pull-left'><div class='clickRole addStoTabWid'><input id='stgName"+id+"_1' type='text' style='border:none;width:100%;'></div></div></div>"
@@ -938,9 +976,9 @@ function createVol(num){
 	appendD.appendData(volumeType,"selsstg"+id+"_"+inc+"");
 	document.getElementById("storage"+id+"_"+(inc-1)+"").id = "storage"+id+"_"+inc+"";
 	inc++;
-	$(".clickRole").click(function(){
+	/*$(".clickRole").click(function(){
 			$(this).find(".dropDown").slideToggle();
-		})	
+		})*/	
 }
 function deleteVol(row, n){
 	var pn = row.parentNode;
@@ -1349,7 +1387,7 @@ function createStgFunction(buttonId, Id){
 	var res = idNum.split("_");
 	for(var i=0;i<=res[1];i++)
 	{
-		alert(i);
+		//alert(i);
 		var vType = document.getElementById("selstg"+res[0]+"_"+i+"").innerText;
 		var vSize = document.getElementById("stgsz"+res[0]+"_"+i+"").value;
 		var vIops = document.getElementById("stgIops"+res[0]+"_"+i+"").value;
@@ -1381,8 +1419,8 @@ function createStgFunction(buttonId, Id){
 		data.vSize = vSize;
 		data.vIops = vIops;
 		data.vName = vName;
-		//data.vZone = zone;
-		data.vZone = "us-east-1d";
+		data.vZone = zone;
+		//data.vZone = "us-east-1d";
 	
 	console.log(data);
 	$.ajax({
@@ -1547,14 +1585,14 @@ function deployFunction(){
 			}
 		if(str == "multi")
 		{	
-			alert("Multi node deployment");
+			//alert("Multi node deployment");
 			for(var i=0;i<temp_info.length;i++)
 				{
 					//var stgName = document.getElementById("stgName"+i+"").value;
 					var dsk = document.querySelector('.disk'+i+'').id;
 					var dskNo = dsk.substr(dsk.length-3),
 					    dskLoop = dskNo.split("_");
-						alert(dskLoop.length)
+						//alert(dskLoop.length)
 						for(j=0;j<=dskLoop[1];j++)
 						{
 							//var stgName = document.getElementById("stgName"+dskLoop[0]+"_"+i+"").value
@@ -1643,7 +1681,7 @@ function deployTemplateFunction()
 			var resultObj1 = [],disks1 = [];
 			if(str == "multi")
 			{
-				alert("Multi node deployment");
+				//alert("Multi node deployment");
 				for(var i=0;i<temp_info.length;i++)
 					{
 						var resultObj = [],disks = [];
@@ -1654,7 +1692,7 @@ function deployTemplateFunction()
 						for(j=0;j<=dskLoop[1];j++)
 						{
 							var stgName = document.getElementById("stgName"+dskLoop[0]+"_"+j+"").value;
-							alert(stgName);
+							//alert(stgName);
 							disks.push(stgName);
 						}
 						disks1.push(disks);
@@ -1682,9 +1720,10 @@ function deployTemplateFunction()
 						
 						var instName = temp_info[i].node;
 						var imageName = temp_info[i].image;
+						var id = imageName.split("~");
 						var roleName = temp_info[i].role;
 						console.log(stgName+sgName+instName+imageName+roleName);
-						resultObj.push((disks.length),sgName,pIp,instName,imageName,roleName);
+						resultObj.push((disks.length),sgName,pIp,instName,id[1],roleName);
 						resultObj1.push(resultObj);			
 					}
 				}else{
@@ -1727,8 +1766,33 @@ function deployTemplateFunction()
 		        url: _ip+'/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
-		        	$(".alert-temp").stop().slideDown();
-		        	location.href="http://172.29.59.65:3000/master_2"
+		        	//$(".alert-temp").stop().slideDown();
+		        	//location.href="http://172.29.59.65:3000/master_2"
+					$(".popupData, .proDiv").show(); 
+			        //var instanceCount = ["t2.micro","t3.micro"] 
+			        var int = setInterval(hideme, temp_info.length*60000); 
+			        
+			        var i = temp_info.length*60000/1000; 
+			        
+			        console.log(temp_info.length) 
+			        console.log(i/temp_info.length) 
+			        var count = 0; 
+			        setInterval(function (){ 
+			                console.log(i--); 
+			                if(i%60 == 0){ 
+			                        count++; 
+			                }                       
+							$("#instanceName").html("<b>"+temp_info[count].node+"</b>"+" is Deploying..");
+			                
+			         }, 1000);
+					function hideme(){
+							$("#doneDeploy, .sucessMes").show();
+							$(".deployText, #loadingImg").hide();
+							
+							//$(".popupData, .proDiv").hide();
+							console.log(int);
+							window.clearInterval(int);
+						}
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1772,9 +1836,10 @@ function deployTemplateFunction()
 					{
 						var instName = temp_info[i].node;
 						var imageName = temp_info[i].image;
+						var id = imageName.split("~");
 						var roleName = temp_info[i].role;
-						console.log(instName+imageName+roleName);
-						resultObj1.push(instName,imageName,roleName);
+						//console.log(instName+imageName+roleName);
+						resultObj1.push(instName,id[0],roleName);
 					}
 				}else{
 					var instName = str2;
@@ -1793,7 +1858,7 @@ function deployTemplateFunction()
 					url: _ip+'/deployTemplate',
 					success: function(data, textStatus){
 						alert(data);
-						location.href=_ip+"/master_2"
+						//location.href=_ip+"/master_2"
 						},
 						 error: function (xhr, status, error){
 							 console.log('Failure');

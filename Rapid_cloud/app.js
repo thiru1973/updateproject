@@ -95,6 +95,7 @@ app.get('/manage_template',routes.manage_template);
 app.get('/preview', view.preview);
 app.post('/viewdata',view.viewdata);
 app.post('/temp_image', routes.temp_image);
+app.post('/temp_image1', routes.temp_image1);
 app.post('/temp_region', routes.temp_region);
 app.post('/temp_store', routes.temp_store);
 app.get('/create_template2', routes.create_template2);
@@ -144,7 +145,7 @@ app.get('/trafficManager', manage.trafficManager);
 app.get('/nodeTemplates', routes.nodeTemplates);
 app.get('/accountTemplates', routes.accountTemplates);
 
-//Manage stg, sec, kp
+//Mange stg, sec, kp
 app.get('/volumeDetails', manage.volumeDetails);
 app.post('/keyPairDetails', manage.keyPairDetails);
 app.get('/secGrpDetails', manage.secGrpDetails);
@@ -210,6 +211,7 @@ var url = "http://172.29.59.65:3001/add";
 
 	});*/
 
-http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
+//http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
+http.createServer(app).listen(app.get('port'), "172.29.59.44", function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

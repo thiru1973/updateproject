@@ -392,6 +392,43 @@ exports.temp_image=function(req,res){
 				}		 
 			});	
 };
+exports.temp_image1=function(req,res){
+	var result=JSON.stringify(req.body);
+	var Obj = JSON.parse(result);
+	var pname=Obj.provider;
+	var os=Obj.os;
+	console.log(req.body);
+	var region;	
+	if(Obj.provider != "Azure")
+		{
+			region=Obj.region;
+		}else{ region="All";}
+	var image1=[];	
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+						console.log('Unable to connect to the mongoDB server. Error:', err);
+				   } else {
+					console.log('Connection established');	
+					var image=db.collection('Images1');
+					var token = new RegExp(os, 'i');
+					image.find({$and: [{"prov_id": pname},{"region":region},{"Image_name":{$all:[token]}}]}).toArray(function(err,result){
+						if(err){
+							throw err
+							}
+						else{
+							var len=result.length;													
+							for(var i=0;i<len;i++)
+							{
+								image1[i]=result[i].Image_name+"~"+result[i].id;								
+							}	
+								console.log(image1);
+								res.send(image1);
+							}
+					 db.close();					
+					});					
+				}		 
+			});	
+};
 var res_store=[];
 exports.temp_store=function(req,res){
 	var result=JSON.stringify(req.body);	

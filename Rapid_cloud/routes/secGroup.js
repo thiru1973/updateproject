@@ -1,9 +1,6 @@
 var AWS = require('aws-sdk');
 
-AWS.config.update({accessKeyId : 'AKIAJTPQAUMPWKMM7ENA',
-	secretAccessKey : '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',
-});
-AWS.config.update({region : 'us-east-1'});
+
 
 var ec2 = new AWS.EC2();
 
