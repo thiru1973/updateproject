@@ -3,7 +3,7 @@
 	Created on: 30th March 2016
 *************************************** */
 
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.62:3000";
 
 $(document).ready(function(){
 	var i =0;
@@ -447,7 +447,7 @@ function createProject(){
 		document.getElementById("pName").focus();
 		return;
 	}else if(pName){
-		$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+		$.getJSON('http://172.29.59.62:3000/accountDetails', function(data){
 			console.log(data);
 			for(var i =0; i < data.data2.length; i++){
 				if(data.data2[i].p_name == pName){
@@ -507,7 +507,7 @@ function createProduct(){
 		document.getElementById("pdName").focus();
 		return;
 	}else if(pdName){
-		$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+		$.getJSON('http://172.29.59.62:3000/accountDetails', function(data){
 			console.log(data);
 			for(var i =0; i < data.data3.length; i++){
 				if(data.data3[i].prod_name == pdName){
@@ -559,7 +559,7 @@ function validateSubscriptionForm(){
 	
 	if(azureSub){
 		$(function(){
-				$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+				$.getJSON('http://172.29.59.62:3000/accountDetails', function(data){
 					for(var i =0; i < data.data1.length; i++){
 						console.log("number"+i);
 						if(data.data1[i].subscription_name == azureSub){
@@ -591,7 +591,7 @@ function addAwsSubscription(){
 	
 	if(awsSub){
 		$(function(){
-				$.getJSON('http://172.29.59.65:3000/accountDetails', function(data){
+				$.getJSON('http://172.29.59.62:3000/accountDetails', function(data){
 					for(var i =0; i < data.data1.length; i++){
 						if(data.data1[i].subscription_name == awsSub){
 							alert("name already exists");

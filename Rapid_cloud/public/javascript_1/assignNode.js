@@ -29,7 +29,7 @@ function getTemplateName(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: template,	 
-			     url: 'http://172.29.59.65:3000/gen_template',
+			     url: 'http://172.29.59.62:3000/gen_template',
 			     success: function(results) {	
 			    	 templates = results[0].Template_Role;
 			    	 os = results[0].os
@@ -91,7 +91,7 @@ function templateDetails(){
 	})
 }
 $('#Templates2').click(function(){
-	location.href="http://172.29.59.65:3000/master_2"
+	location.href="http://172.29.59.62:3000/master_2"
 });
 	$(document).ready(function(){
 	$(".alert").hide();	
@@ -254,7 +254,7 @@ function region_fun(reg){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/temp_region',
+	     url: 'http://172.29.59.62:3000/temp_region',
 	     success: function(results) {
 	    	 for(var i=0;i<results.length;i++)
 				{
@@ -283,7 +283,7 @@ function node_filter(pvd,reg){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/filter',
+	     url: 'http://172.29.59.62:3000/filter',
 	     success: function(results) {
 	    	 nodes=results;
 	    	 var len=results.length;
@@ -363,7 +363,7 @@ function show_images(id){
 			 jsonpCallback: "callback",
 		     datatype: 'jsonp',
 		     data: img_data,	 
-		     url: 'http://172.29.59.65:3000/temp_image',
+		     url: 'http://172.29.59.62:3000/temp_image',
 		     success: function(results) {		    		 
 			    	 	var appendD = new DropdownConst();
 			    	 	appendD.appendData(results,"sellls"+id);
@@ -452,11 +452,11 @@ function saveInformation(tm_name){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: "d1="+arr1+"&d2="+arr2+"&d3="+acName+"&d4="+pjName+"&d5="+pdName,	     
-	     url: 'http://172.29.59.65:3000/temp_store',
+	     url: 'http://172.29.59.62:3000/temp_store',
 	     success: function(results) {
 	     	 $(".alert-success").stop().slideDown();
-	    	 //location.href="//172.29.59.65:3000/deployTemplate"+"?data="+t_name;
-	    	 location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+t_name;
+	    	 //location.href="//172.29.59.62:3000/deployTemplate"+"?data="+t_name;
+	    	 location.href="//172.29.59.62:3000/deployTemplate"+"?data="+"multi"+"?data2="+t_name;
 	     },
 		 error: function (xhr, status, error){
 	        console.log('Failure');

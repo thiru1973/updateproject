@@ -1,7 +1,7 @@
 /* ************************************
 	Create by: Omprakash Ramanadham	
 *************************************** */
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.62:3000";
 
 $(document).ready(function(){
 	var i =0;
@@ -37,7 +37,7 @@ $(document).ready(function(){
 });
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
-	//location.href="http://172.29.59.65:3000/master_2"
+	//location.href="http://172.29.59.62:3000/master_2"
 });
 window.onload = function(){};
 window.onclick=function(){

@@ -101,13 +101,13 @@ exports.devopsTemplate = function(req,res){
 }
 
 exports.devopsTemp = function(req, res){
-	res.render("devops");
+	res.render("devopsTemp");
 }
 exports.saveDevopsTemplate = function(req,res){
 
 	var result=JSON.stringify(req.body);	
 	var Obj = JSON.parse(result);
-	//console.log(Obj);
+	console.log(Obj);
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -119,10 +119,17 @@ exports.saveDevopsTemplate = function(req,res){
 		        					console.log(err);
 		     					 } else {
 		        		console.log('Inserted values sucess fully');
-						res.send("Saved DevOps template");
+						var obj = {"data" : "OK"};
+            				res.send(obj);
 		      			}
 		      			db.close();
 		    			});					
 				}		 
 			});	
+}
+
+//Create Project
+
+exports.createProject = function(req, res){
+	res.render("create_project");
 }

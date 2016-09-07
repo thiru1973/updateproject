@@ -12,7 +12,7 @@ function isIE () {
 }
 
 $('#Templates1').click(function(){
-	location.href="http://172.29.59.65:3000/master_2"
+	location.href="http://172.29.59.62:3000/master_2"
 });
 
 function modify(){
@@ -28,11 +28,11 @@ function hideAlerts(){
 }
 $(".closeError").click(function(){
 	$(".alertS div.alert").stop().slideUp();
-	//location.href="http://172.29.59.65:3000/master_2"
+	//location.href="http://172.29.59.62:3000/master_2"
 });
 $(".closeMsg").click(function(){
 	$(".alertS div.alert").stop().slideUp();
-	//location.href="http://172.29.59.65:3000/master_2"
+	//location.href="http://172.29.59.62:3000/master_2"
 });
 $(".warning").click(function(){
 	$(".alertS div.alert").stop().slideUp();
@@ -246,7 +246,7 @@ var osArr = ["Ubuntu", "Debian", "SUSE", "CentOS", "RHEL(AWS)", "Windows", "Gent
 var idDt;
 function data(){
 	$(function(){		
-		   $.getJSON('http://172.29.59.65:3000/org_temp', function(data) {			
+		   $.getJSON('http://172.29.59.62:3000/org_temp', function(data) {			
 			   console.log(data);
 			   idDt = data[0].types;			  
 			   /*for(var j=0;j<=idDt.length-1;j++){
@@ -263,7 +263,7 @@ function data(){
 			   //var opeSys = data[0].types[2].subrole;		  
 		   });
 		   
-		   $.getJSON('http://172.29.59.65:3000/project', function(data){
+		   $.getJSON('http://172.29.59.62:3000/project', function(data){
 			   var proje = data;
 			   var pj_Na=[], pr_Na=[], tec_ngy=[];
 			   for(var d=0; d<=proje.length-1; d++){				   			   
@@ -528,15 +528,15 @@ function saveTemplateFunction(id, te_name){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: "d1="+ary1+"&d2="+te_name+"&d3="+acName+"&d4="+pjName+"&d5="+pdName,
-	     url: 'http://172.29.59.65:3000/node_store',
+	     url: 'http://172.29.59.62:3000/node_store',
 	     success: function(results) {
 	    	 if(id == "save_exit")
 	    	 {
-		    	 location.href="http://172.29.59.65:3000/assignNode"+"?data="+te_name;
+		    	 location.href="http://172.29.59.62:3000/assignNode"+"?data="+te_name;
 	    	 }else if(id == "create_exit")
 	    	 		 {
 				    	 $(".alert-success").stop().slideDown();
-				    	 location.href="http://172.29.59.65:3000/master_2"
+				    	 location.href="http://172.29.59.62:3000/master_2"
 	    	 		 }
 	     },
 		 error: function (xhr, status, error){

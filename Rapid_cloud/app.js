@@ -116,6 +116,7 @@ app.post('/cloud_project',manage.cloud_project);
 app.post('/create_deploy_slot',routes.create_deploy_slot);
 app.post('/filter_slot',manage.filter_slot);
 app.get('/list_cloud_service',manage.list_cloud_service)
+app.post('/testscript', routes.testscript);
 
 //New manage screen
 app.get('/manageEnv', manage.manageEnv);
@@ -162,6 +163,16 @@ app.get('/attachDisk', resources.attachDisk)
 app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
+//Devops
+app.get('/setup', routes.setup);
+app.get('/devops', routes.devops);
+app.get('/devopsDetails', routes.devopsDetails);
+
+//Create Project
+app.get('/createProject', resources.createProject);
+//app.get('/gitAuth', project.gitAuth);
+app.post('/repoLogin', project.repoLogin);
+app.post('/repoWebhook', project.repoWebhook);
 
 var url = "http://172.29.59.65:3001/add";
 
@@ -177,6 +188,6 @@ var url = "http://172.29.59.65:3001/add";
 
 	});*/
 
-http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
+http.createServer(app).listen(app.get('port'), "172.29.59.62", function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

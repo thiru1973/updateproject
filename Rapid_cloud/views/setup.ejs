@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<title>DevOps Setup</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></scr`ipt>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+<div class="alertS">
+	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning" role="alert"><b>Warning!</b> Better check yourself, you're not looking too good.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+</div>
+
+<div class="container">		
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<h1>DevOps Setup<a href=""></a></h1>
+				<!--<aside>
+					<input type="text" value="Search">
+				</aside>-->
+			</header>
+			<section role="createTemplate">								
+				<div class="pull-left" style="padding: 24px 0 20px 23px;">
+				  <h4 style="display: inline-block;">Existing Virtual Machine &nbsp;&nbsp;</h4> Or <button class="redButton countAlign createAccount" id="add0" name="add_0">Create New</button></div>
+					<div class="roles">
+					   <div class="row">
+						<div class="pull-left">
+							<label id="" class="labelTemp"><span>Choose Account</span></label>
+							<div id="typeDro1" class="clickRole temp1stRowWid"><span>Select</span>
+								<ul id="accounts_ID" class="dropDown">
+									</ul>
+								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+							</div>						
+						</div>
+						<div class="pull-left">
+							<label id="" class="labelTemp"><span>Choose Project</span></label>
+							<div id="typeDro2" class="clickRole temp1stRowWid"><span>Select</span>
+								<ul id="Project_ID" class="dropDown">
+									</ul>
+								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+							</div>						
+						</div>
+						<!--  <div class="pull-left">
+							<label id="" class="labelTemp"><span>Choose Product</span></label>
+							<div id="typeDro3" class="clickRole temp1stRowWid"><span>Select</span>
+								<ul id="Product_ID" class="dropDown">
+									<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Dev</dd></dl></li>
+									<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Test</dd></dl></li>
+									<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Stag</dd></dl></li>
+								</ul>
+								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+							</div>						
+						</div>-->
+						<div class="pull-left" style="padding-top:0px;color:inherit">
+							<label id="" class="labelTemp"><span>Choose Environment</span></label>
+							<div id="typeDro4" class="clickRole temp1stRowWid"><span>Select</span>
+								<ul id="Environment_ID" class="dropDown">
+								</ul>
+								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+							</div>						
+						</div>
+						<div class="pull-left" style="padding-top:0px;color:inherit">
+							<label id="" class="labelTemp"><span>Choose Technology</span></label>
+							<div id="typeDro5" class="clickRole temp1stRowWid"><span>Select</span>
+								<ul id="Product_ID" class="dropDown">
+									<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Node.js</dd></dl></li>
+									<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Asp.Net</dd></dl></li>
+									<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">PHP</dd></dl></li>
+								</ul>
+								<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+							</div>						
+						</div>
+				     </div>
+					</div>
+				<div style="clear:both;">&nbsp;</div>
+					<div style="padding:0 20px;">
+						<b style="padding:5px 0 10px 0;display:block;">What do you want to setup?</b>
+						<form class="" id="rbtn0">
+							<label class="radio-inline">
+							<input type="radio" name="inlineRadioOptions" checked="checked" id="inlineRadio10" value="option1">Setup CI Platform </label>
+							<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio20" value="option2">Setup CT Platform </label>
+							<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio30" value="option2">Setup CD Platform </label>
+						</form>
+					</div>
+					<div class="roles">
+						<ul class="standardTools">
+							
+							<li>
+								<img src="images_1/git_and_jenkins_icon.png">
+								<span>App Server</span>
+								<os>Ubuntu</os>
+								<br>
+								<div class="pull-left" style="text-align: left;">
+									<label id="" class="labelTemp"><span>Choose VM</span></label>
+									<div id="typeD1r" class="clickRole temp1stRowWid"><span>Select</span>
+										<ul id="ft_ID1" class="dropDown">
+											<!--<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Select</dd></dl></li>
+											<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">VM India</dd></dl></li>
+											<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">VM USA</dd></dl></li>
+										--></ul>
+										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+									</div>						
+								</div>
+							</li>
+							<li>
+								<img src="images_1/sonar_icon.png">
+								<span>App Server</span>
+								<os>Ubuntu</os>
+								<br>
+								<div class="pull-left" style="text-align: left;">
+									<label id="" class="labelTemp"><span>Choose VM</span></label>
+									<div id="typeDr2" class="clickRole temp1stRowWid"><span>Select</span>
+										<ul id="ft_ID2" class="dropDown">
+											<!--<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Select</dd></dl></li>
+											<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">VM India</dd></dl></li>
+											<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">VM USA</dd></dl></li>
+										--></ul>
+										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+									</div>						
+								</div>
+							</li>
+							<!--<li>
+								<img src="images_1/nexus_icon.png">
+								<span>App Server</span>
+								<os>Ubuntu</os>
+								<br>
+								<div class="pull-left" style="text-align: left;">
+									<label id="" class="labelTemp"><span>Choose VM</span></label>
+									<div id="typeDr3" class="clickRole temp1stRowWid"><span>Select</span>
+										<ul id="ft_ID3" class="dropDown">
+											<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Select</dd></dl></li>
+											<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">VM India</dd></dl></li>
+											<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">VM USA</dd></dl></li>
+										</ul>
+										</ul>
+										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+									</div>						
+								</div>
+							</li>
+						--></div>
+					<div style="clear:both;">&nbsp;</div>
+				  <div style="padding:10px;">
+					<button class="redButton pull-right countAlign exit">Cancel</button>
+					<button class="redButton pull-right countAlign exit" onclick="deployDevops()">Deploy</button>
+				  </div>
+				<div style="clear:both;">&nbsp;</div>
+			</section>
+		</section>
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+<!--<script src="javascript_1/accounts.js"></script>-->
+<script src="javascript_1/menu.js"></script>
+<script src="javascript_1/setup.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");
+});
+</script>
+</body>
+</html>

@@ -29,7 +29,7 @@ function getStorageData(){
 
 var myTemplate_images = [];
 $(function(){		
-		$.getJSON( "http://172.29.59.65:3000/my_view", function( data ) {	
+		$.getJSON( "http://172.29.59.62:3000/my_view", function( data ) {	
 		              var result=data;
 		              var tempName = [], region = [], tempType = [], nodes = [], cloud = [];
 		              getStorageData();
@@ -67,7 +67,7 @@ $(function(){
 });	
 		
 $(function(){
-		$.getJSON( "http://172.29.59.65:3000/gen_view", function( data ) {	
+		$.getJSON( "http://172.29.59.62:3000/gen_view", function( data ) {	
 			var result1=data;
 			//console.log(data);
 			var tempName1 = [], region1 = [], tempType1 = [], nodes1 = [];
@@ -141,11 +141,11 @@ function pvdSpec_function(myT){
 	var template = myT.id;
 	//alert("Disabled the functions....!");
 	console.log(myT);
-	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
+	location.href="//172.29.59.62:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
 }	
 
 $('#manageEnv').click(function(){
-	location.href="//172.29.59.65:3000/manageEnv";
+	location.href="//172.29.59.62:3000/manageEnv";
 })
 function addDevOps(ev){	
 	localStorage.setItem("InfraId",ev.title)
@@ -213,7 +213,7 @@ function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 function genereic_function(genT){
 	//alert("Disabled the functions....!");
 	var genTemplate = genT.id
-	location.href ="http://172.29.59.65:3000/assignNode"+"?data="+genTemplate;
+	location.href ="http://172.29.59.62:3000/assignNode"+"?data="+genTemplate;
 }
 
 function generic_details(result1){
@@ -249,7 +249,7 @@ $('input#search').keyup(function() {
 });
 
 $('button#create_temp').click(function(){
-	location.href="http://172.29.59.65:3000/create_template"
+	location.href="http://172.29.59.62:3000/create_template"
 });
 
 var fadeSpped="speed";

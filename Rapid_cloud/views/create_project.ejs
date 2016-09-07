@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<title>Accounts</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+<div class="alertS">
+	<div class="alert alert-success alert-accName" role="alert"><b>Account</b> name already exists or it should not include special character<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-success" role="alert"><b>Well done!</b> You successfully read this important alert message.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-info" role="alert"><b>Heads up!</b> This alert needs your attention, but it's not super important.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
+	<div class="alert alert-warning" role="alert"><b>Warning!</b> 
+		<span class="aw"></span>
+		<span class="glyphicon glyphicon-remove-circle closeAlert"></span>
+	</div>
+	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> 
+		<span class="ad"></span>
+		<span class="glyphicon glyphicon-remove-circle closeAlert"></span>
+	</div>
+</div>
+<div id="pop"></div>
+
+<div id="create_Sub_POP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+			<button type="button" id="vmPopupClose" class="close" data-dismiss="modal" aria-label="Close"><!--<span aria-hidden="true">x</span>--></button>
+			<h4 class="modal-title">Add VM</h4>
+		  </div>
+		   <div class="modal-body">
+				<ul id="noDEpullL">
+					
+				</ul>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+			  <div class="modal-footer" id="vmPopBut">
+				
+			  </div>
+		</div>
+	</div>
+</div>
+
+<div class="container">		
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<h1>Create New Project<a href=""></a></h1>
+				<!--<aside>
+					<input type="text" value="Search">
+				</aside>-->
+			</header>
+			<section role="createProject">
+				<div style="clear:both;">&nbsp;</div>
+				<div class="roles" style="display:none;">
+					<div class="pull-left tempRadio">
+						<label><input type="radio" name="templateType" checked="checked"/> My Template</label>
+					</div>
+					<div class="pull-left tempRadio">
+						<label><input type="radio" name="templateType" /> System Template</label>
+					</div>
+				</div>				
+				<div class="roles gapForDiv">
+					<div class="pull-left">
+						<label class="labelTemp">* Template Name</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="Ex: Dev_Name" id="t_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Project Name</label>
+						<div class="clickRole temp1stRowWid" id="p_n">
+							<input type="text" placeholder="Ex: Dev_Pro_Name" id="p_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left" style="">
+						<label id="" class="labelTemp"><span>* Technology</span></label>
+						<div id="technology_" class="clickRole temp1stRowWid"><span>Select</span>
+							<ul id="technology_N_Drop" class="dropDown" style="display: none;">
+								<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">.NET</dd></dl></li>
+								<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Nodejs</dd></dl></li>
+								<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">Java</dd></dl></li>
+							</ul>
+							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+						</div>						
+					</div>
+				</div>
+				<div style="clear:both;">&nbsp;</div>
+				<div class="cndt_bold">DevOps Deployment
+				
+					<div class = "projectCreateButtons">
+						<button id="cTA_createProject" onclick= "chooseTemplate();">Select DevOps Template</button>
+					</div>
+				
+				</div>
+				<div style="clear:both;">&nbsp;</div>
+				<div>
+					<div class="cndt_bold">Repository Credentials
+				</div>
+				<div class="roles gapForDiv">
+					<div class="pull-left">
+						<label class="labelTemp">* UserName</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="Repository Username" id="user_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Password</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="password" placeholder="Repository Password" id="pass" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Oauth Token</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="Oauth Token" id="o_token" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class = "projectCreateButtons">
+						<button class = "buttonSave" id="cTA_createProject" >Save</button>
+						<button class = "createWebhook" id="cTA_createProject" >Create WebHooks</button>
+					</div>			
+				</div>
+				
+				<div style="clear:both;">&nbsp;</div>
+				<div>
+					<div class="cndt_bold">CI Server Credentials
+				</div>
+				<div class="roles gapForDiv">
+					<div class="pull-left">
+						<label class="labelTemp">* UserName</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="Username" id="user_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Password</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="password" placeholder="Password" id="pass" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Deployment URL</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="IP address/URL" id="o_token" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class = "projectCreateButtons">
+						<button class = "buttonSaveCI" id="cTA_createProject" >Save</button>
+						<button class = "selectPipelines" id="cTA_createProject" >Select Pipelines</button>
+					</div>			
+				</div>
+				<!--
+				<div style="clear:both;">&nbsp;</div>
+				<div class="cndt_bold">Create Webhooks
+				</div>
+				<div class="roles gapForDiv">
+					<div class="pull-left">
+						<label class="labelTemp">* Repository Name</label>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Webhook Name</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="Name" id="t_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">* Payload URL</label>
+						<div class="clickRole temp1stRowWid" id="t_n">
+							<input type="text" placeholder="Payload URL" id="t_name" style="border:none;width:100%;">
+						</div>
+					</div>
+					<div class="pull-left">
+					<div class = "projectCreateButtons">
+						<button class="buttonEvents" id="cTA_createProject">Choose Events</button>
+					</div>
+					</div>
+				</div>
+				-->
+				
+				<div class="container">
+				<div>
+				<!-- Pop ups to choose Webhook Repositories -->
+				<div class="popupData"></div>
+					<div class="popData1">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">Select Repositories</h4>
+							  </div>
+							  <div>
+							  <ul id="creatWebHooks"> </ul>					
+							  </div>
+							   <div class="modal-footer">
+								<a class="cancelPoup">Cancel</a>&nbsp;
+								<button class="redButton" id="addRepo">ADD</button>
+							  </div>
+					   </div>
+					</div>
+				</div>
+				
+				
+				<div class="container">
+				<div>
+				<!-- Pop ups to choose SCM events -->
+				
+					<div class="popData">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">Select Events</h4>
+							  </div>
+							 <div class="pull-left">
+								<div class="checkbox checkbox-inline"> <label> <input type="checkbox" id="push_check" name="Push"> Push </label> </div>
+							 </div>
+							 <div class="pull-left">
+								<div class="checkbox checkbox-inline"> <label> <input type="checkbox" id="pull_req_check" name="PullRequest"> Pull Request </label> </div>
+							 </div>
+							 <div class="">
+								<div class="checkbox checkbox-inline"> <label> <input type="checkbox" id="fork_check" name="Fork"> Fork </label> </div>
+							 </div>
+							 <div class="pull-left">
+								<div class="checkbox checkbox-inline"> <label> <input type="checkbox" id="create_check" name="Create"> Create Branch/Tag </label> </div>
+							 </div>
+							 <div class="">
+								<div class="checkbox checkbox-inline"> <label> <input type="checkbox" id="delete_check" name="Delete"> Delete Branch/Tag </label> </div>
+							 </div>
+							  <div class="">
+								<div class="checkbox checkbox-inline"> <label> <input type="checkbox" id="repo_check" name="Repository"> Create/Delete Repository </label> </div>
+							 </div>
+							  <div class="modal-footer">
+								<a class="cancelPoup">Cancel</a>&nbsp;
+								<button class="redButton" id="createVpc">ADD</button>
+							  </div>
+						</div>
+					</div>
+				</div> 
+		</section>
+	</section>
+<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+<script src="javascript_1/create_project.js"></script>
+<script src="javascript_1/menu.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");  
+});
+</script>
+</body>
+</html>

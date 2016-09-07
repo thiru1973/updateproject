@@ -24,7 +24,7 @@ function get_aws_region(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/temp_region',
+        url: 'http://172.29.59.62:3000/temp_region',
         success: function(data, textStatus){
         	
         	pvd_aws = data;
@@ -46,7 +46,7 @@ function get_azure_region(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/temp_region',
+        url: 'http://172.29.59.62:3000/temp_region',
         success: function(data, textStatus){
         	pvd_azure = data;
         	},
@@ -64,7 +64,7 @@ $('#Node').click(function(){
 	$("#single_node").show();
 	$("[role='template1']").show();
 	var aws_count = 0, azure_count = 0;
-	$.getJSON( "http://172.29.59.65:3000/all_nodes", function( data ) {		
+	$.getJSON( "http://172.29.59.62:3000/all_nodes", function( data ) {		
 		for(var i=0;i<data.length;i++)
 			{
 				inst_type[i] = data[i].inst_type;
@@ -266,6 +266,6 @@ function nodeDeploy_function(value){
 	console.log(id);
 	var region = document.getElementById(id).innerText;
 	//alert(region);
-	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"single"+"?data2="+att[0]+"?data3="+att[1]+"?data4="+region;
+	location.href="//172.29.59.62:3000/deployTemplate"+"?data="+"single"+"?data2="+att[0]+"?data3="+att[1]+"?data4="+region;
 
 }

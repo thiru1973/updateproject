@@ -151,6 +151,14 @@ footer{clear:both;border-top:solid 1px #ccc;}
 .operatingSys{padding-right:0px!important;}
 #osVe{padding:0px!important;}
 
+/*createProject*/
+[role="createProject"]{width:100%;clear:both;}
+.roles{background-color:#F7F7F7; padding:10px;margin-top:5px;float:left;width:100%;}
+.projectCreateButtons{padding-top:30px;float:left;clear:both;text-align:right;width:100%;padding-right:0px!important;}
+.projectCreateButtons button{background-color: #E24B4B;padding: 5px 10px;color: #fff;border: none;margin-top: -90%;}
+.buttonSm,.buttonEvents,.buttonSn,.buttonRt,.buttonGtw{background-color: #E24B4B;padding: 2px 5px;color: #fff;border: none;margin-top: -90%;}
+#creatWebHooks> li{float:left; margin-right: 5px;font-size:12px; margin-bottom: 15px; width: 217px; margin-left: 5px;}
+
 /*assign node*/
 #nodeAtID{padding-top:0px}
 .borderSpace{border-spacing:15px;padding: 5px;background-color:#ccc;width:100%;}

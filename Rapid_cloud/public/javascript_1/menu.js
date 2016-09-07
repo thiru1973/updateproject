@@ -132,15 +132,15 @@ menU.aboutProject();
 
 $('#Templates').click(function(){
 	//alert("Hello");
-	location.href = "http://172.29.59.65:3000/master_2";
+	location.href = "http://172.29.59.62:3000/master_2";
 });
 
 $('#Manage').click(function(){
 	//alert("Manage function");
-	location.href = "http://172.29.59.65:3000/manageEnv"
+	location.href = "http://172.29.59.62:3000/manageEnv"
 });
 $('#Dashboard').click(function(){
-	location.href = "http://172.29.59.65:3000/accounts"
+	location.href = "http://172.29.59.62:3000/accounts"
 })
 
 

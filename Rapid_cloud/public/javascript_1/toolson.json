@@ -1,101 +1,145 @@
 {
-"tool_name" : "NodeJS",
-"OS" : "Centos",
-"os_version" : "7.1",
-"endpoints" : "'8080'",
-"runlist" : "'role[centjen]'",
-"devops_type" : "CI",
-"version" : "1.6581-1",
-"standard_vm" : "'Medium'",
-"process_vms" : "3",
-"technology" : ["Node.js", "Java"],
-"image" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"
-			
+	"data": [{
+			"tool_name": "Jenkins",
+			"OS": "Centos",
+			"os_version": "7.1",
+			"endpoints": "'8080'",
+			"runlist": "'role[centjen]'",
+			"devops_type": "CI",
+			"version": "1.6581-1",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ["Node.js", "Java"],
+			"image": "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"
+
+		},
+
+		{
+			"tool_name": "Jenkins",
+			"OS": "Ubuntu",
+			"os_version": "14.04",
+			"endpoints": "'8080'",
+			"runlist": "'role[cisrole]'",
+			"devops_type": "CI",
+			"version": "1.6581-1",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ["Node.js", "Java"],
+			"image": "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"
+		},
+
+		{
+			"tool_name": "Jenkins",
+			"OS": "Windows",
+			"os_version": "Server_R2_2012",
+			"endpoints": "'8080'",
+			"runlist": "'role[winjen]'",
+			"devops_type": "CI",
+			"version": "1.6581-1",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ".NET",
+			"image": "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'"
+		},
+
+		{
+			"tool_name": "Sonarqube",
+			"OS": "Ubuntu",
+			"os_version": "14.04",
+			"endpoints": "'9000,9002,9009'",
+			"runlist": "'role[sonar_role]'",
+			"devops_type": "CI",
+			"version": "5.1.2",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ["Node.js", ".NET", "Java"],
+			"image": "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"
+		},
+
+		{
+			"tool_name": "Nexus",
+			"OS": "Centos",
+			"os_version": "7.1",
+			"endpoints": "'8081'",
+			"runlist": "'role[nexusrole]'",
+			"devops_type": "CI",
+			"version": "2.11.2-06",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ["Node.js", ".NET", "Java"],
+			"image": "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"
+		},
+
+
+		{
+			"tool_name": "Sonarqube",
+			"OS": "Centos",
+			"os_version": "7.1",
+			"endpoints": "'9000,9002,9009'",
+			"runlist": "'role[sonar_role]'",
+			"devops_type": "CI",
+			"version": "2.11.2-06",
+			"standard_vm": "Medium",
+			"process_vms": "3",
+			"technology": ["Node.js", ".NET", "Java"],
+			"image": "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"
+		},
+
+
+		{
+			"tool_name": "Nexus",
+			"OS": "Ubuntu",
+			"os_version": "14.04",
+			"endpoints": "'8081'",
+			"runlist": "role[nexusrole]",
+			"devops_type": "CI",
+			"version": "2.11.2-06",
+			"standard_vm": "Medium",
+			"process_vms": "3",
+			"technology": ["Node.js", ".NET", "Java"],
+			"image": "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"
+		},
+
+		{
+			"tool_name": "Selenium",
+			"OS": "Centos",
+			"os_version": "7.1",
+			"endpoints": "'4444,5555'",
+			"runlist": "'role[selenium]'",
+			"devops_type": "CT",
+			"version": "2.53",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ["Node.js", "Java"],
+			"image": "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"
+		},
+
+		{
+			"tool_name": "Selenium",
+			"OS": "Ubuntu",
+			"os_version": "14.04",
+			"endpoints": "'4444,5555'",
+			"runlist": "'role[selenium]'",
+			"devops_type": "CT",
+			"version": "2.53",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ["Node.js", "Java"],
+			"image": "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"
+		},
+
+		{
+			"tool_name": "Selenium",
+			"OS": "Windows",
+			"os_version": "Server_R2_2012",
+			"endpoints": "'4444,5555'",
+			"runlist": "'role[selenium]'",
+			"devops_type": "CT",
+			"version": "2.53",
+			"standard_vm": "'Medium'",
+			"process_vms": "3",
+			"technology": ".NET",
+			"image": "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'"
+		}
+	]
 }
-
-{
-"tool_name" : "NPM",
-"OS" : "Ubuntu",
-"os_version" : "14.04",
-"endpoints" : "'8080'",
-"runlist" : "'role[cisrole]'",
-"devops_type" : "CI",
-"version" : "1.6581-1",
-"standard_vm" : "'Medium'",
-"process_vms" : "3",
-"technology" : ["Node.js", "Java"],
-"image" : "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"			
-}
-
-{
-"tool_name" : "Mongodb",
-"OS" : "Windows",
-"os_version" : "Server_R2_2012",
-"endpoints" : "'8080'",
-"runlist" : "'role[winjen]'",
-"devops_type" : "CI",
-"version" : "1.6581-1",
-"standard_vm" : "'Medium'",
-"process_vms" : "3",
-"technology" : ".NET",
-"image" : "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'"
-}
-
-{
-"tool_name" : "Postgres",
-"OS" : "Ubuntu",
-"os_version" : "14.04",
-"endpoints" : "'9000,9002,9009'",
-"runlist" : "'role[sonar_role]'",
-"devops_type" : "CI",
-"version" : "5.1.2",
-"standard_vm" : "'Medium'",
-"process_vms" : "3",
-"technology" : ["Node.js", ".NET", "Java"],
-"image" : "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"
-}
-
-{
-"tool_name" : "Nexus",
-"OS" : "Centos",
-"os_version" : "7.1",
-"endpoints" : "'8081'",
-"runlist" : "'role[nexusrole]'",
-"devops_type" : "CI",
-"version" : "2.11.2-06",
-"standard_vm" : "'Medium'",
-"process_vms" : "3",
-"technology" : ["Node.js", ".NET", "Java"],
-"image" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"			
-}
-
-
-{
-"tool_name" : "Sonarqube",
-"OS" : "Centos",
-"os_version" : "7.1",
-"endpoints" : "'9000,9002,9009'",
-"runlist" : "'role[sonar_role]'",
-"devops_type" : "CI",
-"version" : "2.11.2-06",
-"standard_vm" : "Medium",
-"process_vms" : "3",
-"technology" : ["Node.js", ".NET", "Java"],
-"image" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"			
-}
-
-
-{
-"tool_name" : "Nexus",
-"OS" : "Ubuntu",
-"os_version" : "14.04",
-"endpoints" : "'8081'",
-"runlist" : "role[nexusrole]",
-"devops_type" : "CI",
-"version" : "2.11.2-06",
-"standard_vm" : "Medium",
-"process_vms" : "3",
-"technology" : ["Node.js", ".NET", "Java"],
-"image" : "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'"
-}
-

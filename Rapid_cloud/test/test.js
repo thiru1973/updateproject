@@ -83,7 +83,7 @@ describe("Routing", function(){
     });
 });
 
-var server = supertest.agent("http://172.29.59.65:3000");
+var server = supertest.agent("http://172.29.59.62:3000");
 
 /*describe("AWS script test",function(){
 	it("Run the script",function(done){
@@ -190,6 +190,7 @@ describe("Azure create resource group test", function(){
 	});
 });*/
 
+/*
 describe("Azure Attach disk test", function(){
 	it("Attach diak", function(done){
 		server
@@ -199,6 +200,31 @@ describe("Azure Attach disk test", function(){
         if (err) return done(err)
         done()
       });
+	});
+});
+*/
+describe("Saving DevOps Template Test", function(){
+	it("Run the script", function(done){
+		var data = { 'templateDetails[_templateName]': 'om_259',
+  'templateDetails[_projectName]': 'Rezopia_proj',
+  'templateDetails[_technology]': 'Nodejs',
+  'CI_vms[vms][0][_vmName]': 't2.microt2.microt2.micro',
+  'CI_vms[vms][0][_vmRole]': 'ApplicationServer',
+  'CI_vms[vms][0][_vmPackages][Jenkins]': 'true',
+  'CI_vms[vms][0][_vmPackages][Sonarqube]': 'true',
+  'CI_vms[vms][0][_vmPackages][Nexus]': 'true' };
+		
+			server
+			.post('/saveDevopsTemplate')
+			.send(data)
+			.expect("content-type", /json/)
+			.expect(200)
+			.end(function(err,res){
+				//res.status.should.equal(200);
+				res.body.data.should.equal("OK");
+				done();
+			});
+		
 	});
 });
 

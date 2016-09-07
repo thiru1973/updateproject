@@ -1,4 +1,5 @@
 /* ************************************
+/* ************************************
 	Create by:Omprakash
 	Created on: 4th April 2016
 *************************************** */
@@ -47,12 +48,12 @@ function validate()
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/validate',
+	     url: 'http://172.29.59.62:3000/validate',
 	     success: function(results) {
 	    	 console.log(results);
 	    	 if(results == "Valid")
 	    		 {
-	    		 	location.href = "http://172.29.59.65:3000/accounts"
+	    		 	location.href = "http://172.29.59.62:3000/accounts"
 	    		 }else{
 	    			 $(".alert-danger, .alert-warning").hide();
 	    				$(".alert-danger").show().delay(2000).fadeOut('slow');

@@ -70,6 +70,15 @@ exports.deployTemplate = function(req, res){
 }
 
 
+//Devops Functions
+exports.setup = function(req, res){
+	res.render('setup');
+}
+exports.devops = function(req, res){
+	res.render('devops');
+}
+
+
 /*Old page functions*/
 exports.index = function(req, res){
   res.render('index');
@@ -699,3 +708,44 @@ exports.scheduleService = function(req, res){
     //res.send("Success");
 };
 
+
+var spawn = require("child_process").spawn,child;
+exports.testscript=function(req,res){
+	console.log("Inside the function");
+	child = spawn("powershell.exe",["C:\\Users\\anurag.s\\chef-repo\\script.ps1"]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	    res.send("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    console.log("Powershell Errors: " + data);
+	    res.send("Errors "+data);
+	});
+	child.on("exit",function(){
+	    console.log("Powershell Script finished");
+	    res.send("Script is finished");
+	});
+	child.stdin.end(); //end input	
+	res.send("success");
+};
+exports.devopsDetails = function(req, res){
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+						console.log('Unable to connect to the mongoDB server. Error:', err);
+				   } else {
+					console.log('Connection established');
+					var collection=db.collection('devops_vms');
+									
+					collection.find().toArray(function(err,result){
+					if(err){
+							throw err;
+							}
+						else{
+							//console.log(result);					
+							res.send(result);	
+							}
+					 db.close();					
+					});					
+				}		 
+			});	
+}
