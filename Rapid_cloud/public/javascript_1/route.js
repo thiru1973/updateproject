@@ -4,6 +4,7 @@ window.onload = function(){
 	//getSubnet();
 	getVnet();
 	getSubnetName();
+	document.getElementById("RM_name1").value = sessionStorage.getItem("resourceGroup");
 }
 function getVnet(){
 	$(function(){
@@ -168,7 +169,7 @@ function createRouteAzure(pvd,region){
 		data.addPrefix = addPrefix;
 		data.nextHop = nextHop;
 		data.nextHopIp = nextHopIp;
-		
+		console.log(data);
 		$.ajax({
 			type: 'POST',
 			jsonpCallback: "callback",

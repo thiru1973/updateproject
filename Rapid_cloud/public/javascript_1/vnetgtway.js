@@ -2,6 +2,7 @@ var _ip = "http://172.29.59.65:3000";
 window.onload = function(){
 	getVnet();	
 	getSubnet();
+	document.getElementById("RM_name1").value = sessionStorage.getItem("resourceGroup");
 }
 
 function getVnet(){

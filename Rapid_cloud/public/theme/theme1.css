@@ -902,7 +902,12 @@ button:disabled {
   color: #AAAAAA;
   border: none;
   cursor: not-allowed; }
-
+.but:disabled {
+  background-color: #DDDDDD;
+  padding: 5px 10px;
+  color: #AAAAAA;
+  border: none;
+  cursor: not-allowed; }
 .countAlign {
   margin: 4px 0px 0px 10px; }
 

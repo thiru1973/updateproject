@@ -248,7 +248,6 @@ function createResourceGp(pvd)
 	data.provider = pvd_name;
 	data.resGrp = resGrp;
 	console.log(data);
-	
 	$.ajax({
         type: 'POST',
    	 	jsonpCallback: "callback",
@@ -257,12 +256,14 @@ function createResourceGp(pvd)
         url: _ip+'/createGroup',
         success: function(data, textStatus){
         	alert("Success");
+			sessionStorage.setItem("resourceGroup",resGrp);
+			document.getElementById("cTA_CreateAndDeploy").disabled=true;
         	},
         	 error: function (xhr, status, error){
                  console.log('Failure');
          		alert("failure");
          		},
-            });	
+            });
 }
 
 /*var n = 0;

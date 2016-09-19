@@ -3,6 +3,7 @@ var _ip = "http://172.29.59.65:3000";
 window.onload = function(){
 	getVnet();
 	getVpcName();
+	document.getElementById("RM_name").value = sessionStorage.getItem("resourceGroup");
 }
 var n = 0;
 var m = 0;
@@ -43,7 +44,7 @@ function selectOpt(event, idn, con){
 	var v = event.parentNode;
 	var vb = v.parentNode;
 	var idd = vb.id;
-	alert(aTex);
+
 	for(var i=0;i<=m;i++){
 		if(idd == "vnT12_0"+i)
 		{
@@ -292,26 +293,30 @@ function createAzureSecGroup(pvd, region)
 		,prodName = localStorage.getItem("ProductName");
 	var resGp = document.getElementById("RM_name").value
 	   ,rule1 = "Inbound"
-	   ,ruleName1 = document.getElementById("ruleName1").value
-	   ,access1 = document.getElementById("access1").innerText
-	   ,protocol1 = document.getElementById("protocol1").innerText
-	   ,priority1 = document.getElementById("priority1").value
+	   ,ruleName1 = document.getElementById("ruleName1").value;
+	   
+	var Access1 = $("#access1 span").text();
+	var Protocol1 = $("#protocol1 span").text(); 
+	console.log(Access1+Protocol1);
+	var priority1 = document.getElementById("priority1").value
 	   ,prefix1 = document.getElementById("prefix1").value
 	   ,rule2 = "Outbound"
-	   ,ruleName2 = document.getElementById("ruleName2").value
-	   ,access2 = document.getElementById("access2").innerText
-	   ,protocol2 = document.getElementById("protocol2").innerText
-	   ,priority2 = document.getElementById("priority2").value
+	   ,ruleName2 = document.getElementById("ruleName2").value;
+	var Access2 = $("#access2 span").text();
+	var Protocol2 = $("#protocol2 span").text();
+	console.log(Access2+Protocol2);
+	var priority2 = document.getElementById("priority2").value
 	   ,prefix2 = document.getElementById("prefix2").value
-	   ,sgName = document.getElementById("sgName").value
+	   ,sgName = document.getElementById("sgName1").value
 	   ,vNet = document.getElementById("vnT2_").innerText
 	   ,subNet = document.getElementById("subNet").value
 	   ,cidr = document.getElementById("cidr").value;
+	   console.log(sgName);
 	   var data = {};
 		data.accountName = accountName;data.projName = projName;data.prodName = prodName;data.provider = pvd;data.region = region;
 		data.resGp = resGp;
-		data.rule1 = rule1;data.ruleName1 = ruleName1;data.access1 = access1;data.protocol1 = protocol1;data.priority1 = priority1;data.prefix1 = prefix1;
-		data.rule2 = rule2;data.ruleName2 = ruleName2;data.access2 = access2;data.protocol2 = protocol2;data.priority2 = priority2;data.prefix2 = prefix2;
+		data.rule1 = rule1;data.ruleName1 = ruleName1;data.access1 = Access1;data.protocol1 = Protocol1;data.priority1 = priority1;data.prefix1 = prefix1;
+		data.rule2 = rule2;data.ruleName2 = ruleName2;data.access2 = Access2;data.protocol2 = Protocol2;data.priority2 = priority2;data.prefix2 = prefix2;
 		data.sgName = sgName;data.vNet = vNet;data.subNet = subNet;data.cidr = cidr;
 		console.log(data);	
 		

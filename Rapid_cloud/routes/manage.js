@@ -1219,21 +1219,22 @@ exports.validate = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	console.log(Obj);
-	client_pg.query("SELECT * FROM account;", function(err, result){
+	//client_pg.query("Select * from deployment_env where env_name = ($1) AND p_id = ($2)", [t_name, proj_id], function(err,result){
+	client_pg.query("SELECT * FROM account where username = ($1) AND password = ($2)",[Obj.userName, Obj.passWord], function(err, result){
 		if(err){
 		throw err;
 		}
 		var rows = result.rows;
-		console.log(rows);
-		var row_length = rows.length;
-		for(var i=0;i<row_length;i++)
-			{
-				if(rows[i].username == Obj.userName && rows[i].password == Obj.passWord)
-					{
-					res.send("Valid");
-					}else{res.send("Invalid")}
-			}
-		 });	
+		if(rows.length == 0)
+		{
+			res.send("Invalid");
+		}else{
+			var data = {};
+			data.result = "Valid";
+			data.role = rows[0].role;
+			res.send(data);
+		}
+	});	
 }
 var upload_path1 = '../Rapid_cloud/blobfiles'
 exports.blobUpload = function(req,res){
@@ -1478,7 +1479,8 @@ exports.createGroup = function(req,res){
 	 setTimeout(function(){
 				var list1 = {rg_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGrp, region : req.body.region, vpcName : req.body.vpc, addPrefix : req.body.cidr};
 			    var msg = saveObject(list1, "resourcegroup");
-				if(msg == true){
+				//console.log(msg);
+				//if(msg == true){
 					var retVal = executeScript("resource.ps1");						
 					var account = req.body.accountName,
 						project = req.body.projName,
@@ -1489,11 +1491,12 @@ exports.createGroup = function(req,res){
 						client_pg.query('INSERT INTO resources(account,project,resourcegroup,region) values($1, $2, $3, $4)', [account, project, resourceGroup, region]);	
 						client_pg.query('INSERT INTO virtualnetwork(account,project,resourcegroup,vnetname,address_prefix,location) values($1, $2, $3, $4, $5, $6)', [account, project, resourceGroup, vnetname, addressprefix, region]);	
 						res.send("success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);		 
 }
 
 function executeScript(scriptName){
+	console.log(scriptName);
 	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
 	child = spawn("powershell.exe", [cmd]);
 	child.stdout.on("data",function(data){
@@ -1575,7 +1578,7 @@ exports.createSubnet = function(req, res){
 		setTimeout(function(){
 				var list1 = {sn_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetname, addPrefix : req.body.cidrBlkSn, confName : req.body.confName};
 			    var msg = saveObject(list1, "subnet");
-				if(msg == true){
+				//if(msg == true){
 					var retVal = executeScript("subnet.ps1");	
 					var account = req.body.accName,
 						project = req.body.projName,
@@ -1585,7 +1588,7 @@ exports.createSubnet = function(req, res){
 						addressprefix = req.body.cidrBlkSn;
 						client_pg.query('INSERT INTO res_subnet(account,project,resourcegroup,vnetname,subnet_conf_name,address_prefix) values($1, $2, $3, $4, $5, $6)', [account, project, resourceGroup, vnetname, subnet_config_name, addressprefix]);			
 						res.send("success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);		
 		
 }
@@ -1601,12 +1604,13 @@ exports.getSubnet = function(req, res){
 exports.createRtTable = function(req, res){
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
-				var list1 = {rt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetname, routeTable : req.body.routTable, routeConf : req.body.routeConf, addPrefix : req.body.addPrefix,
+				var list1 = {rt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetName, routeTable : req.body.routTable, routeConf : req.body.routeConf, addPrefix : req.body.addPrefix,
 				             nextHop : req.body.nextHop, nextHopIp : req.body.nextHopIp};
 			    var msg = saveObject(list1, "routeTable");
-				if(msg == true){
+				//if(msg == true){
+					var retVal = executeScript("route.ps1");
 					res.send("Success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);		
 	
 }
@@ -1615,22 +1619,24 @@ exports.createLclNetGtWay = function(req, res){
 	setTimeout(function(){
 				var list1 = {gt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, gWayName : req.body.gwName, gateWayIpAdd : req.body.gwIpAdd, addPrefix : req.body.addPfx};
 			    var msg = saveObject(list1, "localNwGway");
-				if(msg == true){
+				//if(msg == true){
+					var retVal = executeScript("localNetGWay.ps1");
 					res.send("Success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);	
 }
 exports.createSecGrp = function(req,res){
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
 				var list1 = {sg_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region,
-				             rule1 : req.body.rule1, ruleName1 : req.body.ruleName1, access1 : req.body.access1, protocol1 : req.body.protocol1, priority1 : req.body.priority1, prefix1 : req.body.prefix1,
-							 rule2 : req.body.rule2, ruleName2 : req.body.ruleName2, access2 : req.body.access2, protocol2 : req.body.protocol2, priority2 : req.body.priority2, prefix2 : req.body.prefix2,
+				             rule1 : req.body.rule1, ruleName1 : req.body.ruleName1, access1 : req.body.access1, protocol1 : req.body.protocol1, priority1 : parseInt(req.body.priority1,10), prefix1 : req.body.prefix1,
+							 rule2 : req.body.rule2, ruleName2 : req.body.ruleName2, access2 : req.body.access2, protocol2 : req.body.protocol2, priority2 : parseInt(req.body.priority2,10), prefix2 : req.body.prefix2,
 							 sgName : req.body.sgName, vNet : req.body.vNet, subNet : req.body.subNet, cidr : req.body.cidr};
 			    var msg = saveObject(list1, "securityGrp");
-				if(msg == true){
+				//if(msg == true){
+					var retVal = executeScript("securityGroup.ps1");
 					res.send("Success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);	
 	
 }
@@ -1640,9 +1646,10 @@ exports.createDns = function(req, res){
 	setTimeout(function(){
 				var list1 = {dns_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, dnsName : req.body.dnsName};
 			    var msg = saveObject(list1, "dns");
-				if(msg == true){
+				//if(msg == true){
+					var retVal = executeScript("dns.ps1");
 					res.send("Success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);	
 }
 exports.createEndPoint = function(req, res){
@@ -1652,9 +1659,10 @@ exports.createEndPoint = function(req, res){
 								dnsName : req.body.dnsName, ttl : req.body.ttl, protocol : req.body.protocol, port : req.body.port, path : req.body.path,
 								epName : req.body.epName, epType : req.body.epType, epStatus : req.body.epStatus, webAppName : req.body.webAppName};
 			    var msg = saveObject(list1, "resGpEndpoint");
-				if(msg == true){
+				//if(msg == true){
+					var retVal = executeScript("endpoint.ps1");
 					res.send("Success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);
 }
 exports.createVnetGWay = function(req, res){
@@ -1663,9 +1671,10 @@ exports.createVnetGWay = function(req, res){
 				var list1 = {gw_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, pipName : req.body.pip, alMethod : req.body.alMethod,
 				             vnet : req.body.vnet, snet : req.body.snet, gwType : req.body.gwType, vpnType : req.body.vpnType, gwSku : req.body.gwSku};
 			    var msg = saveObject(list1, "createVnetGWay");
-				if(msg == true){
+				//if(msg == true){
+					var retVal = executeScript("VNetGWay.ps1");
 					res.send("Success");
-				}else{res.send("Error in saving data");}
+				//}else{res.send("Error in saving data");}
 	     }, 2000);
 		
 }
@@ -1694,7 +1703,14 @@ exports.deployResource = function(req, res){
 		    console.log('Connection established to');    
 			var collection=db.collection('deploy_resources');
 		    var data_obj = {rs_id : 1, AccoutName:account, ProjectName:project, ProductName:product, userName : "test@rapiddirectory.onmicrosoft.com", pwd : "Boron12#4", Environment:environment, Region:region, ResourceName:resGroup, VirtualNet:vnet, Subnet:subnet, Instances:d2_obj};
-		    collection.insert([data_obj], function (err, result) {
+		    collection.remove(function(err, result){
+					if(err){
+						console.log(err);
+					}else{
+						console.log("Document is deleted");
+					}
+				});
+			collection.insert([data_obj], function (err, result) {
 		      if (err) {
 		        console.log(err);
 		      } else {

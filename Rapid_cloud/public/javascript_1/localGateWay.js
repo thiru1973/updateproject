@@ -1,3 +1,7 @@
+window.onload = function(){
+	document.getElementById("RM_name").value = sessionStorage.getItem("resourceGroup");	
+}
+
 function createLocNwGtWay(){
 	alert("Inside the function");
 	var pvd_region = sessionStorage.getItem("chooseRegion");

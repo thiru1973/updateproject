@@ -1,3 +1,7 @@
+window.onload = function(){
+	document.getElementById("RM_name").value = sessionStorage.getItem("resourceGroup");
+}
+
 function createDNS()
 {
 	alert("Inside dns function");

@@ -20,7 +20,7 @@ var app = express();
 // all environments
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -211,8 +211,8 @@ var url = "http://172.29.59.65:3001/add";
 
 	});*/
 
-//http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
-http.createServer(app).listen(app.get('port'), "172.29.59.44", function(){
+http.createServer(app).listen(app.get('port'), "172.29.59.65", function(){
+//http.createServer(app).listen(app.get('port'), "172.29.59.44", function(){
   console.log('Express server listening on port ' + app.get('port'));
-  process.exit();
+  //process.exit();
 });

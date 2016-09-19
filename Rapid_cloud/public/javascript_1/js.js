@@ -111,8 +111,8 @@ function assign_myTemplate(tempName,region,tempType,nodes,cloud){
 									+"<div class='face back' id='"+tempName[i]+"'><span class='"
 									+"glyphicon glyphicon-remove-circle closeTemplate'></span>Nodes:<input class='inPut' value='"+nodes[i]+"' type='text' disabled='disabled' /><br><br><b>Role Deatails</b>" +
 											"<table border='0' class='my_info'><thead><tr><th>Node </th><th>Role </th></tr></thead><tbody></tbody></table>"
-									+"<br><input type='button' value='Modify'/>&nbsp;<input type='button' value='Deploy' onclick='pvdSpec_function("+tempName[i]+")' />"
-									+"&nbsp<input type='button' value='Add DevOps' title='"+tempName[i]+"' onclick='addDevOps(this)'/>"
+									+"<br><input type='button' class='but' value='Modify'/>&nbsp;<input type='button' class='but' value='Deploy' onclick='pvdSpec_function("+tempName[i]+")' />"
+									+"&nbsp<input type='button' class='but' value='Add DevOps' title='"+tempName[i]+"' onclick='addDevOps(this)'/>"
 									+"</div></div></article>";
 						}
 	}
@@ -131,6 +131,7 @@ function assign_myTemplate(tempName,region,tempType,nodes,cloud){
 		$('.card').removeClass('flipped');
 		//$(".card").removeClass();
 	})
+	
 }
 $('#Templates').click(function(){
 	$("[role='template']").show();
@@ -187,11 +188,11 @@ function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 							+"<div class='face back' id='"+tempName1[i]+"'><span class='"
 							+"glyphicon glyphicon-remove-circle closeTemplate'></span>Roles:<input class='inPut' value='"+nodes1[i]+"' type='text' disabled='disabled'/><br><br><b>Role Details</b>"+
 							"<table border='0' class='gen_info'><thead><tr><th>Role </th></tr></thead><tbody></tbody></table>"
-							+"<br><input type='button' value='Modify' />&nbsp;<input type='button' onclick='genereic_function("+tempName1[i]+")' value='Deploy' />"
+							+"<br><input type='button' class='but' value='Modify' />&nbsp;<input type='button' class='but' onclick='genereic_function("+tempName1[i]+")' value='Deploy' />"
 							+"</div></div></article>";
 				}
 		}
-
+		disable();
 		var i=1;
 		$('.flip').click(function(event){
 			//console.log(this);
@@ -207,8 +208,17 @@ function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 			$('.card').removeClass('flipped');
 			//$(".card").removeClass();
 		})
+		
 }
-
+function disable(){
+	if(sessionStorage.getItem("role") == "User"){
+		var elems = document.getElementsByClassName("but");
+		//console.log(elems);
+		for(var i = 0; i < elems.length; i++) {
+			elems[i].disabled = true;
+		}
+	}
+}
 function genereic_function(genT){
 	//alert("Disabled the functions....!");
 	var genTemplate = genT.id

@@ -3,6 +3,7 @@ window.onload = function(){
 	getVnet();
 	displayZones();
 	getVpcName();
+	document.getElementById("RM_name1").value = sessionStorage.getItem("resourceGroup");
 }
 /*
 function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,imageArray,dataSt){

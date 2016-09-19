@@ -418,7 +418,7 @@ function saveInformation(tm_name){
 	var acName = localStorage.getItem("Account")
 	    ,pjName = localStorage.getItem("ProjectName")
 	    ,pdName = localStorage.getItem("ProductName");
-	
+	console.log(node);
 	for(var i=0;i<templates.length;i++)
 	{	
 		var node_role = templates[i].role
