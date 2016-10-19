@@ -54,6 +54,7 @@ var menU = {
 	primaryLins:{
 		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
 		level_2:["Templates","Node","Blueprint","Networks","Load Balancer"],
+		level_5:["Setup Devops"],
 		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
 		//Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks", 5:"Load Balancer"},
@@ -72,6 +73,14 @@ var menU = {
 		var subL0 = document.getElementById("link_1");
 		for(i=0; i<= this.primaryLins.level_2.length-1; i++ ){
 			subL0.innerHTML+='<li id='+this.primaryLins.level_2[i]+'>'+this.primaryLins.level_2[i]+'</li>';
+		}
+		this.createSubView1();
+	},
+	
+	createSubView1:function(){
+		var subL1 = document.getElementById("link_5");
+		for(i=0; i<= this.primaryLins.level_5.length-1; i++ ){
+			subL1.innerHTML+='<li id='+this.primaryLins.level_5[i]+'>'+this.primaryLins.level_5[i]+'</li>';
 		}
 	},
 	lnav: document.getElementById("leftNavigation"),
@@ -143,6 +152,9 @@ $('#Dashboard').click(function(){
 	location.href = "http://172.29.59.62:3000/accounts"
 })
 
+$('#Setup').click(function(){
+	location.href = "http://172.29.59.62:3000/createProject"
+})
 
 
 

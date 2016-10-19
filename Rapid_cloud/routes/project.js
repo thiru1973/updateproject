@@ -3,7 +3,14 @@ var express = require('express');
 var app     = express();
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
+var pg = require("pg");
+
+var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var url = 'mongodb://172.29.59.100:27017/test';
+
+
+var client_pg = new pg.Client(conString);
+
 
 exports.project_page = function(req,res){
 	res.render('project');
@@ -13,11 +20,28 @@ exports.project_view = function(req,res){
 };
 
 
+exports.attach_devops = function(req, res){
+	client_pg.query("", function(err, result){
+	if(err){
+	throw err;
+	}
+	var rows = result.rows;
+	res.render('attach_devops', {data : rows});
+	 });	 
+};
+
+
+
 var GitHub = require('github-api');
 var Promise = require("es6-promise").Promise;
 
+var bitbucket = require('bitbucket-api');
+var credentials = {username:'gannykumar', password:'carborandum12#4'};
+var client = bitbucket.createClient(credentials);
+
 var jenkinsapi = require("jenkins-api");
-var jenkins = jenkinsapi.init("http://sonatawkins.cloudapp.net:8080");
+//var jenkins = jenkinsapi.init("http://sonatawkins.cloudapp.net:8080");
+
 
 //by default all requests are unauthenticated
 //unauthenticated clients are limited to 60 request per hour
@@ -53,6 +77,7 @@ exports.repoLogin = function(req, res){
 		var webhook_url = [];
 		var repo_list = [];
 		var repo_url = [];
+		var branch_list = [];
 
 
 		var gh = new GitHub({
@@ -79,6 +104,14 @@ exports.repoLogin = function(req, res){
 			 //console.log (webhook_url[i]);
 			 repo_list[i] = data.data[i].name;
 			 console.log(repo_list[i]);
+			 const repo = gh.getRepo(u_name, repo_list[i]);
+			//console.log(repo);
+				repo.listBranches()
+				.then(function(data1){
+					console.log(data1[0])
+				//branch_list[i] = data.data;
+				//console.log(branch_list[i]);
+				});
 			 
 		 }
 		  res.send(repo_list);
@@ -165,7 +198,8 @@ exports.repoWebhook = function(req, res){
 		  });
 		 
   */
-  
+ 
+/* 
   jenkins.all_jobs(function(err, data) {
   if (err){ return console.log(err); }
   //console.log(data)
@@ -178,6 +212,8 @@ jenkins.job_info('Build+Unit-test+Code_Quality+Code_Coverage', function(err, dat
   
   jenkins.get_config_xml('Master_Build', function(err, data) {
   if (err){ return console.log(err); }
-  console.log(data)
+  //console.log(data)
 });
+ */
+ 
  

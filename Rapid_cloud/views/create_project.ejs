@@ -50,7 +50,7 @@
 		</aside>
 		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
 			<header>
-				<h1>Create New Project<a href=""></a></h1>
+				<h1>Setup DevOps<a href=""></a></h1>
 				<!--<aside>
 					<input type="text" value="Search">
 				</aside>-->
@@ -64,7 +64,14 @@
 					<div class="pull-left tempRadio">
 						<label><input type="radio" name="templateType" /> System Template</label>
 					</div>
-				</div>				
+				</div>			
+				<div style="clear:both;">&nbsp;</div>
+				<div class="cndt_bold">Attach DevOps Infrastructure
+					<div class = "projectCreateButtons">
+						<button id="cTA_createProject" onclick= "chooseTemplate();">Select DevOps Template</button>
+					</div>
+				</div>
+				
 				<div class="roles gapForDiv">
 					<div class="pull-left">
 						<label class="labelTemp">* Template Name</label>
@@ -91,28 +98,31 @@
 					</div>
 				</div>
 				<div style="clear:both;">&nbsp;</div>
-				<div class="cndt_bold">DevOps Deployment
-				
-					<div class = "projectCreateButtons">
-						<button id="cTA_createProject" onclick= "chooseTemplate();">Select DevOps Template</button>
-					</div>
-				
-				</div>
-				<div style="clear:both;">&nbsp;</div>
 				<div>
-					<div class="cndt_bold">Repository Credentials
-				</div>
+					<div class="cndt_bold">Choose Version Control Tool
+					</div>
+					<div style="clear:both;">&nbsp;</div>
+					<div class="pull-left tempRadio">
+						<label><input type="radio" name="version control" value="Github"/> Github </label>					
+					</div>
+					<div class="pull-left tempRadio">
+					<label><input type="radio" name="version control" value="Bitbucket"/> Bitbucket </label>
+					</div>
+					<div class="pull-left tempRadio">
+					<label><input type="radio" name="version control" value="Gitlab"/> Gitlab </label>
+					</div>
+					<div style="clear:both;">&nbsp;</div>
 				<div class="roles gapForDiv">
 					<div class="pull-left">
 						<label class="labelTemp">* UserName</label>
 						<div class="clickRole temp1stRowWid" id="t_n">
-							<input type="text" placeholder="Repository Username" id="user_name" style="border:none;width:100%;">
+							<input type="text" placeholder="Username" id="user_name" style="border:none;width:100%;">
 						</div>
 					</div>
 					<div class="pull-left">
 						<label class="labelTemp">* Password</label>
 						<div class="clickRole temp1stRowWid" id="t_n">
-							<input type="password" placeholder="Repository Password" id="pass" style="border:none;width:100%;">
+							<input type="password" placeholder="Password" id="pass" style="border:none;width:100%;">
 						</div>
 					</div>
 					<div class="pull-left">
@@ -122,9 +132,14 @@
 						</div>
 					</div>
 					<div class = "projectCreateButtons">
-						<button class = "buttonSave" id="cTA_createProject" >Save</button>
-						<button class = "createWebhook" id="cTA_createProject" >Create WebHooks</button>
+						<button class = "buttonSave" id="cTA_createProject" >Save</button>						
 					</div>			
+				</div>
+				
+				<div class="roles gapForDiv">
+				<div class = "projectCreateButtons">
+				<button class = "selectRepos" id="cTA_createProject" >Select Repositories</button>
+				</div>
 				</div>
 				
 				<div style="clear:both;">&nbsp;</div>

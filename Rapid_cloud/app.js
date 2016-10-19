@@ -6,6 +6,7 @@ var express = require('express')
   , view = require('./routes/view')
   , project = require('./routes/project')
   , manage_nodes = require('./routes/manage_nodes')
+  , poc = require('./routes/poc')
   , secGroups = require('./routes/secGroup')
   , account = require('./routes/accounts')
   , resources = require('./routes/resource')
@@ -173,6 +174,7 @@ app.get('/createProject', resources.createProject);
 //app.get('/gitAuth', project.gitAuth);
 app.post('/repoLogin', project.repoLogin);
 app.post('/repoWebhook', project.repoWebhook);
+app.get('/attach_devops', project.attach_devops);
 
 var url = "http://172.29.59.65:3001/add";
 
