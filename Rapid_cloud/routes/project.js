@@ -4,6 +4,7 @@ var app     = express();
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var pg = require("pg");
+var async = require("async");
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var url = 'mongodb://172.29.59.100:27017/test';
@@ -78,6 +79,7 @@ exports.repoLogin = function(req, res){
 		var repo_list = [];
 		var repo_url = [];
 		var branch_list = [];
+		var repo;
 
 
 		var gh = new GitHub({
@@ -95,7 +97,7 @@ exports.repoLogin = function(req, res){
 		me.listRepos()
 		.then(function(data){
 			repo_data = data;
-		 repos = data.data.length;
+		 repos = data.data.length;		 
 		 //console.log(repos);
 		 for (var i =0; i<repos; i++){
 			 repo_names[i] = data.data[i].full_name;
@@ -103,19 +105,22 @@ exports.repoLogin = function(req, res){
 			 webhook_url[i] = data.data[i].hooks_url;
 			 //console.log (webhook_url[i]);
 			 repo_list[i] = data.data[i].name;
-			 console.log(repo_list[i]);
-			 const repo = gh.getRepo(u_name, repo_list[i]);
+			 //console.log(repo_list[i] + " " + u_name);
+			 
+			  repo = gh.getRepo(u_name, repo_list[i]);
 			//console.log(repo);
 				repo.listBranches()
 				.then(function(data1){
-					console.log(data1[0])
-				//branch_list[i] = data.data;
-				//console.log(branch_list[i]);
+					branch_list.push(data1.data);
+					//console.log(branch_list);
+				
 				});
-			 
+			
 		 }
+		  
 		  res.send(repo_list);
 		});
+		//console.log(branch_list);
 }
 		   
 		    

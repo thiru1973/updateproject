@@ -53,6 +53,7 @@ app.get('/create', routes.create);
 app.get('/tmplt_pg', routes.tmplt_pg);
 app.get('/tmplt_create', routes.tmplt_create);
 app.get('/all_nodes', routes.all_nodes);
+app.get('/authentication', poc.authentication);
 
 //controller for schedule VM's
 app.post('/scheduleService', routes.scheduleService);
@@ -168,6 +169,8 @@ app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 app.get('/setup', routes.setup);
 app.get('/devops', routes.devops);
 app.get('/devopsDetails', routes.devopsDetails);
+app.get('/viewDevOpsTemplate', routes.viewDevOpsTemplate);
+app.get('/deploydbData', resources.deploydbData);
 
 //Create Project
 app.get('/createProject', resources.createProject);

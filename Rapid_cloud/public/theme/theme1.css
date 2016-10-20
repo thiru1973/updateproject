@@ -902,12 +902,7 @@ button:disabled {
   color: #AAAAAA;
   border: none;
   cursor: not-allowed; }
-.but:disabled {
-  background-color: #DDDDDD;
-  padding: 5px 10px;
-  color: #AAAAAA;
-  border: none;
-  cursor: not-allowed; }
+
 .countAlign {
   margin: 4px 0px 0px 10px; }
 
@@ -937,7 +932,7 @@ button:disabled {
   background-color: #FBFBFB;
   margin: 10px 0; }
 
-.tableWid {
+.tableWid, article[role="devTemp"] > summary[role="templateDetails"] table, article[role="devTemp"] summary[role="packagesDetails"] table {
   width: 100%; }
 
 .templateConfiguration {
@@ -1416,6 +1411,49 @@ button:disabled {
   padding: 7px;
   margin-right: 7px;
   margin-bottom: 7px; }
+  
+  
+[role="createProject"]{width:100%;clear:both;}
+
+.roles
+{
+
+ background-color:#F7F7F7;
+ padding:10px;
+ margin-top:5px;
+ float:left;
+ width:100%;}
+ 
+.projectCreateButtons
+{
+	padding-top:30px;
+	float:left;
+	clear:both;
+	text-align:right;
+	width:100%;
+	padding-right:0px!important;}
+	
+
+.projectCreateButtons
+ button{
+	 background-color: #E24B4B;
+	 padding: 5px 10px;
+	 color: #fff;
+	 border: none;
+	 margin-top: -90%;}
+	 
+	 
+.buttonSm,.buttonEvents,.buttonSn,.buttonRt,.buttonGtw
+{
+	background-color: #E24B4B;
+	padding: 2px 5px;
+	color: #fff;
+	border: none;
+	margin-top: -90%;}
+
+	#creatWebHooks> li{
+		float:left; margin-right: 5px;font-size:12px; margin-bottom: 15px; width: 217px; margin-left: 5px;}
+
 
 #infra_List_CD > li, #infra_List_CT > li, #infra_List_CI > li {
   float: left;
@@ -1540,11 +1578,118 @@ aside > .col-xs-12, .col-sm-2, .col-md-2, .col-lg-2 {
 .glyphicon-plus-sign, .gr {
   font-size: 20px;
   color: #7f8281; }
-  
-  .proDiv{position: fixed; z-index: 14; width: 50%; left: 25%; top: 28%; padding:20px; background-color:#fff; text-align:center;box-shadow: 0px 0px 16px #524f4f; border: solid 2px #655f5f;border-radius: 16px;}
- .proDiv b{color:#000;}
- .progress {height: 25px;}
- #data{color:#ccc;}
- .userName{text-align: right;background-color: #f9f9f9;font-size:12px;}
- .userNa{text-align:right; color:#5a5757;  padding:10px; display:inline-block;}
- .userNa:hover{text-decoration:none;}
+
+.cancelPoup {
+  cursor: pointer; }
+
+.proDiv {
+  position: fixed;
+  z-index: 14;
+  width: 50%;
+  left: 25%;
+  top: 28%;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0px 0px 16px #524f4f;
+  border: solid 2px #655f5f;
+  border-radius: 16px; }
+
+.proDiv b {
+  color: #000; }
+
+.progress {
+  height: 25px; }
+
+#data {
+  color: #ccc; }
+
+.userName {
+  text-align: right;
+  background-color: #f9f9f9;
+  font-size: 12px; }
+
+.userNa {
+  text-align: right;
+  color: #5a5757;
+  padding: 10px;
+  display: inline-block; }
+
+.userNa:hover {
+  text-decoration: none; }
+
+/* DevOps view Template */
+.blockAndLeft, article[role="devTemp"] {
+  display: block;
+  float: left; }
+
+.padForTemp, article[role="devTemp"] > summary[role="templateDetails"], article[role="devTemp"] summary[role="packagesDetails"] {
+  padding: 20px; }
+
+.tableWid, article[role="devTemp"] > summary[role="templateDetails"] table, article[role="devTemp"] summary[role="packagesDetails"] table {
+  width: 100%; }
+
+.fontForTableData, article[role="devTemp"] > summary[role="templateDetails"] table, article[role="devTemp"] summary[role="packagesDetails"] table {
+  font-size: 12px; }
+
+.w_table {
+  width: 40%; }
+
+article[role="devTemp"] {
+  background-color: #B2C1BC;
+  width: 300px;
+  margin: 0 15px 15px 0;
+  position: relative; }
+  article[role="devTemp"] > summary[role="templateDetails"] {
+    background-color: #EAEAEA;
+    padding-bottom: 0px; }
+    article[role="devTemp"] > summary[role="templateDetails"] > hr {
+      margin: 10px 0 0;
+      border-top: solid 1px #D2DBD8; }
+  article[role="devTemp"] > nav[role="devopsCycle"] {
+    text-align: center;
+    background-color: #EAEAEA; }
+    article[role="devTemp"] > nav[role="devopsCycle"] ul {
+      margin: 0px; }
+      article[role="devTemp"] > nav[role="devopsCycle"] ul li {
+        list-style-type: none;
+        display: inline; }
+        article[role="devTemp"] > nav[role="devopsCycle"] ul li a {
+          text-decoration: none;
+          position: relative;
+          padding: 10px;
+          display: inline-block; }
+          article[role="devTemp"] > nav[role="devopsCycle"] ul li a span.arrowPointer {
+            position: absolute;
+            top: 25px;
+            left: 6px;
+            color: #E1685C;
+            font-size: 20px; }
+        article[role="devTemp"] > nav[role="devopsCycle"] ul li :hover {
+          color: #E1685C; }
+  article[role="devTemp"] > h2.vmAPacks {
+    background-color: #E1685C;
+    padding: 13px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    margin: 0px; }
+  article[role="devTemp"] summary[role="packagesDetails"] {
+    height: 163px;
+    overflow-y: auto; }
+    article[role="devTemp"] summary[role="packagesDetails"] > hr {
+      margin: 10px 0px;
+      border-top: solid 1px #D2DBD8; }
+  article[role="devTemp"] .actioniTems {
+    z-index: 12;
+    position: absolute;
+    background-color: #fff;
+    padding: 10px;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    display: none; }
+    article[role="devTemp"] .actioniTems button {
+      clear: both;
+      width: 100%;
+      margin: 4px auto; }

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ng-app>
+<title>RapidCloud</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+	<div class="container">
+<!--<div class=	"header-sec">
+		<header role="header">
+			<a href="#"> <img src="images_1/RapidCloud_Logo.png" /> </a> <span class="header-txt"> Manage, Govern and Optimize your Cloud Environments </span>
+			<img src="images_1/Sonata_Logo.png" class="second-logo"/>
+			<ul>
+				<li><span class="glyphicon glyphicon-bell"></span></li>
+				<li><span class="glyphicon glyphicon-envelope"></span></li>
+				<li><span class="glyphicon glyphicon-question-sign"></span></li>
+				<li><span class="glyphicon glyphicon-cog"></span></li>
+			</ul>			
+		</header>
+		</div>-->
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+			
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="view_temp">
+		<nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
+			<header>
+				<h1>DevOps View Templates<br><span id="data" style="float:right;padding:7px 0px 0px 0px;font-size:11px;color:#ccc;"></span></h1>
+				<aside style="display:none;">
+					<input type="text" placeholder="Search Template" id="search" name="q">
+					<button id="create_temp" onclick="http://172.29.59.65:3000/create_template">Create Template</button></br>
+					<h1></h1>
+				</aside>
+			</header>		
+			<section role="templatesFilter" style="display:none;">
+				<ul style="float:left;">
+					<li><label><input type="radio" checked="checked" name="filter" value="ATemplates" />All</label></li>
+					<li><label><input type="radio" name="filter" value="MTemplates" />My Templates</label></li>
+					<li><label><input type="radio" value="GTemplates"  name="filter" />Generic Templates</label></li>
+					<li><label><input type="radio" value="STemplates" name="filter" />System Templates</label></li>
+				</ul>
+			</section>
+			<div>&nbsp;</div>
+			<section role="devOpsTemplate">
+			 	<article role="devTemp" style="display:none;">
+			 		<summary role="templateDetails">
+			 			<table>
+			 				<tr>
+			 					<td><b>Template: </b></td>
+			 					<td>CI_CD_Node</td>
+			 				</tr>
+			 				<tr>
+			 					<td><b>Project: </b></td>
+			 					<td>RapidCloud</td>
+			 				</tr>
+			 				<tr>
+			 					<td><b>Technology: </b></td>
+			 					<td>Node.js</td>
+			 				</tr>
+			 			</table>
+			 			<hr>
+			 		</summary>
+			 		<nav role="devopsCycle">
+			 			<ul>
+			 				<li><a href="#">CI<span class="arrowPointer glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a></li>
+			 				<li>+</li>
+			 				<li><a href="#">CT</a></li>
+			 				<li>+</li>
+			 				<li><a href="#">CD</a></li>
+			 			</ul>
+			 		</nav>
+			 		<h2 class="vmAPacks">VM and Packages</h2>
+			 		<summary role="packagesDetails">
+			 			<table>
+			 				<tr>
+			 					<td><b>Role: </b></td>
+			 					<td>Application Server</td>
+			 				</tr>
+			 				<tr>
+			 					<td><b>Node: </b></td>
+			 					<td>Medium</td>
+			 				</tr>
+			 				<tr>
+			 					<td><b>Packages: </b></td>
+			 					<td>Jenkins + Sonarqube</td>
+			 				</tr>
+			 			</table>
+			 			<hr>
+			 			<table>
+			 				<tr>
+			 					<td><b>Role</b></td>
+			 					<td>Application Server</td>
+			 				</tr>
+			 				<tr>
+			 					<td><b>Node</b></td>
+			 					<td>Medium</td>
+			 				</tr>
+			 				<tr>
+			 					<td><b>Packages</b></td>
+			 					<td>Jenkins + Sonarqube</td>
+			 				</tr>
+			 			</table>
+			 		</summary>
+			 	</article>
+			</section>
+		</section>
+		
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="single_node">
+			<header>
+				<h1>View Nodes</h1>
+				<aside>
+					<input type="text" placeholder="Search Nodes" id="search1">					
+				</aside>
+			</header>		
+			<section role="templatesFilter">
+				<ul>
+					<li><label><input type="radio" checked="checked" name="filter1" value="ATemplates" />All</label></li>
+					<li><label><input type="radio" name="filter1" value="MTemplates" />AWS</label></li>
+					<li><label><input type="radio" value="GTemplates"  name="filter1" />Azure</label></li>
+				</ul>
+			</section>
+			<section role="template1">
+			
+			</section>
+		</section>
+		
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+</body>
+<!-- <script src="javascript_1/js.js"></script> -->
+<script src="javascript_1/menu.js"></script>
+<script src="javascript_1/vpc.js"></script>
+<script src="javascript_1/node.js"></script>
+<script src="javascript_1/viewDevOpsTemp.js"></script>
+</html>

@@ -78,6 +78,14 @@ exports.devops = function(req, res){
 	res.render('devops');
 }
 
+ 
+
+exports.viewDevOpsTemplate = function(req,res){
+res.render('viewDevOpsTemplate');
+
+};
+
+ 
 
 /*Old page functions*/
 exports.index = function(req, res){

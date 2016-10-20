@@ -128,6 +128,27 @@ exports.saveDevopsTemplate = function(req,res){
 			});	
 }
 
+exports.deploydbData = function(req, res){
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+						console.log('Unable to connect to the mongoDB server. Error:', err);
+				   } else {
+					console.log('Connection established');
+					var instance=db.collection('devops_template_save');									
+					instance.find().toArray(function(err,result){
+					if(err){
+							throw err
+							}
+						else{
+							console.log(result);
+								res.send(result);
+							}
+					 db.close();					
+					});					
+				}
+		});
+};
+
 //Create Project data
 
 exports.createProject = function(req, res){
