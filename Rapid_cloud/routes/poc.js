@@ -5,6 +5,8 @@ var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var pg = require("pg");
 var async = require("async");
+var fs = require("fs");
+var jsonfile = require("jsonfile");
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var url = 'mongodb://172.29.59.100:27017/test';
@@ -23,6 +25,21 @@ const gh = new GitHub({
    password: 'carborandum12#4'
 });
 
+var Jenkins_Centos ={
+"tool_name" : "Jenkins",
+"OS" : "Centos",
+"os_version" : "7.1",
+"endpoints" : "'8080'",
+"runlist" : "'role[centjen]'",
+"devops_type" : "CI",
+"version" : "1.6581-1",
+"standard_vm" : "'Medium'",
+"process_vms" : "3",
+"technology" : ["Node.js", "Java"],
+"image" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"			
+};
+
+/*
 const me = gh.getUser();
 me.listRepos()
 .then(function(data) {
@@ -45,14 +62,32 @@ me.listRepos()
 }
 	
 });
+*/
+
+jsonfile.writeFile("projectfiles/projectname.json", Jenkins_Centos, function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+}); 
 
 
 
 
 
-
-
-
+var req = request.post(url, function (err, resp, body) {
+  if (err) {
+    console.log('Error!');
+  } else {
+    console.log('URL: ' + body);
+  }
+});
+var form = req.form();
+form.append('file', '<FILE_DATA>', {
+  filename: 'myfile.txt',
+  contentType: 'text/plain'
+});
 
 
 

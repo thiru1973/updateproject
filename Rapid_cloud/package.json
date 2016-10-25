@@ -11,9 +11,11 @@
     "ejs": "*",
     "es6-promise": "^3.2.1",
     "express": "3.2.6",
+    "fs": "0.0.2",
     "github-api": "^2.3.0",
     "jenkins": "^0.18.0",
     "jenkins-api": "^0.2.8",
+    "jsonfile": "^2.4.0",
     "supertest": "^1.2.0"
   },
   "devDependencies": {
