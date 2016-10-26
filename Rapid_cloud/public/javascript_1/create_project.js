@@ -82,8 +82,8 @@ $(".buttonSave").click(function(){
 			var cwh = document.getElementById("creatWebHooks");
 			
 				for(var i=0; i<data.length; i++){
-					cwh.innerHTML+='<li style="padding:0px;width:inherit"><input type="checkbox" id="'+data[i]+'" onchange="check(this)" /> '+data[i]+'</li>';
-					obj[data[i]] = false;
+					cwh.innerHTML+='<li style="padding:0px;width:inherit"><input type="radio" id="'+data[i]+'" name="repositories" onchange="check(this)" /> '+data[i]+'</li>';
+					//obj[data[i]] = false;
 				}
 				console.log(obj);
 			},
@@ -95,8 +95,9 @@ $(".buttonSave").click(function(){
 });
 
 function check(ev){	
-	obj[ev.id] == false ? obj[ev.id] = true : obj[ev.id] = false;
-	console.log(obj)
+	//obj[ev.id] == false ? obj[ev.id] = true : obj[ev.id] = false;
+	obj.repName = ev.id;
+	console.log(obj.repName)
 }
 
 /* Fetch Repository Credentials -------------- End
@@ -157,7 +158,7 @@ $("#addRepo").click(function(){
 		type: 'POST',
 		jsonpCallback: "callback",
         datatype: 'jsonp',
-        data: "d1="+ar_data,
+        data: "d1="+obj,
 		url: _ip+'/repoWebhook',
 		 success: function(data, textStatus){
 			console.log(data);

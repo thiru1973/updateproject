@@ -1,1 +1,0 @@
-{"tool_name":"Jenkins","OS":"Centos","os_version":"7.1","endpoints":"'8080'","runlist":"'role[centjen]'","devops_type":"CI","version":"1.6581-1","standard_vm":"'Medium'","process_vms":"3","technology":["Node.js","Java"],"image":"'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"}

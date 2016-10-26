@@ -106,15 +106,6 @@ exports.repoLogin = function(req, res){
 			 //console.log (webhook_url[i]);
 			 repo_list[i] = data.data[i].name;
 			 //console.log(repo_list[i] + " " + u_name);
-			 
-			  repo = gh.getRepo(u_name, repo_list[i]);
-			//console.log(repo);
-				repo.listBranches()
-				.then(function(data1){
-					branch_list.push(data1.data);
-					//console.log(branch_list);
-				
-				});
 			
 		 }
 		  
@@ -128,27 +119,30 @@ exports.repoWebhook = function(req, res){
 	
 	var d1 = req.body.d1;
 	console.log(d1);
-	var selRepo = [];
-	selRepo = d1.split(",");
-	console.log(selRepo);
-	selength = selRepo.length;
-	console.log(selength);
+	var selRepo = d1;
+	//selRepo = d1.split(",");
+	//console.log(selRepo);
+	//selength = selRepo.length;
+	//console.log(selength);
 	console.log(repo_data.data.length)
 	repo_obj = {};
 	repo_arr =[];
 	
-	for (var i =0; i<selength; i++){
+	//for (var i =0; i<selength; i++){
 		
 		for (var j=0;j<repo_data.data.length;j++){
 			if(selRepo[i] == repo_data.data[j].name){
+				repo_obj.username = u_name;
+				repo_obj.password = pass;
 				repo_obj.webhook_url = repo_data.data[j].hooks_url;
 				repo_obj.branch_url = repo_data.data[j].branches_url;
 				repo_obj.name = repo_data.data[j].name;
+				
 			}		
 		}
 		console.log(repo_obj);
-		repo_arr[i] = repo_obj;
-	}
+		repo_arr = repo_obj;
+	//}
 			
 		MongoClient.connect(url, function (err, db) {
 		  if (err) {
