@@ -3,7 +3,7 @@
 <title>DevOps Setup</title>
 <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-<link href="css_1/style.css" rel="stylesheet"/>
+<link href="css_1/style.css" id = "myTheme" rel="stylesheet"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></scr`ipt>
 <script src="javascript_1/bootstrap.min.js"></script>
@@ -84,35 +84,35 @@
 						<b style="padding:5px 0 10px 0;display:block;">What do you want to setup?</b>
 						<form class="" id="rbtn0">
 							<label class="radio-inline">
-							<input type="radio" name="inlineRadioOptions" checked="checked" id="inlineRadio10" value="option1">Setup CI Platform </label>
-							<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio20" value="option2">Setup CT Platform </label>
-							<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio30" value="option2">Setup CD Platform </label>
+							<input type="radio" name="inlineRadioOptions"  id="inlineRadio10" value="option1">Setup CI Platform </label>
+							<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" checked="checked" id="inlineRadio20" value="option2">Setup CT Platform </label>
+							<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio30" value="option3">Setup CD Platform </label>
 						</form>
 					</div>
 					<div class="roles">
 						<ul class="standardTools">
 							
 							<li>
-								<img src="images_1/git_and_jenkins_icon.png">
-								<span>App Server</span>
-								<os>Ubuntu</os>
+								<img src="images_1/bugzilla_icon.jpg">
+								<span>Testops</span>
+								<os>CentOS</os>
 								<br>
 								<div class="pull-left" style="text-align: left;">
 									<label id="" class="labelTemp"><span>Choose VM</span></label>
 									<div id="typeD1r" class="clickRole temp1stRowWid"><span>Select</span>
 										<ul id="ft_ID1" class="dropDown">
-											<!--<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Select</dd></dl></li>
+											<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Select</dd></dl></li>
 											<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">VM India</dd></dl></li>
 											<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">VM USA</dd></dl></li>
-										--></ul>
+										</ul>
 										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 									</div>						
 								</div>
 							</li>
-							<li>
-								<img src="images_1/sonar_icon.png">
+							<!--<li>
+							<img src="images_1/sonar_icon.png">
 								<span>App Server</span>
-								<os>Ubuntu</os>
+								<os>CentOS</os>
 								<br>
 								<div class="pull-left" style="text-align: left;">
 									<label id="" class="labelTemp"><span>Choose VM</span></label>
@@ -121,11 +121,11 @@
 											<!--<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Select</dd></dl></li>
 											<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">VM India</dd></dl></li>
 											<li onclick="selectOpt(this,2)" class="Stag"><dl><dt></dt><dd class="va">VM USA</dd></dl></li>
-										--></ul>
+										</ul>
 										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 									</div>						
 								</div>
-							</li>
+							</li> -->
 							<!--<li>
 								<img src="images_1/nexus_icon.png">
 								<span>App Server</span>

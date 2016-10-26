@@ -117,7 +117,7 @@ exports.repoLogin = function(req, res){
 		    
 exports.repoWebhook = function(req, res){
 	
-	var d1 = req.body.d1;
+	var d1 = req.body.repName;
 	console.log(d1);
 	var selRepo = d1;
 	//selRepo = d1.split(",");
@@ -128,22 +128,29 @@ exports.repoWebhook = function(req, res){
 	repo_obj = {};
 	repo_arr =[];
 	
-	//for (var i =0; i<selength; i++){
-		
+	
+	var gh = new GitHub({
+		   username: u_name,
+		   password: pass
+		});
+	
+	const me = gh.getUser();
+	repo = gh.getRepo(u_name, selRepo);
+	repo.listBranches()
+	.then(function(data){
+		console.log(data.data);
 		for (var j=0;j<repo_data.data.length;j++){
-			if(selRepo[i] == repo_data.data[j].name){
+			if(selRepo == repo_data.data[j].name){
 				repo_obj.username = u_name;
 				repo_obj.password = pass;
 				repo_obj.webhook_url = repo_data.data[j].hooks_url;
 				repo_obj.branch_url = repo_data.data[j].branches_url;
 				repo_obj.name = repo_data.data[j].name;
-				
+				repo_obj.branches = data.data;
 			}		
 		}
 		console.log(repo_obj);
 		repo_arr = repo_obj;
-	//}
-			
 		MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -155,8 +162,8 @@ exports.repoWebhook = function(req, res){
 		        					console.log(err);
 		     					 } else {
 		        		console.log('Inserted values sucess fully');
-						var obj = {"data" : "OK"};
-            				res.send(obj);
+						//var obj = {"data" : "OK"};
+            				res.send("Success");
 		      			}
 		      			db.close();
 		    			});					
@@ -164,7 +171,18 @@ exports.repoWebhook = function(req, res){
 
 				   });
 	
-	res.send("success");
+	
+		
+	});
+	
+	
+	
+	//for (var i =0; i<selength; i++){
+		
+		
+	//}
+			
+		
 }
 
 /*		   

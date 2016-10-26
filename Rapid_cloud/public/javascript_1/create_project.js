@@ -141,16 +141,16 @@ $("#addRepo").click(function(){
 	//var selectedRepos = document.getElementById("checkbox");
 	console.log(obj);
 	var ar_data = [];
-	var data = {};
-	for(i in obj){
+	var data = obj;
+	//for(i in obj){
 		//console.log(obj[i] === false);
-		if(obj[i] === true){
+		//if(obj[i] === true){
 			//console.log(Object.key(obj))
-			ar_data.push(i);
-			console.log(i);
-		}
-	}
-	console.log(ar_data)
+			//ar_data.push(i);
+			//console.log(i);
+		//}
+	//}
+	//console.log(ar_data)
 	//data.ar_data;
 	//console.log(data.length);
 	
@@ -158,7 +158,7 @@ $("#addRepo").click(function(){
 		type: 'POST',
 		jsonpCallback: "callback",
         datatype: 'jsonp',
-        data: "d1="+obj,
+        data: data,
 		url: _ip+'/repoWebhook',
 		 success: function(data, textStatus){
 			console.log(data);

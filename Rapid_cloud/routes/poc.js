@@ -1,4 +1,5 @@
 var http = require('http');
+var request = require('request');
 var express = require('express');
 var app     = express();
 var mongodb = require('mongodb');
@@ -10,6 +11,7 @@ var jsonfile = require("jsonfile");
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var url = 'mongodb://172.29.59.100:27017/test';
+var URL = "http://sonatawkins.cloudapp.net:8080"
 
 
 var GitHub = require('github-api');
@@ -72,10 +74,10 @@ jsonfile.writeFile("projectfiles/projectname.json", Jenkins_Centos, function(err
 }); 
 
 
+*/
 
 
-
-var req = request.post(url, function (err, resp, body) {
+var req = request.post(URL, function (err, resp, body) {
   if (err) {
     console.log('Error!');
   } else {
@@ -84,12 +86,10 @@ var req = request.post(url, function (err, resp, body) {
 });
 var form = req.form();
 form.append('file', '<FILE_DATA>', {
-  filename: 'myfile.txt',
-  contentType: 'text/plain'
+  filename: 'projectfiles/projectname.json',
+  contentType: 'application/json'
 });
 
-
-*/
 
 
 

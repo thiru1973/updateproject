@@ -16,6 +16,7 @@
     "jenkins": "^0.18.0",
     "jenkins-api": "^0.2.8",
     "jsonfile": "^2.4.0",
+    "request": "^2.76.0",
     "supertest": "^1.2.0"
   },
   "devDependencies": {
