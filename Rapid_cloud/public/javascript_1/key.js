@@ -26,7 +26,9 @@ function createKeyPair(){
         data: data,
         url: _ip+'/createKeyPair',
         success: function(data, textStatus){
-        	alert("Success");    
+			if(data == "Success")
+		    		 {window.open(_ip+'/downloadKp');}
+		    	 else{alert(results);}  
 			document.getElementById("cTA_CreateAndDeploy").disabled=true;
         	},
         	 error: function (xhr, status, error){

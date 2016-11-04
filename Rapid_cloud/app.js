@@ -5,7 +5,7 @@ var express = require('express')
   , manage = require('./routes/manage')
   , view = require('./routes/view')
   , project = require('./routes/project')
-  , manage_nodes = require('./routes/manage_nodes')
+  , manage_node = require('./routes/manage_nodes')
   , secGroups = require('./routes/secGroup')
   , account = require('./routes/accounts')
   , resources = require('./routes/resource')
@@ -35,6 +35,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' === app.get('env')) {
   app.use(express.errorHandler());
 }
+//POC
+app.get('/oauth', view.oauth);
+app.post('/authentication', view.authentication);
+app.post('/gmail', view.gmail);
+app.get('/oauth2callback', view.oauth2callback);
+app.post('/getToken', view.getToken);
+app.post('/getRoles', view.getRoles);
 //New page functions
 app.get('/master_2', routes.master_2);
 app.get('/create_template', routes.create_template);
@@ -133,7 +140,7 @@ app.get('/azure_image',routes.azure_image);
 app.post('/cloud_project',manage.cloud_project);
 app.post('/create_deploy_slot',routes.create_deploy_slot);
 app.post('/filter_slot',manage.filter_slot);
-app.get('/list_cloud_service',manage.list_cloud_service)
+app.get('/list_cloud_service',manage.list_cloud_service);
 
 //New manage screen
 //app.get('/manageEnv', manage.manageEnv);
@@ -145,7 +152,7 @@ app.get('/trafficManager', manage.trafficManager);
 app.get('/nodeTemplates', routes.nodeTemplates);
 app.get('/accountTemplates', routes.accountTemplates);
 
-//Mange stg, sec, kp
+//Manage stg, sec, kp
 app.get('/volumeDetails', manage.volumeDetails);
 app.post('/keyPairDetails', manage.keyPairDetails);
 app.get('/secGrpDetails', manage.secGrpDetails);
@@ -173,6 +180,7 @@ app.post('/createProject', manage.createProject);
 app.post('/createProduct', manage.createProduct);
 app.post('/createAccount', manage.createAccount);
 app.get('/download', account.download);
+app.get('/downloadKp', manage.downloadKp);
 app.post('/storeAwsSub', manage.storeAwsSub);
 app.post('/loadBalancerCreate', manage.loadBalancerCreate);
 //resource group services

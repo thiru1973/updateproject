@@ -211,7 +211,7 @@ function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 		
 }
 function disable(){
-	if(sessionStorage.getItem("role") == "User"){
+	if(sessionStorage.getItem("role") == "u"){
 		var elems = document.getElementsByClassName("but");
 		//console.log(elems);
 		for(var i = 0; i < elems.length; i++) {

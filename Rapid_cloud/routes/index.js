@@ -52,6 +52,7 @@ var client_pg = new pg.Client(conString);
 exports.master = function(req,res){
 	res.render('master');
 };
+
 /* New Pages*/
 exports.master_2 = function(req,res){
 	res.render('master_2');

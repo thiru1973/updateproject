@@ -455,7 +455,8 @@ function saveInformation(tm_name){
 	     success: function(results) {
 	     	 $(".alert-success").stop().slideDown();
 	    	 //location.href="//172.29.59.65:3000/deployTemplate"+"?data="+t_name;
-	    	 location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+t_name;
+	    	 //location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+t_name;
+			 location.href="//172.29.59.65:3000/master_2"
 	     },
 		 error: function (xhr, status, error){
 	        console.log('Failure');
@@ -464,9 +465,11 @@ function saveInformation(tm_name){
 		 });
 	
 }
+//Exitpage
 
-
-
+$(".exitpage").click(function(){
+	location.href="//172.29.59.65:3000/master_2"
+});
 /* Provider */
 var provider = new DropdownConst("div","nodeId","","assignNode","","","");
 provider.createCon();

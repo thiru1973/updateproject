@@ -70,15 +70,15 @@ $(document).ready(function(){
 	
 	
 	//$(".container").append().html("<p>All new content. <em>You bet!</em></p>");
-	var uName = sessionStorage.getItem("role");
+	var uName = "User";//sessionStorage.getItem("role");
 	var i = $('[role="contentArea"]')
-		i.prepend("<div class='userName'>"+uName+" | <a href='/login' class='userNa'>SignOut</a></div>");
+		i.prepend("<div class='userName'>"+uName+" | <a href='/oauth' class='userNa'>SignOut</a></div>");
 	
 	var accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
 	var theDiv = document.getElementById("data");
-	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName;	
+	theDiv ? theDiv.innerHTML += accountName+">>"+projName+">>"+prodName : false;
 });
 
 $(document).on('click', 'li#Templates', function(){ 
@@ -227,11 +227,44 @@ LayOut1.prototype = {
 function LayOut(){
 	this.open = true;
 	this.close = 0;
+	this.menu = [];
 }
+
+
+//var menu1 = sessionStorage.getItem("role");
+//var menu = menu1.split(",");
+//console.log(menu);
+//var menu = ["Accounts","Design","Deploy","Manage","Monitor","Projects"];
+
 LayOut.prototype = {
-	primaryLins:{
-		
-		level_1:["Accounts","Design","Deploy","Manage","Monitor","Projects"],
+	getRoles: function(){
+		var data = {};
+		data.roleId  = sessionStorage.getItem("role");
+		//data.roleId = 'u';
+		var self = this;
+		$.ajax({
+			 type: 'POST',
+			 jsonpCallback: "callback",
+			 datatype: 'jsonp',
+			 data: data,
+			 async: false,
+			 url: 'http://172.29.59.65:3000/getRoles',
+			 success: function(results) {
+				 console.log(results);
+				 for(var i =0;i<results.length;i++)
+				 {
+					 self.menu.push(results[i].perm_name);
+				 }
+			 },
+			 error: function (xhr, status, error){
+				console.log('Failure');
+				alert("failure");
+				},
+		   });
+		   this.createParentView();
+	},
+	primaryLins:{		
+		level_1: self.menu,
 								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
 								level_2:["Networks","Templates"],
 														level_2_2:["View Templates","Create Template"],
@@ -247,46 +280,19 @@ LayOut.prototype = {
 		// 5:"Load Balancer"},
 		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
 	},
-	primaryLins1:{
-		
-		level_1:["Accounts","Manage","Monitor","Projects"],
-								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
-								level_2:["Templates"],
-														level_2_2:["View Templates","Create Template"],
-										  level_2a:["Node", "Templates"],
-														level_2a1:["Single Node"],
-														level_2a2:["Account Templates"],
-		level_2_1:["VPC","Subnet","Security Gruop","Route Table","VPN Connection","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
-		
-		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
-		// Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks",
-		// 5:"Load Balancer"},
-		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
-	},
 	createParentView: function(){
 		var navv = document.getElementById("navDiv"), i;
-		if(sessionStorage.getItem("role") == "Admin"){
-		for(i=0; i<= this.primaryLins.level_1.length-1; i++ ){
-			navv.innerHTML+='<li class="link_Prime" id='+this.primaryLins.level_1[i]+'>\
+		console.log(this.menu)
+		for(i=0; i<= this.menu.length-1; i++ ){
+			navv.innerHTML+='<li class="link_Prime" id='+this.menu[i]+'>\
 							<ul class="howMe" id="link_'+i+'"></ul>\
-							<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>\
-								<span class="myTe">'+this.primaryLins.level_1[i]+'</span></li>';
+							<!--<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>-->\
+								<span class="myTe">'+this.menu[i]+'</span></li>';
 		}
 		this.createSubView(0);
 		this.pagNav();this.activeTab();
-		}else if(sessionStorage.getItem("role") == "User"){
-			for(i=0; i<= this.primaryLins1.level_1.length-1; i++ ){
-			navv.innerHTML+='<li class="link_Prime" id='+this.primaryLins1.level_1[i]+'>\
-							<ul class="howMe" id="link_'+i+'"></ul>\
-							<i class="fa fa-2x '+this.primaryLins1.level_1_Icons[i]+'"></i>\
-								<span class="myTe">'+this.primaryLins1.level_1[i]+'</span></li>';
-		}
-		this.createSubView(1);
-		this.pagNav();this.activeTab();			
-		}
 	},
 	createSubView:function(Id){
-		console.log(Id);
 		var subL0_1 = document.getElementById("themeNav");
 		if(subL0_1 === null){
 			return false;
@@ -418,13 +424,13 @@ LayOut.prototype = {
 					  <menu role="profileLinks">\
 						<ul>\
 							<!-- <li><a href="/myAccount">My Account</a></li>\
-							<li><a href="/login">Sign Out</a></li>-->\
+							<li><a href="/oauth">Sign Out</a></li>-->\
 						</ul>\
 					  </menu>\
 					  <nav role="naviGation">\
 						<ul id="navDiv"></ul>\
 					  </nav></div>';
-		this.createParentView();
+		this.getRoles();
 	},
 	moreMenu:function(ev){
 		if(this.open){
@@ -446,6 +452,8 @@ LayOut.prototype = {
 	assignIcons:function(){
 	}
 }
+var menIte = new LayOut();
+	//menIte.getRoles();
 /*
 function theme(ev, themeNum){
 	if(themeNum == 1){

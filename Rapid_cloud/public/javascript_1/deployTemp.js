@@ -29,7 +29,7 @@ $(document).ready(function(){
 	function dataUpDate(){
 		$(this).parent(".dropDown").slideUp();
 	}*/
-	$(document).on("click", ".clickRole",function(e){
+	$(document).on("click",".clickRole",function(e){
 	e.stopPropagation();
 	if ($(this).find(".dropDown").css('display') == 'block'){
 		$(this).find(".dropDown").slideUp();
@@ -212,13 +212,15 @@ function populate_image(idd){
 	var img_data = {};
 	img_data.provider = pvd_name1;
 	img_data.os = idd;
+	img_data.region = pvd_region;
 	$.ajax({
 	     type: 'POST',
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: img_data,	 
-	     url: _ip+'/temp_image',
-	     success: function(results) {		    		 
+	     url: _ip+'/temp_image1',
+	     success: function(results) {
+				console.log(results);
 		    	 	var appendD = new DropdownConst();
 		    	 	appendD.appendData(results,"selImage");
 	    		 
@@ -329,9 +331,15 @@ function getSecurity(vpcName){
 				 			secName[x] = data[x].sg_name;
 				 		}
 				 }
+			if(str == "multi"){
 			for(var y=0;y<temp_info.length;y++){
 				var tT = document.getElementById("selsgn"+y+"");
 								tT.innerHTML+='<li onclick="selectOpt(this,'+y+')" class="Dev"><dl><dt></dt><dd class="va">'+secName+'</dd></dl></li>';					
+			}
+			}else{
+				var z=0;
+				var tT = document.getElementById("selsgn"+z+"");
+								tT.innerHTML+='<li onclick="selectOpt(this,'+z+')" class="Dev"><dl><dt></dt><dd class="va">'+secName+'</dd></dl></li>';
 			}
 			   //var appendD = new DropdownConst();
 			   //appendD.appendData(secName,"selsgn0");
@@ -436,8 +444,8 @@ function get_templateName(){
 			            tr.append("<td><span style='font-size:18px;font-weight:bold;'><span class='deploytempNa'>Name : </span>"+str2+"</span><br>Region : "+str4+"<br></td>");
 			            $('table.temp_info').append(tr);
 			            document.getElementById("regName").value=str4;
-			            $('td#tdkey').hide();
-			            $('td#tdkey1').hide();
+			            //$('td#tdkey').hide();
+			            //$('td#tdkey1').hide();
 			            show_singlenode(str2);			            
 			            $('td#depClsrv').hide();
 			            $('div.advancedOptionsDiv').hide();
@@ -445,6 +453,7 @@ function get_templateName(){
 			            $('div.advOpn').hide();
 			            $('#scriptConfig').hide();
 						$('#resGorup').hide();
+						$('#stoAco').hide();
 			 	}
 			 	else{
 			 		var tr = $('<tr/>');
@@ -881,7 +890,7 @@ function show_nodeDetails(data){
 		$(".1stRowAdd").click(function(){
 			var na = $(this).attr("name");
 			$("."+na).show();
-			//console.log(na);
+			console.log(na);
 		});
 		
 		$(".close").click(function(){
@@ -1014,37 +1023,41 @@ function show_singlenode(data){
 			  +"<table style='width:100%;'>"
 			  +"<tr><td style='padding:0px;width:250px;vertical-align: top;background-color:#FBFBFB;'>"
 			  +"<div class='col-lg-12 col-md-12 col-sm-12 content_box padZero padAllSides' id='latestUpdates'>"
-			  +"<ul id='latestUpdatesTab' class='nav nav-tabs hidden-xs'><li class='active addStoTab'><a href='#alerts"+0+"' data-toggle='tab'>Add Storage</a></li><li><a href='#requests"+0+"' data-toggle='tab'>Security Groups</a></li><li><a href='#svpTweet"+0+"' data-toggle='tab'>Key Pairs</a></li><li><a href='#publicIp"+0+"' data-toggle='tab'>Public IP</a></li><li class='pull-right'>"
+			  +"<ul id='latestUpdatesTab' class='nav nav-tabs hidden-xs'><li class='active addStoTab'><a href='#alerts"+0+"' data-toggle='tab'>Add Storage</a></li><li><a href='#requests"+0+"' data-toggle='tab'>Security Groups</a></li><li><a href='#publicIp"+0+"' data-toggle='tab'>Public IP</a></li><li class='pull-right'>"
 			  +"<button type='button' class='close redLinks closeRoleConfi' name='add_"+0+"' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>x</span></button></li>"
 			  +"</ul><div class='panel-group visible-xs' id='latestUpdatesTab-accordion'></div>"
 			  +"<div class='tab-content hidden-xs'>"
 			  
 			  +"<div class='tab-pane fade  in active alignAllsides' id='alerts"+i+"'>"
-			  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>Volume Type</label><div id='selstg"+0+"' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+0+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
-			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='text' id='stgsz"+0+"' placeholder='Ex: 1 to 16384GB' style='border:none;width:100%;'></div></div></div>"
-			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='number' id='stgIops"+0+"' placeholder='' style='border:none;width:100%;'></div></div></div>"
-			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
-			  //+"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Encryption</label><div class='checkB addStoTabWid'><input type='checkbox' style='border:none'>Yes</div></div></div>"
-			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='storage"+0+"' onclick='createStgFunction(this.id, "+0+")'>Create</button></div>"
+			  +"<div class='roleID '><div class='pull-left'><label class='labelTemp'>Volume Type</label><div id='selstg"+i+"_0' class='clickRole borderNoN'><span>Select</span><ul id='selsstg"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Size</label><div class='clickRole addStoTabWid'><input type='number' onchange='iopsFunction(this.value, this.id)' id='stgsz"+i+"_0' min='1' style='border:none;width:100%;'/></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>IOPS</label><div class='clickRole addStoTabWid'><input type='Text' id='stgIops"+i+"_0' placeholder='' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Volume Name</label><div class='clickRole addStoTabWid'><input id='stgName"+i+"_0' type='text' style='border:none;width:100%;'></div></div></div>"
+			  +"<span class='glyphicon glyphicon-plus-sign' onclick='createVol("+i+");' id='addRole' style='color:#999999;'></span></a>"
+			  //+"</div>"
+			  +"<div class='tab-pane fade in active alignAllsides' id='dup"+i+"'><br></br></div>"
+			  //+"</div>"
+			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign disk"+i+"' id='storage"+i+"_0' onclick='createStgFunction(this.id, "+i+")'>Create</button></div>"
 			  +"</div>"
 			  
 			  
 			  +"<div class='tab-pane fade alignAllsides' id='requests"+i+"'>"
-			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+0+"' style='border:none;width:100%;'></div></div></div>"
+			  +"<div class='CreateNewSecurity CreateSec"+i+"' ><div class='roleId'><div class='pull-left'><div id='selsg"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsgn"+i+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div></div>"
+			  /*+"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Name</label><div class='clickRole addStoTabWid'><input type='text' id='sgName"+0+"' style='border:none;width:100%;'></div></div></div>"
 			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>From Port</label><div class='clickRole addStoTabWid'><input id='sgFPort"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
 			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>To Port</label><div class='clickRole addStoTabWid'><input id='sgTPort"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
 			  +"<div class='roleID'><div class='pull-left'><label class='labelTemp'>CIDR IP</label><div id='selci"+i+"' class='clickRole borderNoN'><span>Select</span><ul id='selsci"+0+"' class='dropDown'></ul><span id='' class='glyphicon glyphicon-chevron-down pull-right'><span></span></span></div></div></div>"
 			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'></label><div class='clickRole addStoTabWid'><input id='ipText"+0+"' type='text' style='border:none;width:100%;'></div></div></div>"
-			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+0+")'>Create</button></div>"
+			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='secGroup"+i+"' onclick='createSgpFunction(this.id, "+0+")'>Create</button></div>"*/
 			  +"</div>"
 			  
-			  +"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
+			  /*+"<div class='tab-pane fade alignAllsides' id='svpTweet"+i+"'>"
 			  +"<div class='operatingSys'><div class='pull-left'><label class='labelTemp'>Key Name</label><div class='clickRole addStoTabWid'><input id='keyPairName"+i+"' type='text' style='border:none;width:100%;'></div></div></div>"
 			  +"<div style='clear:both;' class='pull-right'><button class='redButton pull-left countAlign' id='keyPair"+i+"' onclick='createKpFunction(this.id, "+i+")'>Create</button></div>"
-			  +"</div>"
+			  +"</div>"*/
 			  
 			  +"<div class='tab-pane fade alignAllsides' id='publicIp"+i+"'>"
-			  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><input type='radio' name='pubIp' value='Yes' style='border:none'>Yes<input name='pubIp' type='radio' value='No' style='border:none'>No</div></div></div>"
+			  +"<div class='operatingSys'><div class='pull-left'><div class='checkB addStoTabWid'><form id='ip"+i+"'><input type='radio' name='pubIp' value='Yes' style='border:none'/>Yes<input name='pubIp' type='radio' value='No' checked style='border:none'/>No</form></div></div></div>"
 			  +"</div>"
 			  
 			  +"</div></div>"
@@ -1053,6 +1066,8 @@ function show_singlenode(data){
 	$('table.nodeSelSingle').append(tr2);
 	//addRow(i);
 	var appendD = new DropdownConst();
+	appendD.appendData(volumeType,"selsstg"+i+"");
+	//var appendD = new DropdownConst();
 	//appendD.appendData(volumeType,"selsstg"+i+"");
 	//appendD.appendData(cidrIp,"selsci"+i+"");
 
@@ -1117,17 +1132,17 @@ function show_singlenode(data){
 		$(".1stRowAdd").click(function(){
 			var na = $(this).attr("name");
 			$("."+na).show();
-			console.log(na);
+			//console.log(na);
 		});
 		
 		$(".close").click(function(){
 			var na = $(this).attr("name");
 			$("."+na).hide();
-			console.log(na);
+			//console.log(na);
 		});
 		
 		
-		$(".up_1").click(function(e){
+		/*$(".up_1").click(function(e){
 			   var vv = $(this).parent().parent().children("input[type='text']");
 			   var valu = vv.val();
 			    valu == 10 ? false : valu++;   
@@ -1141,7 +1156,7 @@ function show_singlenode(data){
 			  });
 		$(".clickRole").click(function(){
 			$(this).find(".dropDown").slideToggle();
-		})		
+		})	*/	
 }
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
@@ -1727,33 +1742,45 @@ function deployTemplateFunction()
 						resultObj1.push(resultObj);			
 					}
 				}else{
-					var resultObj = [];
-					var stgName = document.getElementById("stgName0").value;
-					var count = document.getElementById("count0").value;
+					var resultObj = [],disks = [];
+					var dsk = document.querySelector('.disk0').id;
+						var dskNo = dsk.substr(dsk.length-3),
+					    dskLoop = dskNo.split("_");
+						console.log(dskLoop);
+						for(j=0;j<=dskLoop[1];j++)
+						{
+							var stgName = document.getElementById("stgName"+dskLoop[0]+"_"+j+"").value;
+							//alert(stgName);
+							disks.push(stgName);
+						}
+						disks1.push(disks);
+					//var stgName = document.getElementById("stgName0").value;
+					//var count = document.getElementById("count0").value;
 					var form = document.getElementById("ip0");
 					var pIp=form.elements["pubIp"].value;
-					var form1 = document.getElementById("rbtn0");
-					var selopt = form1.elements["inlineRadioOptions"].value;
+					//var form1 = document.getElementById("rbtn0");
+					//var selopt = form1.elements["inlineRadioOptions"].value;
 					//if(selopt == "option1")
 						//{
 						//var sgName = document.getElementById("sgName0").value;
 						//}else{
-							var sgName = document.getElementById("selsg0").innerText;
+								var sgName = document.getElementById("selsg0").innerText;
 						//}
-					var form2 = document.getElementById("rbtnkp0");
+					/*var form2 = document.getElementById("rbtnkp0");
 					var selopt2 = form2.elements["inlineRadioOptions"].value;
 					if(selopt2 == "option1")
 						{
 							var keyPairName = document.getElementById("keyPairName0").value
 						}else{
 								var keyPairName = document.getElementById("selkp0").innerText;
-						}
+						}*/
 					
 					var instName = str2;
 					var imageName = document.getElementById("selImag").innerText;
-					var roleName = document.getElementById("selRole").innerText;
+					var id = imageName.split("~");
+					var roleName = document.getElementById("selRole").innerText;					
 					console.log(stgName+sgName+instName+imageName+roleName);
-					resultObj.push(stgName,sgName,pIp,instName,imageName,roleName);
+					resultObj.push((disks.length),sgName,pIp,instName,id[1],roleName);
 					resultObj1.push(resultObj);	
 				}
 			console.log(result_arr);
@@ -1768,6 +1795,12 @@ function deployTemplateFunction()
 		        	//alert(data);
 		        	//$(".alert-temp").stop().slideDown();
 		        	//location.href="http://172.29.59.65:3000/master_2"
+					var st = [];
+					if(str == "single"){
+						var st = {};
+						st.node = str2;
+						temp_info = st
+					}
 					$(".popupData, .proDiv").show(); 
 			        //var instanceCount = ["t2.micro","t3.micro"] 
 			        var int = setInterval(hideme, temp_info.length*60000); 
@@ -1782,7 +1815,7 @@ function deployTemplateFunction()
 			                if(i%60 == 0){ 
 			                        count++; 
 			                }                       
-							$("#instanceName").html("<b>"+temp_info[count].node+"</b>"+" is Deploying..");
+							$("#instanceName").html("<b>"+temp_info[count].role+"</b>"+" is Deploying..");
 			                
 			         }, 1000);
 					function hideme(){
@@ -1798,9 +1831,7 @@ function deployTemplateFunction()
 		                 console.log('Failure');
 		         		alert("failure");
 		         		},
-		            });
-			
-			
+		            });			
 		}else
 			{
 			console.log("This is Azure template");
@@ -1859,6 +1890,31 @@ function deployTemplateFunction()
 					success: function(data, textStatus){
 						alert(data);
 						//location.href=_ip+"/master_2"
+						$(".popupData, .proDiv").show(); 
+				        //var instanceCount = ["t2.micro","t3.micro"] 
+				        var int = setInterval(hideme, temp_info.length*60000); 
+				        
+				        var i = temp_info.length*60000/1000; 
+				        
+				        console.log(temp_info.length) 
+				        console.log(i/temp_info.length) 
+				        var count = 0; 
+				        setInterval(function (){ 
+				                console.log(i--); 
+				                if(i%60 == 0){ 
+				                        count++; 
+				                }                       
+								$("#instanceName").html("<b>"+temp_info[count].role+"</b>"+" is Deploying..");
+				                
+				         }, 1000);
+						function hideme(){
+								$("#doneDeploy, .sucessMes").show();
+								$(".deployText, #loadingImg").hide();
+								
+								//$(".popupData, .proDiv").hide();
+								console.log(int);
+								window.clearInterval(int);
+							}
 						},
 						 error: function (xhr, status, error){
 							 console.log('Failure');

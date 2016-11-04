@@ -10,6 +10,7 @@
     "edge": "^5.0.0",
     "ejs": "*",
     "express": "3.2.6",
+    "googleapis": "^13.0.0",
     "supertest": "^1.2.0"
   },
   "devDependencies": {

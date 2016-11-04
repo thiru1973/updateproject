@@ -392,10 +392,24 @@ exports.createKeyPair = function(req, res){
 	     setTimeout(function(){
 			   var arr = [pvd, "create_key_pair",auth1, auth2, kpRegion , keyPair];
 			   console.log(arr);
-			   client.invoke("assign", arr, function(error, resq, more) {       
-			   });
+			   //client.invoke("assign", arr, function(error, resq, more) {       
+			   //});
+			   
 			   res.send("Success");
 	     }, 2000);
+}
+var _ = require("underscore");
+exports.downloadKp = function(req,res){
+	function getMostRecentFileName(dir) {
+	    var files = fs.readdirSync(dir);
+	    return _.max(files, function (f) {
+	        var fullpath = path.join(dir, f);
+	        return fs.statSync(fullpath).ctime;
+	    });
+	}
+	var fpath = 'D:\\updated\\Rapid_cloud\\keyfile\\'
+	var filepath = getMostRecentFileName(fpath);
+	res.download(fpath+filepath,filepath);
 }
 //create snashot for volume
 exports.createSnapShot = function(req, res){
@@ -417,7 +431,7 @@ exports.deployTemplate = function(req, res){
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
-	//console.log(req.body);
+	console.log(req.body);
 	if(d1arr[0] == 'AWS'){
 			getAwsCred.getAwsMethod(d1arr[4],d1arr[5],d1arr[6]);
 		 setTimeout(function(){	
@@ -455,7 +469,7 @@ exports.deployTemplate = function(req, res){
 					  while (d3.length) {
 					    results.push(d3.splice(0, 6));
 					  }
-					  for(var i=0;i<results.length;i++)
+					  //for(var i=0;i<results.length;i++)
 					  for(var i=0;i<results.length;i++)
 						  {
 						  	arr.push(results[i]);

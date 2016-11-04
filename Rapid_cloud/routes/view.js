@@ -2,6 +2,13 @@ var express = require('express');
 var zerorpc = require("zerorpc");
 var app     = express();
 var MongoClient = require('mongodb').MongoClient;
+var authObject =  require("./manage_nodes.js");
+var pg = require("pg");
+var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
+var client_pg = new pg.Client(conString);
+client_pg.connect();
+var ActiveDirectory = require('activedirectory');
+
 
 //var url = 'mongodb://172.29.59.62:27017/test';
 var url = 'mongodb://172.29.59.100:27017/test';
@@ -207,3 +214,96 @@ exports.my_view=function(req, res){
 });
 };
 
+exports.oauth = function(req, res){
+	res.render('oauth');
+}
+
+var ad = new ActiveDirectory({
+			 url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/ou=Users,ou=Nandi,dc=SONATA,dc=LOCAL',
+			 //url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/DC=SONATA,DC=LOCAL',
+			 //url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/cn=ISV_Comp_Users,cn=Users,dc=SONATA,dc=LOCAL',
+			});
+exports.authentication = function(req, res){
+	/*var obj1 = new authObject("AD", req.body.userName, req.body.passWord);
+	var result= obj1.add();	
+	setTimeout(function(){		
+			 console.log(result);
+			 res.send(result);
+		 	 }, 2000);*/	
+	var username = req.body.userName, password = req.body.passWord;		 
+	ad.authenticate(username, password, function(err, auth) {
+		  if (err) {
+			console.log('ERROR: '+JSON.stringify(err));
+		  }
+		  if (auth) {
+			console.log(auth);
+			client_pg.query("select * from user_role where user_id = ($1)",[username], function(err,result){
+				if(err){
+					console.log(err);
+				}
+				var rows = result.rows;
+				if(rows.length != 0){
+				res.send(rows[0]);
+				}
+				else{
+					client_pg.query("INSERT INTO user_role(user_name,user_email,user_id,role_id) values($1,$2,$3,$4)",[username,username,username,'u'],
+					function(err, result) {
+					if(err){
+						res.send(err)
+					}else{
+						var d = {};
+						d.role_id = 'u';
+						res.send(d);
+					}
+					});
+				}
+			
+			});
+		  }
+		  else {
+			res.send('Authentication failed!');
+		  }
+		});
+}
+exports.getRoles = function(req, res){
+			var id = req.body.roleId;
+			console.log(id);
+			client_pg.query("Select r.role_id,p.perm_id,p.perm_name from roles r,permissions p,role_perm rp where rp.role_id = r.role_id and rp.perm_id = p.perm_id and r.role_id =($1)",[id],function(err,result){
+				if(err){
+					throw err;
+				}
+				var rows = result.rows;		
+				res.send(rows);				
+			});
+}
+var google = require('googleapis');
+var https = require('https');
+var OAuth2 = google.auth.OAuth2;
+var CLIENT_ID = '107357424883-a1n7q1lnprhmved4d2bsrvhmedh9lhv1.apps.googleusercontent.com';
+var CLIENT_SECRET = 'CDYGivXFVPijxsf2qP5oTHuX';
+var REDIRECT_URL = 'http://localhost:3000/oauth2callback';
+var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
+exports.gmail = function(req, res){
+	console.log(req.body);
+	var scopes = ['https://www.googleapis.com/auth/gmail.modify'];
+		var url = oauth2Client.generateAuthUrl({
+		  access_type: 'offline', // 'online' (default) or 'offline' (gets refresh_token)
+		  scope: scopes // If you only need one scope you can pass it as string
+		});
+		res.send(url);
+	
+}
+exports.oauth2callback = function(req, res){
+	res.render('oauth2callback');
+}
+exports.getToken = function(req, res){
+	console.log(req.body.code);
+	oauth2Client.getToken(req.body.code, function(err, tokens) {
+		  if(!err) {
+			  res.send(tokens);
+			  //oauth2Client.setCredentials(tokens);
+		  }else{
+			  res.send(err);
+		  }
+		});
+}

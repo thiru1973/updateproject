@@ -6,7 +6,7 @@ var url = 'mongodb://172.29.59.100/test';
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
-
+client_pg.connect();
 exports.createGroup = function(req,res){
 	var account = "Rezopia_Acc",
 	    project = "Rezopa_proj",

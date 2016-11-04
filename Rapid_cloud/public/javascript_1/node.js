@@ -233,7 +233,7 @@ function assign_region(inst_id, aws, azure){
 	for(var k=0;k<pvd_azure.length;k++){
 		reg2[k] = pvd_azure[k].region_name;
 	}
-	for(var l=0;l<aws+azure;l++){
+	for(var l=aws;l<aws+azure;l++){
 		var appendD = new DropdownConst();
 		appendD.appendData(reg2,"sels"+l+"");
 	}

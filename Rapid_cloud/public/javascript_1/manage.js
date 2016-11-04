@@ -214,10 +214,38 @@ LayOut1.prototype = {
 function LayOut(){
 	this.open = true;
 	this.close = 0;
+	this.menu = [];
 }
+//var menu =["Account","Design","Deploy","Manage","Monitor","Projects"];
 LayOut.prototype = {
+	getRoles: function(){
+		var data = {};
+		data.roleId  = sessionStorage.getItem("role");
+		//data.roleId = 'u';
+		var self = this;
+		$.ajax({
+			 type: 'POST',
+			 jsonpCallback: "callback",
+			 datatype: 'jsonp',
+			 data: data,
+			 async: false,
+			 url: 'http://172.29.59.65:3000/getRoles',
+			 success: function(results) {
+				 console.log(results);
+				 for(var i =0;i<results.length;i++)
+				 {
+					 self.menu.push(results[i].perm_name);
+				 }
+			 },
+			 error: function (xhr, status, error){
+				console.log('Failure');
+				alert("failure");
+				},
+		   });
+		   this.createParentView();
+	},
 	primaryLins:{
-		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
+		level_1:self.menu,//["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
 		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers"],
 		level_2_1:["dsd"],
 		
@@ -228,11 +256,11 @@ LayOut.prototype = {
 	},
 	createParentView: function(){
 		var navv = document.getElementById("navDiv"), i;
-		for(i=0; i<= this.primaryLins.level_1.length-1; i++ ){
-			navv.innerHTML+='<li class="link_Prime" id='+this.primaryLins.level_1[i]+'>\
+		for(i=0; i<= this.menu.length-1; i++ ){
+			navv.innerHTML+='<li class="link_Prime" id='+this.menu[i]+'>\
 							<ul class="howMe" id="link_'+i+'"></ul>\
-							<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>\
-								<span class="myTe">'+this.primaryLins.level_1[i]+'</span></li>';
+							<!--<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>-->\
+								<span class="myTe">'+this.menu[i]+'</span></li>';
 		}
 		this.createSubView();
 		this.pagNav();this.activeTab();
@@ -339,7 +367,8 @@ LayOut.prototype = {
 					  <nav role="naviGation">\
 						<ul id="navDiv"></ul>\
 					  </nav></div>';
-		this.createParentView();
+		//this.createParentView();
+		this.getRoles();
 	},
 	moreMenu:function(ev){
 		if(this.open){
