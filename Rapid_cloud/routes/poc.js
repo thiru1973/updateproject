@@ -8,6 +8,7 @@ var pg = require("pg");
 var async = require("async");
 var fs = require("fs");
 var jsonfile = require("jsonfile");
+var client = require('scp2');
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var url = 'mongodb://172.29.59.100:27017/test';
@@ -74,7 +75,6 @@ jsonfile.writeFile("projectfiles/projectname.json", Jenkins_Centos, function(err
 }); 
 
 
-*/
 
 
 var req = request.post(URL, function (err, resp, body) {
@@ -90,7 +90,7 @@ form.append('file', '<FILE_DATA>', {
   contentType: 'application/json'
 });
 
-
+*/
 
 
 
