@@ -1,0 +1,10 @@
+WINDOWS AZURE – MANAGE VMS ENDPOINTS
+
+http://pwrshell.net/windows-azure-manage-vms-endpoints/
+
+=============*********************========================
+End Point to Traffic Manager in Azure
+
+http://stackoverflow.com/questions/28459416/can-azure-traffic-manager-be-used-with-api-management
+
+=============*********************========================

@@ -1,0 +1,77 @@
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var url = 'mongodb://172.29.59.62:27017/test';
+
+MongoClient.connect(url, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    
+    console.log('Connection established to', url);
+
+    
+    var collection = db.collection('instance');
+	collection.ensureIndex({inst_id:44}, {unique:true});
+	
+	var list44 = {inst_id: 44, inst_type: 'ExtraSmall', vcpu: 1, memory_gib: '0.75GB', storage: '20GB', prov_id: 'Azure'};
+		
+	
+    // Insert some users
+    collection.insert([list44], function (err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+      }
+      //Close connection
+      db.close();
+    });
+  } 
+});
+
+{"cloud_Service" : "testcldsrc","VM_Name" : "test","EP_Name" : "HTTPS","Local_Port" : "443","Public_Port" : "443"}
+
+#$json = (Get-Content "C:\Users\sangamesh.b\Desktop\scripts\data.json" -Raw) | ConvertFrom-Json
+#$Data = $json.psobject.properties.value
+
+#$Cloud_Service = $Data[0]
+#$VMName = $Data[1]
+#$EpName = $Data[2]
+#$LocalPort = $Data[3]
+#$PublicPort = $Data[4]
+
+#Write-Host $Cloud_Service,$VMName,$EpName,$LocalPort,$PublicPort
+
+$mongoDbDriverPath = "C:\mongo\"
+$dbName = "test"
+$collectionName = "Endpoints"
+Add-Type -Path "$($mongoDbDriverPath)\MongoDB.Bson.dll"
+Add-Type -Path "$($mongoDbDriverPath)\MongoDB.Driver.dll"
+$db = [MongoDB.Driver.MongoDatabase]::Create("mongodb://172.29.59.62:27017/$($dbName)")
+$collection = $db[$collectionName]
+
+#Write-Host $collection
+$query = new-object MongoDB.Driver.QueryDocument("ep_id",1)
+$results = $collection.FindOne($query)
+$Cloud_Service = $results[2]
+$VMName = $results[3]
+$EpName = $results[4]
+$LocalPort = $results[5]
+$PublicPort = $results[6]
+#Write-Host $results
+#Write-Host $Cloud_Service,$VMName,$EpName,$LocalPort,$PublicPort
+
+
+
+$Subscriptions = Get-AzureSubscription
+
+Get-AzureVM -ServiceName $Cloud_Service -Name $VMName | 
+Add-AzureEndpoint -Name $EpName -LocalPort $LocalPort `
+-PublicPort $PublicPort -Protocol tcp |
+Update-AzureVM
+
+Write-Host "End point is created"
+
+
+
+

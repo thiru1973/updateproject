@@ -1,0 +1,8 @@
+{
+	"cloud_Service" : "testcldsrc",
+	"VM_Name" : "test",
+	"EP_Name" : "HTTPS",
+	"Local_Port" : "443",
+	"Public_Port" : "443"
+}
+

@@ -494,14 +494,19 @@ exports.deployTemplate = function(req, res){
 					var results = [];
 					  while (d3.length) {
 					    results.push(d3.splice(0, 3));
+						console.log(results);
 					  }
 					  for(var i=0;i<results.length;i++)
 						  {
 						  	arr.push(results[i]);
+							console.log(arr);
+							client.invoke("assign", arr, function(error, resq, more) {});
 						  }
-				}else{arr.push(d3);}
-			  console.log(arr);
-			 client.invoke("assign", arr, function(error, resq, more) {});
+				}else{arr.push(d3);
+						client.invoke("assign", arr, function(error, resq, more) {});
+						}
+			  //console.log(arr);
+			 //client.invoke("assign", arr, function(error, resq, more) {});
 			res.send("Success");
 			}
 }
@@ -1511,7 +1516,8 @@ exports.createGroup = function(req,res){
 
 function executeScript(scriptName){
 	console.log(scriptName);
-	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
+	//var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
+	var cmd = './res_scripts/'+scriptName;
 	child = spawn("powershell.exe", [cmd]);
 	child.stdout.on("data",function(data){
 	   console.log("Powershell Data: " + data);
@@ -1735,7 +1741,8 @@ exports.deployResource = function(req, res){
 		  } 
 		});
 		
-	var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\deploy.ps1';
+	//var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\deploy.ps1';
+	var cmd = './res_scripts/deploy.ps1';
 	child = spawn("powershell.exe", [cmd]);
 	child.stdout.on("data",function(data){
 	   console.log("Powershell Data: " + data);

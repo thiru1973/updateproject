@@ -219,7 +219,8 @@ exports.oauth = function(req, res){
 }
 
 var ad = new ActiveDirectory({
-			 url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/ou=Users,ou=Nandi,dc=SONATA,dc=LOCAL',
+			 url: 'LDAP://172.26.42.66/CN=Users,DC=SONATA,DC=LOCAL',
+			 //url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/ou=Users,ou=Nandi,dc=SONATA,dc=LOCAL',
 			 //url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/DC=SONATA,DC=LOCAL',
 			 //url: 'LDAP://BGLBG1W8DC01.SONATA.LOCAL/cn=ISV_Comp_Users,cn=Users,dc=SONATA,dc=LOCAL',
 			});
