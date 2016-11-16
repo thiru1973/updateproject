@@ -85,6 +85,13 @@ res.render('viewDevOpsTemplate');
 
 };
 
+exports.viewProductTemplate = function(req, res){ 
+res.render('viewProductTemplate');
+ }
+ 
+exports.deployProductTemplate = function(req, res){ 
+res.render('deployProductTemplate');
+ }
  
 
 /*Old page functions*/

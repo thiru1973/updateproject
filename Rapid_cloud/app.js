@@ -165,6 +165,12 @@ app.get('/attachDisk', resources.attachDisk)
 app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
+
+//Product Templates
+
+app.get('/viewProductTemplate', routes.viewProductTemplate);
+app.get('/deployProductTemplate', routes.deployProductTemplate);
+
 //Devops
 app.get('/setup', routes.setup);
 app.get('/devops', routes.devops);
@@ -193,6 +199,6 @@ var url = "http://172.29.59.65:3001/add";
 
 	});*/
 
-http.createServer(app).listen(app.get('port'), "172.29.59.44", function(){
+http.createServer(app).listen(app.get('port'), "172.29.59.62", function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
