@@ -161,7 +161,7 @@ app.get('/createDns', resources.createDns);
 app.get('/attachDisk', resources.attachDisk)
 
 
-//DevOps
+//DevOps templates
 app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
