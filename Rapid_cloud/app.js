@@ -21,7 +21,7 @@ var app = express();
 // all environments
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -176,7 +176,10 @@ app.get('/setup', routes.setup);
 app.get('/devops', routes.devops);
 app.get('/devopsDetails', routes.devopsDetails);
 app.get('/viewDevOpsTemplate', routes.viewDevOpsTemplate);
+//app.get('/deployDivopsTemplate', routes.deployDivopsTemplate);
 app.get('/deploydbData', resources.deploydbData);
+app.get('/create_devOps_template', account.create_devOps_template);
+
 
 //Create Project
 app.get('/createProject', resources.createProject);
@@ -199,6 +202,6 @@ var url = "http://172.29.59.65:3001/add";
 
 	});*/
 
-http.createServer(app).listen(app.get('port'), "172.29.59.44", function(){
+http.createServer(app).listen(app.get('port'), "172.29.59.62", function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
