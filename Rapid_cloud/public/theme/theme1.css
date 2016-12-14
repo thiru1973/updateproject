@@ -1548,3 +1548,6 @@ aside > .col-xs-12, .col-sm-2, .col-md-2, .col-lg-2 {
  .userName{text-align: right;background-color: #f9f9f9;font-size:12px;}
  .userNa{text-align:right; color:#5a5757;  padding:10px; display:inline-block;}
  .userNa:hover{text-decoration:none;}
+ 
+ .selected {background-color: #A52A2A;color: #A52A2A;}
+

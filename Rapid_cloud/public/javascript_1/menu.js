@@ -70,10 +70,13 @@ $(document).ready(function(){
 	
 	
 	//$(".container").append().html("<p>All new content. <em>You bet!</em></p>");
-	var uName = "User";//sessionStorage.getItem("role");
+	var uName = sessionStorage.getItem("User");
+	if(uName != null){
 	var i = $('[role="contentArea"]')
 		i.prepend("<div class='userName'>"+uName+" | <a href='/oauth' class='userNa'>SignOut</a></div>");
-	
+	}else{
+		location.href = location.origin+"/oauth";
+	}
 	var accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
@@ -238,6 +241,7 @@ function LayOut(){
 
 LayOut.prototype = {
 	getRoles: function(){
+		
 		var data = {};
 		data.roleId  = sessionStorage.getItem("role");
 		//data.roleId = 'u';

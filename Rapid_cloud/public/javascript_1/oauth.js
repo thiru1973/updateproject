@@ -3,6 +3,7 @@
 	Created on: 4th April 2016
 *************************************** */
 "use strict";
+var _ip = 'http://172.29.59.65:3000'
 var _userName_Input_Id = document.getElementById("userName_Input_Id"),
 	_passWord_Input_Id = document.getElementById("passWord_Input_Id"),
 	_login_Button = document.getElementById("login_Button"),
@@ -47,13 +48,14 @@ function validate()
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/authentication',
+	     url: _ip+'/authentication',
 	     success: function(results) {
 			 console.log(results);
 	    	 if(results != "Authentication failed!")
 	    		 {
 					sessionStorage.setItem("role",results.role_id);
-	    		 	location.href = "http://172.29.59.65:3000/accounts"
+					sessionStorage.setItem("User",results.user_id);
+	    		 	location.href = _ip+"/accounts"
 	    		 }else{
 	    			 $(".alert-danger, .alert-warning").hide();
 	    				$(".alert-danger").show().delay(2000).fadeOut('slow');
@@ -78,7 +80,7 @@ function myfunction(){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/gmail',
+	     url: _ip+'/gmail',
 	     success: function(results) {
 	    	 //alert(results);
 			 
@@ -96,10 +98,80 @@ function myfunction(){
 					 jsonpCallback: "callback",
 					 datatype: 'jsonp',
 					 data: data,	 
-					 url: 'http://172.29.59.65:3000/getToken',
+					 url: _ip+'/getToken',
 					 success: function(results) {
 							alert(results.access_token);	
 							console.log(results);
+					 },
+					 error: function (xhr, status, error){
+						console.log('Failure');
+						alert("failure");
+						},
+				   });
+			 }
+			 
+	     },
+		 error: function (xhr, status, error){
+	        console.log('Failure');
+			alert("failure");
+			},
+	   });	
+}
+/*function azureAuth(){
+	var data = {};
+	data.userName = "Azure";
+	var windowThatWasOpend;
+	$.ajax({
+	     type: 'POST',
+		 jsonpCallback: "callback",
+	     datatype: 'jsonp',
+	     data: data,	 
+	     url: _ip+'/auth',
+	     success: function(results) {
+	    	 console.log(results);
+			  window.location.href = results;
+			 
+	     },
+		 error: function (xhr, status, error){
+	        console.log('Failure');
+			alert("failure");
+			},
+	   });	
+}*/
+function azureAuth(){
+	var data = {};
+	data.userName = "Azure";
+	var windowThatWasOpend;
+	$.ajax({
+	     type: 'POST',
+		 jsonpCallback: "callback",
+	     datatype: 'jsonp',
+	     data: data,	 
+	     url: _ip+'/auth',
+	     success: function(results) {
+	    	 //alert(results);
+			 
+			 windowThatWasOpend = window.open(results, "please sign with google", "width=500px,height=700px");
+			 window.onmessage = function(e){
+				 windowThatWasOpend.close();
+				 var urlWithCode = e.data;
+				 console.log(urlWithCode);
+				 var idx = urlWithCode.lastIndexOf("code=");
+				 var code = urlWithCode.substring(idx+5).replace("#","");
+				var data = {};
+				data.code = code;
+				console.log(data);
+				 $.ajax({
+					 type: 'POST',
+					 jsonpCallback: "callback",
+					 datatype: 'jsonp',
+					 data: data,	 
+					 url: _ip+'/getAzureToken?code='+code,
+					 success: function(results) {	
+							console.log(results);
+							sessionStorage.setItem("role",results.role_id);
+							sessionStorage.setItem("User",results.User);
+							location.href = _ip+"/accounts"
 					 },
 					 error: function (xhr, status, error){
 						console.log('Failure');

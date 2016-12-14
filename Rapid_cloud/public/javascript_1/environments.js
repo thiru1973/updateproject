@@ -836,7 +836,7 @@ function loadBalancer(){
 										   <li onclick="">Snap Shoart</li>-->\
 										  </ul>';
 				insertAfter(nodId, nodeListOptions);
-			}else if(ev.title == "Azure"){
+			}else if(ev.title == "AZure"){
 				var nodeListOptions = document.createElement("ul");
 				nodeListOptions.id="nLinks_"+project_id+"_"+i;
 				nodeListOptions.className="nodeSettings";

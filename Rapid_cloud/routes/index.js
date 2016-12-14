@@ -124,6 +124,7 @@ exports.create_template2 = function(req, res){
 	};
 
 exports.drop_down=function(req,res){	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -154,6 +155,7 @@ exports.drop_down=function(req,res){
 exports.next=function(req,res){
 	var pid=req.query.prov_id;
 	console.log(pid);
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -173,6 +175,7 @@ exports.next=function(req,res){
 			});	
 };
 exports.all_nodes=function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -202,6 +205,7 @@ exports.filter = function(req, res){
 		var region1=Obj.region;
 		var pname=Obj.pname;		
 		console.log(region1+" "+pname);
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		MongoClient.connect("mongodb://172.29.59.100:27017/test", function(err, db) {
 
 			if(err) { return console.dir(err); }
@@ -249,7 +253,7 @@ exports.tmplt_pg=function(req, res){
 };
 
 exports.tmplt_create=function(req, res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var nodes=req.query.data;
 	console.log(nodes);
 	var tname=req.query.tmp_name;
@@ -278,6 +282,7 @@ exports.tmplt_create=function(req, res){
 };
 	
 exports.create = function(req,res){	
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		 var id = req.query.prov_id;
 		 var cre_date = req.query.dt;
 		 var proj_id = req.query.proj_id;
@@ -314,7 +319,7 @@ exports.manage_template = function(req, res){
 }
 
 exports.temp_region=function(req,res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var pname=Obj.pname;
@@ -366,6 +371,7 @@ exports.temp_image=function(req,res){
 	var ver = version.split("/");
 	var attribute=Obj.attribute;*/
 	var image1=[];	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -394,6 +400,7 @@ exports.temp_image=function(req,res){
 			});	
 };
 exports.temp_image1=function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var pname=Obj.provider;
@@ -432,6 +439,7 @@ exports.temp_image1=function(req,res){
 };
 var res_store=[];
 exports.temp_store=function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);	
 	var Obj = JSON.parse(result);	
 	var d1 = Obj.d1;
@@ -470,7 +478,7 @@ exports.temp_store=function(req,res){
 }
 
 exports.nodes_details=function(req,res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -493,7 +501,7 @@ exports.nodes_details=function(req,res){
 
 exports.pvd_template = function(req, res){
 	//console.log(req.body);
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);	
 	var Obj1 = JSON.parse(result);
 	var g_tname = Obj1.tname;
@@ -520,7 +528,7 @@ exports.pvd_template = function(req, res){
 }
 exports.gen_template = function(req, res){
 	//console.log(req.body);
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);	
 	var Obj1 = JSON.parse(result);
 	var g_tname = Obj1.tname;	
@@ -545,6 +553,7 @@ exports.gen_template = function(req, res){
 }
 
 exports.pvd_check=function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function(err, db){
 		if (err){
 			console.log('Unable to connect to the MongoDB server. Error:',err);
@@ -572,6 +581,7 @@ exports.cloud_service = function(req,res){
 
 client_pg.connect();
 exports.create_cloud_service = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 	var name=Obj.name
@@ -614,6 +624,7 @@ exports.prod_stage = function(req,res){
 };
 
 exports.cloudname = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	client_pg.query("SELECT cloud_name FROM cloudservice", function(err, result){
 		if(err){
 		throw err;
@@ -635,7 +646,7 @@ exports.cloudname = function(req,res){
 };
 
 exports.azure_size=function(req,res){
-
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -664,7 +675,7 @@ exports.azure_size=function(req,res){
 };
 
 exports.azure_image=function(req,res){
-
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -696,6 +707,7 @@ exports.azure_image=function(req,res){
 };
 
 exports.create_deploy_slot = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 
@@ -714,6 +726,7 @@ exports.create_deploy_slot = function(req,res){
 var cron = require('cron');
 var spawn = require("child_process").spawn,child;
 exports.scheduleService = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	console.log(req.body);
 	var reqResult = req.body
 		,cloudSer = reqResult.cldsrvc

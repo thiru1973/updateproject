@@ -14,6 +14,7 @@ var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
 
 var rpcConString = "tcp://172.29.93.97:4242";
+//var rpcConString = "tcp://172.29.59.65:4242";
 var client = new zerorpc.Client();
 client.connect(rpcConString);
 
@@ -43,6 +44,9 @@ var auth=[];
 
 var client_pg = new pg.Client(conString);
 client_pg.connect();
+
+ client.invoke("validate_user", "sangamesh", function(request, response, more){});
+
 
 exports.manageEnv = function(req, res){
 	res.render('manageEnv');
@@ -99,6 +103,7 @@ exports.trafficManager = function(req, res){res.render('trafficManager'); }
 exports.schedulingNode = function(req, res){res.render('schedulingNode'); }
 
 exports.manage = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	client_pg.query("SELECT * FROM azure_details where status <> 'terminated';", function(err, result){
 	if(err){
 	throw err;
@@ -109,6 +114,7 @@ exports.manage = function(req, res){
 };
 
 exports.manage_env_nodes = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 	//console.log(Obj);
@@ -140,6 +146,7 @@ exports.manage_env_nodes = function(req,res){
 		}	
 };
 exports.manage_env = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var proj_name = [];
 	client_pg.query("SELECT * FROM project3;", function(err, result){
 	if(err){
@@ -156,6 +163,7 @@ exports.manage_env = function(req, res){
 };
 
 exports.deploy=function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -176,7 +184,8 @@ exports.deploy=function(req,res){
 			});	
 };
 
-exports.actions = function(req,res){	
+exports.actions = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var dns=req.query.id;
 	action=req.query.status;	
 	var arr=[action, dns];
@@ -212,7 +221,7 @@ exports.create_vpc=function(req,res){
  
 /* Functions for new screens*/
 exports.vpc=function(req,res){
-	  
+	  res.setHeader("Access-Control-Allow-Origin", "*");
 	  var result=JSON.stringify(req.body);
 	  var Obj = JSON.parse(result);
 	  //console.log(Obj);
@@ -234,7 +243,7 @@ exports.vpc=function(req,res){
 	  }, 2000);
 };
 exports.subnet=function(req,res){
-	  
+	  res.setHeader("Access-Control-Allow-Origin", "*");
 	  var result=JSON.stringify(req.body)
 	      ,Obj = JSON.parse(result)
 	      ,accountName = Obj.accountName
@@ -255,6 +264,7 @@ exports.subnet=function(req,res){
 	     }, 2000);
 };
 exports.routeTable = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	  var result=JSON.stringify(req.body)
 	      ,Obj = JSON.parse(result)
 	      ,accountName = Obj.accountName
@@ -275,6 +285,7 @@ exports.routeTable = function(req,res){
 	      }, 2000);
 }
 exports.gateWay = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	  var result=JSON.stringify(req.body)
 	      ,Obj = JSON.parse(result)
 	      ,accountName = Obj.accountName
@@ -294,6 +305,7 @@ exports.gateWay = function(req,res){
 		  }, 2000);
 };
 exports.createStorage = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	 var result=JSON.stringify(req.body)
 	     ,Obj = JSON.parse(result)
 	     ,accountName = Obj.accountName
@@ -315,6 +327,7 @@ exports.createStorage = function(req, res){
 	     }, 2000);
 };
 exports.createSecGroup = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 		  var d1arr = (req.body.d1).split(','); 
 		  var d2arr = (req.body.d2).split(',');
 		  console.log(d1arr);
@@ -340,6 +353,7 @@ exports.createSecGroup = function(req, res){
 			  }, 2000);
 }
 exports.getSecurity = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var rows1 = [];
 	client_pg.query("SELECT * FROM security_group;",function(err, result){
 		if(err){
@@ -350,6 +364,7 @@ exports.getSecurity = function(req, res){
 	});
 }
 exports.getRouteTable = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var rows1 = [];
 	client_pg.query("SELECT * FROM route_table;",function(err, result){
 		if(err){
@@ -360,6 +375,7 @@ exports.getRouteTable = function(req, res){
 	});
 }
 exports.getInetGateWay = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var rows1 = [];
 	client_pg.query("SELECT * FROM internet_gateway;",function(err, result){
 		if(err){
@@ -370,6 +386,7 @@ exports.getInetGateWay = function(req, res){
 	});
 }
 exports.getKeypair = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var rows1 = [];
 	client_pg.query("SELECT * FROM key_pair;",function(err, result){
 		if(err){
@@ -380,6 +397,7 @@ exports.getKeypair = function(req, res){
 	});
 }
 exports.createKeyPair = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	 var result=JSON.stringify(req.body)
 	     ,Obj = JSON.parse(result)
 	     ,accountName = Obj.accountName
@@ -400,6 +418,7 @@ exports.createKeyPair = function(req, res){
 }
 var _ = require("underscore");
 exports.downloadKp = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	function getMostRecentFileName(dir) {
 	    var files = fs.readdirSync(dir);
 	    return _.max(files, function (f) {
@@ -413,6 +432,7 @@ exports.downloadKp = function(req,res){
 }
 //create snashot for volume
 exports.createSnapShot = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	  var arr = [pvd, "create_snap",auth[0], auth[1], volName , snapName];
@@ -425,13 +445,12 @@ exports.createSnapShot = function(req, res){
 }
 
 exports.deployTemplate = function(req, res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var arr=[];
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
 	var d1arr = d1.split(',');
-	console.log(req.body);
 	if(d1arr[0] == 'AWS'){
 			getAwsCred.getAwsMethod(d1arr[4],d1arr[5],d1arr[6]);
 		 setTimeout(function(){	
@@ -476,7 +495,17 @@ exports.deployTemplate = function(req, res){
 						  }
 				}else{arr.push(d3);}
 			  console.log(arr);
-			  client.invoke("assign", arr, function(error, resq, more) {});
+			  client.invoke("assign", arr, function(error, res, more) {
+				  if(error) {
+						console.error(error);
+					} else {
+						console.log("UPDATE:", res);
+					}
+
+					if(!more) {
+						console.log("Done.");
+					}
+			  });
 			res.send("Success");
 		 }, 2000);
 	}else{
@@ -487,27 +516,81 @@ exports.deployTemplate = function(req, res){
 		
 			var d2 = Obj.d2;
 			var d3 = d2.split(',');
-			//console.log(d3.length);
-			
+			console.log(d1arr);
+			var results = [];
 			if(d3.length>3)
 				{
-					var results = [];
+					  deployFun();
+					  
+				function deployFun(){
+					
 					  while (d3.length) {
 					    results.push(d3.splice(0, 3));
-						console.log(results);
 					  }
 					  for(var i=0;i<results.length;i++)
 						  {
 						  	arr.push(results[i]);
-							console.log(arr);
-							client.invoke("assign", arr, function(error, resq, more) {});
+							console.log(results[i]);
+							client.invoke("assign", arr, function(error, res, more) {
+								if(error) {
+									console.error(error);
+								} else {
+									console.log("UPDATE:", res);
+								}
+
+								if(!more) {
+									console.log("Done.");
+								}						
+							});
 						  }
+						  checkFailed();
+						/*setTimeout(function(){
+							var loc;
+						  for(var j=0;j<results.length;j++){
+							  loc = j;
+							  client_pg.query("SELECT * FROM deployment_env where env_name = ($1) and role = ($2)", [d1arr[3],results[j][2]], function(err,result){
+							  if(err){
+							   throw err;
+							  }
+							  var rows = result.rows;
+							  console.log(loc);
+							  if(rows.length == 0){
+								  deployFailedFun(loc);}
+							});	
+						  }
+						  
+						 }, 60000);*/
+				}
 				}else{arr.push(d3);
 						client.invoke("assign", arr, function(error, resq, more) {});
 						}
+				function checkFailed(){
+					setTimeout(function(){
+							var loc;
+						  for(var j=0;j<results.length;j++){
+							  loc = j;
+							  client_pg.query("SELECT * FROM deployment_env where env_name = ($1) and role = ($2)", [d1arr[3],results[j][2]], function(err,result){
+							  if(err){
+							   throw err;
+							  }
+							  var rows = result.rows;
+							  console.log(loc);
+							  if(rows.length == 0){
+								  deployFailedFun(loc);}
+							});	
+						  }
+						  
+						 }, 60000);
+				}		
+				function deployFailedFun(pos){
+					arr.splice(9,arr.length);
+					arr.push(results[pos]);
+					client.invoke("assign", arr, function(error, resq, more) {});
+					res.send("Success");
+				}
 			  //console.log(arr);
 			 //client.invoke("assign", arr, function(error, resq, more) {});
-			res.send("Success");
+			//res.send("Success");
 			}
 }
 
@@ -515,7 +598,7 @@ exports.deployTemplate = function(req, res){
 //New screen function end
 /*Old screen functions*/
 exports.deploy_data = function(req, res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 	template_id=Obj.id1;
@@ -562,6 +645,7 @@ exports.deploy_data = function(req, res){
 };
 
 exports.vpc_deploy = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var vpc_name = [];
 	/*var client_pg = new pg.Client(conString);
 	client_pg.connect();*/
@@ -590,6 +674,7 @@ exports.project = function(req, res){
 	/*var client_pg = new pg.Client(conString);
 	client_pg.connect();*/
 	//client_pg.query("SELECT p_name FROM project", function(err, result){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	client_pg.query("SELECT * FROM project", function(err, result){
 	if(err){
 	throw err;
@@ -612,6 +697,7 @@ exports.project = function(req, res){
 };
 
 exports.subnet_deploy = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var vpc_name = [];
 	/*var client_pg = new pg.Client(conString);
 	client_pg.connect();*/
@@ -639,6 +725,7 @@ exports.subnet_deploy = function(req, res){
 };
 
 exports.store_template = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	console.log(result);
 	var Obj = JSON.parse(result);
@@ -687,7 +774,7 @@ for(var k = 1; k<d2_len; k+=3){
 console.log(new_role);
 console.log(new_inst);
 console.log(new_img);
-var client = new zerorpc.Client();
+var client = new zerorpc.Client({ timeout: 120 });
 client.connect("tcp://172.29.59.61:4242");     
 //var arr = ["aws", "create_environment_aws","rapidcloud","lledx" , new_inst[0], new_img[0], new_role[0],new_inst[1], new_img[1], new_role[1]];
 var arr = ["aws", "create_environment", auth[0], auth[1], "ap-northeast-1", vpc, subnet,project, tename, "t2.micro","ami-383c1956", "app_server", "t2.medium", "ami-0dd8f963", "web_server", "m3.medium", "ami-f8220896", "data_base" ]
@@ -709,6 +796,7 @@ var ninst = new_inst[i];
 
 
 exports.manage_template = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	/*var client_pg = new pg.Client(conString);
 	client_pg.connect();*/
 	client_pg.query("SELECT * FROM enviroment3;", function(err, result){
@@ -723,6 +811,7 @@ exports.manage_template = function(req, res){
 };
 //client_pg.connect();
 exports.filter_env = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	 var result=JSON.stringify(req.body);
 	 var Obj = JSON.parse(result); 
 	 var proj_id=Obj.id;
@@ -736,6 +825,7 @@ exports.filter_env = function(req,res){
 	 });
 };
 exports.filter_env2 = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	 var result=JSON.stringify(req.body);
 	 var Obj = JSON.parse(result); 
 	 var proj_name=Obj.id;
@@ -759,6 +849,7 @@ exports.filter_env2 = function(req,res){
 };
 
 exports.popup_nodes = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 	var t_name=Obj.tname;
@@ -801,6 +892,7 @@ exports.popup_nodes = function(req,res){
 };
 
 exports.node_details = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	 var result=JSON.stringify(req.body);
 	 var Obj = JSON.parse(result);
 	 console.log(Obj);
@@ -818,6 +910,7 @@ exports.node_details = function(req,res){
 	 
 	};
 exports.node_detailsManage = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	 var result=JSON.stringify(req.body);
 	 var Obj = JSON.parse(result);
 	 console.log(Obj);
@@ -859,7 +952,7 @@ fs.readFile('new.txt', 'utf-8', function(err,data){
     dec2 += decipher2.final('utf8');  
     }               
      
-     var client = new zerorpc.Client();
+     var client = new zerorpc.Client({ timeout: 120 });
      client.connect("tcp://172.29.93.87:4242");     
      access = dec;
      secret = dec2;
@@ -876,6 +969,7 @@ fs.readFile('new.txt', 'utf-8', function(err,data){
     }); 
 
 exports.cloud_project = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 	var project=Obj.project;
@@ -903,6 +997,7 @@ exports.cloud_project = function(req,res){
 };
 
 exports.filter_slot = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);	
 	var cloud=Obj.cloud_service;
@@ -930,6 +1025,7 @@ exports.filter_slot = function(req,res){
 };
 
 exports.list_cloud_service = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var vpc_name = [];
 	/*var client_pg = new pg.Client(conString);
 	client_pg.connect();*/
@@ -948,6 +1044,7 @@ exports.list_cloud_service = function(req, res){
 
 //Manage storage, sec group, key pair, 
 exports.volumeDetails = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var inst_id = "i-f9491f79";
@@ -962,6 +1059,7 @@ exports.volumeDetails = function(req,res){
 		 });
 }
 exports.volumeDetails1 = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	client_pg.query("SELECT * FROM volume ",function(err, result){
 		if(err){
 		throw err;
@@ -972,6 +1070,7 @@ exports.volumeDetails1 = function(req,res){
 		 });
 }
 exports.keyPairDetails = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	client_pg.query("SELECT * FROM key_pair", function(err, result){
@@ -983,6 +1082,7 @@ exports.keyPairDetails = function(req, res){
 	});
 }
 exports.secGrpDetails = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	client_pg.query("SELECT * FROM security_group", function(err, result){
@@ -994,7 +1094,8 @@ exports.secGrpDetails = function(req, res){
 		res.send(rows);
 	});
 }
-exports.attachVolume = function(req, res){	
+exports.attachVolume = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	    //vol = Obj.attachVol;
@@ -1020,6 +1121,7 @@ exports.attachVolume = function(req, res){
 	
 }
 exports.attachKeyPair = function(req, res){	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body),
 	    Obj = JSON.parse(result),
 	    pv_name = "AWS";
@@ -1030,6 +1132,7 @@ exports.attachKeyPair = function(req, res){
 	res.send(result);
 }
 exports.attachSecGrp = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var pv_name = "AWS";
@@ -1041,6 +1144,7 @@ exports.attachSecGrp = function(req,res){
 }
 
 exports.loadBalancerCreate = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var arr1 = Obj.d2;
@@ -1072,6 +1176,7 @@ exports.loadBalancerCreate = function(req, res){
 	
 }
 exports.straccount = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var pv_name ="Azure";
@@ -1090,6 +1195,7 @@ exports.straccount = function(req, res){
 var spawn = require("child_process").spawn,child;
 //Azure Load Balancer
 exports.azLoadBalancer = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	var cldService = Obj.cldService,
@@ -1143,6 +1249,7 @@ exports.azLoadBalancer = function(req, res){
 	
 }
 exports.azureEndPoint = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body)
 	     Obj = JSON.parse(result);
 	console.log(Obj);
@@ -1189,6 +1296,7 @@ exports.azureEndPoint = function(req, res){
 }
 
 exports.trafficManage = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body)
 	    ,Obj = JSON.parse(result);
 	var ttl = 300;
@@ -1235,6 +1343,7 @@ exports.trafficManage = function(req,res){
 }
 
 exports.validate = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	console.log(Obj);
@@ -1257,6 +1366,7 @@ exports.validate = function(req,res){
 }
 var upload_path1 = '../Rapid_cloud/blobfiles'
 exports.blobUpload = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var bName = req.body.bName
 	    ,cName = req.body.cName;
 	console.log(bName);
@@ -1329,8 +1439,9 @@ exports.blobUpload = function(req,res){
 	}
 }
 
-var hostName = '172.29.93.97',userName = 'sonata', userPass = "sonata@123";
+var hostName = '172.29.93.97',useName = 'sonata', userPass = "sonata@123";
 exports.fileupload = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
     var accId = req.body.accName1
 	,subId = req.body.subId
 	,azureSub = req.body.azureSub
@@ -1369,13 +1480,13 @@ console.log(req.body.accName1);
 		var newPath = path.resolve(upload_path, fileName);
 		var ssh = new SSH({
 		    host: hostName,
-		    user: userName,
+		    user: useName,
 		    pass: userPass
 		});	 
 		ssh.exec('mkdir /home/sonata/certificates/'+folder+'', {out: function(stdout) {console.log(stdout);}}).start();
 		clientscp.scp(newPath, {
 		    host: hostName,
-		    username: userName,
+		    username: useName,
 		    password: userPass,
 		    path: '/home/sonata/certificates/'+folder+''
 		}, function(err) {
@@ -1397,6 +1508,7 @@ console.log(req.body.accName1);
 }
 
 exports.accountDetails = function(req, res){	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var rows,rows1,rows2,row3;
 	client_pg.query("SELECT * FROM accountinfo;",function(err, result){
 		if(err){
@@ -1434,6 +1546,7 @@ exports.accountDetails = function(req, res){
 	}	
 }
 exports.createAccount = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result  = JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	//console.log(Obj);
@@ -1445,6 +1558,7 @@ exports.createAccount = function(req, res){
 	res.send("Success");
 }
 exports.createProject = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result  = JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	console.log(Obj);
@@ -1456,6 +1570,7 @@ exports.createProject = function(req, res){
 	res.send("Success");
 }
 exports.createProduct = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
 	console.log(Obj.pdDate);
@@ -1468,6 +1583,7 @@ exports.createProduct = function(req, res){
 }
 //Get the storage account
 exports.getAzureStg = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	client_pg.query("SELECT * FROM storageacc;", function(err, result){
 		if(err){
 		throw err;
@@ -1478,6 +1594,7 @@ exports.getAzureStg = function(req, res){
 }
 //To store the aws credentials
 exports.storeAwsSub = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body)
 	    ,Obj = JSON.parse(result)
 	    ,pvd = "AWS";
@@ -1494,6 +1611,7 @@ exports.storeAwsSub = function(req, res){
 
 //services for Azure resource group function
 exports.createGroup = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	 setTimeout(function(){
 				var list1 = {rg_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGrp, region : req.body.region, vpcName : req.body.vpc, addPrefix : req.body.cidr};
@@ -1566,6 +1684,7 @@ function saveObject(list, cname){
 	
 }
 exports.getResource = function(req, res){
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		client_pg.query("SELECT * FROM resources;", function(err, result){
 		if(err){
 		throw err;
@@ -1575,6 +1694,7 @@ exports.getResource = function(req, res){
 		});
 }
 exports.createVnet = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var account = "Rezopia_Acc1",
 	    project = "Rezopa_proj",
 	    resourceGroup = "TestRG1",
@@ -1585,6 +1705,7 @@ exports.createVnet = function(req, res){
 		res.send("success"); 
 }
 exports.getVnet = function(req, res){
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		client_pg.query("SELECT * FROM virtualnetwork;", function(err, result){
 		if(err){
 		throw err;
@@ -1594,6 +1715,7 @@ exports.getVnet = function(req, res){
 		});
 }
 exports.createSubnet = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 		getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 		setTimeout(function(){
 				var list1 = {sn_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetname, addPrefix : req.body.cidrBlkSn, confName : req.body.confName};
@@ -1613,6 +1735,7 @@ exports.createSubnet = function(req, res){
 		
 }
 exports.getSubnet = function(req, res){
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		client_pg.query("SELECT * FROM res_subnet;", function(err, result){
 		if(err){
 		throw err;
@@ -1622,6 +1745,7 @@ exports.getSubnet = function(req, res){
 		});
 }
 exports.createRtTable = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
 				var list1 = {rt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, vpcName : req.body.vnetName, routeTable : req.body.routTable, routeConf : req.body.routeConf, addPrefix : req.body.addPrefix,
@@ -1635,6 +1759,7 @@ exports.createRtTable = function(req, res){
 	
 }
 exports.createLclNetGtWay = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
 				var list1 = {gt_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, gWayName : req.body.gwName, gateWayIpAdd : req.body.gwIpAdd, addPrefix : req.body.addPfx};
@@ -1646,6 +1771,7 @@ exports.createLclNetGtWay = function(req, res){
 	     }, 2000);	
 }
 exports.createSecGrp = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
 				var list1 = {sg_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region,
@@ -1662,6 +1788,7 @@ exports.createSecGrp = function(req,res){
 }
 
 exports.createDns = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
 				var list1 = {dns_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, dnsName : req.body.dnsName};
@@ -1673,6 +1800,7 @@ exports.createDns = function(req, res){
 	     }, 2000);	
 }
 exports.createEndPoint = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 	setTimeout(function(){
 				var list1 = {ep_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, pfName : req.body.pfName, rtMethod : req.body.rtMethod,
@@ -1686,6 +1814,7 @@ exports.createEndPoint = function(req, res){
 	     }, 2000);
 }
 exports.createVnetGWay = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 		getAwsCred.getAzureCred(req.body.accountName,req.body.projName,req.body.prodName);
 		setTimeout(function(){
 				var list1 = {gw_id : 1, userName : uName, pwd : pWord, resGrpName : req.body.resGp, region : req.body.region, pipName : req.body.pip, alMethod : req.body.alMethod,
@@ -1701,6 +1830,7 @@ exports.createVnetGWay = function(req, res){
 
 //Deployment of template in resource group
 exports.deployResource = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);	
 	var Obj = JSON.parse(result);	
 	var d1 = Obj.d1,
@@ -1752,20 +1882,31 @@ exports.deployResource = function(req, res){
 	});
 	child.on("exit",function(){
 	   console.log("Powershell Script finished");
+	    var prod_id;
+		client_pg.query("SELECT pd_id FROM product where prod_name = ($1);",[product], function(err, result){
+		if(err){
+		throw err;
+		}
+		rows2 = result.rows;
+		prod_id = rows2[0].pd_id;
+		savedata();
+		});
+	function savedata(){
 	   for(var i=0;i<d2_obj.length;i++)
-		{
-		var prod_id = 106;
+		{		
 		client_pg.query("INSERT INTO deployment_env(prov_id,region,env_name,p_name,p_id,vpc_name,subnet_name,inst_type,inst_id,image,role,status,cloud_name,accountid,product_name) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)", 
-		 ['AWS', region, environment, project, prod_id, vnet, subnet, d2_obj[i].instName, d2_obj[i].instName,d2_obj[i].os, d2_obj[i].roleName, "running", resGroup, account, product],
+		 ['AZure', region, environment, project, prod_id, vnet, subnet, d2_obj[i].instName, d2_obj[i].instName,d2_obj[i].os, d2_obj[i].roleName, "running", resGroup, account, product],
 				function(err, writeResult) {
 			console.log('err',err,'pg writeResult',writeResult);
-		  });
+			res.send("Success");
+		  });	
+		
 		}
-	   
+	} 
 	});
 	child.stdin.end(); //end input	
 	
-	res.send("Success");
+	
 }
 
 

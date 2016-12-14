@@ -328,12 +328,19 @@ function ramsize_fun(data,appendToWhat){
 function showNode_fun(ram,appendTo){
 	//alert(cpu+a+b);
 	var id=appendTo;
-	$('table#nodeSel'+id+' tbody tr td').empty();
+	$('table#nodeSel'+id+' tbody').empty();
+				tr1 = $('<tr/>');
+				tr1.append("<th>Inst_Name</th>");
+				tr1.append("<th>VCPU</th>");
+				tr1.append("<th>RAM</th>");
+				tr1.append("<th>Storage</th>");
+				$('table#nodeSel'+id+' tbody').append(tr1);
 	for(var i=0;i<nodes.length;i++)
 	{
 		if(nodes[i].vcpu == cpu && nodes[i].memory_gib == ram)
-			{							
-				tr = $('<tr class="node1" onclick="get_nodes(this.id)"/>');
+			{	//<tr><th>Inst_Name</th><th>VCPU</th><th>RAM</th><th>Storage</th></tr><tr><td>--</td><td>--</td><td>--</td><td>--</td></tr></table></td></tr>						
+				
+				tr = $('<tr class="node1" onclick="get_nodes(this.id, '+id+')"/>');
 				tr.attr("id", "row"+i);
 	            tr.append("<td>" + nodes[i].inst_type+ "</td>");	
 	            tr.append("<td>" + nodes[i].vcpu+ "</td>");
@@ -346,9 +353,12 @@ function showNode_fun(ram,appendTo){
 }
 
 var node = [];
-function get_nodes(el){		
-	 node1= $('tr#'+el).closest("tr").find('td:eq(0)').text();
-	 node.push(node1);
+function get_nodes(el,tabid){		
+	 /*node1= $('tr#'+el).closest("tr").find('td:eq(0)').text();
+	 node.push(node1);*/
+	 $('table#nodeSel'+tabid+' tbody tr#'+el+'').addClass('selected').siblings().removeClass('selected');    
+		var value=$('table#nodeSel'+tabid+' tbody tr#'+el+'').find('td:first').html();
+		alert("You have selected "+value);
 }
 
 function show_images(id){
@@ -390,7 +400,7 @@ $(".saveInfo").click(function(){
 		var x = document.getElementById("sel"+i+"").innerText;
 		var y = document.getElementById("sell"+i+"").innerText;
 		var z = document.getElementById("selll"+i+"").innerText;
-		
+		var node = $('table#nodeSel'+i+' tr.selected td:first').html();
 		if(x == str1)
 			{
 			document.getElementById("sel"+i+"").style.border="thin dashed #E24B4B";
@@ -404,7 +414,11 @@ $(".saveInfo").click(function(){
 				{
 				document.getElementById("selll"+i+"").style.border="thin dashed #E24B4B";
 				return;
-				}
+				}else if(node == undefined)
+					{
+						alert("Pls select the node for "+templates[i].role+" !!!");
+						return;
+					}
 	}
 	if(!expTname.test(tm_name)){
 		$(".alert-warning").stop().slideDown();
@@ -426,9 +440,10 @@ function saveInformation(tm_name){
 		var x = document.getElementById("sel"+i+"").innerText;
 		var y = document.getElementById("sell"+i+"").innerText;
 		var z = document.getElementById("selll"+i+"").innerText;
+		//alert($('table#nodeSel'+i+' tr.selected td:first').html());
 		var role_info={};
 		role_info.os = node_os;
-		role_info.node=node[i];
+		role_info.node=$('table#nodeSel'+i+' tr.selected td:first').html();;
 		role_info.image=z;
 		role_info.role=node_role;			
 		save_info.push(role_info);

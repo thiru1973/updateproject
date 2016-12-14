@@ -13,7 +13,7 @@ var ActiveDirectory = require('activedirectory');
 //var url = 'mongodb://172.29.59.62:27017/test';
 var url = 'mongodb://172.29.59.100:27017/test';
 exports.preview = function(req, res){
-
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -36,7 +36,7 @@ exports.preview = function(req, res){
 };
 
 exports.viewdata = function(req,res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);	
 	var Obj = JSON.parse(result);
 		console.log(Obj);
@@ -68,7 +68,7 @@ exports.viewdata = function(req,res){
 
 exports.org_temp=function(req,res){
 	var role=[];
-
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -92,7 +92,7 @@ exports.org_temp=function(req,res){
 
 exports.create_org_temp=function(req,res){
 	var role=[];
-
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -125,6 +125,7 @@ exports.node_store=function(req,res){
 	console.log(d2+d3+d4+d5);
 	var c_date = Date();
 	var tt_type="Generic Template";
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 		    console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -150,6 +151,7 @@ exports.node_store=function(req,res){
 };
 
 exports.name_check=function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function(err, db){
 		if (err){
 			console.log('Unable to connect to the MongoDB server. Error:',err);
@@ -172,7 +174,7 @@ exports.name_check=function(req, res){
 }
 
 exports.gen_view=function(req, res){
-	
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		MongoClient.connect(url, function (err, db){
 		if (err) {
 			console.log('Unable to connect to the MongoDB server. Error:',err);
@@ -193,7 +195,7 @@ exports.gen_view=function(req, res){
 	});
 };
 exports.my_view=function(req, res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db){
 	if (err) {
 		console.log('Unable to connect to the MongoDB server. Error:',err);
@@ -230,7 +232,8 @@ exports.authentication = function(req, res){
 	setTimeout(function(){		
 			 console.log(result);
 			 res.send(result);
-		 	 }, 2000);*/	
+		 	 }, 2000);*/
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var username = req.body.userName, password = req.body.passWord;		 
 	ad.authenticate(username, password, function(err, auth) {
 		  if (err) {
@@ -252,9 +255,12 @@ exports.authentication = function(req, res){
 					if(err){
 						res.send(err)
 					}else{
-						var d = {};
-						d.role_id = 'u';
-						res.send(d);
+						var data = {};
+						data.role_id = 'u';
+						data.User = username;
+						//res.send(data);
+						res.write(data);
+						res.end();
 					}
 					});
 				}
@@ -267,6 +273,7 @@ exports.authentication = function(req, res){
 		});
 }
 exports.getRoles = function(req, res){
+			res.setHeader("Access-Control-Allow-Origin", "*");
 			var id = req.body.roleId;
 			console.log(id);
 			client_pg.query("Select r.role_id,p.perm_id,p.perm_name from roles r,permissions p,role_perm rp where rp.role_id = r.role_id and rp.perm_id = p.perm_id and r.role_id =($1)",[id],function(err,result){
@@ -286,6 +293,7 @@ var REDIRECT_URL = 'http://localhost:3000/oauth2callback';
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 exports.gmail = function(req, res){
 	console.log(req.body);
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var scopes = ['https://www.googleapis.com/auth/gmail.modify'];
 		var url = oauth2Client.generateAuthUrl({
 		  access_type: 'offline', // 'online' (default) or 'offline' (gets refresh_token)
@@ -299,6 +307,7 @@ exports.oauth2callback = function(req, res){
 }
 exports.getToken = function(req, res){
 	console.log(req.body.code);
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	oauth2Client.getToken(req.body.code, function(err, tokens) {
 		  if(!err) {
 			  res.send(tokens);

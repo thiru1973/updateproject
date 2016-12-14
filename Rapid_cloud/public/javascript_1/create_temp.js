@@ -241,7 +241,7 @@ function getStorageData(){
 }
 //var idArr=[];
 //var osArr=[];
-var idArr = ["Database", "WebServer", "ApplicationServer", "Integration", "Test Server", "Build Server", "Proxy Server", "Mail Server", "Apache Solr Server","Caching Server", "NAT Server","RDP Server"];
+var idArr = ["Database", "WebServer", "ApplicationServer", "Integration", "TestServer", "BuildServer", "ProxyServer", "MailServer", "ApacheSolrServer","CachingServer", "NATServer","RDPServer","CMTool","RepoManager"];
 var osArr = ["Ubuntu", "Debian", "SUSE", "CentOS", "RHEL(AWS)", "Windows","Debian"];
 var idDt;
 function data(){

@@ -31,6 +31,20 @@ app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    // Pass to next layer of middleware
+    next();
+});
+
 // development only
 if ('development' === app.get('env')) {
   app.use(express.errorHandler());
@@ -205,7 +219,7 @@ app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 
-var url = "http://172.29.59.65:3001/add";
+//var url = "http://172.29.59.65:3001/add";
 //Outside service
 /*http.get(url, function(response) {
 	var finalData = '';
@@ -218,9 +232,67 @@ var url = "http://172.29.59.65:3001/add";
 	  });
 
 	});*/
+var AuthenticationContext = require('adal-node').AuthenticationContext;
+var crypto = require("crypto")
 
+
+var clientId = 'b25d0c71-946f-4450-9c3a-c3f112d869a7';
+var clientSecret = 'j4fxNOAKv27JLGFkb7yRV1VE7/FMXaWqxkfbdom8Ic8=';
+var authorityHostUrl = 'https://login.windows.net';
+var tenant = '56836078-8488-41e7-bcfb-b5a9d0e5e5e3';
+var authorityUrl = authorityHostUrl + '/' + tenant;
+var redirectUri = 'http://172.29.59.65:3000/getAToken';
+var resource = 'https://management.core.windows.net';
+var templateAuthzUrl = 'https://login.windows.net/' + 
+                        tenant + 
+                        '/oauth2/authorize?response_type=code&client_id=' +
+                        clientId + 
+                        '&redirect_uri=' + 
+                        redirectUri +
+                        '&state=<state>&resource=' + 
+                        resource;
+
+function createAuthorizationUrl(state) {
+  return templateAuthzUrl.replace('<state>', state);
+}
+
+app.post('/auth', function(req, res) {
+  crypto.randomBytes(48, function(ex, buf) {
+    var token = buf.toString('base64').replace(/\//g,'_').replace(/\+/g,'-');
+
+    res.cookie('authstate', token);
+    var authorizationUrl = createAuthorizationUrl(token);
+	console.log(authorizationUrl);
+	res.send(authorizationUrl);
+  });
+});
+app.get('/getAToken', function(req, res){
+	res.render('getAToken');
+})
+app.post('/getAzureToken', function(req, res) {
+	console.log(req.query.code);
+	 var authenticationContext = new AuthenticationContext(authorityUrl);
+
+	  authenticationContext.acquireTokenWithAuthorizationCode(
+	    req.query.code,
+	    redirectUri,
+	    resource,
+	    clientId, 
+	    clientSecret,
+	    function(err, response) {
+	      var errorMessage = '';
+	      if (err) {
+	        errorMessage = 'error: ' + err.message + '\n';
+	      }
+	      errorMessage += 'response: ' + JSON.stringify(response);
+		  console.log(errorMessage);
+		  var d = {};
+		  d.role_id = "a"
+		  d.User = response.userId; 
+	      res.send(d);
+	    }
+	  );
+});
 http.createServer(app).listen(app.get('port'), function(){
-//http.createServer(app).listen(app.get('port'), "172.29.59.44", function(){
   console.log('Express server listening on port ' + app.get('port'));
-  //process.exit();
 });
