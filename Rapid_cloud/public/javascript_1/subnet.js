@@ -45,7 +45,7 @@ function getVpcName(){
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
 				 {
-				 	vpc_Name[x] = /*data[x].vpc_name+"/"+*/data[x].vpc_id;
+				 	vpc_Name[x] = data[x].vpc_name+"/"+data[x].vpc_id;
 				 }
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"vpc2_Drop");			   
@@ -116,7 +116,8 @@ function createSubnet()
 	}
 	var snName = document.getElementById("nameTag1").value;
 	var cidrBlkSn = document.getElementById("cidrBlkSn3").value;
-	var snVpc = document.getElementById("selVpcSn").innerText;
+	var snVpc1 = document.getElementById("selVpcSn").innerText;
+	var snVpc = snVpc1.split("/");
 	var snZone = document.getElementById("selZn9").innerText;
 	if(snName == "" || snName == null)
 	{
@@ -126,7 +127,7 @@ function createSubnet()
 		{
 		document.getElementById("cidrBlkSn3").style.border="thin dashed #0099FF";
 		return;
-		}else if(snVpc == "Select")
+		}else if(snVpc1 == "Select")
 			{
 			document.getElementById("selVpcSn").style.border="thin dashed #0099FF";
 			return;
@@ -143,7 +144,7 @@ function createSubnet()
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.cidrBlkSn = cidrBlkSn;
-	data.snVpc = snVpc;
+	data.snVpc = snVpc[1];
 	data.snName = snName;
 	data.snZone = snZone;
 	console.log(data)

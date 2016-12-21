@@ -267,7 +267,10 @@ function nodeDeploy_function(value){
 	var id = str1.concat(att[2]);
 	console.log(id);
 	var region = document.getElementById(id).innerText;
-	//alert(region);
+	if(region == "Select"){
+		document.getElementById(id).style.border="thin dashed #0099FF";
+		return;
+	}
 	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"single"+"?data2="+att[0]+"?data3="+att[1]+"?data4="+region;
 
 }

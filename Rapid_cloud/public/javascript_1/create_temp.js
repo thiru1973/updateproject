@@ -176,6 +176,7 @@ function selectOpt(ev, idn){
 		 				{
 		 					 if(aTex == idDt[j].name && idd == "sel"+norole[i]+"")
 		 							{	
+										//document.getElementById("sell0").innerText="";
 		 								roleAt = idDt[j].subrole;
 		 								addValues(roleAt,"sell"+norole[i]+"s")
 		 							}
@@ -186,6 +187,7 @@ function selectOpt(ev, idn){
 	 $("#"+idd+" span img").css("width", "25px");	
 }
 function addValues(data, toWhat){
+		$("#sell0 > span:first-child").text("Select");
 		var appendD = new DropdownConst();
 		appendD.appendData(data,toWhat);
 }
@@ -502,11 +504,11 @@ function saveTemplateInformation(buttonId){
 	a = a.toString().substring(0, 3);
 	var te_name=pj_name+"_"+tm_name+"_"+a;
 	alert("Template saved with "+te_name+" name!!!!!!!!");
-	saveTemplateFunction(id,te_name);
+	saveTemplateFunction(id,te_name,tm_desc);
 }
-function saveTemplateFunction(id, te_name){
+function saveTemplateFunction(id, te_name,tm_desc){
 	//alert(id);
-	console.log(norole);
+	console.log(tm_desc);
 	for(var i=0;i<norole.length;i++)
 	{
 				var x1 = document.getElementById("sel"+norole[i]).innerText;
@@ -527,7 +529,7 @@ function saveTemplateFunction(id, te_name){
 	     type: 'POST',
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
-	     data: "d1="+ary1+"&d2="+te_name+"&d3="+acName+"&d4="+pjName+"&d5="+pdName,
+	     data: "d1="+ary1+"&d2="+te_name+"&d3="+acName+"&d4="+pjName+"&d5="+pdName+"&d6="+tm_desc,
 	     url: 'http://172.29.59.65:3000/node_store',
 	     success: function(results) {
 	    	 if(id == "save_exit")

@@ -186,7 +186,7 @@ function getVpcName(){
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
 				 {
-				 	vpc_Name[x] = /*data[x].vpc_name+"/"+*/data[x].vpc_id;
+				 	vpc_Name[x] = data[x].vpc_name+"/"+data[x].vpc_id;
 				 }
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"vpc2_Drop");			   
@@ -206,10 +206,11 @@ function createSecGroup()
 		createAzureSecGroup(pvd_name, pvd_region);
 	}
 	alert("Outbound"+n+"-"+m+"inbound");
-	var vpcId = document.getElementById("selVpcSn").innerText;
+	var vpcId1 = document.getElementById("selVpcSn").innerText;
+	var vpcId = vpcId1.split("/");
 	var sgName = document.getElementById("sgName").value;
 	var data = [];
-	data.push(accountName,projName,prodName,pvd_name,pvd_region,sgName,vpcId);
+	data.push(accountName,projName,prodName,pvd_name,pvd_region,sgName,vpcId[1]);
 	var arr = [];
 	for(var ib=0;ib<=m;ib++)
 	{		

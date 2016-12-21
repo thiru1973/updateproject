@@ -836,7 +836,7 @@ function loadBalancer(){
 										   <li onclick="">Snap Shoart</li>-->\
 										  </ul>';
 				insertAfter(nodId, nodeListOptions);
-			}else if(ev.title == "AZure"){
+			}else if(ev.title == "Azure"){
 				var nodeListOptions = document.createElement("ul");
 				nodeListOptions.id="nLinks_"+project_id+"_"+i;
 				nodeListOptions.className="nodeSettings";
@@ -1350,24 +1350,24 @@ function getPublicIp(valuee, append){
 								<span class="statusText">&nbsp;&nbsp;<span class="'+this.dataOfNd[clickedData].status+'"></span>'+this.dataOfNd[clickedData].status+'</span>\
 							  </p>\
 							  <div class="nodeScheduleBox">\
-								<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStop</button>\
+								<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeSchedule(this)">ScheduleStop</button>\
 								<input type="date" id="user_date" name="date">\
 								<select id="user_hr"></select>\
 								<select id="user_min"></select>\
-								<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeSchedule(this)">ScheduleStart</button>\
+								<button class="redButton" id="Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeSchedule(this)">ScheduleStart</button>\
 								</div>\
 							</td>\
 						</tr>\
 						<tr>\
 							<td colspan="2">\
 							<div class="nodeBuT" style="border-top:solid 1px #ccc;">\
-							<button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Start</button>\
+							<button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Start</button>\
 							\
-							<button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
+							<button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
 							\
-							<button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
+							<button class="redButton" id="this_Terminate_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Terminate</button>\
 							\
-							<button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
+							<button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
 							</div>\
 							</td>\
 						</tr>';
@@ -1441,15 +1441,17 @@ function getPublicIp(valuee, append){
 		 
 	}
 	Projects.prototype.nodeServerEngine = function(wichOne){
-		console.log(wichOne.value, wichOne.innerHTML);
+		//console.log(wichOne.value, wichOne.innerHTML);
 		var accountName = localStorage.getItem("Account")
 	    ,projName = localStorage.getItem("ProjectName")
 	    ,prodName = localStorage.getItem("ProductName");
 		var inst_id = wichOne.value;
-		var arr =inst_id.split(",");
+		var arr =inst_id.split(",");		
 		var action = wichOne.innerHTML;
-		var accName = document.getElementById("typeDro1").innerText;
-		alert(accName);
+		if(arr[6] == "resGroup"){
+			manage.resNodeAction(arr,action);
+		}else{
+		//var accName = document.getElementById("typeDro1").innerText;
 		var data = {};
 		data.accName = accountName;
 		data.projName = projName;
@@ -1460,7 +1462,7 @@ function getPublicIp(valuee, append){
 		data.cldsrvc = arr[3];
 		data.role = arr[4];
 		console.log(data);
-		$.ajax({
+		/*$.ajax({
 	        type: 'POST',
 	   	 	jsonpCallback: "callback",
 	        datatype: 'jsonp',
@@ -1475,7 +1477,42 @@ function getPublicIp(valuee, append){
 	                 console.log('Failure');
 	         		alert("failure");
 	         		},
+	            });*/
+		}
+	}
+	Projects.prototype.resNodeAction = function(arr,action){
+		//console.log("inside"+arr,action);
+		var accountName = localStorage.getItem("Account")
+	    ,projName = localStorage.getItem("ProjectName")
+	    ,prodName = localStorage.getItem("ProductName");
+		var data = {};
+		data.accName = accountName;
+		data.projName = projName;
+		data.prodName = prodName;
+		data.inst_id = arr[0];
+		data.action = action;
+		data.region = arr[1];
+		data.pvd = arr[2];
+		data.resGroup = arr[3];
+		data.role = arr[4];
+		console.log(data);
+		$.ajax({
+	        type: 'POST',
+	   	 	jsonpCallback: "callback",
+	        datatype: 'jsonp',
+	        data: data,
+	        url: _ip+'/resGroup_action',
+	        success: function(data, textStatus){
+	        	alert(data);
+	        	/*if(data != "Success"){$(".alert-warning").stop().slideDown();}
+	        	else{$(".alert-success").stop().slideDown();}*/
+	        	},
+	        	 error: function (xhr, status, error){
+	                 console.log('Failure');
+	         		alert("failure");
+	         		},
 	            });
+		
 	}
 	Projects.prototype.createTableData = function(dataSource){
 		console.log(dataSource);

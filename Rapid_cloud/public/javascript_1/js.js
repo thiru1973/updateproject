@@ -30,7 +30,7 @@ var myTemplate_images = [];
 $(function(){		
 		$.getJSON( _ip+"/my_view", function( data ) {	
 		              var result=data;
-		              var tempName = [], region = [], tempType = [], nodes = [], cloud = [];
+		              var tempName = [], region = [], tempType = [], nodes = [], cloud = [], desc1 = [];
 		              getStorageData();
 		              var acc = localStorage.getItem("Account");
 		              var prj = localStorage.getItem("ProjectName");
@@ -45,6 +45,7 @@ $(function(){
 							tempType[j] = result[j].Template_type;
 							nodes[j] = (result[j].Instances).length;
 							cloud[j] = result[j].Cloud;
+							desc1[j] = result[j].Template_Desc;
 						}else{console.log("No");}
 					}
 				
@@ -60,7 +61,7 @@ $(function(){
 				    	}
 				 }	
 				
-				assign_myTemplate(tempName,region,tempType,nodes,cloud);
+				assign_myTemplate(tempName,region,tempType,nodes,cloud,desc1);
 				myTemp_details(result);
 			});
 });	
@@ -69,7 +70,8 @@ $(function(){
 		$.getJSON(_ip+"/gen_view", function( data ) {	
 			var result1=data;
 			//console.log(data);
-			var tempName1 = [], region1 = [], tempType1 = [], nodes1 = [];
+			var tempName1 = [], region1 = [], tempType1 = [],nodes1 = [];
+			var desc = [];
 			var stg = localStorage.getItem("Account");
 			var prj = localStorage.getItem("ProjectName");
 			for(var k=0;k<result1.length;k++)
@@ -83,15 +85,15 @@ $(function(){
 						region1[k] = result1[k].Region;
 						tempType1[k] = result1[k].Template_type;
 						nodes1[k] = (result1[k].Template_Role).length;
+						desc[k] = result1[k].Template_Desc;
 					}else{console.log("no")}
 				}
-			//console.log(tempName1+tempName1.length);
-			assign_generic(tempName1,region1,tempType1,nodes1);
+			assign_generic(tempName1,region1,tempType1,nodes1,desc);
 			generic_details(result1);			
 		});
 });
 
-function assign_myTemplate(tempName,region,tempType,nodes,cloud){
+function assign_myTemplate(tempName,region,tempType,nodes,cloud,desc1){
 	var qu = document.querySelector("[role='template']");
 	for(var i=0;i<=tempName.length-1;i++){
 		if(tempName[i] != undefined){
@@ -107,6 +109,7 @@ function assign_myTemplate(tempName,region,tempType,nodes,cloud){
 									+"<li>Region: "+region[i]+"</li>"
 									+"<li>Type: <span>"+tempType[i]+"</span></li>"
 									+"<li>Node: "+nodes[i]+"</li>"
+									//+"<li>Desc: "+desc1[i]+"</li>"
 									+"</ul></div>"
 									+"<div class='face back' id='"+tempName[i]+"'><span class='"
 									+"glyphicon glyphicon-remove-circle closeTemplate'></span>Nodes:<input class='inPut' value='"+nodes[i]+"' type='text' disabled='disabled' /><br><br><b>Role Deatails</b>" +
@@ -168,7 +171,7 @@ function myTemp_details(result){
 	}
 }
 
-function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
+function assign_generic(tempName1,region1,tempType1,nodes1,desc){
 	var qu1 = document.querySelector("[role='template']");
 	var img=["generic_Template.png"];
 	for(var i=0;i<=tempName1.length-1;i++){
@@ -184,6 +187,7 @@ function assign_generic(tempName1,region1,tempType1,nodes1,cloud1){
 							+"<ul>"
 							+"<li>Type: <span>"+tempType1[i]+"</span></li>"
 							+"<li>Roles: "+nodes1[i]+"</li>"
+							//+"<li>Desc: "+desc[i]+"</li>"
 							+"</ul></div>"
 							+"<div class='face back' id='"+tempName1[i]+"'><span class='"
 							+"glyphicon glyphicon-remove-circle closeTemplate'></span>Roles:<input class='inPut' value='"+nodes1[i]+"' type='text' disabled='disabled'/><br><br><b>Role Details</b>"+

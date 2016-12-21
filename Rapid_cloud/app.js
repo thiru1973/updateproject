@@ -219,6 +219,11 @@ app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 
+//Resource group actions
+app.post('/resGroup_action', manage.resGroup_action);
+//Get the provider name
+app.post('/getSubProviders', view.getSubProviders);
+
 //var url = "http://172.29.59.65:3001/add";
 //Outside service
 /*http.get(url, function(response) {

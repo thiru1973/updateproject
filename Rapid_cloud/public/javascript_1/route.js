@@ -25,7 +25,7 @@ function getVpcName(){
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
 				 {
-				 	vpc_Name[x] = /*data[x].vpc_name+"/"+*/data[x].vpc_id;
+				 	vpc_Name[x] = data[x].vpc_name+"/"+data[x].vpc_id;
 				 }
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"endpointFs21_Drop");			   
@@ -52,7 +52,7 @@ function getSubnetName(){
 		  $.getJSON(_ip+'/subnet_deploy', function(data){			  
 			 for(var x=0;x<data.length;x++)
 				 {
-				 			subNetName1[x] = data[x].subnet_id;
+				 			subNetName1[x] = data[x].subnet_name+"/"+data[x].subnet_id;
 				 }
 			   var appendD = new DropdownConst();
 			   appendD.appendData(subNetName1,"subnetFs21_Drop");
@@ -73,14 +73,16 @@ function createRoute()
 		createRouteAzure(pvd_name,pvd_region);
 	}else{
 		var routeName = document.getElementById("RM_name3").value;
-		var vpcId1 = document.getElementById("endpointFs21").innerText;
-		var subnetId1 = document.getElementById("subnetFs21").innerText;
+		var vpcId2 = document.getElementById("endpointFs21").innerText;
+		var vpcId1 = vpcId2.split("/")
+		var subnetId2 = document.getElementById("subnetFs21").innerText;
+		var subnetId1 = subnetId2.split("/");
 		//alert(vpcId1);
-		if(vpcId1 == "Select")
+		if(vpcId2 == "Select")
 			{
 				document.getElementById("endpointFs21").style.border="thin dashed #0099FF";
 				return;
-			}else if(subnetId1 == "Select")
+			}else if(subnetId2 == "Select")
 				{
 					document.getElementById("subnetFs21").style.border="thin dashed #0099FF";
 					return;
@@ -96,8 +98,8 @@ function createRoute()
 					data.provider = pvd_name;
 					data.region = pvd_region;
 					data.routeName = routeName;
-					data.routeVpc = vpcId1;
-					data.routeSubnet = subnetId1;
+					data.routeVpc = vpcId1[1];
+					data.routeSubnet = subnetId1[1];
 					console.log(data);
 					//console.log(routeName+routeVpc+pvd_name);
 					$.ajax({

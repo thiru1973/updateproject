@@ -118,8 +118,8 @@ exports.node_store=function(req,res){
 	var result=JSON.stringify(req.body);	
 	var Obj = JSON.parse(result);
 	var d1 = Obj.d1;
-	var d2 = Obj.d2, d3 = Obj.d3, d4 = Obj.d4, d5 = Obj.d5;
-	console.log(d1);
+	var d2 = Obj.d2, d3 = Obj.d3, d4 = Obj.d4, d5 = Obj.d5, d6 = Obj.d6;
+	console.log(d6);
 	var d1_obj = JSON.parse(d1);
 	console.log(d1_obj);
 	console.log(d2+d3+d4+d5);
@@ -132,7 +132,7 @@ exports.node_store=function(req,res){
 		  } else {    
 		    console.log('Connection established to');    
 			var collection=db.collection('generic_template_information');
-		    var DB_data = {Template_name : d2, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type : tt_type, Created_at : c_date, Template_Role:d1_obj };
+		    var DB_data = {Template_name : d2, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type : tt_type, Created_at : c_date, Template_Role:d1_obj, Template_Desc:d6};
 
 		   collection.insert([DB_data], function (err, result) {
 
@@ -147,7 +147,7 @@ exports.node_store=function(req,res){
 
 		    			});
 		  	}	
-		});	
+		});
 };
 
 exports.name_check=function(req, res){
@@ -315,5 +315,25 @@ exports.getToken = function(req, res){
 		  }else{
 			  res.send(err);
 		  }
+		});
+}
+//Services to get the name of the provoder that added under account
+exports.getSubProviders = function(req, res){
+	console.log(req.body);
+	var acName = req.body.account,
+		pjName = req.body.project;
+	client_pg.query("SELECT * from project3 where account = ($1) and p_name = ($2)",[acName,pjName],function(err, result){
+			if(err){
+				throw err;
+			}
+			rows3 = result.rows;
+			var subsc = rows3[0].subscription_name;
+			
+			client_pg.query("SELECT provider from subscription where accountid = ($1) and subscription_name = ($2)",[acName,subsc],function(err, result){
+				if(err){
+					throw err;
+				}
+				res.send(result.rows);
+			});
 		});
 }

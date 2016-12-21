@@ -23,7 +23,7 @@ function getVpcName(){
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
 				 {
-				 	vpc_Name[x] = /*data[x].vpc_name+"/"+*/data[x].vpc_id;
+				 	vpc_Name[x] = data[x].vpc_name+"/"+data[x].vpc_id;
 				 }
 			   var appendD = new DropdownConst();
 			   appendD.appendData(vpc_Name,"vpc2_Drop");			   
@@ -39,8 +39,9 @@ function createGateway()
 	var pvd_region = sessionStorage.getItem("chooseRegion");
 	var pvd_name = sessionStorage.getItem("chooseUrCloud");
 	var gtWayName = document.getElementById("GW_name").value;
-	var gtVpc = document.getElementById("vpc2_").innerText;
-	if(gtVpc == "Select")
+	var gtVpc1 = document.getElementById("vpc2_").innerText;
+	var gtVpc = gtVpc1.split("/");
+	if(gtVpc1 == "Select")
 	{
 		document.getElementById("vpc2_").style.border="thin dashed #0099FF";
 		return;
@@ -56,9 +57,9 @@ function createGateway()
 	data.provider = pvd_name;
 	data.region = pvd_region;
 	data.gtWayName = gtWayName;
-	data.gtWayVpc = gtVpc;
+	data.gtWayVpc = gtVpc[1];
 	console.log(data);
-	$.ajax({
+	/*$.ajax({
         type: 'POST',
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
@@ -72,5 +73,5 @@ function createGateway()
                  console.log('Failure');
          		alert("failure");
          		},
-            });
+            });*/
 }

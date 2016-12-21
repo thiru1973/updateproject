@@ -1894,21 +1894,48 @@ exports.deployResource = function(req, res){
 	function savedata(){
 	   for(var i=0;i<d2_obj.length;i++)
 		{		
-		client_pg.query("INSERT INTO deployment_env(prov_id,region,env_name,p_name,p_id,vpc_name,subnet_name,inst_type,inst_id,image,role,status,cloud_name,accountid,product_name) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)", 
-		 ['AZure', region, environment, project, prod_id, vnet, subnet, d2_obj[i].instName, d2_obj[i].instName,d2_obj[i].os, d2_obj[i].roleName, "running", resGroup, account, product],
+		client_pg.query("INSERT INTO deployment_env(prov_id,region,env_name,p_name,p_id,vpc_name,subnet_name,inst_type,inst_id,image,role,status,cloud_name,accountid,product_name,type) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)", 
+		 ['Azure', region, environment, project, prod_id, vnet, subnet, d2_obj[i].instName, d2_obj[i].instName,d2_obj[i].os, d2_obj[i].roleName, "running", resGroup, account, product,"resGroup"],
 				function(err, writeResult) {
 			console.log('err',err,'pg writeResult',writeResult);
-			res.send("Success");
+			
 		  });	
 		
 		}
 	} 
 	});
 	child.stdin.end(); //end input	
+	res.send("Success");
 	
 	
 }
 
-
+//resource group action functions
+exports.resGroup_action= function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	console.log(req.body);
+		getAwsCred.getAzureCred(req.body.accName,req.body.projName,req.body.prodName);
+		setTimeout(function(){
+			if(req.body.action == "Stop"){
+				var list1 = {rs_id : 1, userName : uName, pwd : pWord, resName : req.body.resGroup, vmName : req.body.role};
+			    var msg = saveObject(list1, "stopVmRes");
+				var retVal = executeScript("stopVmRes.ps1");
+				client_pg.query("UPDATE deployment_env SET status = ($1) WHERE role= ($2) and cloud_name=($3)",["stopped",req.body.role,req.body.resGroup]);
+				res.send("Success");
+			}else if(req.body.action == "Start"){
+				var list1 = {rs_id : 1, userName : uName, pwd : pWord, resName : req.body.resGroup, vmName : req.body.role};
+			    var msg = saveObject(list1, "startVmRes");
+				var retVal = executeScript("startVmRes.ps1");
+				client_pg.query("UPDATE deployment_env SET status = ($1) WHERE role= ($2) and cloud_name=($3)",["running",req.body.role,req.body.resGroup]);
+				res.send("Success");
+			}else if(req.body.action == "Terminate"){
+				var list1 = {rs_id : 1, userName : uName, pwd : pWord, resName : req.body.resGroup, vmName : req.body.role};
+			    var msg = saveObject(list1, "removeVmRes");
+				var retVal = executeScript("removeVmRes.ps1");
+				res.send("Success");
+			}			
+	     }, 2000);		
+		
+}
 
 

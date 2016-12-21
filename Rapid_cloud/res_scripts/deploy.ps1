@@ -27,8 +27,9 @@ $vnetName = $results[10]
 $subnetName = $results[11]
 
 $vnet1 = Get-AzureRmVirtualNetwork -Name $vnetName -ResourceGroupName $rgName
+$num = Get-Random -minimum 1 -maximum 1000
+$stName = "mystog"+$num
 
-$stName = "mystog12"
 Get-AzureRmStorageAccountNameAvailability $stName
 
 $storageAcc = New-AzureRmStorageAccount -ResourceGroupName $rgName -Name $stName -SkuName "Standard_LRS" -Kind "Storage" -Location $locName

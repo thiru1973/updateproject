@@ -1,6 +1,39 @@
 window.onload = function(){
 	getTemplateName();
 	//setStorageData();
+	getProviders();
+}
+//var roLee=["AWS","Azure","OpenStack","Helion","SoftLayer"];
+var roLee = [] ;
+var roleAt=[];
+function getProviders(){
+	var accountName = localStorage.getItem("Account")
+		,projName = localStorage.getItem("ProjectName");
+	var data = {};
+	data.account = accountName;
+	data.project = projName;
+		$.ajax({
+			     type: 'POST',
+				 jsonpCallback: "callback",
+			     datatype: 'jsonp',
+			     data: data,	 
+			     url: 'http://172.29.59.65:3000/getSubProviders',
+			     success: function(results) {	
+						console.log(results);
+						for(var i=0;i<results.length;i++)
+						{
+							//roLee[i] = results[i].provider;
+							var tT = document.getElementById("sels");
+								tT.innerHTML+='<li onclick="selectOpt(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+results[i].provider+'</dd></dl></li>';					
+			
+						}
+						//addProvider(roLee);
+			    	 },
+				 error: function (xhr, status, error){
+			        console.log('Failure');
+					alert("failure");
+					},
+			   });
 }
 function setStorageData(){
 	var accountName = localStorage.getItem("Account")
@@ -165,8 +198,7 @@ function DropdownConst(createEle,addId,addClass,appendTo,labName,createCon,image
 };
 
 
-var roLee=["AWS","Azure","OpenStack","Helion","SoftLayer"];
-var roleAt=[];
+
 
 DropdownConst.prototype.appendData = function(name,appentoWhat){	
 	var epn = document.getElementById(appentoWhat);
@@ -391,8 +423,10 @@ $(".saveInfo").click(function(){
 	//var arr1=JSON.stringify(save_info);
 	//console.log(arr1);
 	var tm_name = document.getElementById("t_name").value;
+	var tm_desc = document.getElementById("t_desc").value;
 	var str1="Select";
 	var expTname = /^\w+$/;
+	var expDesc =  /^[A-Za-z\d\s\.\()]+$/;
 	
 	for(var i=0;i<templates.length;i++)
 	{	
@@ -424,11 +458,15 @@ $(".saveInfo").click(function(){
 		$(".alert-warning").stop().slideDown();
 		document.getElementById("t_name").focus();
 		return;
-	}
-	saveInformation(tm_name);
+	}else if(!expDesc.test(tm_desc)){
+			$(".description").stop().slideDown();
+			document.getElementById("t_desc").focus();
+			return;
+			}
+	saveInformation(tm_name,tm_desc);
 })
 
-function saveInformation(tm_name){
+function saveInformation(tm_name,tm_desc){
 	var acName = localStorage.getItem("Account")
 	    ,pjName = localStorage.getItem("ProjectName")
 	    ,pdName = localStorage.getItem("ProductName");
@@ -465,7 +503,7 @@ function saveInformation(tm_name){
 	     type: 'POST',
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
-	     data: "d1="+arr1+"&d2="+arr2+"&d3="+acName+"&d4="+pjName+"&d5="+pdName,	     
+	     data: "d1="+arr1+"&d2="+arr2+"&d3="+acName+"&d4="+pjName+"&d5="+pdName+"&d6="+tm_desc,	     
 	     url: 'http://172.29.59.65:3000/temp_store',
 	     success: function(results) {
 	     	 $(".alert-success").stop().slideDown();
@@ -486,15 +524,16 @@ $(".exitpage").click(function(){
 	location.href="//172.29.59.65:3000/master_2"
 });
 /* Provider */
-var provider = new DropdownConst("div","nodeId","","assignNode","","","");
-provider.createCon();
-var provider = new DropdownConst("div","noDEpullL","pull-left","nodeId","","","").createCon();
-var provider = new DropdownConst("label","","labelTemp","noDEpullL","Provider *","","").createCon();
-var provider = new DropdownConst("div","sel","clickRole forWid","noDEpullL","Select","","",roLee);
-provider.createCon();
-provider.cre();
-//role.preView();
-var provider = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel","","","").createCon();
+
+	var provider = new DropdownConst("div","nodeId","","assignNode","","","");
+	provider.createCon();
+	var provider = new DropdownConst("div","noDEpullL","pull-left","nodeId","","","").createCon();
+	var provider = new DropdownConst("label","","labelTemp","noDEpullL","Provider *","","").createCon();
+	var provider = new DropdownConst("div","sel","clickRole forWid","noDEpullL","Select","","",roLee);
+	provider.createCon();
+	provider.cre();
+	//role.preView();
+	var provider = new DropdownConst("span","","glyphicon glyphicon-chevron-down pull-right","sel","","","").createCon();
 
 
 /* Region */

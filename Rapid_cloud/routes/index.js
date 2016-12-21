@@ -444,7 +444,7 @@ exports.temp_store=function(req,res){
 	var Obj = JSON.parse(result);	
 	var d1 = Obj.d1;
 	var d1_obj = JSON.parse(d1);	
-	var d2 = Obj.d2, d3 = Obj.d3, d4 = Obj.d4, d5 = Obj.d5;
+	var d2 = Obj.d2, d3 = Obj.d3, d4 = Obj.d4, d5 = Obj.d5, d6 = Obj.d6;
 	res_store = d2.split(",");
 	var p_name = res_store[0];		
 	var t_region = res_store[1];
@@ -459,7 +459,7 @@ exports.temp_store=function(req,res){
 		    console.log('Connection established to');    
 			var collection=db.collection('pvd_template_information');
 		    var DB_data = {Template_name:t_name, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type:t_type, Instances : d1_obj, Cloud : p_name, Region : t_region, VMSs: t_vms,
-		    		Created_at : c_date};
+		    		Created_at : c_date, Template_Desc:d6};
 //			var DB_data = {Template_name:t_name, Account_Name : d3, Project_Name : d4, Product_Name : d5, Template_type:t_type, Instances : d1_obj, Cloud : p_name, VMSs: t_vms,
 //		    		Created_at : c_date};
 			console.log(DB_data);
