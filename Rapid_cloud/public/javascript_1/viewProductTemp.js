@@ -17,6 +17,7 @@ ViewConstru.prototype = {
 		var _self = this;
 		$.getJSON(this.jd, function(d , responce){
 			_self.data = d;
+			console.log(d.length);
 			for(_self.i ; _self.i< d.length; _self.i++){
 				_self.docId.innerHTML+='<article role="devTemp">\
 									<summary role="templateDetails">\
@@ -67,18 +68,8 @@ ViewConstru.prototype = {
 	addDevOpsCycle: function(i){
 		var devCy = document.getElementById(i),
 			u=0;
-			if(Object.keys(this.data[i][this.dt][0].cIVMs) != ""){
+			if(Object.keys(this.data[i][this.dt][0].Product_VMs) != ""){
 				devCy.innerHTML+='<li><a href="#" onclick="vt.getVmDetails(this, '+i+')">CI<span class="" aria-hidden="true"></span></a></li>';
-				u == 0 ? $("#"+i+" li a span").click() : true ;
-				u++;
-			}
-			if(Object.keys(this.data[i][this.dt][0].cTVMs) != ""){
-				devCy.innerHTML+='<li><a href="#" onclick="vt.getVmDetails(this, '+i+')">CT<span class="" aria-hidden="true"></span></a></li>';
-				u == 0 ? $("#"+i+" li a span").click() : true ;
-				u++;
-			}
-			if(Object.keys(this.data[i][this.dt][0].cDVMs) != ""){
-				devCy.innerHTML+='<li><a href="#" onclick="vt.getVmDetails(this, '+i+')">CD<span class="" aria-hidden="true"></span></a></li>';
 				u == 0 ? $("#"+i+" li a span").click() : true ;
 				u++;
 			}
@@ -89,10 +80,9 @@ ViewConstru.prototype = {
 		$("#"+id+" li a span").removeClass("arrowPointer glyphicon glyphicon-triangle-top");
 		ev.firstElementChild.className += "arrowPointer glyphicon glyphicon-triangle-top";
 
-		var devOpsTyp = "cIVMs";
+		var devOpsTyp = "Product_VMs";
 		ev.text == "CI" ? devOpsTyp : true ;
-		ev.text == "CT" ? devOpsTyp = "cTVMs" : true ;
-		ev.text == "CD" ? devOpsTyp = "cDVMs" : true ;
+		
 		document.getElementById(id+"_vm").innerHTML="";
 
 		var k = Object.keys(this.data[id][this.dt][0][devOpsTyp]);
@@ -130,7 +120,7 @@ ViewConstru.prototype = {
 			}
 	}
 }
-var vt = new ViewConstru("http://172.29.59.62:3000/deploydbData");
+var vt = new ViewConstru("http://172.29.59.62:3000/javascript_1/product_data.json");
 	vt.init();
 
 $(document).on("mouseenter", ".en", function(){

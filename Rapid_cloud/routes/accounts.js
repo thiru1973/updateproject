@@ -11,6 +11,15 @@ exports.accounts = function(req,res){
 exports.login = function(req, res){
 	res.render('login');
 }
+
+exports.create_devOps_template = function(req,res){
+	res.render('create_devOps_template');
+}
+
+exports.createDevTemp = function(req,res){
+	res.render('createDevTemp');
+}
+
 exports.validate = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);

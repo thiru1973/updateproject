@@ -69,7 +69,7 @@ var repo_data;
 
 exports.repoLogin = function(req, res){
 	console.log(req.body);
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 		 u_name = req.body.username;
 		 pass = req.body.password;
 
@@ -116,7 +116,7 @@ exports.repoLogin = function(req, res){
 		   
 		    
 exports.repoWebhook = function(req, res){
-	
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	var d1 = req.body.repName;
 	console.log(d1);
 	var selRepo = d1;
@@ -163,7 +163,7 @@ exports.repoWebhook = function(req, res){
 		     					 } else {
 		        		console.log('Inserted values sucess fully');
 						//var obj = {"data" : "OK"};
-            				res.send("Success");
+            				res.send(repo_obj);
 		      			}
 		      			db.close();
 		    			});					

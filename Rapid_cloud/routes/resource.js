@@ -103,29 +103,33 @@ exports.devopsTemplate = function(req,res){
 exports.devopsTemp = function(req, res){
 	res.render("devopsTemp");
 }
-exports.saveDevopsTemplate = function(req,res){
 
-	var result=JSON.stringify(req.body);	
+exports.saveDevopsTemplate = function(req,res){
+	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
-	console.log(Obj);
-	MongoClient.connect(url, function (err, db) {
-		  if (err) {
-						console.log('Unable to connect to the mongoDB server. Error:', err);
+	var dt = Obj.deployTemplate;
+	var dt_obj = JSON.parse(dt);
+	console.log(dt_obj);
+	
+	MongoClient.connect(url, function (err, db){
+		  if (err){
+					console.log('Unable to connect to the mongoDB server. Error:', err);
 				   } else {
 					console.log('Connection established');
-					var instance=db.collection('devops_template_save');									
-					instance.insert([Obj], function (err, result) {
+					//var DB_data = {obj:{"templateDetails":{"_templateName":"testazure_980","_projectName":"Demo_proj","_technology":"Java","_tool_name":"Java"},"CI_vms":{"vms":{"0":{"_vmName":"Medium","_vmRole":"WebServer","_vmPackages":{"Jenkins":false,"Sonarqube":false,"Nexus":false}},"1":{"_vmName":"Medium","_vmRole":"ApplicationServer","_vmPackages":{"Jenkins":true,"Sonarqube":true,"Nexus":false}}}},"CT_vms":{"vms":{}},"CD_vms":{"vms":{}}}};
+					var DB_data = {deployTemplate:dt_obj};
+					var instance=db.collection('devops_template_save');
+					instance.insert([DB_data], function (err, result){
 		      				if (err) {
-		        					console.log(err);
-		     					 } else {
+		        				console.log(err);
+		     				} else {
 		        		console.log('Inserted values sucess fully');
-						var obj = {"data" : "OK"};
-            				res.send(obj);
+						res.send("Saved DevOps template");
 		      			}
 		      			db.close();
-		    			});					
-				}		 
-			});	
+		    			});
+				}
+			});
 }
 
 exports.deploydbData = function(req, res){

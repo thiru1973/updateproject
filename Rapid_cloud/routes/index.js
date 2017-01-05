@@ -78,6 +78,10 @@ exports.devops = function(req, res){
 	res.render('devops');
 }
 
+
+exports.deployDivOpsTemplate = function(req, res){
+	res.render("deployDivOpsTemplate");
+} 
  
 
 exports.viewDevOpsTemplate = function(req,res){
@@ -726,6 +730,25 @@ exports.scheduleService = function(req, res){
 
 var spawn = require("child_process").spawn,child;
 exports.testscript=function(req,res){
+	var provider = 'Azure';
+	if(provider == 'AWS'){
+		console.log("Inside the function");
+	child = spawn("powershell.exe",["C:\\Users\\anurag.s\\chef-repo\\script.ps1"]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	    res.send("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    console.log("Powershell Errors: " + data);
+	    res.send("Errors "+data);
+	});
+	child.on("exit",function(){
+	    console.log("Powershell Script finished");
+	    res.send("Script is finished");
+	});
+	child.stdin.end(); //end input	
+		} else if (provider == 'Azure'){
+	
 	console.log("Inside the function");
 	child = spawn("powershell.exe",["C:\\Users\\anurag.s\\chef-repo\\script.ps1"]);
 	child.stdout.on("data",function(data){
@@ -741,6 +764,7 @@ exports.testscript=function(req,res){
 	    res.send("Script is finished");
 	});
 	child.stdin.end(); //end input	
+}
 	res.send("success");
 };
 exports.devopsDetails = function(req, res){

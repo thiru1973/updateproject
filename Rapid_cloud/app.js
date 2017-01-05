@@ -179,6 +179,7 @@ app.get('/viewDevOpsTemplate', routes.viewDevOpsTemplate);
 //app.get('/deployDivopsTemplate', routes.deployDivopsTemplate);
 app.get('/deploydbData', resources.deploydbData);
 app.get('/create_devOps_template', account.create_devOps_template);
+app.get('/createDevTemp', account.createDevTemp);
 
 
 //Create Project

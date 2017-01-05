@@ -1693,3 +1693,87 @@ article[role="devTemp"] {
       clear: both;
       width: 100%;
       margin: 4px auto; }
+	  
+	  
+	  #designLin {
+  background-color: #252525;
+  padding: 0 5px;
+  margin-bottom: 1px; }
+  #designLin li {
+    display: inline-block;
+    padding: 8px 8px;
+    color: #EDEDED; }
+  #designLin :hover {
+    background-color: #862929;
+    cursor: pointer; }
+  #designLin .active {
+    background-color: #862929; }
+
+
+	
+/* Create New DevOps Template : Starts....*/
+/*$countNum: #E03F3E;*/
+#stepsOfDevOps {
+  text-align: center; }
+  #stepsOfDevOps span {
+    display: inline-bloack;
+    padding: 5px; }
+  #stepsOfDevOps .countNum {
+    font-size: 41px;
+    color: #BABABA;
+    vertical-align: middle; }
+  #stepsOfDevOps .countLable {
+    font-size: 18px;
+    color: #BABABA;
+    vertical-align: -webkit-baseline-middle; }
+  #stepsOfDevOps span.glyphicon-arrow-right {
+    color: #BABABA;
+    vertical-align: -webkit-baseline-middle; }
+
+.ac {
+  color: #E03F3E !important; }
+
+#techDiv li.techLi, .dev2 li.techLi {
+  cursor: pointer; }
+  #techDiv li.techLi span, .dev2 li.techLi span {
+    text-align: center;
+    border-top: solid 1px red;
+    padding: 5px 0;
+    border-top: solid 1px #af9d9d;
+    color: #1d1717;
+    font-weight: normal;
+    display: block; }
+
+#techDiv ul li, .dev2 ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 15px; }
+  #techDiv ul li label, .dev2 ul li label {
+    cursor: pointer; }
+  #techDiv ul li .techImg, .dev2 ul li .techImg {
+    border: solid 1px #bbb;
+    border-bottom: 0px;
+    padding: 2px; }
+  #techDiv ul li .techRadBut, .dev2 ul li .techRadBut {
+    border: solid 1px #bbb;
+    padding: 8px 0;
+    background: #fff url("../images_1/deselectRb.jpg") no-repeat center; }
+  #techDiv ul li .techRadBut_Selected, .dev2 ul li .techRadBut_Selected {
+    background: #fff url("../images_1/selectRb.jpg") no-repeat center; }
+
+#ci_check, #ct_check, #cd_check {
+  display: none; }
+
+.techChekBut {
+  border: solid 1px #bbb;
+  padding: 8px 0;
+  background: #fff url("../images_1/uncheck.jpg") no-repeat center; }
+
+.techChekBut_Selected {
+  background: #fff url("../images_1/check.jpg") no-repeat center; }
+
+.deActive {
+  background-color: #e68b8b !important;
+  cursor: no-drop; }
+
+/* Create New DevOps Template : Ends....*/

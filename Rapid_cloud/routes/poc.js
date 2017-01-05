@@ -9,6 +9,9 @@ var async = require("async");
 var fs = require("fs");
 var jsonfile = require("jsonfile");
 var client = require('scp2');
+var app     = express();
+var zerorpc = require("zerorpc");
+var path = require("path");
 
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var url = 'mongodb://172.29.59.100:27017/test';
@@ -18,6 +21,7 @@ var URL = "http://sonatawkins.cloudapp.net:8080"
 var GitHub = require('github-api');
 var Promise = require("es6-promise").Promise;
 
+/*
 var noAuth = new GitHub();
 var repo_names = [];
 var branch_array = [];
@@ -42,7 +46,7 @@ var Jenkins_Centos ={
 "image" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'"			
 };
 
-/*
+
 const me = gh.getUser();
 me.listRepos()
 .then(function(data) {
@@ -120,7 +124,6 @@ form.append('file', '<FILE_DATA>', {
 
 
 
-
 var ActiveDirectory = require('activedirectory');
 
 
@@ -144,3 +147,44 @@ exports.authentication = function(req, res){
 		  }
 		});
 }
+
+
+
+
+
+
+//Amazon Web Services
+
+/*
+
+var spawn = require("child_process").spawn,child;
+//exports.awschef=function(req,res){
+	console.log("Inside the function");
+	child = spawn("powershell.exe", ["chef-apply","c:\\Users\\anurag.s\\chef-repo\\azurepro.rb"]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	    //res.send("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    console.log("Powershell Errors: " + data);
+	    //res.send("Errors "+data);
+	});
+	child.on("exit",function(){
+	    console.log("Powershell Script finished");
+	    //res.send("Script is finished");
+	});
+	child.stdin.end(); //end input	
+	//res.send("success");
+//};
+
+*/
+
+
+
+
+
+
+
+
+
+

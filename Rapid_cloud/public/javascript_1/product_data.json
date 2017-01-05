@@ -1,0 +1,105 @@
+[{
+  "_id" : "580f33e140607ee4489dc072",
+  "deployTemplate" : [{
+      "_templateName" : "Dynamics_AX",
+      "_projectName" : "Ofbiz",
+      "_technology" : "Java",
+      "_tool_name" : "Java",
+      "_region" : "East US",
+      "_provider" : "Azure",
+      "Product_VMs" : {
+        "0" : {
+          "_vmName" : "Large",
+          "_vmRole" : "Dynamics_AX",
+          "_vmPackages" : {
+            "Aos" : true,
+            "Aos_Data" : {
+              "_endpoints" : "'8101'",
+              "_img" : "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'",
+              "_runList" : "'role[aosrole]'",
+              "_os" : "Windows",
+              "_version" : "2013-R3"
+            },
+            "dynamics_ax" : true,
+            "AX_Data" : {
+              "_endpoints" : "'8202'",
+              "_img" : "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'",
+              "_runList" : "'role[axrole]'",
+              "_os" : "Windows",
+              "_version" : "2013-R3"
+            },
+            "MS_SQL" : false,
+            "MSSQL_Data" : {
+              "_endpoints" : "'1433'",
+              "_img" : "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'",
+              "_runList" : "role[sqlserverrole]",
+              "_os" : "Windows",
+              "_version" : "2012-express"
+            }
+          }
+        },
+        "1" : {
+          "_vmName" : "ExtraLarge",
+          "_vmRole" : "MS_SQL",
+          "_vmPackages" : {
+            "MS_SQL" : true,
+            "MSSQL_Data" : {
+              "_endpoints" : "'1433'",
+              "_img" : "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'",
+              "_runList" : "'role[sqlserverrole]'",
+              "_os" : "Windows",
+              "_version" : "2012-express"
+            },
+            "Sonarqube" : false,
+            "Sonarqube_Data" : {
+              "_endpoints" : "'9000,9002,9009'",
+              "_img" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'",
+              "_runList" : "'role[sonar_role]'",
+              "_os" : "Centos",
+              "_version" : "2.11.2-06"
+            },
+            "Nexus" : false,
+            "Nexus_Data" : {
+              "_endpoints" : "'8081'",
+              "_img" : "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'",
+              "_runList" : "role[nexusrole]",
+              "_os" : "Ubuntu",
+              "_version" : "2.11.2-06"
+            }
+          }
+        }
+      },
+	  
+	  "2" : {
+          "_vmName" : "Large",
+          "_vmRole" : "Load_Balancer",
+          "_vmPackages" : {
+            "AOS_Server" : true,
+            "Aos_Data" : {
+              "_endpoints" : "'8101'",
+              "_img" : "'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-20160229-en.us-127GB.vhd'",
+              "_runList" : "'role[aosrole]'",
+              "_os" : "Windows",
+              "_version" : "2013-R3"
+            },
+            "Sonarqube" : false,
+            "Sonarqube_Data" : {
+              "_endpoints" : "'9000,9002,9009'",
+              "_img" : "'5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-71-20150605'",
+              "_runList" : "'role[sonar_role]'",
+              "_os" : "Centos",
+              "_version" : "2.11.2-06"
+            },
+            "Nexus" : false,
+            "Nexus_Data" : {
+              "_endpoints" : "'8081'",
+              "_img" : "'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_3-LTS-amd64-server-20151217-en-us-30GB'",
+              "_runList" : "role[nexusrole]",
+              "_os" : "Ubuntu",
+              "_version" : "2.11.2-06"
+            }
+          }
+        }
+      
+    }]
+}]

@@ -83,13 +83,14 @@ $(document).on('click', 'li#Templates', function(){
 	
 });
 function themeChange(ev){
+	var th = document.getElementById("myTheme");
 	if(ev.value == "Classic"){
 		localStorage.setItem("Theme", ev.value);
 		//var li = document.createElement("link");
 		//li.id=ev.value
 		//li.rel="stylesheet";
 		location.reload();
-		var th = document.getElementById("myTheme");
+		
 		th.href="css_1/style.css";
 		//document.getElementsByTagName("head")[0].appendChild(li);
 		
@@ -99,7 +100,6 @@ function themeChange(ev){
 		//var li = document.createElement("link");
 			//li.rel="stylesheet";
 			//li.id=ev.value
-			var th = document.getElementById("myTheme");
 				th.href="theme/theme1.css"
 				//document.getElementsByTagName("head")[0].appendChild(li);
 	}
@@ -110,7 +110,7 @@ function LayOut1(){
 }
 LayOut1.prototype = {
 	primaryLins:{
-		level_1:["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
+		level_1:["Dashboard","Design","Deploy","Manage","Monitor"],
 		level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
 		level_2_1:["VPC","Subnet","Security Gruop","Route Table","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
 		//level_2_2:["View Templates","Create Templat"],
@@ -217,9 +217,6 @@ LayOut1.prototype = {
 	assignIcons:function(){
 	}
 }
-
-
-
 ///////////////////////////////////////// Theme2
 function LayOut(){
 	this.open = true;
@@ -227,7 +224,12 @@ function LayOut(){
 }
 LayOut.prototype = {
 	primaryLins:{
-		level_1:["Accounts","Design","Deploy","Manage","Monitor","Projects"],
+		deployPrime:["Infrastructure","DevOps Template","Product Template"],
+		
+		designPrime:["Infrastructure Template","DevOps Template","Product Template"],
+			//level_1designPrime:["View","Create","Deploy"],
+			level_1designPrime:["View","Deploy"],
+		level_1:["Accounts","Design","Deploy","Manage","Monitor"],
 								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
 								level_2:["Networks","Templates"],
 														level_2_2:["View Templates","Create Templat"],
@@ -235,7 +237,7 @@ LayOut.prototype = {
 														level_2a1:["Single Node"],
 														level_2a2:["Account Templates"],
 		level_2_1:["VPC","Subnet","Security Gruop","Route Table","VPN Connection","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
-		level_5:["Setup Devops"],
+		
 
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
 		// Dashboard:{1:"Templates", 2:"Node", 3:"Blueprint", 4:"Networks",
@@ -243,6 +245,17 @@ LayOut.prototype = {
 		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
 	},
 	createParentView: function(){
+		var th = $("#themeNav").parent();
+			$(th).prepend("<ul id='designLin'></ul>");
+		
+		var dl = document.getElementById("designLin") || false;
+			
+		for(d=0; d<= this.primaryLins.designPrime.length-1; d++ ){
+			dl.innerHTML+='<li class="link_Prime" id="design_'+d+'">\
+								'+this.primaryLins.designPrime[d]+'\
+							</li>';
+		}
+		
 		var navv = document.getElementById("navDiv"), i;
 		for(i=0; i<= this.primaryLins.level_1.length-1; i++ ){
 			navv.innerHTML+='<li class="link_Prime" id='+this.primaryLins.level_1[i]+'>\
@@ -254,7 +267,8 @@ LayOut.prototype = {
 		this.pagNav();this.activeTab();
 	},
 	createSubView:function(elementId){
-		var subL0_1 = document.getElementById("themeNav");
+		var subL0_1 = document.getElementById("themeNav"),
+			dl = document.getElementById("designLin") || false;
 		if(subL0_1 === null){
 			return false;
 		}else{
@@ -273,20 +287,47 @@ LayOut.prototype = {
 							<span class="myTe">'+this.primaryLins.level_2a[i]+'</span>\
 							</li>';
 			}
+		}else if(pt === "/create_devOps_template"){
+			$("#link_1_0, #themeNav").hide();
+			dl.innerHTML="";
+			for(d=0; d<= this.primaryLins.designPrime.length-1; d++ ){
+				dl.innerHTML+='<li class="link_Prime" id="creDevTem'+d+'">\
+									'+this.primaryLins.designPrime[d]+'\
+								</li>';
+			}
+			$("#Design, #creDevTem1").addClass("active");
 		}
-		this.createSubView1();
-	},
-	
-	createSubView1:function(){
-		var subL1 = document.getElementById("link_5");
-		for(i=0; i<= this.primaryLins.level_5.length-1; i++ ){
-			subL1.innerHTML+='<li id='+this.primaryLins.level_5[i]+'>'+this.primaryLins.level_5[i]+'</li>';
+		else if(pt === "/vpc"){
+			//$("#Templates").hide();
 		}
+		/*
+		else if(pt === "/viewProductTemplate" || pt === "/deployProductTemplate"){
+			$("#link_1_0").hide();
+			subL0_1.style="margin-bottom:5px;"
+			subL0_1.innerHTML="";
+			for(i=0; i<= this.primaryLins.level_1designPrime.length-1; i++ ){
+			subL0_1.innerHTML+='<li id=viewProTe'+i+'>\
+							<span class="myTe">'+this.primaryLins.level_1designPrime[i]+'</span>\
+							</li>';
+			}
+		}*/
+		else if(pt === "/viewDevOpsTemplate"){
+			$("#link_1_0").hide();
+			subL0_1.style="margin-bottom:5px;"
+			subL0_1.innerHTML="";
+			for(i=0; i<= this.primaryLins.level_1designPrime.length-1; i++ ){
+			subL0_1.innerHTML+='<li id=viewDevTe'+i+'>\
+							<span class="myTe">'+this.primaryLins.level_1designPrime[i]+'</span>\
+							</li>';
+			}
+		}
+		
 		this.createSubView3();
 	},
-	
 	createSubView3:function(){
-		var subL0 = document.getElementById("link_1_0");
+		var subL0 = document.getElementById("link_1_0"),
+			subL0_1 = document.getElementById("themeNav"),
+			dl = document.getElementById("designLin") || false;
 		for(i=0; i<= this.primaryLins.level_2_1.length-1; i++ ){
 			if(this.primaryLins.level_2_1[i] == "Key Pair" || this.primaryLins.level_2_1[i] == "Internet Gate Way" || this.primaryLins.level_2_1[i] == "VPN Connection"){
 				subL0.innerHTML+='<li role="forAWS" id='+"3rd"+this.primaryLins.level_2_1[i]+'>'+this.primaryLins.level_2_1[i]+'</li>';
@@ -299,7 +340,7 @@ LayOut.prototype = {
 			}
 		}
 		var pt = location.pathname;
-		if(pt === "/master_2" || pt === "/create_template" || pt === "/addData"){
+		if(pt === "/create_template" || pt === "/addData"){
 			var subL0 = document.getElementById("link_1_0");
 				subL0.innerHTML="";
 			for(i=0; i<= this.primaryLins.level_2_2.length-1; i++ ){
@@ -312,27 +353,52 @@ LayOut.prototype = {
 			/*for(i=0; i<= this.primaryLins.level_2a1.length-1; i++ ){
 				subL0.innerHTML+='<li id='+"3rd"+[i]+this.primaryLins.level_2a1[i]+'>'+this.primaryLins.level_2a1[i]+'</li>';
 			}*/
+		}else if(pt === "/master_2" || pt === "/viewDevOpsTemplate" || pt === "/deployDivOpsTemplate" || pt === "/viewProductTemplate" || pt === "/deployProductTemplate" || pt==="/deployTemplate"){
+			dl.innerHTML="";
+			for(d=0; d<= this.primaryLins.deployPrime.length-1; d++ ){
+				dl.innerHTML+='<li class="link_Prime" id="deploy'+d+'">\
+									'+this.primaryLins.deployPrime[d]+'\
+								</li>';
+				}
+			subL0.innerHTML="";
+			$("#link_1_0").hide();
+			subL0.style="margin-bottom:-6px;"
+			subL0_1.innerHTML="";
+			for(i=0; i<= this.primaryLins.level_1designPrime.length-1; i++ ){
+			subL0_1.innerHTML+='<li id=depInfra'+i+'>\
+							<span class="myTe">'+this.primaryLins.level_1designPrime[i]+'</span>\
+							</li>';
+			}
+			//$("#design_0, #deploy0, #depInfra0").addClass("active");
 		}
 	},
 	activeTab:function(){
 		var pt = location.pathname;
-			pt === "/accounts" ? $("#Accounts").addClass("active") : false ;
+			pt === "/viewDevOpsTemplate" ? $("#depInfra0, #Deploy, #deploy1").addClass("active") : false;
+			pt === "/deployDivOpsTemplate" ? $("#depInfra1, #Deploy, #deploy1").addClass("active") : false;
+			
+			pt === "/viewProductTemplate" ? $("#depInfra0, #Deploy, #deploy2").addClass("active") : false;
+			pt === "/deployProductTemplate" ? $("#depInfra1, #Deploy, #deploy2").addClass("active") : false;
+			//pt === "/viewProductTemplate" || pt === "/deployProductTemplate" ? $("#design_2, #viewProTe0, #Deploy").addClass("active") : false;
 		
-			pt === "/vpc" ? $("#3rdVPC, #Networks, #Design").addClass("active") : false ;
-			pt === "/subnet" ? $("#3rdSubnet, #Networks, #Design").addClass("active") : false ;
-			pt === "/keyPair" ? $("#3rdKey, #Networks, #Design").addClass("active") : false ;
+			pt === "/accounts" ? $("#Accounts").addClass("active") : false;
+		
+			pt === "/vpc" ? $("#3rdVPC, #design_0, #Networks, #Design, #design_0").addClass("active") : false;
+			pt === "/subnet" ? $("#3rdSubnet, #design_0, #Networks, #Design").addClass("active") : false;
+			pt === "/keyPair" ? $("#3rdKey, #design_0, #Networks, #Design").addClass("active") : false;
 			
-			pt === "/localNetworkGateWay" ? $("#3rdLocal, #Networks, #Design").addClass("active") : false ;
-			pt === "/internetGateWay" ? $("#3rdInternet, #Networks, #Design").addClass("active") : false ;
+			pt === "/localNetworkGateWay" ? $("#3rdLocal, #Networks, #Design").addClass("active") : false;
+			pt === "/internetGateWay" ? $("#3rdInternet, #Networks, #Design").addClass("active") : false;
 			
-			pt === "/vpnConnection" ? $("#3rdVPN, #Networks, #Design").addClass("active") : false ;
+			pt === "/vpnConnection" ? $("#3rdVPN, #Networks, #Design").addClass("active") : false;
 			pt === "/DNSZone" ? $("#3rdDNS, #Networks, #Design").addClass("active") : false ;
 			pt === "/endPoint" ? $("#3rdEnd, #Networks, #Design").addClass("active") : false ;
-			pt === "/virtualNetworkGatway" ? $("#3rdVirtual, #Networks, #Design").addClass("active") : false ;
+			pt === "/virtualNetworkGatway" ? $("#3rdVirtual, #Networks, #Design").addClass("active") : false;
 			
-			pt === "/securityGroup" ? $("#3rdSecurity, #Networks, #Design").addClass("active") : false ;
+			pt === "/securityGroup" ? $("#3rdSecurity, #Networks, #Design").addClass("active") : false;
 			pt === "/routeTable" ? $("#3rdRoute, #Networks, #Design").addClass("active") : false ;
-			pt === "/master_2" ? $("#Templates, #Design, #3rd0View").addClass("active") : false ;
+			pt === "/deployTemplate" ? $("#Templates, #Deploy, #3rd0View, #design_0, #deploy0, #depInfra1").addClass("active") : false ;
+			pt === "/master_2" ? $("#Templates, #Deploy, #3rd0View, #design_0, #deploy0, #depInfra0").addClass("active") : false ;
 			pt === "/create_template" ? $("#Templates, #Design, #3rd1Create").addClass("active") : false ;
 			pt === "/addData" ? $("#Templates, #Design, #3rd2addData").addClass("active") : false ;
 			pt === "/manageEnv" ? $("#Manage").addClass("active") : false ;
@@ -342,6 +408,21 @@ LayOut.prototype = {
 			pt === "/assignNode" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 	},
 	pagNav:function(){
+		$("#design_1").click(function(){location.href = location.origin+"/create_devOps_template";});
+		
+		$("#deploy0").click(function(){location.href = location.origin+"/master_2";});
+		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		$("#deploy2").click(function(){location.href = location.origin+"/viewProductTemplate";});
+		
+		$('#depDevTe0').click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		$('#depDevTe1').click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		$('#depDevTe2').click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		
+		$('#creDevTem0').click(function(){location.href = location.origin+"/vpc";});
+		$('#creDevTem1').click(function(){location.href = location.origin+"/create_devOps_template";});
+		//$('#creDevTem2').click(function(){location.href = location.origin+"/viewProductTemplate";});
+		
+		
 		$('#Accounts').click(function(){location.href = location.origin+"/accounts";});
 		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
@@ -367,7 +448,8 @@ LayOut.prototype = {
 		$('#3rd1Create').click(function(){location.href = location.origin+"/create_template"});
 		$('#3rd2addData').click(function(){location.href = location.origin+"/addData"});
 		
-		$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/nodeTemplates"});
+		//$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/nodeTemplates"});
+		$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/master_2"});
 		$('#p1Templates').click(function(){location.href = location.origin+"/accountTemplates"});
 	},
 	lnav: document.getElementById("leftNavigation"),
