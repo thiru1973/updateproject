@@ -34,7 +34,9 @@ exports.preview = function(req, res){
 				}		 
 			});	
 };
-
+exports.importvm = function(req,res){
+	res.render('importvm');
+}
 exports.viewdata = function(req,res){
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);	
@@ -234,6 +236,7 @@ exports.authentication = function(req, res){
 			 res.send(result);
 		 	 }, 2000);*/
 	res.setHeader("Access-Control-Allow-Origin", "*");
+	console.log(req.body);
 	var username = req.body.userName, password = req.body.passWord;		 
 	ad.authenticate(username, password, function(err, auth) {
 		  if (err) {
@@ -336,4 +339,78 @@ exports.getSubProviders = function(req, res){
 				res.send(result.rows);
 			});
 		});
+}
+
+exports.getvms = function(req, res){
+	console.log(req.body);
+	client_pg.query("SELECT * from deployment_env_sync where prov_id = ($1) and p_name = ($2)",[req.body.provider, req.body.project],function(err, result){
+				if(err){
+					throw err;
+				}
+				res.send(result.rows);
+			});
+}
+
+exports.syncVmData = function(req, res){
+	var syncData;
+	if(req.body.provider == "Azure"){
+	client_pg.query("SELECT * from deployment_env_sync where prov_id = ($1) and p_name = ($2)",[req.body.provider, req.body.project],function(err, result){
+				if(err){
+					throw err;
+				}
+				syncData = result.rows;
+				var cnt = 0;
+				for(var i=0;i<syncData.length;i++)
+				{
+					client_pg.query("SELECT * from deployment_env where cloud_name = ($1) and inst_type = ($2)",[syncData[i].cloud_name,syncData[i].inst_id],function(err, syresult){
+						if(err){
+							throw err;
+						}
+						var syncresult = syresult.rows;
+						cnt = syncData.length-(syncData.length-cnt);
+						//console.log(cnt);
+						if(syncresult.length == 0){
+							client_pg.query("INSERT INTO deployment_env(prov_id,region,env_name,p_name,p_id,vpc_name,subnet_name,inst_type,inst_id,image,role,status,cloud_name,accountid,product_name,type) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)", 
+								['Azure', syncData[cnt].region, syncData[cnt].env_name, syncData[cnt].p_name, syncData[cnt].p_id, syncData[cnt].vpc_name, syncData[cnt].subnet_name, syncData[cnt].inst_type, syncData[cnt].inst_type,syncData[cnt].image, syncData[cnt].role, syncData[cnt].status , syncData[cnt].cloud_name, syncData[cnt].accountid, syncData[cnt].product_name,syncData[cnt].type],
+							function(err, writeResult) {
+								console.log('err',err,'pg writeResult',writeResult);							
+							});
+						}	
+						cnt++;
+					});
+					
+				}
+				res.send("Success");
+			});
+	}else if(req.body.provider == "AWS"){
+		client_pg.query("SELECT * from deployment_env_sync where prov_id = ($1) and p_name = ($2)",[req.body.provider, req.body.project],function(err, result){
+				if(err){
+					throw err;
+				}
+				syncData = result.rows;
+				var cnt = 0;
+				for(var i=0;i<syncData.length;i++)
+				{
+					client_pg.query("SELECT * from deployment_env where vpc_name = ($1) and inst_id = ($2)",[syncData[i].vpc_name,syncData[i].inst_id],function(err, syresult){
+						if(err){
+							throw err;
+						}
+						var syncresult = syresult.rows;
+						console.log(syncresult);
+						cnt = syncData.length-(syncData.length-cnt);
+						if(syncresult.length == 0){
+							client_pg.query("INSERT INTO deployment_env(prov_id,region,env_name,p_name,p_id,vpc_name,subnet_name,inst_type,inst_id,image,role,status,cloud_name,accountid,product_name,type) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)", 
+								['Aws', syncData[cnt].region, syncData[cnt].env_name, syncData[cnt].p_name, syncData[cnt].p_id, syncData[cnt].vpc_name, syncData[cnt].subnet_name, syncData[cnt].inst_type, syncData[cnt].inst_id,syncData[cnt].image, syncData[cnt].role, syncData[cnt].status , syncData[cnt].cloud_name, syncData[cnt].accountid, syncData[cnt].product_name,syncData[cnt].type],
+							function(err, writeResult) {
+								console.log('err',err,'pg writeResult',writeResult);							
+							});
+						}
+						cnt++;
+					});
+					
+				}
+				res.send("Success");
+			});
+		
+	}
 }

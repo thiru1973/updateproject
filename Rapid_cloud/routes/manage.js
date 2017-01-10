@@ -1060,12 +1060,11 @@ exports.volumeDetails = function(req,res){
 }
 exports.volumeDetails1 = function(req,res){
 	res.setHeader("Access-Control-Allow-Origin", "*");
-	client_pg.query("SELECT * FROM volume ",function(err, result){
+	client_pg.query("SELECT * FROM volume where status = ($1)",["Not"],function(err, result){
 		if(err){
 		throw err;
 		}
 		var rows = result.rows;
-		console.log(rows)
 		res.send(rows);
 		 });
 }
@@ -1142,7 +1141,47 @@ exports.attachSecGrp = function(req,res){
 	var result= obj1.attach();	
 	res.send(result);
 }
+exports.deleteSecGrp = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	console.log(req.body);
+	getAwsCred.getAwsMethod(req.body.accName,req.body.projName,req.body.prodName);
+	     setTimeout(function(){
+			   var arr = ["AWS", "delete_sec_grp",auth1, auth2, req.body.region , req.body.secGrpId];
+			   //console.log(arr);
+			   client.invoke("assign", arr, function(error, resq, more) {       
+			   });
+			   
+			   res.send("Success");
+	     }, 2000);
+}
 
+exports.deleteVol = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	console.log(req.body);
+	getAwsCred.getAwsMethod(req.body.accName,req.body.projName,req.body.prodName);
+	     setTimeout(function(){
+			   var arr = ["AWS", "delete_vol",auth1, auth2, req.body.region , req.body.volName];
+			   //console.log(arr);
+			   client.invoke("assign", arr, function(error, resq, more) {       
+			   });
+			   
+			   res.send("Success");
+	     }, 2000);
+}
+exports.attachVol = function(req, res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	console.log(req.body);
+	getAwsCred.getAwsMethod(req.body.accName,req.body.projName,req.body.prodName);
+	     setTimeout(function(){
+			   var arr = ["AWS", "attach_vol",auth1, auth2, req.body.region , req.body.instId, req.body.volumeId];
+			   console.log(arr);
+			   client.invoke("assign", arr, function(error, resq, more) {  
+			   });
+			   
+			   res.send("Success");
+	     }, 2000);
+	
+}
 exports.loadBalancerCreate = function(req, res){
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result = JSON.stringify(req.body);
@@ -1936,6 +1975,46 @@ exports.resGroup_action= function(req, res){
 			}			
 	     }, 2000);		
 		
+}
+//Service to sync the vm details from the azure subscription
+exports.upadatevm_details = function(req, res){
+	console.log(req.body);
+	if(req.body.Provider == "Azure"){
+		getAwsCred.getAzureCred(req.body.accName,req.body.projName,req.body.prodName);
+		setTimeout(function(){
+				var prod_id;
+			client_pg.query("SELECT pd_id FROM product where prod_name = ($1);",[req.body.prodName], function(err, result){
+			if(err){
+			throw err;
+			}
+			rows2 = result.rows;
+			prod_id = rows2[0].pd_id;
+			var list1 = {vm_id : 1, provider : req.body.Provider, userName : uName, pwd : pWord, project : req.body.projName, pd_id : prod_id};
+					var msg = saveObject(list1, "getVms");
+					var retVal = executeScript("getVms.ps1");
+					res.send("Success");
+			});	
+				
+			 }, 2000);
+	}else{
+		getAwsCred.getAwsMethod(req.body.accName,req.body.projName,req.body.prodName);
+		setTimeout(function(){
+				var prod_id;
+			client_pg.query("SELECT pd_id FROM product where prod_name = ($1);",[req.body.prodName], function(err, result){
+			if(err){
+			throw err;
+			}
+			rows2 = result.rows;
+			prod_id = rows2[0].pd_id;
+			var list1 = {vm_id : 1, provider : req.body.Provider, userName : auth1, pwd : auth2, project : req.body.projName, pd_id : prod_id};
+					var msg = saveObject(list1, "getVms");
+					var retVal = executeScript("getVms.ps1");
+					res.send("Success");
+			});	
+				
+			 }, 2000);
+	}		 
+	
 }
 
 

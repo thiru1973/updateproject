@@ -53,6 +53,19 @@ exports.master = function(req,res){
 	res.render('master');
 };
 
+////devops template pages
+exports.deployDivOpsTemplate = function(req, res){
+	res.render("deployDivOpsTemplate");
+} 
+
+exports.viewProductTemplate = function(req, res){ 
+res.render('viewProductTemplate');
+ }
+ 
+exports.deployProductTemplate = function(req, res){ 
+res.render('deployProductTemplate');
+ }
+///////////
 /* New Pages*/
 exports.master_2 = function(req,res){
 	res.render('master_2');
@@ -112,7 +125,10 @@ exports.accountTemplates = function(req,res){
 exports.nodeTemplates = function(req, res){
 	res.render('nodeTemplates');
 }
+exports.viewDevOpsTemplate = function(req,res){
+res.render('viewDevOpsTemplate');
 
+};
 
 /*Old page functions*/
 exports.index = function(req, res){

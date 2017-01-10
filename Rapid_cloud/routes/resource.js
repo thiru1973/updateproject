@@ -113,26 +113,52 @@ exports.devopsTemplate = function(req,res){
 exports.devopsTemp = function(req, res){
 	res.render("devops");
 }
-exports.saveDevopsTemplate = function(req,res){
 
-	var result=JSON.stringify(req.body);	
+exports.saveDevopsTemplate = function(req,res){
+	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
-	//console.log(Obj);
+	//console.log(Obj.d1); 
+	var d1 = Obj.d1;
+	var dt_obj = JSON.parse(d1);
+	//console.log(dt_obj);
+	MongoClient.connect(url, function (err, db){
+		if (err){
+		console.log('Unable to connect to the mongoDB server. Error:', err);
+		} else {
+			console.log('Connection established');
+			//var DB_data = {obj:{"templateDetails":{"_templateName":"testazure_980","_projectName":"Demo_proj","_technology":"Java","_tool_name":"Java"},"CI_vms":{"vms":{"0":{"_vmName":"Medium","_vmRole":"WebServer","_vmPackages":{"Jenkins":false,"Sonarqube":false,"Nexus":false}},"1":{"_vmName":"Medium","_vmRole":"ApplicationServer","_vmPackages":{"Jenkins":true,"Sonarqube":true,"Nexus":false}}}},"CT_vms":{"vms":{}},"CD_vms":{"vms":{}}}};
+			var DB_data = {deployTemplate:dt_obj};
+			var instance=db.collection('devops_template_save');
+			instance.insert(DB_data, function (err, result){
+			if (err) {
+				console.log(err);
+				} else {
+				console.log('Inserted values sucess fully');
+				res.send("success");
+				}
+				db.close();
+				});
+		}
+	});
+}
+
+
+exports.deploydbData = function(req, res){
 	MongoClient.connect(url, function (err, db) {
 		  if (err) {
 						console.log('Unable to connect to the mongoDB server. Error:', err);
 				   } else {
 					console.log('Connection established');
 					var instance=db.collection('devops_template_save');									
-					instance.insert([Obj], function (err, result) {
-		      				if (err) {
-		        					console.log(err);
-		     					 } else {
-		        		console.log('Inserted values sucess fully');
-						res.send("Saved DevOps template");
-		      			}
-		      			db.close();
-		    			});					
-				}		 
-			});	
-}
+					instance.find().toArray(function(err,result){
+					if(err){
+							throw err
+							}
+						else{
+								res.send(result);
+							}
+					 db.close();					
+					});					
+				}
+		});
+};

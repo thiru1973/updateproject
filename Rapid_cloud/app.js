@@ -167,12 +167,15 @@ app.get('/nodeTemplates', routes.nodeTemplates);
 app.get('/accountTemplates', routes.accountTemplates);
 
 //Manage stg, sec, kp
-app.get('/volumeDetails', manage.volumeDetails);
+app.get('/volumeDetails1', manage.volumeDetails1);
 app.post('/keyPairDetails', manage.keyPairDetails);
 app.get('/secGrpDetails', manage.secGrpDetails);
 app.post('/attachVolume', manage.attachVolume);
 app.get('/attachKeyPair', manage.attachKeyPair);
 app.get('/attachSecGrp', manage.attachSecGrp);
+app.post('/deleteSecGrp',manage.deleteSecGrp);
+app.post('/deleteVol', manage.deleteVol);
+app.post('/attachVol', manage.attachVol);
 app.post('/azureLoad',manage.azLoadBalancer);
 app.post('/straccount', manage.straccount);
 app.post('/azureEndPoint', manage.azureEndPoint);
@@ -218,12 +221,25 @@ app.get('/multicloud', routes.multicloud);
 app.get('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
+app.get('/createDevTemp', account.createDevTemp);
+app.get('/viewDevOpsTemplate', routes.viewDevOpsTemplate);
+app.get('/deploydbData', resources.deploydbData);
+app.get('/deployDivOpsTemplate', routes.deployDivOpsTemplate);
+
+//Product Templates
+app.get('/viewProductTemplate', routes.viewProductTemplate);
+app.get('/deployProductTemplate', routes.deployProductTemplate);
+
 
 //Resource group actions
 app.post('/resGroup_action', manage.resGroup_action);
 //Get the provider name
 app.post('/getSubProviders', view.getSubProviders);
-
+//Sync the vm details to datbase
+app.post('/upadatevm_details', manage.upadatevm_details);
+app.get('/importvm',view.importvm);
+app.post('/getvms', view.getvms);
+app.post('/syncVmData', view.syncVmData);
 //var url = "http://172.29.59.65:3001/add";
 //Outside service
 /*http.get(url, function(response) {

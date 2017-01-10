@@ -86,6 +86,31 @@ $(document).ready(function(){
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
 
+	var data = {};
+	data.account = accountName;
+	data.project = projName;
+		$.ajax({
+			     type: 'POST',
+				 jsonpCallback: "callback",
+			     datatype: 'jsonp',
+			     data: data,	 
+			     url: 'http://172.29.59.65:3000/getSubProviders',
+			     success: function(results) {	
+						console.log(results);
+						for(var i=0;i<results.length;i++)
+						{
+							//roLee[i] = results[i].provider;
+							var tT = document.getElementById("sels");
+								tT.innerHTML+='<li onclick="selectOpt(this,'+i+')" class="Dev"><dl><dt></dt><dd class="va">'+results[i].provider+'</dd></dl></li>';					
+			
+						}
+						//addProvider(roLee);
+			    	 },
+				 error: function (xhr, status, error){
+			        console.log('Failure');
+					alert("failure");
+					},
+			   });
 
 	// Subnet Single and Public
 	$('#vpcs_check, #vpcp_check').on('change', function(){
@@ -93,6 +118,7 @@ $(document).ready(function(){
 		this.id == "vpcp_check" ? $('.publicAndPrivateSubnet').show() : false ;
 		this.id == "vpcs_check" ? $('.publicAndPrivateSubnet').hide() : false ;
 	})
+	
 })
 /* Drop-down menu -------------- End
  * 

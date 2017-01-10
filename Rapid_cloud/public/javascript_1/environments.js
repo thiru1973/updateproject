@@ -10,19 +10,20 @@ $(document).ready(function(){
 		event.stopPropagation();
 		$(e).parent(".dropDown").slideUp();
 	}
-	$(".clickRole").click(function(e){		
-		e.stopPropagation();
-		if ($(this).find(".dropDown").css('display') == 'block'){
-			$(this).find(".dropDown").slideUp();
-		}else{
-			$(".dropDown").slideUp();
-			$(this).find(".dropDown").slideDown();
-		}
-	});
 	$(document).on("click", function () {
 		$(".dropDown").slideUp();
 	});
-
+	$(document).on("click",".clickRole",function(e){
+	e.stopPropagation();
+	if ($(this).find(".dropDown").css('display') == 'block'){
+		$(this).find(".dropDown").slideUp();
+	}else{
+		$(".dropDown").slideUp();
+		$(this).find(".dropDown").slideDown();
+	}
+	});
+	$(".proDiv ,.popupData").hide();
+	$(".popData").hide();
 	/* End Dropdown function */
 	$("#volumeDetailsPopup").hide();
 	$(".close, .cancelPoup").click(function(){
@@ -40,6 +41,23 @@ $(document).ready(function(){
 	,prodName = localStorage.getItem("ProductName");
 	var theDiv = document.getElementById("data");
 	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName;
+	var data = {};
+	data.account = accountName;
+	data.project = projName;
+		$.ajax({
+			     type: 'POST',
+				 jsonpCallback: "callback",
+			     datatype: 'jsonp',
+			     data: data,	 
+			     url: 'http://172.29.59.65:3000/getSubProviders',
+			     success: function(results) {	
+						sessionStorage.setItem("Provider", results[0].provider);
+			    	 },
+				 error: function (xhr, status, error){
+			        console.log('Failure');
+					alert("failure");
+					},
+			   });
 });
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
@@ -1462,7 +1480,7 @@ function getPublicIp(valuee, append){
 		data.cldsrvc = arr[3];
 		data.role = arr[4];
 		console.log(data);
-		/*$.ajax({
+		$.ajax({
 	        type: 'POST',
 	   	 	jsonpCallback: "callback",
 	        datatype: 'jsonp',
@@ -1477,7 +1495,7 @@ function getPublicIp(valuee, append){
 	                 console.log('Failure');
 	         		alert("failure");
 	         		},
-	            });*/
+	            });
 		}
 	}
 	Projects.prototype.resNodeAction = function(arr,action){
@@ -1792,83 +1810,49 @@ Array.prototype.equals = function (array) {
 // Hide method from for-in loops
 Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
-var n = 0;
-function createVol(num){
-	var id = num, nn;
-	n++;
-	if(id ==0){
-		nn = "inB1";
-	}else if(id == 1){
-		nn = "outB1"
-	}else if(id == 2){
-		nn = "volumes1"
-	var dd = document.getElementById(nn);
-		dd.innerHTML+='<div id="r_'+n+'">\
-					<div class="pull-left padRit">\
-							<label class="labelTemp">Volume Type</label>\
-							<div class="clickRole temp1stRowWid" id="">\
-								<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
-							</div>\
-						</div>\
-						<div class="pull-left" >\
-							<label class="labelTemp">Volume Size</label>\
-							<div class="clickRole" style="margin-right:10px">\
-								<input type="number" id="mPort" placeholder="Public Port" style="border:none;width:100%;">\
-							</div>\
-						</div>\
-						<div class="pull-left padRit">\
-							<label class="labelTemp">IOPS</label>\
-							<div class="clickRole temp1stRowWid" id="">\
-								<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
-							</div>\
-						</div>\
-						<div class="pull-left padRit">\
-							<label class="labelTemp">Volume Name</label>\
-							<div class="clickRole temp1stRowWid" id="">\
-								<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
-							</div>\
-						</div>\
-						<div class="pull-left padRit" style="padding-top: 32px;">\
-							<span class="glyphicon glyphicon-minus-sign" onclick="removeRow(this,'+n+');" id="addRole" style="color:#999999;"></span>\
-						</div>\
-						<div style="clear:both;">&nbsp;</div></div>';
-				return;
-	}
-	var epn = document.getElementById(nn);
-		epn.innerHTML+='<div id="r_'+n+'"><div class="pull-left padBot padRit">\
-						<label class="labelTemp">From Port</label>\
-						<div class="clickRole temp1stRowWid" id="">\
-							<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
-						</div>\
-					</div>\
-					<div class="pull-left padBot padRit">\
-						<label class="labelTemp">To Port</label>\
-						<div class="clickRole temp1stRowWid" id="">\
-							<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
-						</div>\
-					</div>\
-					<div class="pull-left padBot padRit">\
-						<label id="" class="labelTemp"><span> CIDR IP</span></label>\
-						<div id="vnT12_" class="clickRole temp1stRowWid"><span>Select</span>\
-							<ul id="vnT12_Drop" class="dropDown" style="display: none;">\
-								<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Anywhere</dd></dl></li>\
-								<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">My IP</dd></dl></li>\
-								<li onclick="selectOpt(this,2)" class="Test"><dl><dt></dt><dd class="va">Custom IP</dd></dl></li>\
-							</ul>\
-							<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
-						</div>\
-					</div>\
-					<div class="pull-left padBot padRit">\
-						<label class="labelTemp">&nbsp;</label>\
-						<div class="clickRole temp1stRowWid" id="">\
-							<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">\
-						</div>\
-					</div>\
-					<div class="pull-left padBot padRit" style="padding-top: 34px;">\
-						<span class="glyphicon glyphicon-minus-sign" onclick="removeRow(this,'+n+');" id="addRole" style="color:#999999;"></span>\
-					</div>\
-					<div style="clear:both;">&nbsp;</div></div>';
-}
-function removeRow(ev, n){
-	$("#r_"+n).remove();
+
+function updatevmsFunc(){
+	//alert("get vm function");
+	var accountName = localStorage.getItem("Account")
+	    ,projName = localStorage.getItem("ProjectName")
+	    ,prodName = localStorage.getItem("ProductName");
+		var data = {};
+		data.accName = accountName;
+		data.projName = projName;
+		data.prodName = prodName;
+		data.Provider = sessionStorage.getItem("Provider");
+		console.log(data);
+		$.ajax({
+	        type: 'POST',
+	   	 	jsonpCallback: "callback",
+	        datatype: 'jsonp',
+	        data: data,
+	        url: _ip+'/upadatevm_details',
+	        success: function(data, textStatus){
+	        	alert(data);
+				location.href="//172.29.59.65:3000/importvm"
+				/*$(".popupData, .proDiv").show(); 
+				        var int = setInterval(hideme, 1*60000); 
+				        
+				        var i = 1*60000/1000;  
+				        var count = 0; 
+				        setInterval(function (){ 
+				                console.log(i--); 
+				                if(i%60 == 0){ 
+				                         
+				                }				                
+				         }, 1000);
+						function hideme(){
+								$(".deployText, #loadingImg").hide();
+								
+								//$(".popupData, .proDiv").hide();
+								console.log(int);
+								window.clearInterval(int);
+							}*/
+	        	},
+	        	 error: function (xhr, status, error){
+	                 console.log('Failure');
+	         		alert("failure");
+	         		},
+	            });
 }

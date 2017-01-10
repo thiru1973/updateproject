@@ -118,12 +118,10 @@
 			 <nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
 			<header>
 				<h1>Manage Security Groups<a href=""></a></h1>
-				<!--<aside>
-					<input type="text" value="Search">
-				</aside>-->
+				<aside><div id="data"></data></aside>
 			</header>
-			<div style="clear:both;">&nbsp;</div>
-			<div class="roles">
+			
+			<div class="roles" style="display:none;"><div style="clear:both;">&nbsp;</div>
 				<div class="pull-left">
 					<label id="" class="labelTemp"><span>Projects</span></label>
 					<div id="typeDro1" class="clickRole temp1stRowWid"><span>Select</span>
@@ -154,7 +152,22 @@
 				</div>
 			</div>
 			<div style="clear:both;">&nbsp;</div>
-			<div class="countConfigBox">
+			<div>
+				<table class="nodeSel enviTable">
+					<tr id="sGTable">
+						<th>Security Group Name</th>
+						<th>Security Group ID</th>
+						<th>VPC ID</th>
+						<th>From Port</th>													
+						<th>To Port</th>
+						<th>CIDR</th>
+						<th>Region</th>
+						<th>Actions</th>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="" style="display:none;">
 					<table style="width:100%">
 						<tr>
 							<td>
@@ -218,6 +231,8 @@
 						</tr>									
 					</table>
 				</div>
+				
+			
 			<section role="createTemplate" style="display:none;">
 				<div style="clear:both;">&nbsp;</div>
 				<div class="countConfigBox">
@@ -326,6 +341,7 @@
 	</div>
 <script src="javascript_1/environments.js"></script>
 <script src="javascript_1/manage.js"></script>
+<script src="javascript_1/manageSecurity.js"></script>
 <script>
 $(document).ready(function()
 {

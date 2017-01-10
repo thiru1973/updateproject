@@ -152,7 +152,7 @@ $('#manageEnv').click(function(){
 })
 function addDevOps(ev){	
 	localStorage.setItem("InfraId",ev.title)
-	location.pathname="/devopsTemp"
+	location.pathname="/createDevTemp"
 }
 
 function myTemp_details(result){

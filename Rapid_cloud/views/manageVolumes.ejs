@@ -18,99 +18,33 @@
 	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 </div>
 
-<div id="volumeDetailsPopup">
-	<div class="popupData" style="display: block;position: fixed;"></div>
-	<div class="popData" style="display: block;width:66%;position: fixed;">
+<div id="instan" style="display:none;">
+	<div class="popupData1" style="display: block;position: fixed;"></div>
+	<div class="popData1" style="display: block;width:66%;position: fixed;">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
-			<h4 class="modal-title" id="titleOfPopup">Create New Volume</h4>
-		</div>
-	<div>
-	   <div id="volumeCereatBlock" style="display:none;">
-		<div class="modal-body">
-			<div class="tab-pane fade  in active" id="alerts0">
-			  <div class="roleID">
-				<div class="pull-left">
-				  <label class="labelTemp">Volume Type</label>
-				  <div id="selstg0" class="clickRole addStoTabWid"><span>Select</span>
-					<ul id="selsstg0" class="dropDown" style="display: none;">
-					  <li onclick="selectOpt(this,0)" class="Provisioned IOPS SSD">
-						<dl><dt></dt>
-						  <dd class="va">Provisioned IOPS SSD</dd>
-						</dl>
-					  </li>
-					  <li onclick="selectOpt(this,1)" class="General Purpose SSD">
-						<dl><dt></dt>
-						  <dd class="va">General Purpose SSD</dd>
-						</dl>
-					  </li>
-					  <li onclick="selectOpt(this,2)" class="Magnetic">
-						<dl><dt></dt>
-						  <dd class="va">Magnetic</dd>
-						</dl>
-					  </li>
-					</ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
-				  </div>
-				</div>
-			  </div>
-			  <div class="operatingSys">
-				<div class="pull-left">
-				  <label class="labelTemp">Volume Size</label>
-				  <div class="clickRole addStoTabWid">
-					<input type="number" onchange="iopsFunction(this.value, 0)" id="stgsz0" min="1" style="border:none;width:100%;">
-				  </div>
-				</div>
-			  </div>
-			  <div class="operatingSys">
-				<div class="pull-left">
-				  <label class="labelTemp">IOPS</label>
-				  <div class="clickRole addStoTabWid">
-					<input type="Text" id="stgIops0" placeholder="" style="border:none;width:100%;">
-				  </div>
-				</div>
-			  </div>
-			  <div class="operatingSys">
-				<div class="pull-left">
-				  <label class="labelTemp">Volume Name</label>
-				  <div class="clickRole addStoTabWid">
-					<input id="stgName0" type="text" style="border:none;width:100%;">
-				  </div>
-				</div>
-			  </div>
-			</div>
-		</div>
-		<br><br><br>
-		<div style="float:right;padding:10px 41px 0 0;">
-			<a class="cancelPoup">Cancel</a>&nbsp;
-			<button class="redButton" id="storage0" onclick="createStgFunction(this.id, 0)">Create</button>
-			<button class="redButton" id="createVpc">Create & Attach</button>
-		</div>
+			<h4 class="modal-title" id="titleOfPopup">Instances</h4>
 		</div>
 		
-		<div id="securityGrCreatBlock" style="display:none;"></div>
-		
-	  </div>
-		
-		<br><br><br>
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-			<h4 class="modal-title" id="existingData">Existing Volumes</h4>
-		</div>
 		<div class="modal-body">
 			<table style="width:100%" class="nodeSel">
-			  <tbody id="existingVolumesID">
+			  <thead id="">
 				<tr>
-					<th>Volume Name</th>
-					<th>Volume Type</th>
-					<th>Volume Size</th>
-					<th>IOPS</th>
-					<th></th>
+					<th>Instance Name</th>
+					<th>Select</th>
 				</tr>
+			  </thead>
+			  <tbody id="instList">				
 			  </tbody>
 			</table>
 		</div>
+		<div style="float:right;padding:10px 41px 10px 0;">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button class="redButton" id="createVpc" onclick="mV.selectDone()">Done</button>
+		</div>
 	</div>
 </div>
+
 <div class="container">
 		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
 		</aside>
@@ -118,13 +52,14 @@
 			 <nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
 			<header>
 				<h1>Manage Volumes<a href=""></a></h1>
-				<!--<aside>
-					<input type="text" value="Search">
-				</aside>-->
+				<aside>
+					<div id="data"></data>
+					<button class="redButton countAlign createAccount" onclick="mV.createVolume(this)" id="createVolume" name="add_0">Create New</button>
+				</aside>
 			</header>
-			<div style="clear:both;">&nbsp;</div>
+			<div style="clear:both;line-height:10px;">&nbsp;</div>
 			<div class="roles">
-				<div class="pull-left">
+				<div class="pull-left" style="display:none;">
 					<label id="" class="labelTemp"><span>Projects</span></label>
 					<div id="typeDro1" class="clickRole temp1stRowWid"><span>Select</span>
 						<ul id="accounts_ID" class="dropDown">
@@ -132,57 +67,86 @@
 						<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 					</div>						
 				</div>
-				<div class="pull-left" style="padding-left:20px;">
+				<div class="pull-left">
 					<label id="" class="labelTemp"><span>Environments</span></label>
 					<div id="endpointFs2" class="clickRole temp1stRowWid"><span>Select</span>
 						<ul id="endpointFs2_Drop" class="dropDown" style="display: none;">
-							<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Option 1</dd></dl></li>
-							<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Option 2</dd></dl></li>
+							<!--<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">Option 1</dd></dl></li>
+							<li onclick="selectOpt(this,1)" class="Test"><dl><dt></dt><dd class="va">Option 2</dd></dl></li>-->
 						</ul>
 						<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 					</div>
 				</div>
+				
+				
+			</div>
+			<div>&nbsp;</div>
+			<div>
+				<table class="nodeSel enviTable">
+					<tr id="mvTable">
+						<th>ID</th>
+						<th>Name</th>
+						<th>Size</th>
+						<th>Type</th>
+						<th>IOPS</th>
+						<th>status</th>
+						<th>Availability Zone</th>
+						<th>Region</th>
+						<th>Actions</th>
+					</tr>
+				</table>
 			</div>
 			<section role="createTemplate">
 				<div style="clear:both;">&nbsp;</div>
+				
 				<div class="countConfigBox">
+				<div class="pull-left">
+					<label id="" class="labelTemp"><span>Availability Zone</span></label>
+					<div id="aZone" class="clickRole temp1stRowWid"><span>Select</span>
+						<ul id="aZones" class="dropDown" style="display: none;">
+						</ul>
+						<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
+					</div>
+				</div>
+				<div style="clear:both;">&nbsp;</div>
 					<table style="width:100%">
 						<tr role="forAWS">
 						 	<td style="padding:0px;width:250px;vertical-align:top;">
 								 <div role="tabpanel" class="tab-pane active" id="inbound-aws">
-									<div class="pull-left padRit">
-										<label class="labelTemp">Volume Type</label>
-										<div class="clickRole temp1stRowWid" id="">
-											<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">
+									<div id="noDEpullL" class="pull-left"><span></span><label id="" class="labelTemp">
+										<span>Volume Type * </span>
+										<a href="#" data-toggle="tooltip" title="" data-original-title=""><span class="infoSignColor glyphicon glyphicon-info-sign"></span></a>
+										</label>
+										<div id="sel0" class="clickRole borderNoN temp1stRowWid"><span>Select</span><ul id="sels0" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>
 										</div>
 									</div>
 									<div class="pull-left" >
 										<label class="labelTemp">Volume Size</label>
 										<div class="clickRole" style="margin-right:10px">
-											<input type="number" id="mPort" placeholder="Public Port" style="border:none;width:100%;">
+											<input type="number" onchange="iopsFunction(this.value, this.id)" id="stgsz0" placeholder="" style="border:none;width:100%;">
 										</div>
 									</div>
 									<div class="pull-left padRit">
 										<label class="labelTemp">IOPS</label>
 										<div class="clickRole temp1stRowWid" id="">
-											<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">
+											<input type="text" placeholder="" id="stgIops0" style="border:none;width:100%;">
 										</div>
 									</div>
 									<div class="pull-left padRit">
 										<label class="labelTemp">Volume Name</label>
 										<div class="clickRole temp1stRowWid" id="">
-											<input type="text" placeholder="Ex: Name" id="" style="border:none;width:100%;">
+											<input type="text" placeholder="" id="stgName0" style="border:none;width:100%;">
 										</div>
 									</div>
 									<div class="pull-left padRit" style="padding-top: 32px;">
 										<span class="glyphicon glyphicon-plus-sign" onclick="createVol(2);" id="addRole" style="color:#999999;"></span>
 									</div>
-									<div style="clear:both;">&nbsp;</div>
-									<div id="volumes1"></div>
+									
+									<div class = "tab-pane fade in active alignAllsides" id="volumes1"></div>
 								</div>
 							</td>
 						</tr>
-						<tr role="forAzure">
+						<!--<tr role="forAzure">
 							<td>
 								<nav role="noDes" style="padding:10px;float:left;width:100%;">
 									<div class="pull-left padRit">
@@ -199,12 +163,12 @@
 									</div>
 								</nav>
 							</td>
-						</tr>
+						</tr>-->
 						<tr><td>&nbsp;</td></tr>
 						<tr>
 							<td>
-								<button class="redButton" style="padding:7px 12px;font-size:16px;" onclick="trafficManager(''+this.dataOfNd[0].cloud_name+'');">Create</button>
-								<button class="redButton countAlign" style="padding:7px 12px;font-size:16px;">Cancel</button>
+								<button class="redButton" style="padding:7px 12px;font-size:16px;" onclick="mV.createVolumeFun(this);">Create</button>
+								<button class="redButton countAlign" onclick="mV.cancelV(this)" style="padding:7px 12px;font-size:16px;">Cancel</button>
 							</td>
 						</tr>
 					</table>
@@ -218,6 +182,7 @@
 	</div>
 <script src="javascript_1/environments.js"></script>
 <script src="javascript_1/manage.js"></script>
+<script src="javascript_1/manageVolumes.js"></script>
 <script>
 $(document).ready(function()
 {
