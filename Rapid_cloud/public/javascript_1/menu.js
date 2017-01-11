@@ -263,9 +263,9 @@ LayOut.prototype = {
 		   this.createParentView();
 	},
 	primaryLins:{
-		deployPrime:["Infrastructure","DevOps Template","Product Template"],
+		deployPrime:["Infrastructure","DevOps Template","Product Template","Node"],
 		
-		designPrime:["Infrastructure Template","DevOps Template","Product Template"],
+		designPrime:["Infrastructure Template","DevOps Template","Product Template","Node"],
 			//level_1designPrime:["View","Create","Deploy"],
 			level_1designPrime:["View","Deploy"],
 		level_1:self.menu,
@@ -443,7 +443,7 @@ LayOut.prototype = {
 			pt === "/addData" ? $("#Templates, #Design, #3rd2addData").addClass("active") : false ;
 			pt === "/manageEnv" ? $("#Manage").addClass("active") : false ;
 			
-			pt === "/nodeTemplates" ? $("#p0Node, #3rd0Single, #Deploy").addClass("active") : false ;
+			pt === "/nodeTemplates" ? $("#p0Node, #3rd0Single, #Deploy","#deploy3").addClass("active") : false ;
 			pt === "/accountTemplates" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 			pt === "/assignNode" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 	},
@@ -453,6 +453,7 @@ LayOut.prototype = {
 		$("#deploy0").click(function(){location.href = location.origin+"/master_2";});
 		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
 		$("#deploy2").click(function(){location.href = location.origin+"/viewProductTemplate";});
+		$("#deploy3").click(function(){location.href = location.origin+"/nodeTemplates";});
 		
 		$('#depDevTe0').click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
 		$('#depDevTe1').click(function(){location.href = location.origin+"/viewDevOpsTemplate";});

@@ -240,19 +240,7 @@ app.post('/upadatevm_details', manage.upadatevm_details);
 app.get('/importvm',view.importvm);
 app.post('/getvms', view.getvms);
 app.post('/syncVmData', view.syncVmData);
-//var url = "http://172.29.59.65:3001/add";
-//Outside service
-/*http.get(url, function(response) {
-	var finalData = '';
-	  response.on("data", function (data) {
-	    finalData += data.toString();
-	  });
-	  response.on("end", function() {
-	    console.log(finalData.length);
-	    console.log(finalData.toString());
-	  });
 
-	});*/
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")
 

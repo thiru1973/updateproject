@@ -58,7 +58,7 @@ Con_ManageVolumes.prototype = {
 		// http://172.29.59.65:3000/volumeDetails
 		$.getJSON( _ip + '/volumeDetails1', function (data){
 			console.log(data);
-			if(data.length == 0){
+			if(data.length > 0){
 				for(var i=0; i<data.length; i++){
 					var crTr = document.createElement("tr");
 						crTr.id ="dataOf"+i;
@@ -80,7 +80,7 @@ Con_ManageVolumes.prototype = {
 				var crTr = document.createElement("tr");
 						crTr.id ="dataOf"+i;
 					insertAfter(self.addLoadBa, crTr);
-					crTr.innerHTML+='<h3 align = "center"><p>No colume to attach</p></h3>\
+					crTr.innerHTML+='<h3 align = "center"><p>No volume to attach</p></h3>\
 					';
 			}
 		});

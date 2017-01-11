@@ -65,6 +65,13 @@ $(document).ready(function(){
 	},function(){
 		$(this).find("#link_1_0").stop().css({display:"none"});
 	});
+	var uName = sessionStorage.getItem("User");
+	if(uName != null){
+	var i = $('[role="contentArea"]')
+		i.prepend("<div class='userName'>"+uName+" | <a href='/oauth' class='userNa'>SignOut</a></div>");
+	}else{
+		location.href = location.origin+"/oauth";
+	}
 	
 });
 $(document).on('click', 'li#Templates', function(){ 
@@ -363,7 +370,7 @@ LayOut.prototype = {
 					  <menu role="profileLinks">\
 						<ul>\
 							<li><a href="/myAccount">My Account</a></li>\
-							<li><a href="/login">Sign Out</a></li>\
+							<li><a href="/oauth">Sign Out</a></li>\
 						</ul>\
 					  </menu>\
 					  <nav role="naviGation">\
