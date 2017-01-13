@@ -263,11 +263,12 @@ LayOut.prototype = {
 		   this.createParentView();
 	},
 	primaryLins:{
-		deployPrime:["Infrastructure","DevOps Template","Product Template","Node"],
+		deployPrime:["Infrastructure","DevOps Template","Product Template"],
 		
-		designPrime:["Infrastructure Template","DevOps Template","Product Template","Node"],
+		designPrime:["Infrastructure Template","DevOps Template","Product Template"],
 			//level_1designPrime:["View","Create","Deploy"],
-			level_1designPrime:["View","Deploy"],
+			level_1designPrime:["View","Deploy","Node"],
+			level_2desPrime:["View","Deploy"],
 		level_1:self.menu,
 		//level_1:["Accounts","Design","Deploy","Manage","Monitor", "Test Ops"],
 								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
@@ -393,7 +394,7 @@ LayOut.prototype = {
 			/*for(i=0; i<= this.primaryLins.level_2a1.length-1; i++ ){
 				subL0.innerHTML+='<li id='+"3rd"+[i]+this.primaryLins.level_2a1[i]+'>'+this.primaryLins.level_2a1[i]+'</li>';
 			}*/
-		}else if(pt === "/master_2" || pt === "/viewDevOpsTemplate" || pt === "/deployDivOpsTemplate" || pt === "/viewProductTemplate" || pt === "/deployProductTemplate" || pt==="/deployTemplate"){
+		}else if(pt === "/master_2" || pt === "/deployDivOpsTemplate" || pt === "/deployProductTemplate" || pt==="/deployTemplate" || pt === "/nodeTemplates"){
 			dl.innerHTML="";
 			for(d=0; d<= this.primaryLins.deployPrime.length-1; d++ ){
 				dl.innerHTML+='<li class="link_Prime" id="deploy'+d+'">\
@@ -410,6 +411,22 @@ LayOut.prototype = {
 							</li>';
 			}
 			//$("#design_0, #deploy0, #depInfra0").addClass("active");
+		}else if(pt === "/viewDevOpsTemplate" || pt === "/viewProductTemplate"){
+			dl.innerHTML="";
+			for(d=0; d<= this.primaryLins.deployPrime.length-1; d++ ){
+				dl.innerHTML+='<li class="link_Prime" id="deploy'+d+'">\
+									'+this.primaryLins.deployPrime[d]+'\
+								</li>';
+				}
+			subL0.innerHTML="";
+			$("#link_1_0").hide();
+			subL0.style="margin-bottom:-6px;"
+			subL0_1.innerHTML="";
+			for(i=0; i<= this.primaryLins.level_2desPrime.length-1; i++ ){
+			subL0_1.innerHTML+='<li id=depInfra'+i+'>\
+							<span class="myTe">'+this.primaryLins.level_2desPrime[i]+'</span>\
+							</li>';
+			}
 		}
 	},
 	activeTab:function(){
@@ -443,15 +460,16 @@ LayOut.prototype = {
 			pt === "/addData" ? $("#Templates, #Design, #3rd2addData").addClass("active") : false ;
 			pt === "/manageEnv" ? $("#Manage").addClass("active") : false ;
 			
-			pt === "/nodeTemplates" ? $("#p0Node, #3rd0Single, #Deploy","#deploy3").addClass("active") : false ;
+			pt === "/nodeTemplates" ? $("#p0Node, #3rd0Single, #Deploy","#design_0").addClass("active") : false ;
 			pt === "/accountTemplates" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 			pt === "/assignNode" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 	},
 	pagNav:function(){
-		$("#design_1").click(function(){location.href = location.origin+"/create_devOps_template";});
+		$("#design_1").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
 		
 		$("#deploy0").click(function(){location.href = location.origin+"/master_2";});
 		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		$("#depInfra2").click(function(){location.href = location.origin+"/nodeTemplates";});
 		$("#deploy2").click(function(){location.href = location.origin+"/viewProductTemplate";});
 		$("#deploy3").click(function(){location.href = location.origin+"/nodeTemplates";});
 		
@@ -468,7 +486,7 @@ LayOut.prototype = {
 		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});
-		$('#Templates').click(function(){location.href = location.origin+"/master_2";});
+		$('#Templates').click(function(){location.href = location.origin+"/create_template";});
 		$('#Manage').click(function(){location.href = location.origin+"/manageEnv"});
 		$('#3rdVPC').click(function(){location.href = location.origin+"/vpc"});
 		$('#3rdKey').click(function(){location.href = location.origin+"/keyPair"});

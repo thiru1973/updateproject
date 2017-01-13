@@ -361,7 +361,7 @@ LayOut.prototype = {
 						</div>\
 					<div id="menuBox">\
 					  <a href="#" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
-					  <section role="aboutProject">\
+					  <section role="aboutProject" style="display:none;">\
 						<!-- <br>\
 						<img src="images_1/profile_pic.png" />\
 						<br> -->\
