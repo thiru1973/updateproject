@@ -445,7 +445,7 @@ exports.temp_image1=function(req,res){
 							{
 								image1[i]=result[i].Image_name+"~"+result[i].id;								
 							}	
-								console.log(image1);
+								//console.log(image1);
 								res.send(image1);
 							}
 					 db.close();					

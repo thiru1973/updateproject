@@ -9,6 +9,7 @@ var express = require('express')
   , secGroups = require('./routes/secGroup')
   , account = require('./routes/accounts')
   , resources = require('./routes/resource')
+  , jenkins = require('./routes/jenkins')
   , http = require('http')
   , path = require('path')
   , multer = require('multer');
@@ -240,6 +241,16 @@ app.post('/upadatevm_details', manage.upadatevm_details);
 app.get('/importvm',view.importvm);
 app.post('/getvms', view.getvms);
 app.post('/syncVmData', view.syncVmData);
+
+//Jenkins services
+app.get('/pipelinelist', jenkins.pipelinelist);
+app.get('/jenkinsJob', jenkins.jenkinsJob);
+app.post('/pipelineviewdata', jenkins.pipelineviewdata);
+app.get('/pipelineview', jenkins.pipelineview);
+app.get('/projectTech', jenkins.projectTech);
+app.post('/getBuild', jenkins.getBuild);
+
+app.get('/testRest', jenkins.testRest);
 
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")

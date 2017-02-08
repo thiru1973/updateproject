@@ -249,7 +249,7 @@ LayOut.prototype = {
 			 async: false,
 			 url: 'http://172.29.59.65:3000/getRoles',
 			 success: function(results) {
-				 console.log(results);
+				 //console.log(results);
 				 for(var i =0;i<results.length;i++)
 				 {
 					 self.menu.push(results[i].perm_name);
