@@ -4,7 +4,7 @@ var fs=require('fs');
 var http = require('http');
 var express = require('express');
 var app     = express();
-var zerorpc = require("zerorpc");
+//var zerorpc = require("zerorpc");
 var path = require("path");
 
 var region_name=[];
@@ -314,11 +314,20 @@ exports.create = function(req,res){
 				 client_pg.connect();
 				  client_pg.query("INSERT INTO azure_details(prov_name,prov_id,date,proj_id,proj_name,status,region) values($1, $2, $3, $4, $5, $6, $7)", [prov_name, id, cre_date, proj_id, proj_name, 'running', 'west-us']);
 				 
-				 var client = new zerorpc.Client();
-				 client.connect("tcp://172.29.93.87:4242");
-				 client.invoke("sendazure1", arr, function(error, res, more) {
-					    console.log(res);
-					});
+				 //var client = new zerorpc.Client();
+				 //client.connect("tcp://172.29.93.87:4242");
+				 var data = {arr1 : arr};
+					var data1 = JSON.stringify(data);
+					http.get(url+data1, function(response) {
+					var finalData = '';
+					  response.on("data", function (data) {
+						finalData += data.toString();
+					  });
+					  response.on("end", function() {
+						console.log(finalData.toString());
+					  });
+					});	
+				 //client.invoke("sendazure1", arr, function(error, res, more) {console.log(res);});
 			 }
 		 else{			 
 			 console.log("you are in aws");
@@ -609,10 +618,20 @@ exports.create_cloud_service = function(req,res){
 	console.log(name+location);
 	var arr=["Azure","create_cloud_service",name,location,Account,Project,Product];
 	console.log(arr);
-	 var client = new zerorpc.Client();
-	client.connect("tcp://172.29.93.97:4242");
-	 client.invoke("assign", arr, function(error, res, more) {
-	 });
+	//var client = new zerorpc.Client();
+	//client.connect("tcp://172.29.93.97:4242");
+	var data = {arr1 : arr};
+	var data1 = JSON.stringify(data);
+	http.get(url+data1, function(response) {
+	var finalData = '';
+	  response.on("data", function (data) {
+		finalData += data.toString();
+	  });
+	  response.on("end", function() {
+		console.log(finalData.toString());
+	  });
+	});	
+	 //client.invoke("assign", arr, function(error, res, more) {});
 	
 	 setTimeout(function() {
 	 client_pg.query("Select message from exception", function(err,result){
@@ -733,10 +752,20 @@ exports.create_deploy_slot = function(req,res){
 	var slot=Obj.slot;
 	var deploy=Obj.deploy;
 	var arr=["azure","create_deploy",cloud,size,image,slot,deploy];
-	 var client = new zerorpc.Client();
-	client.connect("tcp://172.29.59.61:4242");
-	 client.invoke("assign", arr, function(error, res, more) {
-	 });
+	//var client = new zerorpc.Client();
+	//client.connect("tcp://172.29.59.61:4242");
+	var data = {arr1 : arr};
+	var data1 = JSON.stringify(data);
+	http.get(url+data1, function(response) {
+	var finalData = '';
+	  response.on("data", function (data) {
+		finalData += data.toString();
+	  });
+	  response.on("end", function() {
+		console.log(finalData.toString());
+	  });
+	});	
+	 //client.invoke("assign", arr, function(error, res, more) {});
 	 res.send("Created");
 };
 var cron = require('cron');

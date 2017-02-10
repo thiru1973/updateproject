@@ -1,12 +1,12 @@
-var zerorpc = require("zerorpc");
+//var zerorpc = require("zerorpc");
 
 var pg = require("pg");
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
 client_pg.connect();
 var rpcConString = "tcp://172.29.93.97:4242";
-var client = new zerorpc.Client();
-client.connect(rpcConString);
+//var client = new zerorpc.Client();
+//client.connect(rpcConString);
 //Constructor for manage volumes, security groups, keypairs 
 function AttachObject(pvName, methodName, acc, sec, region, sgArr) {
 	  this.pvName = pvName;

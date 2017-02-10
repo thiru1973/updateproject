@@ -1,5 +1,5 @@
 var express = require('express');
-var zerorpc = require("zerorpc");
+//var zerorpc = require("zerorpc");
 var app     = express();
 var MongoClient = require('mongodb').MongoClient;
 var authObject =  require("./manage_nodes.js");

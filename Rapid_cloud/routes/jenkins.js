@@ -49,10 +49,12 @@ exports.getBuild = function(req, res){
 }
 
 exports.testRest = function(req, res){
-	var arr = [1,2,3];
-	var url = "http://localhost:4242/users/"+arr;
-
-	http.get(url, function(response) {
+	var data = {
+		arr : [1,2,3,[4,5]]
+	};
+	var data1 = JSON.stringify(data);
+	var url = "http://172.29.59.65:4242/users/";
+	http.get(url+data1, function(response) {
 	var finalData = '';
 	  response.on("data", function (data) {
 	    finalData += data.toString();

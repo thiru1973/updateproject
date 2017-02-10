@@ -1,7 +1,7 @@
 var http = require('http');
 var express = require('express');
 var pg = require("pg");
-var zerorpc = require("zerorpc");
+//var zerorpc = require("zerorpc");
 var CryptoJS = require('crypto-js');
 var crypto = require('crypto');
 var fs=require('fs');
@@ -15,8 +15,8 @@ var client_pg = new pg.Client(conString);
 
 var rpcConString = "tcp://172.29.93.97:4242";
 //var rpcConString = "tcp://172.29.59.65:4242";
-var client = new zerorpc.Client();
-client.connect(rpcConString);
+//var client = new zerorpc.Client();
+//client.connect(rpcConString);
 
 var path = require('path');
 var upload_path = path.resolve(__dirname + '/uploads');
@@ -45,7 +45,7 @@ var auth=[];
 var client_pg = new pg.Client(conString);
 client_pg.connect();
 
- client.invoke("validate_user", "sangamesh", function(request, response, more){});
+//client.invoke("validate_user", "sangamesh", function(request, response, more){});
 
 
 exports.manageEnv = function(req, res){
@@ -236,9 +236,20 @@ exports.vpc=function(req,res){
 	  console.log(Obj);
 	  getAwsCred.getAwsMethod(accountName,projName,prodName);
 	  setTimeout(function(){		     
-	     var arr = ["AWS", "create_vpc",auth1, auth2, region , cidr, vpc, tenancy];	      
-	     client.invoke("assign", arr, function(error, resq, more){});
-	     console.log(arr);
+	     var arr = ["AWS", "create_vpc",auth1, auth2, region , cidr, vpc, tenancy];	
+         console.log(arr);		 
+	     //client.invoke("assign", arr, function(error, resq, more){});
+		 var data = {arr1 : arr};
+			var data1 = JSON.stringify(data);
+			http.get(url+data1, function(response) {
+			var finalData = '';
+			  response.on("data", function (data) {
+				finalData += data.toString();
+			  });
+			  response.on("end", function() {
+				console.log(finalData.toString());
+			  });
+			});	    
 	     res.send("Success");
 	  }, 2000);
 };
@@ -258,8 +269,18 @@ exports.subnet=function(req,res){
 	     getAwsCred.getAwsMethod(accountName,projName,prodName);
 	     setTimeout(function(){
 			      var arr = [pvd, "create_subnet",auth1, auth2, snRegion , cidrBlkSn, snVpc, snZone, snName];	
-			     client.invoke("assign", arr, function(error, resq, more) {			   	         
-			      });
+			     //client.invoke("assign", arr, function(error, resq, more) {});
+				 var data = {arr1 : arr};
+					var data1 = JSON.stringify(data);
+					http.get(url+data1, function(response) {
+					var finalData = '';
+					  response.on("data", function (data) {
+						finalData += data.toString();
+					  });
+					  response.on("end", function() {
+						console.log(finalData.toString());
+					  });
+					});	
 			     res.send("Success");
 	     }, 2000);
 };
@@ -279,8 +300,18 @@ exports.routeTable = function(req,res){
 	      setTimeout(function(){
 	     		var arr = [pvd, "route_table",auth1, auth2, routeRegion , routeName, routeVpc, routeSubnet];
 	      		//console.log(arr);
-	     		client.invoke("assign", arr, function(error, resq, more) {
-	      		});	  
+				var data = {arr1 : arr};
+				var data1 = JSON.stringify(data);
+				http.get(url+data1, function(response) {
+				var finalData = '';
+				  response.on("data", function (data) {
+					finalData += data.toString();
+				  });
+				  response.on("end", function() {
+					console.log(finalData.toString());
+				  });
+				});	
+	     		//client.invoke("assign", arr, function(error, resq, more) {});	  
 	     		res.send("Success");
 	      }, 2000);
 }
@@ -299,8 +330,18 @@ exports.gateWay = function(req,res){
 		  setTimeout(function(){
 			   var arr = [pvd, "internet_gateway",auth1, auth2, gtWayRegion , gtWayName, gtWayVpc];
 			   //console.log(arr);
-			   client.invoke("assign", arr, function(error, resq, more) {	         
-			   });
+			   var data = {arr1 : arr};
+				var data1 = JSON.stringify(data);
+				http.get(url+data1, function(response) {
+				var finalData = '';
+				  response.on("data", function (data) {
+					finalData += data.toString();
+				  });
+				  response.on("end", function() {
+					console.log(finalData.toString());
+				  });
+				});	
+			   //client.invoke("assign", arr, function(error, resq, more) {});
 			   res.send("success");
 		  }, 2000);
 };
@@ -322,7 +363,18 @@ exports.createStorage = function(req, res){
 	     setTimeout(function(){
 			   var arr = [pvd, "create_volume",auth1, auth2, vRegion , vZone, vName, vSize, vIops, vType];
 			   console.log(arr);
-			   client.invoke("assign", arr, function(error, resq, more) {});
+			   var data = {arr1 : arr};
+				var data1 = JSON.stringify(data);
+				http.get(url+data1, function(response) {
+				var finalData = '';
+				  response.on("data", function (data) {
+					finalData += data.toString();
+				  });
+				  response.on("end", function() {
+					console.log(finalData.toString());
+				  });
+				});	
+			   //client.invoke("assign", arr, function(error, resq, more) {});
 			  res.send("Success");
 	     }, 2000);
 };
@@ -347,8 +399,18 @@ exports.createSecGroup = function(req, res){
 				arr.push(results[i]);
 			  }
 				   console.log(arr);
-				   client.invoke("assign", arr, function(error, resq, more) {        
-				   });
+				   var data = {arr1 : arr};
+					var data1 = JSON.stringify(data);
+					http.get(url+data1, function(response) {
+					var finalData = '';
+					  response.on("data", function (data) {
+						finalData += data.toString();
+					  });
+					  response.on("end", function() {
+						console.log(finalData.toString());
+					  });
+					});	
+				   //client.invoke("assign", arr, function(error, resq, more) {});
 				  res.send("Success");
 			  }, 2000);
 }
@@ -443,7 +505,7 @@ exports.createSnapShot = function(req, res){
 	   });*/
 	res.send("Success");
 }
-
+var url = "http://172.29.93.97:5000/users/";
 exports.deployTemplate = function(req, res){
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	var arr=[];
@@ -495,7 +557,18 @@ exports.deployTemplate = function(req, res){
 						  }
 				}else{arr.push(d3);}
 			  console.log(arr);
-			  client.invoke("assign", arr, function(error, res, more) {
+			    var data = {arr1 : arr};
+				var data1 = JSON.stringify(data);
+				http.get(url+data1, function(response) {
+				var finalData = '';
+				  response.on("data", function (data) {
+					finalData += data.toString();
+				  });
+				  response.on("end", function() {
+					console.log(finalData.toString());
+				  });
+				});
+			  /*client.invoke("assign", arr, function(error, res, more) {
 				  if(error) {
 						console.error(error);
 					} else {
@@ -505,7 +578,7 @@ exports.deployTemplate = function(req, res){
 					if(!more) {
 						console.log("Done.");
 					}
-			  });
+			  });*/
 			res.send("Success");
 		 }, 2000);
 	}else{
@@ -531,7 +604,18 @@ exports.deployTemplate = function(req, res){
 						  {
 						  	arr.push(results[i]);
 							console.log(results[i]);
-							client.invoke("assign", arr, function(error, res, more) {
+							var data = {arr1 : arr};
+							var data1 = JSON.stringify(data);
+							http.get(url+data1, function(response) {
+							var finalData = '';
+							  response.on("data", function (data) {
+								finalData += data.toString();
+							  });
+							  response.on("end", function() {
+								console.log(finalData.toString());
+							  });
+							});
+							/*client.invoke("assign", arr, function(error, res, more) {
 								if(error) {
 									console.error(error);
 								} else {
@@ -541,7 +625,7 @@ exports.deployTemplate = function(req, res){
 								if(!more) {
 									console.log("Done.");
 								}						
-							});
+							});*/
 						  }
 						  checkFailed();
 						/*setTimeout(function(){
@@ -562,7 +646,18 @@ exports.deployTemplate = function(req, res){
 						 }, 60000);*/
 				}
 				}else{arr.push(d3);
-						client.invoke("assign", arr, function(error, resq, more) {});
+						//client.invoke("assign", arr, function(error, resq, more) {});
+						var data = {arr1 : arr};
+						var data1 = JSON.stringify(data);
+						http.get(url+data1, function(response) {
+						var finalData = '';
+						  response.on("data", function (data) {
+							finalData += data.toString();
+						  });
+						  response.on("end", function() {
+							console.log(finalData.toString());
+						  });
+						});
 						}
 				function checkFailed(){
 					setTimeout(function(){
@@ -585,7 +680,18 @@ exports.deployTemplate = function(req, res){
 				function deployFailedFun(pos){
 					arr.splice(9,arr.length);
 					arr.push(results[pos]);
-					client.invoke("assign", arr, function(error, resq, more) {});
+					var data = {arr1 : arr};
+						var data1 = JSON.stringify(data);
+						http.get(url+data1, function(response) {
+						var finalData = '';
+						  response.on("data", function (data) {
+							finalData += data.toString();
+						  });
+						  response.on("end", function() {
+							console.log(finalData.toString());
+						  });
+						});
+					//client.invoke("assign", arr, function(error, resq, more) {});
 					res.send("Success");
 				}
 			  //console.log(arr);
@@ -774,8 +880,8 @@ for(var k = 1; k<d2_len; k+=3){
 console.log(new_role);
 console.log(new_inst);
 console.log(new_img);
-var client = new zerorpc.Client({ timeout: 120 });
-client.connect("tcp://172.29.59.61:4242");     
+//var client = new zerorpc.Client({ timeout: 120 });
+//client.connect("tcp://172.29.59.61:4242");     
 //var arr = ["aws", "create_environment_aws","rapidcloud","lledx" , new_inst[0], new_img[0], new_role[0],new_inst[1], new_img[1], new_role[1]];
 var arr = ["aws", "create_environment", auth[0], auth[1], "ap-northeast-1", vpc, subnet,project, tename, "t2.micro","ami-383c1956", "app_server", "t2.medium", "ami-0dd8f963", "web_server", "m3.medium", "ami-f8220896", "data_base" ]
 client.invoke("assign", arr, function(error, resq, more) {
@@ -952,8 +1058,8 @@ fs.readFile('new.txt', 'utf-8', function(err,data){
     dec2 += decipher2.final('utf8');  
     }               
      
-     var client = new zerorpc.Client({ timeout: 120 });
-     client.connect("tcp://172.29.93.87:4242");     
+     //var client = new zerorpc.Client({ timeout: 120 });
+     //client.connect("tcp://172.29.93.87:4242");     
      access = dec;
      secret = dec2;
      //console.log(access+secret);
@@ -1210,6 +1316,17 @@ exports.loadBalancerCreate = function(req, res){
 			console.log(arr);
 				/*client.invoke("assign", arr, function(error, resq, more) {				   
 				   });*/
+			var data = {arr1 : arr};
+			var data1 = JSON.stringify(data);
+			http.get(url+data1, function(response) {
+			var finalData = '';
+			  response.on("data", function (data) {
+				finalData += data.toString();
+			  });
+			  response.on("end", function() {
+				console.log(finalData.toString());
+			  });
+			});	
 			res.send("Success");
 		 }, 2000);
 	
@@ -1226,9 +1343,18 @@ exports.straccount = function(req, res){
 	    Product = Obj.product,
 	    arr=[pv_name,"create_storage",stracc,strloc,Account,Project,Product];
 	console.log(arr);
-	client.invoke("assign", arr, function(error, resq, more) {
-    
-	   }); 
+	var data = {arr1 : arr};
+	var data1 = JSON.stringify(data);
+	http.get(url+data1, function(response) {
+	var finalData = '';
+	  response.on("data", function (data) {
+		finalData += data.toString();
+	  });
+	  response.on("end", function() {
+		console.log(finalData.toString());
+	  });
+	});	
+	//client.invoke("assign", arr, function(error, resq, more) {}); 
 	res.send("success");
 }
 var spawn = require("child_process").spawn,child;
