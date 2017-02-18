@@ -36,6 +36,10 @@ $(document).ready(function(){
 		$("#ConfigureHealthChecksAdvanced, #SubnetsPoup, #addInstPopUpWin, #securityGroWin, #addEndPointID").hide();
 	});
 	
+	$(".cancelPoup, .close").click(function(){
+		$("#status").hide();
+	});
+	
 	var accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
@@ -848,8 +852,9 @@ function loadBalancer(){
 				var nodeListOptions = document.createElement("ul");
 				nodeListOptions.id="nLinks_"+project_id+"_"+i;
 				nodeListOptions.className="nodeSettings";
-				nodeListOptions.innerHTML='<li onclick="manage.nodeDetailsVolume(this, '+i+', '+project_id+')">Volumes</li>\
-										   <li onclick="manage.nodeDetailsSecurityGroup(this, '+i+', '+project_id+')">Security Group</li>\
+				nodeListOptions.innerHTML='<!--<li onclick="manage.nodeDetailsVolume(this, '+i+', '+project_id+')">Volumes</li>\
+										   <li onclick="manage.nodeDetailsSecurityGroup(this, '+i+', '+project_id+')">Security Group</li>-->\
+										   <li onclick="manage.addScript(this, '+i+', '+project_id+')">Add Script</li>\
 										   <!--<li onclick="">Keypairs</li>\
 										   <li onclick="">Snap Shoart</li>-->\
 										  </ul>';
@@ -1597,6 +1602,22 @@ function getPublicIp(valuee, append){
 	}
 	Projects.prototype.CancelFun = function(ev){
 		
+	}
+	Projects.prototype.deploymentStatus = function(){
+		$.ajax({
+			  type: 'GET',
+			  url: _ip+'/deployStatus'
+			})
+			.done(function(data){
+				console.log(data);
+				$('#depStatus').html("<b>Status : "+data[0].status+"</b></br><b>Time : "+data[0].time+"</b>");
+				//$('#depStatus').html("<b>"+data[0].time+"</b>");
+				
+			})
+			.fail(function(err){
+				console.log(err);
+			})
+		$("#status").show();
 	}
 	Projects.prototype.createPopupStatusNodes = function(_template_Name, project_Id, j){
 		var data = {};

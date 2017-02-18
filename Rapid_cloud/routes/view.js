@@ -414,3 +414,12 @@ exports.syncVmData = function(req, res){
 		
 	}
 }
+
+exports.deployStatus = function(req, res){
+	client_pg.query("SELECT * from deploy_status order by time desc limit 1	", function(err, data){
+		if(err){
+			throw err;
+		}
+		res.send(data.rows)
+	});
+}

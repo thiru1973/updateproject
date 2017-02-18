@@ -11,6 +11,7 @@
 <body id="bg">
 <div class="proDiv">
 	<img id="loadingImg" src="images_1/Loading_icon.gif" style="width:135px;" />
+	<div id="deploymsg">Deploying Instances</div>
 	<div class="progress" style="display:none;">
   		<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
    			<b class="leftCount">40%</b>
@@ -858,7 +859,8 @@
 				</div>
 				<div style="clear:both;">&nbsp;</div>
 				<button class="redButton pull-right countAlign exit">Cancel</button>	
-				<button class="redButton pull-right countAlign" onClick="deployFunction();">Deploy</button>				
+				<!--<button class="redButton pull-right countAlign" id="deploy" onClick="deployFunction();">Deploy</button>-->
+				<button class="redButton pull-right countAlign" id="deploy">Deploy</button>				
 				<div class="roles" style="background-color:#fff;padding:0px;">
 				</div>
 				<div style="clear:both;">&nbsp;</div>

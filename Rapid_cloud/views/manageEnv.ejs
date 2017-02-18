@@ -26,6 +26,22 @@
 	<div class="alert alert-warning lbsName" role="alert"><b>Warning!</b> Enter the name OR Don't include special character to Load Balanacer Set name<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 	<div class="alert alert-danger" role="alert"><b>Oh snap!</b> Change a few things up and try submitting again.<span class="glyphicon glyphicon-remove-circle closeAlert"></span></div>
 </div>
+<div id="status" style="display:none;">
+	<div class="popupData1" style="display: block;position: fixed;"></div>
+	<div class="popData1" style="display: block;width:66%;position: fixed;">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<h4 class="modal-title" id="titleOfPopup">Status of last deployment</h4>
+		</div>
+		
+		<div class="modal-body">
+			<span id="depStatus"></span>
+		</div>
+		<div style="float:right;padding:10px 41px 10px 0;">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+		</div>
+	</div>
+</div>
 <div id="addEndPointID" style="display:none;">
 	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
 	  <div class="balance">
@@ -462,6 +478,7 @@
 			<header>
 				<h1>Manage Nodes<a href=""></a></h1>
 				<aside><div id="data"></data>
+							<button id="getvms" onclick="manage.deploymentStatus();">Status</button>
 							<button id="getvms" onclick="updatevmsFunc();">Import</button>						
 				</aside>
 				<!--<aside>

@@ -242,6 +242,8 @@ app.get('/importvm',view.importvm);
 app.post('/getvms', view.getvms);
 app.post('/syncVmData', view.syncVmData);
 
+app.get('/deployStatus', view.deployStatus);
+
 //Jenkins services
 app.get('/pipelinelist', jenkins.pipelinelist);
 app.get('/jenkinsJob', jenkins.jenkinsJob);

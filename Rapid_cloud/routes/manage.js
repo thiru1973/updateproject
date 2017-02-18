@@ -132,7 +132,18 @@ exports.manage_env_nodes = function(req,res){
 		 	setTimeout(function(){	
 			var arr=["AWS","manage_node",auth1, auth2,region,inst_id,action];
 			console.log(arr);
-			 client.invoke("assign", arr, function(error, res, more) {});			
+			 //client.invoke("assign", arr, function(error, res, more) {});	
+			var data = {arr1 : arr};
+			var data1 = JSON.stringify(data);
+			http.get(url+data1, function(response) {
+			var finalData = '';
+			  response.on("data", function (data) {
+				finalData += data.toString();
+			  });
+			  response.on("end", function() {
+				console.log(finalData.toString());
+			  });
+			});	
 			 res.send("Success");
 		 	 }, 2000);
 		}else{
@@ -564,8 +575,17 @@ exports.deployTemplate = function(req, res){
 				  response.on("data", function (data) {
 					finalData += data.toString();
 				  });
-				  response.on("end", function() {
+				  response.on("end", function() {					  
 					console.log(finalData.toString());
+					client_pg.query("INSERT INTO deploy_status(status,time) values($1,$2)",[finalData.toString(),Date()],
+					function(err, result) {
+					if(err){
+						console.log(err);
+					}else{
+						console.log("Success");;
+					}
+					});
+					
 				  });
 				});
 			  /*client.invoke("assign", arr, function(error, res, more) {
@@ -579,7 +599,7 @@ exports.deployTemplate = function(req, res){
 						console.log("Done.");
 					}
 			  });*/
-			res.send("Success");
+			res.send("Deployment will take some more time please vist after sometime");
 		 }, 2000);
 	}else{
 			for(var i=0;i<d1arr.length;i++)
@@ -612,7 +632,7 @@ exports.deployTemplate = function(req, res){
 								finalData += data.toString();
 							  });
 							  response.on("end", function() {
-								console.log(finalData.toString());
+								res.send(finalData.toString());
 							  });
 							});
 							/*client.invoke("assign", arr, function(error, res, more) {

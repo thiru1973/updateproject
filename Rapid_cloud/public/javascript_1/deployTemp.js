@@ -1579,9 +1579,10 @@ function storageaccFun(){
          		},
             });
 }
-
-function deployFunction(){
+$('#deploy').click(function(e) {
+//function deployFunction(){
 	//alert("In deploy function");
+	e.preventDefault();
 	var pvName = pvd_name;
 	if(pvName == "AWS")
 	{
@@ -1663,12 +1664,11 @@ function deployFunction(){
 		var CloudName = document.getElementById("selClsrv").innerText;		
 		}
 	deployTemplateFunction();
-}
+});
 
 function deployTemplateFunction()
 {
 		//alert("In deploy function");
-	
 		var pvName = pvd_name;
 		console.log(pvd_name);
 		if(pvName == "AWS")
@@ -1794,17 +1794,36 @@ function deployTemplateFunction()
 				}
 			console.log(result_arr);
 			console.log(resultObj1);
+			$(".popupData, .proDiv").show(); 
 			$.ajax({
+			  type: 'POST',
+			  //datatype: 'jsonp',
+			  data:  "d1="+result_arr+"&d2="+resultObj1+"&d4="+disks1,
+			  url: _ip+'/deployTemplate'
+			})
+			.done(function(data){
+				$("#instanceName").html("<b>"+data+"</b>");
+				setTimeout(function(){
+					$(".popupData, .proDiv").hide();
+					location.href = _ip+"/manageEnv";
+				},5000);
+				
+			})
+			.fail(function(err){
+				console.log(err);
+			})
+			/*$.ajax({
 		        type: 'POST',
 		   	 	jsonpCallback: "callback",
-		        datatype: 'jsonp',    
+		        datatype: 'jsonp', 
+				async: false,
 		        data:  "d1="+result_arr+"&d2="+resultObj1+"&d4="+disks1,
 		        url: _ip+'/deployTemplate',
 		        success: function(data, textStatus){
-		        	//alert(data);
+		        	alert(data);
 		        	//$(".alert-temp").stop().slideDown();
 		        	//location.href="http://172.29.59.65:3000/master_2"
-					var st = [];
+					/*var st = [];
 					if(str == "single"){
 						var st = {};
 						st.node = str2;
@@ -1840,7 +1859,7 @@ function deployTemplateFunction()
 		                 console.log('Failure');
 		         		alert("failure");
 		         		},
-		            });			
+		            });	*/		
 		}else
 			{
 			console.log("This is Azure template");
