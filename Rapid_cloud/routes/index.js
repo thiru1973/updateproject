@@ -28,6 +28,7 @@ var access_key;
 var secret_key;
 //var url = 'mongodb://172.29.59.62:27017/test';
 var url = 'mongodb://172.29.59.100:27017/test';
+var cloudurl = "http://172.29.93.97:5000/users/";
 
 var pg = require("pg");
 
@@ -622,7 +623,7 @@ exports.create_cloud_service = function(req,res){
 	//client.connect("tcp://172.29.93.97:4242");
 	var data = {arr1 : arr};
 	var data1 = JSON.stringify(data);
-	http.get(url+data1, function(response) {
+	http.get(cloudurl+data1, function(response) {
 	var finalData = '';
 	  response.on("data", function (data) {
 		finalData += data.toString();
@@ -756,7 +757,7 @@ exports.create_deploy_slot = function(req,res){
 	//client.connect("tcp://172.29.59.61:4242");
 	var data = {arr1 : arr};
 	var data1 = JSON.stringify(data);
-	http.get(url+data1, function(response) {
+	http.get(cloudurl+data1, function(response) {
 	var finalData = '';
 	  response.on("data", function (data) {
 		finalData += data.toString();

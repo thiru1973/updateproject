@@ -135,7 +135,7 @@ exports.manage_env_nodes = function(req,res){
 			 //client.invoke("assign", arr, function(error, res, more) {});	
 			var data = {arr1 : arr};
 			var data1 = JSON.stringify(data);
-			http.get(url+data1, function(response) {
+			http.get(cloudurl+data1, function(response) {
 			var finalData = '';
 			  response.on("data", function (data) {
 				finalData += data.toString();
@@ -252,7 +252,7 @@ exports.vpc=function(req,res){
 	     //client.invoke("assign", arr, function(error, resq, more){});
 		 var data = {arr1 : arr};
 			var data1 = JSON.stringify(data);
-			http.get(url+data1, function(response) {
+			http.get(cloudurl+data1, function(response) {
 			var finalData = '';
 			  response.on("data", function (data) {
 				finalData += data.toString();
@@ -283,7 +283,7 @@ exports.subnet=function(req,res){
 			     //client.invoke("assign", arr, function(error, resq, more) {});
 				 var data = {arr1 : arr};
 					var data1 = JSON.stringify(data);
-					http.get(url+data1, function(response) {
+					http.get(cloudurl+data1, function(response) {
 					var finalData = '';
 					  response.on("data", function (data) {
 						finalData += data.toString();
@@ -313,7 +313,7 @@ exports.routeTable = function(req,res){
 	      		//console.log(arr);
 				var data = {arr1 : arr};
 				var data1 = JSON.stringify(data);
-				http.get(url+data1, function(response) {
+				http.get(cloudurl+data1, function(response) {
 				var finalData = '';
 				  response.on("data", function (data) {
 					finalData += data.toString();
@@ -343,7 +343,7 @@ exports.gateWay = function(req,res){
 			   //console.log(arr);
 			   var data = {arr1 : arr};
 				var data1 = JSON.stringify(data);
-				http.get(url+data1, function(response) {
+				http.get(cloudurl+data1, function(response) {
 				var finalData = '';
 				  response.on("data", function (data) {
 					finalData += data.toString();
@@ -376,7 +376,7 @@ exports.createStorage = function(req, res){
 			   console.log(arr);
 			   var data = {arr1 : arr};
 				var data1 = JSON.stringify(data);
-				http.get(url+data1, function(response) {
+				http.get(cloudurl+data1, function(response) {
 				var finalData = '';
 				  response.on("data", function (data) {
 					finalData += data.toString();
@@ -412,7 +412,7 @@ exports.createSecGroup = function(req, res){
 				   console.log(arr);
 				   var data = {arr1 : arr};
 					var data1 = JSON.stringify(data);
-					http.get(url+data1, function(response) {
+					http.get(cloudurl+data1, function(response) {
 					var finalData = '';
 					  response.on("data", function (data) {
 						finalData += data.toString();
@@ -503,7 +503,7 @@ exports.downloadKp = function(req,res){
 	var filepath = getMostRecentFileName(fpath);
 	res.download(fpath+filepath,filepath);
 }
-//create snashot for volume
+//create snapshot for volume
 exports.createSnapShot = function(req, res){
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	var result=JSON.stringify(req.body);
@@ -516,7 +516,7 @@ exports.createSnapShot = function(req, res){
 	   });*/
 	res.send("Success");
 }
-var url = "http://172.29.93.97:5000/users/";
+var cloudurl = "http://172.29.93.97:5000/users/";
 exports.deployTemplate = function(req, res){
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	var arr=[];
@@ -570,7 +570,7 @@ exports.deployTemplate = function(req, res){
 			  console.log(arr);
 			    var data = {arr1 : arr};
 				var data1 = JSON.stringify(data);
-				http.get(url+data1, function(response) {
+				http.get(cloudurl+data1, function(response) {
 				var finalData = '';
 				  response.on("data", function (data) {
 					finalData += data.toString();
@@ -626,7 +626,7 @@ exports.deployTemplate = function(req, res){
 							console.log(results[i]);
 							var data = {arr1 : arr};
 							var data1 = JSON.stringify(data);
-							http.get(url+data1, function(response) {
+							http.get(cloudurl+data1, function(response) {
 							var finalData = '';
 							  response.on("data", function (data) {
 								finalData += data.toString();
@@ -669,7 +669,7 @@ exports.deployTemplate = function(req, res){
 						//client.invoke("assign", arr, function(error, resq, more) {});
 						var data = {arr1 : arr};
 						var data1 = JSON.stringify(data);
-						http.get(url+data1, function(response) {
+						http.get(cloudurl+data1, function(response) {
 						var finalData = '';
 						  response.on("data", function (data) {
 							finalData += data.toString();
@@ -702,7 +702,7 @@ exports.deployTemplate = function(req, res){
 					arr.push(results[pos]);
 					var data = {arr1 : arr};
 						var data1 = JSON.stringify(data);
-						http.get(url+data1, function(response) {
+						http.get(cloudurl+data1, function(response) {
 						var finalData = '';
 						  response.on("data", function (data) {
 							finalData += data.toString();
@@ -1338,7 +1338,7 @@ exports.loadBalancerCreate = function(req, res){
 				   });*/
 			var data = {arr1 : arr};
 			var data1 = JSON.stringify(data);
-			http.get(url+data1, function(response) {
+			http.get(cloudurl+data1, function(response) {
 			var finalData = '';
 			  response.on("data", function (data) {
 				finalData += data.toString();
@@ -1365,7 +1365,7 @@ exports.straccount = function(req, res){
 	console.log(arr);
 	var data = {arr1 : arr};
 	var data1 = JSON.stringify(data);
-	http.get(url+data1, function(response) {
+	http.get(cloudurl+data1, function(response) {
 	var finalData = '';
 	  response.on("data", function (data) {
 		finalData += data.toString();

@@ -101,6 +101,7 @@ $(document).ready(function(){
 		}
 	}];
 var ci = "cI", ct = "cT", cd = "cD", trueV = 1;
+var TempalteData
 function StepsOfDev(techD){
 	this.tec = techD;
 	this.st = document.getElementById("stepsOfDevOps");
@@ -268,6 +269,8 @@ StepsOfDev.prototype = {
 		$("#t_n > #t_name").val(this.infraNodes[0].Template_name);
 		$("#p_n > #p_name").val(this.infraNodes[0].Project_Name);
 		this.jsonData._templateName = this.infraNodes[0].Template_name;
+		sessionStorage.setItem('t_n',this.infraNodes[0].Template_name);
+		sessionStorage.setItem('p_n',this.infraNodes[0].Project_Name);
 		this.jsonData._projectName = this.infraNodes[0].Project_Name;
 		
 		this.noDEpullL.innerHTML ="";
@@ -326,7 +329,7 @@ StepsOfDev.prototype = {
 			toAdd.innerHTML+=dd;
 		}else{
 			var dd='<ul>';
-				dd+='<li class="techLi" onclick="repItem(this)"><section class="techImg"><img src="/images_1/'+this.tec[0][0].imageOfkey+'" title="'+this.tec[0][1].valueOfkey+'"/></section>\
+				dd+='<li class="techLi" onclick="repItem(this)"><section class="techImg"><img src="/images_1/'+this.tec[0][0].imageOfkey+'" title="'+this.tec[0][0].valueOfkey+'"/></section>\
 									<section class="techRadBut">&nbsp;</section></li>';
 			dd+='</ul>';
 			toAdd.innerHTML+=dd;
@@ -677,6 +680,8 @@ StepsOfDev.prototype = {
 			//Generate json data
 			this.jsonData.jsonVM = {
 			};			
+				//this.templateDetails._templateName = this.jsonData._templateName,
+				//this.templateDetails._projectName = this.jsonData._projectName,
 				this.templateDetails._templateName = this.jsonData._templateName,
 				this.templateDetails._projectName = this.jsonData._projectName,
 				this.templateDetails._technology = this.jsonData._technology,
@@ -687,17 +692,16 @@ StepsOfDev.prototype = {
 				this.templateDetails.cIVMs=this.cIVMs,
 				this.templateDetails.cTVMs=this.cTVMs,
 				this.templateDetails.cDVMs=this.cDVMs
-				/*
 				this.templateDetails = {
-					_templateName : this.jsonData._templateName,
-					_projectName : this.jsonData._projectName,
-					_technology : this.jsonData._technology,
-					_tool_name : this.technologyNa,
+					_templateName : sessionStorage.getItem('t_n'),
+					_projectName : sessionStorage.getItem('p_n'),
+					_technology : sessionStorage.getItem('tech'),
+					_tool_name : sessionStorage.getItem('tech'),
 					
 					cIVMs:this.cIVMs,
 					cTVMs:this.cTVMs,
 					cDVMs:this.cDVMs
-				}*/
+				}
 					
 			var mydata = [this.templateDetails]
 			var tempDetails = JSON.stringify(mydata);
@@ -710,22 +714,22 @@ StepsOfDev.prototype = {
 			var CD_vms = JSON.stringify(this.cDVMs)
 			//var json2 =[{"Jenkins":false,"Sonarqube":false,"Nexus":false}];
 			var devopsJson = this.jsonData.jsonVM
-			console.log(tempDetails);
-				/*$.ajax({
-						 type: 'POST',
-						 jsonpCallback: "callback",
-						 dataType: 'jsonp',
-						 data:"&d1="+tempDetails,
-						 url: _ip+'/saveDevopsTemplate',
-						 success: function(results) {
-							 alert("Success");
-						 },
-						 error: function (xhr, status, error){
-							console.log('Failure'+xhr+error);
-							alert("failure");
-							},
-						 });*/
-						 
+			//console.log(tempDetails);
+				$.ajax({
+           type: 'POST',
+           jsonpCallback: "callback",
+           //dataType: 'json',
+           data:"&d1="+tempDetails,
+           url: _ip+'/saveDevopsTemplate',
+           success: function(results) {
+			   console.log(results);
+             //location.pathname = 'viewDevOpsTemplate';
+           },
+           error: function (xhr,error){
+            console.log('Failure'+xhr+error);
+            },
+         });
+
 		}else{
 			// throw error
 		}
@@ -755,21 +759,24 @@ StepsOfDev.prototype = {
 			
 			if(Object.keys(this.cIVMs).length != 0){
 				for(b in this.cIVMs){
+				  if(typeof(JSON.parse(b))== 'number'){
+				    var a = Object.keys(this.cIVMs[b]._vmPackages);
+            //console.log(a.length);
+            var q = 0;
+            for(var t=0; t < a.length; t++){
+              //console.log(a[t]);
+              //console.log(this.cIVMs[b]._vmPackages[a[t]]);
+              var packNa = this.cIVMs[b]._vmPackages[a[t]];
+              if(packNa == true){
+                //addpackDe(this.toolsonJson.data[i].tool_name,t)
+              }else{
+                q++
+                a.length == q ? alert("Select atleast one package in each VM.") : true;
+              }
+            }
+				  }
 					//console.log(Object.keys(this.cIVMs[b]._vmPackages));
-					var a = Object.keys(this.cIVMs[b]._vmPackages);
-					//console.log(a.length);
-					var q = 0;
-					for(var t=0; t < a.length; t++){
-						//console.log(a[t]);
-						//console.log(this.cIVMs[b]._vmPackages[a[t]]);
-						var packNa = this.cIVMs[b]._vmPackages[a[t]];
-						if(packNa == true){
-							//addpackDe(this.toolsonJson.data[i].tool_name,t)
-						}else{
-							q++
-							a.length == q ? alert("Select atleast one package in each VM.") : true;
-						}
-					}
+
 				}
 			}
 
@@ -789,6 +796,7 @@ function repItem(ev){
 	//console.log(ii);
 	$(".techLi .techRadBut").removeClass("techRadBut_Selected");
 	$(ev).find(".techRadBut").addClass("techRadBut_Selected");
+  sessionStorage.setItem('tech',ii);
 	//document.cookie = "Technology="+ii+";expires=Fri, Dec 02 2016 14:44:30 GMT+0530";
 }
 

@@ -117,11 +117,11 @@ exports.devopsTemp = function(req, res){
 exports.saveDevopsTemplate = function(req,res){
 	var result=JSON.stringify(req.body);
 	var Obj = JSON.parse(result);
-	//console.log(Obj.d1); 
+	console.log(Obj.d1); 
 	var d1 = Obj.d1;
 	var dt_obj = JSON.parse(d1);
-	//console.log(dt_obj);
-	MongoClient.connect(url, function (err, db){
+	console.log(dt_obj);
+	/*MongoClient.connect(url, function (err, db){
 		if (err){
 		console.log('Unable to connect to the mongoDB server. Error:', err);
 		} else {
@@ -139,7 +139,8 @@ exports.saveDevopsTemplate = function(req,res){
 				db.close();
 				});
 		}
-	});
+	});*/
+	res.send("Devops Template Received");
 }
 
 
