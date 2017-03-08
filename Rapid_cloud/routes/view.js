@@ -8,7 +8,7 @@ var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
 client_pg.connect();
 var ActiveDirectory = require('activedirectory');
-
+var spawn = require("child_process").spawn,child;
 
 //var url = 'mongodb://172.29.59.62:27017/test';
 var url = 'mongodb://172.29.59.100:27017/test';
@@ -422,4 +422,64 @@ exports.deployStatus = function(req, res){
 		}
 		res.send(data.rows)
 	});
+}
+var executeScript = function(scriptName){
+	console.log(scriptName);
+	//var cmd = 'C:\\Users\\sangamesh.b\\Desktop\\scripts\\'+scriptName;
+	var cmd = './res_scripts/'+scriptName;
+	child = spawn("powershell.exe", [cmd]);
+	child.stdout.on("data",function(data){
+	   console.log("Powershell Data: " + data);
+	});
+	child.stderr.on("data",function(data){
+	    console.log("Powershell Errors: " + data);
+	    return data;
+	});
+	child.on("exit",function(){
+	   console.log("Powershell Script finished");
+	   return "Script finished";
+	});
+	child.stdin.end(); //end input
+}
+
+var saveObject = function(list, cname){
+	console.log(list,cname);
+	MongoClient.connect(url, function (err, db) {
+		  if (err) {
+		    console.log('Unable to connect to the mongoDB server. Error:', err);
+		  } else {
+		    
+		    console.log('Connection established to', url);    
+		    var collection = db.collection(cname);
+			
+			collection.remove(function(err, result){
+					if(err){
+						console.log(err);
+					}else{
+						console.log("Document is deleted");
+					}
+				});
+			
+		    collection.insert([list], function (err, result) {
+		      if (err) {
+		        console.log(err);
+		      } else {
+		        console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+				return true;
+			  }
+		      db.close();
+		    });
+		  } 
+		});
+	
+	
+}
+
+exports.importSubscription = function(req, res){
+	var list1 = {s_id : 1, accName : req.body.accName, userName : req.body.user, pwd : req.body.pwd, provider : "Azure"};
+	var msg = saveObject(list1, "subscription");
+	var msg1 = executeScript("subscription.ps1");
+	res.send("Success");
+	
+	
 }

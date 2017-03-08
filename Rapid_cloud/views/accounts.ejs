@@ -43,7 +43,38 @@
 		</div>
 	</div>
 </div>
-
+<div id="importSubPOP" style="display:none;">
+	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
+	  <div class="balance">
+		<div class="popDataNew" style="width:34%;">
+			<div class="modal-header">
+				<button type="button" id="subnetsPopupClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+				<h4 class="modal-title">Enter Credentils</h4>
+		    </div>
+		   <div class="modal-body">
+				<div id="noDEpullL">					
+					<div class="pull-left">
+						<label class="labelTemp">User Name</label>
+						<div class="clickRole addStoTabWid">
+							<input type="text" id="user_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+					<div class="pull-left">
+						<label class="labelTemp">Password</label>
+						<div class="clickRole addStoTabWid">
+							<input type="password" id="password_Id" placeholder="" style="border:none;width:100%;">	
+						</div>
+					</div>
+				</div>
+		   </div>
+		   <div style="clear:both;">&nbsp;</div>
+		  <div class="modal-footer">
+			<a class="cancelPoup">Cancel</a>&nbsp;
+			<button id="importSubscription" class="redButton" onclick="importSubscription();">Import</button>
+		  </div>
+		</div>
+	</div>
+</div>
 <div id="create_Sub_POP" style="display:none;">
 	<div class="popupData" style="display:block;z-index:11;position:fixed;"></div>
 	  <div class="balance">
@@ -92,8 +123,9 @@
 							<button class="redButton" id="awsSubscription" onclick="addAwsSubscription();">Create</button>
 						</div>
 					</div>
-					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post" onsubmit="return validateSubscriptionForm()" >
 					<div class="azureD" style="display:none;">
+					<form id="uploadForm" enctype="multipart/form-data" action="/fileupload" method="post" onsubmit="return validateSubscriptionForm()" >
+					
 					 <input type="hidden" id="accName1" name="accName1"/>
 					<div class="pull-left">
 						<label class="labelTemp">Subscription Name</label>
@@ -126,15 +158,12 @@
 							</div>							
 						</div>
 						<div class="pull-left">
-								<input type="submit" value="Create" name="submit">
+								<input type="submit" value="Create" name="submit">								
 						</div>
-						<!--<div class="modal-footer">
-							</br><a class="cancelPoup">Cancel</a>&nbsp;
-							<button class="redButton">Create</button>
-						<input type="submit" value="Create" name="submit">
-						</div>-->
-						</form>
+						</form>		
+					<button class="redButton" id="azureImp"style="margin-top:32px" onclick="importSub();">Import</button>
 					</div>
+					
 				</div>
 		   </div>
 		   <div style="clear:both;">&nbsp;</div>

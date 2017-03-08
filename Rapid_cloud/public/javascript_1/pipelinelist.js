@@ -28,7 +28,7 @@ pipelineList.prototype = {
 				var crTr = document.createElement("tr");
 						crTr.id ="dataOf"+i;
 					insertAfter(self.addLoadBa, crTr);
-					crTr.innerHTML+='<h3 align = "center"><p>No volume to attach</p></h3>\
+					crTr.innerHTML+='<h3 align = "center"><p>No Pipeline List</p></h3>\
 					';
 			}
 		});

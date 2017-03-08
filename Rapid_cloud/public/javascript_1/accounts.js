@@ -80,7 +80,7 @@ $(document).ready(function(){
 		//exVolId.innerHTML="";
 	});
 	$("#ConfigureHealthpopupClose, .cancelPoup, #subnetsPopupClose, .close").click(function(){
-		$("#ConfigureHealthChecksAdvanced, #SubnetsPoup, #addInstPopUpWin, #securityGroWin, #createAccPOP, #create_Sub_POP, #create_Project_POP, #create_Product_POP").hide();
+		$("#ConfigureHealthChecksAdvanced, #importSubPOP, #SubnetsPoup, #addInstPopUpWin, #securityGroWin, #createAccPOP, #create_Sub_POP, #create_Project_POP, #create_Product_POP").hide();
 	});
 	$('.createAccount').click(function(){
 		$('#createAccount_Input_Id').val("");
@@ -636,6 +636,34 @@ function saveAwsCredentials(accName, awsSub, accKey, secKey){
 			alert("failure");
 			},
 	});
+}
+
+function importSub(){
+	 $('#create_Sub_POP').hide();
+	$('#importSubPOP').show();	
+}
+function importSubscription(){
+	var accName = document.getElementById("typeDro").innerText
+	    ,user = document.getElementById("user_Id").value
+		,pwd = document.getElementById("password_Id").value;
+	if(accName == "Select"){alert("Please select account");return;}
+	else if(user == "" || user == null){document.getElementById("user_Id").focus();return false;}
+	else if(pwd == "" || user == null){document.getElementById("password_Id").focus();return false;}
+	var data = {};
+	data.accName = accName;
+	data.user = user;
+	data.pwd = pwd;
+	$.ajax({
+	  type: 'POST',
+	  data: data,	 
+	  url: _ip+'/importSubscription'
+	})
+	.done(function(data){
+		alert(data);
+	})
+	.fail(function(err){
+		alert(err);
+	})
 }
 
 

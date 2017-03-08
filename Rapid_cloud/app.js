@@ -10,6 +10,7 @@ var express = require('express')
   , account = require('./routes/accounts')
   , resources = require('./routes/resource')
   , jenkins = require('./routes/jenkins')
+  , sonar = require('./routes/sonar')
   , http = require('http')
   , path = require('path')
   , multer = require('multer');
@@ -219,7 +220,7 @@ app.post('/deployResource', manage.deployResource);
 
 app.get('/multicloud', routes.multicloud);
 //DevOps
-app.get('/devopsTemplate', resources.devopsTemplate);
+app.post('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 app.get('/createDevTemp', account.createDevTemp);
@@ -243,6 +244,7 @@ app.post('/getvms', view.getvms);
 app.post('/syncVmData', view.syncVmData);
 
 app.get('/deployStatus', view.deployStatus);
+app.post('/importSubscription', view.importSubscription);
 
 //Jenkins services
 app.get('/pipelinelist', jenkins.pipelinelist);
@@ -251,9 +253,13 @@ app.post('/pipelineviewdata', jenkins.pipelineviewdata);
 app.get('/pipelineview', jenkins.pipelineview);
 app.get('/projectTech', jenkins.projectTech);
 app.post('/getBuild', jenkins.getBuild);
+app.post('/buildPipe', jenkins.buildPipe);
+app.post('/getBuildLog', jenkins.getBuildLog);
 
-app.get('/testRest', jenkins.testRest);
-
+//sonarqube services
+app.get('/sonarProject', sonar.sonarProject);
+app.get('/sonarPrjList', sonar.sonarPrjList);
+app.get('/sonarView', sonar.sonarView);
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")
 
