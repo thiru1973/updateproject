@@ -1711,5 +1711,7 @@ article[role="devTemp"] {
 
 /* Create New DevOps Template : Ends....*/
 
+#pipeView{background-color: #EEEEEE;padding-bottom: 10px;}
+#pipeView h5{background-color: #B2C1BC;padding: 10px;font-weight: bold;	}
  
 

@@ -13,6 +13,7 @@
     "googleapis": "^13.0.0",
     "jenkins": "^0.20.0",
     "jenkins-api": "^0.2.8",
+    "request": "^2.79.0",
     "supertest": "^1.2.0"
   },
   "devDependencies": {

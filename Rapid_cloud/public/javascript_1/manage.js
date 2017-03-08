@@ -255,7 +255,7 @@ LayOut.prototype = {
 	},
 	primaryLins:{
 		level_1:self.menu,//["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
-		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers"],
+		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers","Build","Sonar", "nexus"],
 		level_2_1:["dsd"],
 		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
@@ -323,6 +323,8 @@ LayOut.prototype = {
 		$('#1Scheduling').click(function(){location.href = location.origin+"/schedulingNode";});
 		$('#4Security').click(function(){location.href = location.origin+"/securityGroupManage";});
 		$('#5Traffic').click(function(){location.href = location.origin+"/trafficManager";});
+		$('#6Build').click(function(){location.href = location.origin+"/pipelinelist";});
+		$('#7Sonar').click(function(){location.href = location.origin+"/sonarProject";});
 		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});

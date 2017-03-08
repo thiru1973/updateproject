@@ -91,23 +91,24 @@ function executeScript(scriptName){
 }
 
 exports.devopsTemplate = function(req,res){
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	MongoClient.connect(url, function (err, db) {
-		  if (err) {
-						console.log('Unable to connect to the mongoDB server. Error:', err);
-				   } else {
-					console.log('Connection established');
-					var instance=db.collection('devops_tools');									
-					instance.find().toArray(function(err,result){
-					if(err){
-							throw err
-							}
-						else{								
-								res.send(result);
-							}
-					 db.close();					
-					});					
-				}		 
-			});	
+         if (err) {
+                   console.log('Unable to connect to the mongoDB server. Error:', err);
+                } else {
+                console.log('Connection established');
+                var instance=db.collection('devops_tools');                            
+                instance.find({cloud : req.body.cloud, devops_type : req.body.devops_type, technology : req.body.technology}).toArray(function(err,result){
+                if(err){
+                      throw err
+                      }
+                   else{                       
+                         res.send(result);
+                      }
+                 db.close();               
+                });                
+             }      
+          });	
 }
 
 exports.devopsTemp = function(req, res){

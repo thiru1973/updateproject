@@ -881,7 +881,7 @@ function show_nodeDetails(data){
 	
 	var addRole = new HideAndShow_Constructor("1stRowAdd","closeConfig");
 		addRole.defaultHide();
-		//addRole.showActionOnly();
+		//Role.showActionOnly();
 
 	/*var elesticRow = new HideAndShow_Constructor("","addClonedElements");
 		elesticRow.defaultHide();
