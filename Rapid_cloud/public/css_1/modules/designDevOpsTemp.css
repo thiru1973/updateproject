@@ -1,0 +1,155 @@
+[role=template] ul {
+  overflow-y: auto;
+}
+.line-seperator {
+ border-top: 3px solid #777575;
+}
+.devops-stages{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.devops-stage{
+  position: relative;
+  top: 10px;
+  background: #99999A;
+  padding: 10px;
+}
+table.my_info{
+  height: 161px;
+}
+.devops-stages-arrow{
+  color: #99999A;
+  font-size: 41px;
+  top: 10px;
+}
+.active{
+  background:#EB2627;
+}
+figcaption{
+  text-align: center;
+}
+.pipe-block{
+ background-color:transparent !important;
+ height:auto !important;
+ width:auto !important;
+ padding:0 !important;
+ margin: 0 !important;
+}
+.pipeline-label{
+ display: flex;
+ align-items: center;
+ margin-bottom: 10px;
+}
+label ul li{
+  position:relative;
+  list-style:none;
+  padding:10px;
+  float:left;
+  border:2px solid black;
+}
+
+li.icon {
+  /* position: relative; */
+  padding: 0 !important;
+  font-size: 20px !important;
+  border: 0 !important;
+  top: 10px;
+  background: transparent;
+}
+
+
+.track-progress {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.track-progress li {
+  list-style-type: none;
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  line-height: 50px;
+  height: 50px;
+  background-color: grey;
+}
+
+.track-progress li:first-child:nth-last-child(6),
+.track-progress li:first-child:nth-last-child(6) ~ li {
+  width: 16.66%;
+}
+.track-progress li:first-child:nth-last-child(5),
+.track-progress li:first-child:nth-last-child(5) ~ li {
+  width: 20%;
+}
+.track-progress li:first-child:nth-last-child(4),
+.track-progress li:first-child:nth-last-child(4) ~ li {
+  width: 25%;
+}
+.track-progress li:first-child:nth-last-child(3),
+.track-progress li:first-child:nth-last-child(3) ~ li {
+  width: 33.33%;
+}
+
+.track-progress li > span {
+  display: block;
+  color: black;
+  font-weight: bold;
+  font-size: 1vw;
+  padding-left: 30px;
+  text-transform: uppercase;
+}
+
+.track-progress li:first-child  > span{
+  padding-left: 10px;
+}
+
+.track-progress li.done > span {
+  color: #fff;
+  background-color: #e13f3e;
+}
+
+.track-progress li > span:after,
+.track-progress li > span:before {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 0px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  border: solid transparent;
+  border-left-color: grey;
+  border-width: 25px;
+}
+
+.track-progress li > span:after {
+  top: -5px;
+  z-index: 1;
+  border-left-color: white;
+  border-width: 30px;
+}
+
+.track-progress li > span:before {
+  z-index: 2;
+}
+.track-progress li.done + li > span:before {
+  border-left-color: #e13f3e;
+}
+
+.track-progress li:first-child > span:after,
+.track-progress li:first-child > span:before {
+  display: none;
+}
+.design-wizard2{
+  margin-bottom: 15px;
+}
+.tool-preview{
+  background-color: transparent !important;
+}

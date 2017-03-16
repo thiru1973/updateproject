@@ -268,7 +268,7 @@ LayOut.prototype = {
 		designPrime:["Infrastructure Template","DevOps Template","Product Template"],
 			//level_1designPrime:["View","Create","Deploy"],
 			level_1designPrime:["View","Deploy","Node"],
-			level_2desPrime:["View","Deploy"],
+			level_2desPrime:["View","Deploy","","Design"],
 		level_1:self.menu,
 		//level_1:["Accounts","Design","Deploy","Manage","Monitor", "Test Ops"],
 								//level_2:["Networks","Templates","Node","Blueprint","Load Balancer"],
@@ -470,6 +470,7 @@ LayOut.prototype = {
 		$("#deploy0").click(function(){location.href = location.origin+"/master_2";});
 		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
 		$("#depInfra2").click(function(){location.href = location.origin+"/nodeTemplates";});
+		$("#depInfra3").click(function(){location.href = location.origin+"/designDevOpsTemp";});
 		$("#deploy2").click(function(){location.href = location.origin+"/viewProductTemplate";});
 		$("#deploy3").click(function(){location.href = location.origin+"/nodeTemplates";});
 		
@@ -487,6 +488,7 @@ LayOut.prototype = {
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});
 		$('#Templates').click(function(){location.href = location.origin+"/create_template";});
+		//$('#DevOps').click(function(){location.href = location.origin+"/designDevOpsTemp";});
 		$('#Manage').click(function(){location.href = location.origin+"/manageEnv"});
 		$('#3rdVPC').click(function(){location.href = location.origin+"/vpc"});
 		$('#3rdKey').click(function(){location.href = location.origin+"/keyPair"});

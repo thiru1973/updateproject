@@ -11,6 +11,7 @@ var express = require('express')
   , resources = require('./routes/resource')
   , jenkins = require('./routes/jenkins')
   , sonar = require('./routes/sonar')
+  , nexus = require('./routes/nexus')
   , http = require('http')
   , path = require('path')
   , multer = require('multer');
@@ -78,6 +79,8 @@ app.get('/securityGroup', routes.securityGroup);
 app.get('/routeTable', routes.routeTable);
 
 app.get('/myAccount', routes.myAccount);
+//design devops template
+app.get('/designDevOpsTemp', routes.designDevOpsTemp);
 
 //Old page functions
 app.get('/master', routes.master);
@@ -227,7 +230,8 @@ app.get('/createDevTemp', account.createDevTemp);
 app.get('/viewDevOpsTemplate', routes.viewDevOpsTemplate);
 app.get('/deploydbData', resources.deploydbData);
 app.get('/deployDivOpsTemplate', routes.deployDivOpsTemplate);
-
+app.get('/appTechnologies', resources.appTechnologies);
+app.post('/appTools', resources.appTools);
 //Product Templates
 app.get('/viewProductTemplate', routes.viewProductTemplate);
 app.get('/deployProductTemplate', routes.deployProductTemplate);
@@ -248,7 +252,7 @@ app.post('/importSubscription', view.importSubscription);
 
 //Jenkins services
 app.get('/pipelinelist', jenkins.pipelinelist);
-app.get('/jenkinsJob', jenkins.jenkinsJob);
+app.post('/jenkinsJob', jenkins.jenkinsJob);
 app.post('/pipelineviewdata', jenkins.pipelineviewdata);
 app.get('/pipelineview', jenkins.pipelineview);
 app.get('/projectTech', jenkins.projectTech);
@@ -260,6 +264,11 @@ app.post('/getBuildLog', jenkins.getBuildLog);
 app.get('/sonarProject', sonar.sonarProject);
 app.get('/sonarPrjList', sonar.sonarPrjList);
 app.get('/sonarView', sonar.sonarView);
+app.get('/nexusView', nexus.nexusView);
+app.post('/nexusaf', nexus.nexusaf);
+app.get('/nexusafView', nexus.nexusafView);
+app.post('/nexusstatus', nexus.nexusstatus);
+
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app>
+<title>RapidCloud</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
+<link href="css_1/modules/designDevOpsTemp.css"  rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<body id="bg">
+<div class="container">
+    <aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation"></aside>
+    <section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="view_temp">
+        <nav class="themeCon"><ul id="designLin"></ul></nav>
+        <div id="DevOpsStages" class="devops-stages">
+            <ol class="track-progress design-wizard1 col-xs-12">
+                <li class="done">
+                  <span>Select Infrastructure</span>
+                </li><!--
+             --><li>
+                  <span>DevOps Details</span>
+                </li><!--
+             --><li>
+                  <span>Choose Pipeline</span>
+               </li><!--
+             --><li>
+                  <span>Choose Tools</span>
+               </li><!--
+             --><li>
+                  <span>Preview & Save DevOps</span>
+               </li>
+            </ol>
+           <!-- <span class="devops-stage active">Select Infrastructure</span>
+            <span class="glyphicon devops-stages-arrow glyphicon-arrow-right" aria-hidden="true"></span>
+            <span class="devops-stage">DevOps Details</span>
+            <span class="glyphicon devops-stages-arrow glyphicon-arrow-right" aria-hidden="true"></span>
+            <span class="devops-stage">Choose Pipeline</span>
+            <span class="glyphicon devops-stages-arrow glyphicon-arrow-right" aria-hidden="true"></span>
+            <span class="devops-stage">Choose Tools</span>
+            <span class="glyphicon devops-stages-arrow glyphicon-arrow-right" aria-hidden="true"></span>
+            <span class="devops-stage">Preview & Save DevOps</span>-->
+        </div>
+        <hr class="line-seperator"/>
+        <section role="template" class="templates">
+            <div class="stage-infrastructure">
+
+            </div>
+        </section>
+           <div class="templateCreateButtons">
+               <button  class="btn btn-lg devstage-next step1 btn-danger" id="stageDevOps">Next</button>
+               <button class="btn btn-lg devstage-cancel step1 btn-default active">Cancel</button>
+               <button  class="btn btn-lg devstage-next step2 btn-danger hidden" id="stageInfra">Back</button>
+               <button  class="btn btn-lg devstage-next step2 btn-danger hidden" id="stagePipeline">Next</button>
+               <button  class="btn btn-lg devstage-next step3 btn-danger hidden" id="backStageDevOps">Back</button>
+               <button  class="btn btn-lg devstage-next step3 btn-danger hidden" id="stageCodeRepo">Next</button>
+               <button  class="btn btn-lg devstage-next step4 btn-danger hidden" id="backStagePipeline">Back</button>
+               <button  class="btn btn-lg devstage-next step4 btn-danger hidden" id="stageBuildServer">Next</button>
+               <button  class="btn btn-lg devstage-next step4-2 btn-danger hidden" id="backStageCodeRepo">Back</button>
+               <button  class="btn btn-lg devstage-next step4-2 btn-danger hidden" id="stageBuildTool">Next</button>
+               <button  class="btn btn-lg devstage-next step4-3 btn-danger hidden" id="backStageBuildServer">Back</button>
+               <button  class="btn btn-lg devstage-next step4-3 btn-danger hidden" id="stageUnitTest">Next</button>
+               <button  class="btn btn-lg devstage-next step4-4 btn-danger hidden" id="backStageBuildTool">Back</button>
+               <button  class="btn btn-lg devstage-next step4-4 btn-danger hidden" id="stageCodeCoverage">Next</button>
+               <button  class="btn btn-lg devstage-next step4-5 btn-danger hidden" id="backStageUnitTest">Back</button>
+               <button  class="btn btn-lg devstage-next step4-5 btn-danger hidden" id="stagePackage">Next</button>
+               <button  class="btn btn-lg devstage-next step4-6 btn-danger hidden" id="backStageCodeCoverage">Back</button>
+               <button  class="btn btn-lg devstage-next step4-6 btn-danger hidden" id="stagePreviewSave">Next</button>
+               <button  class="btn btn-lg devstage-next step5 btn-danger hidden" id="backStagePackage">Back</button>
+               <button  class="btn btn-lg devstage-next step5 btn-danger hidden" id="stage6">Save</button>
+           </div>
+    </section>
+    <footer>
+        <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+        <span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+    </footer>
+</div>
+</body>
+<script src="javascript_1/designDevOpsTemp.js"></script>
+<script src="javascript_1/menu.js"></script>
+<!--<script src="javascript_1/vpc.js"></script>-->
+<script src="javascript_1/node.js"></script>
+</html>

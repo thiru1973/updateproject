@@ -19,18 +19,19 @@ sonarProject.prototype = {
 			}
 			var data = {};
 			data.mtName = "projectList";
+			data.accountName = localStorage.getItem("Account");
+			data.projectName = localStorage.getItem("ProjectName");
+			data.productName = localStorage.getItem("ProductName");
 			$.ajax({
 			  type: 'GET',
 			  data:data,
 			  url: _ip+'/sonarPrjList'
 			})
 			.done(function(data){
-				var jData = JSON.parse(data);
-				//console.log(data);
-				if(jData.length > 0){				
-				for(var i=0; i<jData.length; i++){
-					$("#pipeView").append("<li class='roles gapForDiv'>"+jData[i].key+""
-						+"&nbsp&nbsp<a href='#' class='showadvancedOpt"+i+" pull-right' style='font-size:12px;' title='"+jData[i].key+"' onclick='pL.showMore(this, "+i+");'>More</a>"
+				if(data.length > 0){				
+				for(var i=0; i<data.length; i++){
+					$("#pipeView").append("<li class='roles gapForDiv'>"+data[i].sonar_project+""
+						+"&nbsp&nbsp<a href='#' class='showadvancedOpt"+i+" pull-right' style='font-size:12px;' title='"+data[i].sonar_project+"' onclick='pL.showMore(this, "+i+");'>More</a>"
 						+"</li>");
 				}
 			}else{
@@ -53,17 +54,18 @@ sonarProject.prototype = {
 		var data = {};
 		data.mtName = "projIssues";
 		data.pjName = id.title;
+		data.accountName = localStorage.getItem("Account");
+		data.projectName = localStorage.getItem("ProjectName");
+		data.productName = localStorage.getItem("ProductName");
 		$.ajax({
 		  type: 'GET',
 		  data:data,
 		  url: _ip+'/sonarPrjList'
 		})
 		.done(function(data){
-			
 			var ot = JSON.parse(data.data1),
 			   ot1 = JSON.parse(data.data2);
 			  complexData = JSON.parse(ot1[0].msr[6].data);
-			 console.log(ot1);
 			$(".advancedOpt"+i+"").empty();
 			$("#pipeView").append("<div class='advancedOpt"+i+"' style='display:none;'><div class='roles gapForDiv'><div class='pull-left' style=''>"
 										+"<button type='button' class='close' data-dismiss='modal' aria-label='Close' id='more' onclick='closeMore("+i+");'><span style='margin-left:100%;' aria-hidden='true'>x</span></button>"

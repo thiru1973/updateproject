@@ -24,6 +24,9 @@ pipelineList.prototype = {
 		var prj = url.substring(idx+5).replace("#","");
 		var data = {};
 		data.mtName = "projIssues";
+		data.accountName = localStorage.getItem("Account");
+		data.projectName = localStorage.getItem("ProjectName");
+		data.productName = localStorage.getItem("ProductName");
 		data.pjName = prj;
 		$.ajax({
 		  type: 'GET',

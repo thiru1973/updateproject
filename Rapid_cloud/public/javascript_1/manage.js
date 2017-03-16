@@ -325,6 +325,7 @@ LayOut.prototype = {
 		$('#5Traffic').click(function(){location.href = location.origin+"/trafficManager";});
 		$('#6Build').click(function(){location.href = location.origin+"/pipelinelist";});
 		$('#7Sonar').click(function(){location.href = location.origin+"/sonarProject";});
+		$('#8nexus').click(function(){location.href = location.origin+"/nexusView";});
 		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});

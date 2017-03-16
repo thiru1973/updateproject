@@ -115,34 +115,45 @@ exports.devopsTemp = function(req, res){
 	res.render("devops");
 }
 
-exports.saveDevopsTemplate = function(req,res){
-	var result=JSON.stringify(req.body);
-	var Obj = JSON.parse(result);
-	console.log(Obj.d1); 
-	var d1 = Obj.d1;
-	var dt_obj = JSON.parse(d1);
-	console.log(dt_obj);
-	/*MongoClient.connect(url, function (err, db){
-		if (err){
-		console.log('Unable to connect to the mongoDB server. Error:', err);
-		} else {
-			console.log('Connection established');
-			//var DB_data = {obj:{"templateDetails":{"_templateName":"testazure_980","_projectName":"Demo_proj","_technology":"Java","_tool_name":"Java"},"CI_vms":{"vms":{"0":{"_vmName":"Medium","_vmRole":"WebServer","_vmPackages":{"Jenkins":false,"Sonarqube":false,"Nexus":false}},"1":{"_vmName":"Medium","_vmRole":"ApplicationServer","_vmPackages":{"Jenkins":true,"Sonarqube":true,"Nexus":false}}}},"CT_vms":{"vms":{}},"CD_vms":{"vms":{}}}};
-			var DB_data = {deployTemplate:dt_obj};
-			var instance=db.collection('devops_template_save');
-			instance.insert(DB_data, function (err, result){
-			if (err) {
-				console.log(err);
-				} else {
-				console.log('Inserted values sucess fully');
-				res.send("success");
-				}
-				db.close();
-				});
-		}
-	});*/
-	res.send("Devops Template Received");
-}
+ exports.saveDevopsTemplate = function(req,res){
+   //console.log(req.body.data);  
+    //var result=JSON.stringify(req.body.data);
+     var Obj = JSON.parse(req.body.data);
+    //console.log('type',typeof Obj);
+    //console.log(Obj);
+
+     console.log(Obj.deployTemplate[0].templateName);
+      //var d1 = Obj.d1;
+     //var dt_obj = JSON.parse(d1);
+     //console.log(dt_obj[0]._templateName);
+     var temp_name = (Obj.deployTemplate[0].templateName.replace(/[0-9]/g, ''));
+     var a = Math.floor(100000 + Math.random() * 900000)
+     a = a.toString().substring(0, 5);
+     var dev_tempName = temp_name+"DevOps"+"_"+a;
+     console.log(dev_tempName);
+     Obj.deployTemplate[0].templateName = dev_tempName;
+     //console.log(dt_obj);
+     MongoClient.connect(url, function (err, db){
+        if (err){
+        console.log('Unable to connect to the mongoDB server. Error:', err);
+        } else {
+           console.log('Connection established');
+           //var DB_data = {obj:{"templateDetails":{"_templateName":"testazure_980","_projectName":"Demo_proj","_technology":"Java","_tool_name":"Java"},"CI_vms":{"vms":{"0":{"_vmName":"Medium","_vmRole":"WebServer","_vmPackages":{"Jenkins":false,"Sonarqube":false,"Nexus":false}},"1":{"_vmName":"Medium","_vmRole":"ApplicationServer","_vmPackages":{"Jenkins":true,"Sonarqube":true,"Nexus":false}}}},"CT_vms":{"vms":{}},"CD_vms":{"vms":{}}}};
+           //var DB_data = {deployTemplate:Obj};
+           var instance=db.collection('devops_template_save');
+           instance.insert(Obj, function (err, result){
+           if (err) {
+              console.log(err);
+              } else {
+              console.log('Inserted values successfully');
+              res.send("success");
+              }
+              db.close();
+              });
+        }
+     });
+     //res.send(req.body.data);
+  }
 
 
 exports.deploydbData = function(req, res){
@@ -164,3 +175,47 @@ exports.deploydbData = function(req, res){
 				}
 		});
 };
+exports.appTechnologies = function(req, res){
+
+   MongoClient.connect(url, function (err, db) {
+        if (err) {
+                  console.log('Unable to connect to the mongoDB server. Error:', err);
+               } else {
+               console.log('Connection established');
+               var instance=db.collection('application_technologies');
+               instance.find().toArray(function(err,result){
+               if(err){
+                     throw err
+                     }
+                  else{
+                        res.send(result);
+                       // console.log(result);
+                     }
+                db.close();
+               });
+            }
+      });
+};
+
+exports.appTools = function(req, res){
+//var result = "Node.js";
+   var result=req.body.technology;
+    MongoClient.connect(url, function (err, db) {
+         if (err) {
+                   console.log('Unable to connect to the mongoDB server. Error:', err);
+                } else {
+                console.log('Connection established');
+                var instance=db.collection('app_devops_tools');
+                instance.find({technology : result}).toArray(function(err,result){
+                if(err){
+                      throw err
+                      }
+                   else{
+                         res.send(result);
+                         //console.log(result);
+                      }
+                 db.close();
+                });
+             }
+       });
+ };

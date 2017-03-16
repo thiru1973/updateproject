@@ -236,7 +236,7 @@ exports.authentication = function(req, res){
 			 res.send(result);
 		 	 }, 2000);*/
 	res.setHeader("Access-Control-Allow-Origin", "*");
-	console.log(req.body);
+	//console.log(req.body);
 	var username = req.body.userName, password = req.body.passWord;		 
 	ad.authenticate(username, password, function(err, auth) {
 		  if (err) {

@@ -71,7 +71,9 @@ res.render('deployProductTemplate');
 exports.master_2 = function(req,res){
 	res.render('master_2');
 };
-
+exports.designDevOpsTemp = function(req,res){
+	res.render('designDevOpsTemp');
+};
 exports.create_template = function(req,res){
 	res.render('create_template');
 };

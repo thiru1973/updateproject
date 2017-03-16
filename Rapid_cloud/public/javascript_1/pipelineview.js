@@ -20,6 +20,9 @@ pipelineList.prototype = {
 		var pipe = url.substring(idx+5).replace("#","");
 		var data = {};
 		data.pipelineName = pipe;
+		data.accountName = localStorage.getItem("Account");
+		data.projectName = localStorage.getItem("ProjectName");
+		data.productName = localStorage.getItem("ProductName");
 		 $.ajax({
 			type: 'POST',
 			jsonpCallback: "callback",
@@ -27,7 +30,6 @@ pipelineList.prototype = {
 			data: data,
 			url: _ip+'/pipelineviewdata',
 			success: function(data, textStatus){
-				 console.log(data);
 				if(data.notFound == true){
 					alert("No Jobs found");
 				}else{			
@@ -95,6 +97,9 @@ pipelineList.prototype = {
 		alert(ev.title);
 		var data = {};
 		data.jobName = ev.title;
+		data.accountName = localStorage.getItem("Account");
+		data.projectName = localStorage.getItem("ProjectName");
+		data.productName = localStorage.getItem("ProductName");
 		$.ajax({
 		  type: 'POST',
 		  data: data,	 
@@ -110,6 +115,9 @@ pipelineList.prototype = {
 	showLogdetails : function(ev){
 		var data = {};
 		data.jobName = ev.title;
+		data.accountName = localStorage.getItem("Account");
+		data.projectName = localStorage.getItem("ProjectName");
+		data.productName = localStorage.getItem("ProductName");
 		$.ajax({
 		  type: 'POST',
 		  data: data,	 
@@ -129,16 +137,17 @@ pipelineList.prototype = {
 		  var a = document.getElementById("a");
 		  var file = new Blob([dwData], {type: type});
 		  a.href = URL.createObjectURL(file);
-		  console.log(a.href);
 		  a.download = "Status.txt";
 
 	},
 	showDetails : function(ev,id){
-		console.log(ev+id);
 		var self = this;
 		var inList = document.getElementById("instList"+id+"");
 		var data = {};
 		data.jobName = ev;
+		data.accountName = localStorage.getItem("Account");
+		data.projectName = localStorage.getItem("ProjectName");
+		data.productName = localStorage.getItem("ProductName");
 		 $.ajax({
 			type: 'POST',
 			jsonpCallback: "callback",
@@ -146,7 +155,6 @@ pipelineList.prototype = {
 			data: data,
 			url: _ip+'/getBuild',
 			success: function(data, textStatus){
-				console.log(data);
 				if(data.notFound == true){
 					alert("NO data found");
 				}else{
