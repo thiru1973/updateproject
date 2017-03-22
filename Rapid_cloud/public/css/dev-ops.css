@@ -1,0 +1,275 @@
+.dev-ops-flow{
+    padding-top: 12px;
+    margin-left: 270px;
+}
+
+.overview-height {
+    height: 350px;
+}
+.dev-ops-flow div {
+    display: inline-block;
+}
+
+.dev-ops-flow span {
+    display: inline-block;
+    color: white;
+    padding-top: 12px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.border {
+    padding: 3px;
+    width: 102px;
+    height: 40px;
+    background: grey;
+    text-align: center;
+}
+
+.border span {
+    color: white;
+}
+
+.glyphicon {
+    top: 20px;
+}
+
+.glyphicon-40 {
+    top: -40px;
+}
+
+.grey-arrow {
+    top: 1px;
+    font-size: 40px;
+    color: grey;
+}
+
+.small-arrow {
+    font-size: 20px;
+    color: grey;
+    width: 20px;
+    width: 20px;
+}
+
+.red-arrow {
+    top: 1px;
+    font-size: 40px;
+    color: #c9302c;
+}
+
+.tools {
+    width: 75px;
+    height: 57px;
+}
+
+#select-devops, #add-cloud-details, #preview-and-deploy, #configure-dev-ops {
+    font-size: 12px;
+    font-family: "Segoe Ui",Helvetica,Arial, sans-serif;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background: #c9302c;
+}
+
+label, span {
+    color: #666;
+    font-family: "Segoe Ui",Helvetica,Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+
+label:first-child[for='overview'] {
+    color: #0A0CFF;
+}
+
+#cloud-details {
+    padding-left: 20px;
+}
+
+.pipeline-border-large {
+    width: 800px;
+    height: 300px;
+    border: 1px solid #C2C2C2;
+}
+
+.pipeline-border-medium {
+    width: 800px;
+    height: 250px;
+    border: 1px solid #C2C2C2;
+}
+
+.pipeline-border-small {
+    width: 800px;
+    height: 120px;
+    border: 1px solid #C2C2C2;
+}
+
+section[role='addPipeline'] {
+    margin-top: 10px;
+}
+
+section[role='addCloudDetails'] .panel{
+    height: 600px;
+}
+
+.form-control {
+    width: 100px;
+    background: #d5d5d5;
+}
+
+#environment-label, #deployment-model, #network-environment-label, #resource-group-label {
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+select, .padding-right {
+    padding-right: 20px;
+}
+
+.padding-left {
+    padding-left: 20px;
+}
+
+.padding-bottom {
+    padding-bottom: 20px;
+}
+
+.padding-bottom-small {
+    padding-bottom: 10px;
+}
+
+.fix-overview {
+    margin-top: -170px;
+}
+
+.float-right {
+    float: right;
+}
+
+.dynamic-margin {
+    margin-top: -130px;
+}
+
+#hr {
+    border: 1px solid;
+    color: black;
+    margin-left: 0px;
+}
+
+.left-margin {
+    margin-left: 520px;
+}
+
+.bottom-margin {
+    margin-bottom: 20px;
+}
+
+button {
+    margin: 10px;
+    width: 100px;
+}
+
+a:visited {
+    color: red;
+}
+
+a:hover {
+    color: lightskyblue;
+}
+
+a:active {
+    color: blue;
+}
+
+.padding-top {
+    padding-top: 20px;
+}
+
+.project-name, .pipeline {
+    color: white;
+}
+
+#view-log, #build-pipeline, #edit-pipeline {
+    text-decoration: none;
+    color: white;
+}
+
+#logDetail .myTe {
+    color: white;
+}
+
+#overflow-pop {
+    height: 350px;
+    overflow-y: auto;
+}
+
+#jenkins-inline {
+    padding-top: 20px;
+}
+
+.padding {
+    padding: 10px;
+}
+
+.border {
+    border: 1px solid black;
+    background: white;
+}
+
+.grey {
+    background: #CCCCCC;
+}
+
+#quality-gate {
+    height: 100px;
+    float: right;
+    margin-top: -100px;
+    margin-right: 24px;
+}
+
+.width-long {
+    width: 200px;
+}
+
+.width-long-md {
+    min-width: 240px;
+	width:auto;
+}
+
+.box-model {
+    width: 100px;
+    height: 80px;
+}
+
+.green {
+    background: green;
+}
+
+.top-margin {
+    margin-top: 30px;
+}
+
+.box-model-md {
+    width: 260px;
+    height: 120px;
+}
+
+.border-big {
+    border: 1px solid black;
+    width: 102px;
+    height: 100px;
+    text-align: center;
+    padding: 30px;
+}
+
+.devops-btn{
+	padding:2px 10px !important;	
+	float:right;
+	width:auto !important; 
+}
+
+.marTop-15{
+	margin-top:15px;	
+}

@@ -1,0 +1,68 @@
+{
+"username" : "rahulkumardbit",
+"password" : "cloudrapid1",
+"technology" : "Node.js",
+"project_name" : "Rapid_Devops",
+"product_name" : "SAAS",
+"repository" : {
+			"repo_tool" : "github",
+			"clone_url" : "https://github.com/rahulkumardbit/updateproject.git",
+			"webhook_url" : "https://api.github.com/repos/rahulkumardbit/updateproject/hooks",
+			"branch_url" : "https://api.github.com/repos/rahulkumardbit/updateproject/branches{/branch}",
+		    "name" : "updateproject"
+},
+"groups" : [
+				{
+					"group_name" : "Build",
+					"branches" : ["Release2.0"]
+				},
+				{
+					"group_name" : "Unit_Test",
+					"branches" : ["Release2.0"]
+				},
+				{
+					"group_name" : "Code_Coverage",
+					"branches" : ["Release2.0"]
+				},
+				{
+					"group_name" : "Package",
+					"branches" : ["Release2.0"]
+				}
+],
+"build_configuration" : {
+							"build_tool" : "maven",
+							"goals" : "clean install",
+							"pom" : "",
+							"properties" : "",
+							"private_repository" : "true"					
+},
+
+"unit_test_configuration" : {
+							    "build_tool" : "maven",
+								"unit_test_tool" : "junit",
+								"goals" : "clean install",
+								"pom" : "",
+								"properties" : "",
+								"private_repository" : "true",
+								"archiveJunit" : ""
+},
+
+"code_coverage_configuration" : {
+									"project" : "",
+									"properties" : "",
+									"javaOpts" : "",
+									"additionalArguments" : "",
+									"jdk" : "",
+									"tasks" : ""
+
+},
+
+"package_configuration" : {
+								"build_tool" : "maven",
+								"goals" : "clean install",
+								"pom" : "",
+								"properties" : "",
+								"private_repository" : "true",
+								"artifact_pattern" : ""								
+}
+}

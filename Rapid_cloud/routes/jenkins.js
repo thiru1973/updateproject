@@ -82,6 +82,9 @@ function getUrlJob(acName, pjName, pdName, callback){
 				callback(rows4[0].url)
 	})
 }
+var conString1 = "pg://postgres:cloud123@172.29.59.63:5432/CI_Devops";
+var client_pg1 = new pg.Client(conString1);
+client_pg1.connect();
 exports.getBuild = function(req, res){
 	var job = req.body.jobName;
 	var acName = req.body.accountName
@@ -95,7 +98,15 @@ exports.getBuild = function(req, res){
 		  }else{
 			jenkins.build.get(job, data1.builds.length, function(err, data) {
 				if (err) res.send(err);
-				res.send(data);
+				client_pg1.query("INSERT INTO jenkins_data(accountid,project_name,prod_name,job_name,build_detail) values($1,$2,$3,$4,$5)",[acName,pjName,pdName,job,data],
+						function(err, stresult) {
+						if(err){
+							console.log(err);
+						}else{
+							res.send(data);
+						}
+				});
+				
 			});		
 		  }
 		});

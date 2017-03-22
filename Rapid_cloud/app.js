@@ -269,6 +269,9 @@ app.post('/nexusaf', nexus.nexusaf);
 app.get('/nexusafView', nexus.nexusafView);
 app.post('/nexusstatus', nexus.nexusstatus);
 
+app.get('/uploadJson', nexus.uploadJson);
+app.post('/uploadConfJson', nexus.uploadConfJson);
+
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")
 
@@ -330,6 +333,7 @@ app.post('/getAzureToken', function(req, res) {
 	    }
 	  );
 });
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

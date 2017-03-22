@@ -1,0 +1,125 @@
+@import url("../../css_1/components/wizard.css");
+
+.deploy-stages{
+  display:flex;
+  padding-top:15px;
+}
+.deployDevOps{
+  display: inline-block;
+}
+.table tr td:nth-child(2){
+   word-break: break-word
+}
+.col-xs-12{
+  padding:0;
+}
+.overview{
+  padding:0;
+}
+.overview .panel-body{
+  overflow-x: auto;
+}
+.pipe-block{
+  background-color:transparent !important;
+  height:auto !important;
+  width:auto !important;
+  padding:0 !important;
+  margin: 0 !important;
+  display: inline-flex;
+}
+.pipe-block li{
+  position:relative;
+  list-style:none;
+  padding:8px;
+  float:left;
+  border:2px solid black;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+li.icon {
+  /* position: relative; */
+  padding: 0 !important;
+  font-size: 20px !important;
+  border: 0 !important;
+  //top: 10px;
+  background: transparent;
+}
+.line-seperator {
+ border-top: 3px solid #777575;
+}
+.temp-selected {
+  opacity: 0.3 !important;
+}
+.popup-body{
+  display:  inline-table;
+  width: 100%;
+}
+label {
+  margin-top: 10px;
+}
+.tool-label figcaption{
+  text-align: center;
+}
+.tool-label{
+  margin: 10px;
+}
+a{
+  cursor: pointer  ;
+}
+.small-btn{
+  padding: 5px;
+  width: 36px;
+  height: 32px;
+  margin-left: 5px;
+  background: #E13F3E;
+}
+label.pipeline-label {
+  display: flex;
+  align-items: center;
+}
+.network-config-content .form-group{
+  margin: 0;
+}
+.custom-spacing{
+  padding: 10px;
+  margin-top: 10px;
+}
+.custom-btm-mrgn{
+  margin-bottom: 10px;
+}
+.padding-zero{
+  padding: 0;
+}
+.content-title{
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+}
+.content-title-heading{
+  font-size: 16px;
+  font-weight: 500;
+}
+.table>tbody>tr>td{
+  padding: 3px;
+}
+article[role="devTemp"]{
+  width: 50% !important;
+  margin: 0;
+}
+article{
+  padding: 0;
+  border: 6px solid white;
+  width: auto;
+}
+
+article[role="devTemp"] > h2.vmAPacks{
+  padding: 6px;
+}
+article[role="devTemp"] summary[role="packagesDetails"]{
+  height: 125px;
+  overflow-y: auto;
+}
+.infrastructure{
+  overflow-y: auto;
+  max-height: 700px;
+}

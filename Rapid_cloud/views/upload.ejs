@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<title>Nexus AF View</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="theme/theme1.css" id="myTheme" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
+<body id="bg">
+
+<div class="container">
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<aside><div id="data"></data></aside>
+			</header>
+			<div style="clear:both;line-height:10px;">&nbsp;</div>
+			<div>&nbsp;</div>
+			<div id="fileUpload">
+				<div class="pull-left">
+						<label class="labelTemp">Sonata</label>
+						<div class="">
+							<input type="radio" value="Sonata" checked name="a" id="" placeholder="" style="border:none;width:80%;">	
+						</div>
+					</div>
+					<div class="pull-left" style="padding-left:50px;">
+						<label class="labelTemp">Dedicated</label>
+						<div class="">
+							<input type="radio" value="Dedicated" name="a" id="" placeholder="" style="border:none;width:80%;">	
+						</div>
+					</div>
+					<div style="clear:both;">&nbsp;</div>
+				<form id="uploadConf" enctype="multipart/form-data" action="/uploadConfJson" method="post">
+					
+					<div class="pull-left">
+							<label class="labelTemp">Upload conf file</label>
+							<div class="clickRole addStoTabWid">
+								<input type="file" name="file" id="file" placeholder="" style="border:none;width:100%;">
+							</div>							
+						</div></br>
+						<div class="pull-left">
+								<input type="submit" value="Create" name="submit">								
+						</div>
+				</form>	
+			</div>
+			
+		</section>
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+	</div>
+
+<script src="javascript_1/menu.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");
+});
+</script>
+</body>
+</html>

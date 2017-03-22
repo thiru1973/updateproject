@@ -455,7 +455,16 @@ LayOut.prototype = {
 			pt === "/securityGroup" ? $("#3rdSecurity, #Networks, #Design").addClass("active") : false;
 			pt === "/routeTable" ? $("#3rdRoute, #Networks, #Design").addClass("active") : false ;
 			pt === "/deployTemplate" ? $("#Templates, #Deploy, #3rd0View, #design_0, #deploy0, #depInfra1").addClass("active") : false ;
-			pt === "/master_2" ? $("#Templates, #Deploy, #3rd0View, #design_0, #deploy0, #depInfra0").addClass("active") : false ;
+		  (pt === "/master_2") ? $("#Templates, #Deploy, #3rd0View, #design_0, #deploy0, #depInfra0").addClass("active") : false ;
+		  (pt === "/designDevOpsTemp" && location.search=="") ? $("#Design, #design_1").addClass("active") : false ;
+		  /*(pt === "/master_2" && location.search=="?design")
+		     ? (function(){
+		          $("#Design, #deploy1").addClass("active");
+		          $('#view_temp section ul li:nth-child(2)')[0].click();
+		          $('#view_temp section')[0].remove();
+		          $('#view_temp header,#themeNav ').remove();
+		        })()
+		     : false ;*/
 			pt === "/create_template" ? $("#Templates, #Design, #3rd1Create").addClass("active") : false ;
 			pt === "/addData" ? $("#Templates, #Design, #3rd2addData").addClass("active") : false ;
 			pt === "/manageEnv" ? $("#Manage").addClass("active") : false ;
@@ -465,12 +474,11 @@ LayOut.prototype = {
 			pt === "/assignNode" ? $("#p1Templates, #3rd0Single, #Deploy").addClass("active") : false ;
 	},
 	pagNav:function(){
-		$("#design_1").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		$("#design_1").click(function(){location.href = location.origin+"/designDevOpsTemp";});
 		
 		$("#deploy0").click(function(){location.href = location.origin+"/master_2";});
 		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
 		$("#depInfra2").click(function(){location.href = location.origin+"/nodeTemplates";});
-		$("#depInfra3").click(function(){location.href = location.origin+"/designDevOpsTemp";});
 		$("#deploy2").click(function(){location.href = location.origin+"/viewProductTemplate";});
 		$("#deploy3").click(function(){location.href = location.origin+"/nodeTemplates";});
 		

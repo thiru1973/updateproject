@@ -225,6 +225,7 @@ function LayOut(){
 	this.close = 0;
 	this.menu = [];
 }
+
 //var menu =["Account","Design","Deploy","Manage","Monitor","Projects"];
 LayOut.prototype = {
 	getRoles: function(){
@@ -255,7 +256,7 @@ LayOut.prototype = {
 	},
 	primaryLins:{
 		level_1:self.menu,//["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
-		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers","Build","Sonar", "nexus"],
+		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers","Build","Sonar", "nexus", "Test Management", "Defect"],
 		level_2_1:["dsd"],
 		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
@@ -326,7 +327,8 @@ LayOut.prototype = {
 		$('#6Build').click(function(){location.href = location.origin+"/pipelinelist";});
 		$('#7Sonar').click(function(){location.href = location.origin+"/sonarProject";});
 		$('#8nexus').click(function(){location.href = location.origin+"/nexusView";});
-		
+		$('#9Test').click(function(){window.open("http://sonatabugs.cloudapp.net/tr_show_product.cgi");});
+		$('#10Defect').click(function(){window.open("http://sonatabugs.cloudapp.net/buglist.cgi?query_format=specific&order=bugs.bug_id+desc&bug_status=__all__&product=");});
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});
 		$('#Templates').click(function(){location.href = location.origin+"/master_2";});
@@ -402,6 +404,11 @@ LayOut.prototype = {
 	assignIcons:function(){
 	}
 }
+/*$('#9TestOps').click(function(){
+	alert("testops function");
+	window.open("http://sonatabugs.cloudapp.net/");
+})*/
+
 /*
 function theme(ev, themeNum){
 	if(themeNum == 1){

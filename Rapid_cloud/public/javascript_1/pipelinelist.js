@@ -44,25 +44,6 @@ pipelineList.prototype = {
 		.fail(function(err){
 			console.log(err);
 		})
-		/*$.getJSON( _ip+'/jenkinsJob', function (data){
-			//console.log(data);
-			if(data.length > 0){
-				for(var i=1; i<data.length; i++){
-					var crTr = document.createElement("tr");
-						crTr.id ="dataOf"+i;
-						insertAfter(self.addLoadBa, crTr);
-					crTr.innerHTML+='<td>'+data[i].name+'</td>\
-								<td><a href="#" title="'+data[i].name+'" onclick="pL.pipelineView(this)" class="viewLink">view</a>&nbsp;&nbsp;</td>\
-								';
-				}
-			}else{
-				var crTr = document.createElement("tr");
-						crTr.id ="dataOf"+i;
-					insertAfter(self.addLoadBa, crTr);
-					crTr.innerHTML+='<h3 align = "center"><p>No Pipeline List</p></h3>\
-					';
-			}
-		});*/
 	},
 	pipelineView: function(ev){
 	console.log(ev.title);

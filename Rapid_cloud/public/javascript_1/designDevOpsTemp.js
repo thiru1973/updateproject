@@ -178,7 +178,9 @@ var designDevOpsData = {
             }
           }
         }
-      }
+      },
+      'cTVMs' : {},
+      'cDVMs' : {}
     }
   ]
 };
