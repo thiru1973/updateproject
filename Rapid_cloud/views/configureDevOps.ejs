@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configure DevOps Template</title>
+    <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
+    <!--<link href="css/dev-ops.css" rel="stylesheet"/>-->
+    <link href="css_1/modules/deployDevOpsTemp.css"  rel="stylesheet"/>
+    <link href="css_1/modules/configureDevOps.css"  rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="javascript_1/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+</head>
+<body  id="bg">
+<div class="container">
+    <aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation"></aside>
+    <section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="view_temp">
+        <nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
+        <div id="DevOpsStages" class="deploy-stages">
+            <ol class="track-progress deploy-wizard1 col-xs-12">
+                <li>
+                    <span>Select DevOps Infrastructure</span>
+                </li><!--
+             --><li>
+                    <span>Add Cloud Details</span>
+                </li><!--
+             --><li>
+                    <span>Preview and Deploy</span>
+                </li><!--
+             --><li class="done">
+                    <span>Configure DevOps</span>
+                </li>
+            </ol>
+        </div>
+        <hr class="line-seperator"/>
+        <section class="configDevOps col-sm-12" id="configureDevOps">
+            <div class="col-xs-12 infrastructure" id="deployTemplates"></div>
+            <div class="col-xs-12 infrastructure" id="configTemplate"></div>
+        </section>
+        <button class="btn pull-right btn-danger" id="configure">Configure</button>
+    </section>
+    <footer>
+        <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+        <span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+    </footer>
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="deployModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content alert-area">
+                <div class="modal-body ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="alert-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="javascript_1/menu.js"></script>
+<script src="javascript_1/configureDevOps.js"></script>
+</body>
+</html>

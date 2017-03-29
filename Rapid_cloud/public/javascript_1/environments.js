@@ -43,8 +43,8 @@ $(document).ready(function(){
 	var accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
-	var theDiv = document.getElementById("data");
-	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName;
+	/*var theDiv = document.getElementById("data");
+	theDiv.innerHTML += accountName+">>"+projName+">>"+prodName;*/
 	var data = {};
 	data.account = accountName;
 	data.project = projName;

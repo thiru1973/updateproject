@@ -49,7 +49,7 @@
           <button class="btn btn-lg step2 btn-danger hidden" id="previewDeploy">Next</button>
           <button class="btn btn-lg step3 btn-danger hidden" id="DeployAndExit">Deploy & Exit</button>
           <button class="btn btn-lg step3 btn-danger hidden" id="backCloudDetails">Back</button>
-          <button class="btn btn-lg step3 btn-danger hidden" id="configure">Next</button>
+          <button class="btn btn-lg step3 btn-danger hidden" id="configure">Configure</button>
           <button class="btn btn-lg step4 btn-danger hidden" id="backPreviewDeploy">Back</button>
           <button class="btn btn-lg step4 btn-danger hidden" id="">Configure and Deploy</button>
         </div>
@@ -74,6 +74,16 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="deployModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content alert-area">
+              <div class="modal-body ">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="alert-body"></div>
+              </div>
+            </div>
+          </div>
+       </div>
     </div>
     <script src="javascript_1/menu.js"></script>
     <script src="javascript_1/viewDevOpsTemp.js"></script>

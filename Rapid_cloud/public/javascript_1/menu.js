@@ -352,7 +352,7 @@ LayOut.prototype = {
 							</li>';
 			}
 		}*/
-		else if(pt === "/viewDevOpsTemplate"){
+		else if(pt === "/viewDevOpsTemplate"|| pt === "/configureDevOps"){
 			$("#link_1_0").hide();
 			subL0_1.style="margin-bottom:5px;"
 			subL0_1.innerHTML="";
@@ -411,7 +411,7 @@ LayOut.prototype = {
 							</li>';
 			}
 			//$("#design_0, #deploy0, #depInfra0").addClass("active");
-		}else if(pt === "/viewDevOpsTemplate" || pt === "/viewProductTemplate"){
+		}else if(pt === "/viewDevOpsTemplate" || pt === "/viewProductTemplate" || pt === "/configureDevOps"){
 			dl.innerHTML="";
 			for(d=0; d<= this.primaryLins.deployPrime.length-1; d++ ){
 				dl.innerHTML+='<li class="link_Prime" id="deploy'+d+'">\
@@ -432,6 +432,7 @@ LayOut.prototype = {
 	activeTab:function(){
 		var pt = location.pathname;
 			pt === "/viewDevOpsTemplate" ? $("#depInfra0, #Deploy, #deploy1").addClass("active") : false;
+			pt === "/configureDevOps" ? $("#depInfra0, #Deploy, #deploy1").addClass("active") : false;
 			pt === "/deployDivOpsTemplate" ? $("#depInfra1, #Deploy, #deploy1").addClass("active") : false;
 			
 			pt === "/viewProductTemplate" ? $("#depInfra0, #Deploy, #deploy2").addClass("active") : false;

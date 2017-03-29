@@ -1,0 +1,38 @@
+.full-width-tab li:first-child:nth-last-child(4),
+.full-width-tab li:first-child:nth-last-child(4) ~ li {
+  width: 25%;
+}
+.full-width-tab li:first-child:nth-last-child(3),
+.full-width-tab li:first-child:nth-last-child(3) ~ li {
+  width: 33.33%;
+}
+.full-width-tab li:first-child:nth-last-child(2),
+.full-width-tab li:first-child:nth-last-child(2) ~ li {
+  width: 50%;
+}
+.full-width-tab li:first-child:nth-last-child(1),
+.full-width-tab li:first-child:nth-last-child(1) ~ li {
+  left:10%;
+  width: 80%;
+}
+.full-width-tab{
+  padding: 0 5px 0 5px;
+}
+.full-width-tab li{
+  text-align: center;
+}
+.nav-tabs>li>a{
+  color: #fff;
+  background-color: #808080 ;
+}
+.nav-tabs>li.active>a {
+  color: #fff !important;
+  background-color: #E13F3E !important;
+}
+.nav-tabs>li>a:hover {
+  color: #000;
+}
+.nav-tabs>li.active>a:hover {
+  color: #fff ;
+  background-color: red !important;
+}

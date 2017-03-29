@@ -1,9 +1,12 @@
 var http = require('http');
 var request = require('request');
 var pg = require("pg");
+var fs=require('fs');
+var MongoClient = require('mongodb').MongoClient;
 var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
 client_pg.connect();
+var murl = 'mongodb://172.29.59.100:27017/test';
 //var jenkins = require('jenkins')({ baseUrl: 'http://sonatawkins.cloudapp.net:8080', crumbIssuer: false });
 exports.pipelinelist = function(req, res){
 	res.render('pipelinelist');
@@ -133,6 +136,43 @@ exports.getBuildLog = function(req, res){
 	})
 	
 	
+}
+
+exports.uploadJson = function(req, res){
+	res.render('upload');
+}
+exports.uploadConfJson = function(req, res){
+	var acName = req.body.accountName
+	   ,pjName = req.body.projectName
+	   ,pdName = req.body.productName;
+	fs.readFile(req.files.file.path, "utf-8", function (err, data) {
+	    if(err){
+	        console.log(err)
+	    } else {
+			console.log(data);
+			MongoClient.connect(murl, function (err, db) {
+			  if (err) {
+				console.log('Unable to connect to the mongoDB server. Error:', err);
+			  } else {
+				var collection = db.collection('config');				
+				collection.insert({data : data}, function (err, result) {
+				  if (err) {
+					console.log(err);
+				  } else {
+					console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+				  }
+					var jenkins = require('jenkins')({ baseUrl: 'http://sonatawkins.cloudapp.net:8080', crumbIssuer: false });
+					jenkins.job.build('Dynamic_Pipeline', function(err, data) {
+						  if (err) throw err;
+						  res.render('pipelinelist');
+					});
+				  db.close();
+				});
+			  } 
+			});
+			//res.send("Success");
+	    }
+	});
 }
 
 

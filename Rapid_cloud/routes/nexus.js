@@ -21,62 +21,7 @@ exports.nexusView = function(req, res){
 exports.nexusafView = function(req, res){
 	res.render('nexusafView');
 }
-exports.uploadJson = function(req, res){
-	res.render('upload');
-}
-var upload_path = '../Rapid_cloud/propertyfiles'
-exports.uploadConfJson = function(req, res){
-	fs.readFile(req.files.file.path, "utf-8", function (err, data) {
-	    
-		var fileName = 'property.json';
-	    if(err){
-	        console.log(err)
-	    } else {
-			console.log(data);
-			MongoClient.connect(murl, function (err, db) {
-			  if (err) {
-				console.log('Unable to connect to the mongoDB server. Error:', err);
-			  } else {
-				
-				console.log('Connection established to', murl);    
-				var collection = db.collection('config');				
-				collection.insert({data : data}, function (err, result) {
-				  if (err) {
-					console.log(err);
-				  } else {
-					console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
-					return true;
-				  }
-				  db.close();
-				});
-			  } 
-			});
-			res.send("Success");
-	        /*var newPath = path.resolve(upload_path, fileName);
-	        fs.writeFile(newPath, data, function (err) {
-	            if(err) {
-	               console.log(err);
-	            } else {
-	                fs.unlink(req.files.file.path, function() {
-	                    if (err) {
-	                        result.status = -1;
-	                        result.message = err;
-	                    } else {
-	                        result.data = fileName;
-	                    }
-	                    password = 'sonata@123';
-						client.scp(upload_path+'/property.json', 'azureuser:'+password+'@sonatawkins.cloudapp.net:"C:\\Program Files (x86)\\Jenkins\\scripts\\"', function(err) {
-							if(err){
-								res.send(err);
-							}
-							res.send("File stored succesfully");
-						})
-	                });
-	            }
-	        });*/
-	    }
-	});
-}
+
 exports.nexusaf = function(req, res){
 	var acName = req.body.accountName
 	   ,pjName = req.body.projectName

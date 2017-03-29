@@ -123,3 +123,7 @@ article[role="devTemp"] summary[role="packagesDetails"]{
   overflow-y: auto;
   max-height: 700px;
 }
+.alert-area{
+  background: #F2DEDE;
+  color: #A94442;
+}

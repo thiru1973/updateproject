@@ -133,6 +133,10 @@ res.render('viewDevOpsTemplate');
 
 };
 
+exports.configureDevOps = function(req,res){
+  res.render('configureDevOps');
+};
+
 /*Old page functions*/
 exports.index = function(req, res){
   res.render('index');

@@ -73,6 +73,12 @@ $(document).ready(function(){
 		location.href = location.origin+"/oauth";
 	}
 	
+	var accountName = localStorage.getItem("Account")
+	,projName = localStorage.getItem("ProjectName")
+	,prodName = localStorage.getItem("ProductName");
+	var theDiv = document.getElementById("data");
+	theDiv ? theDiv.innerHTML += accountName+">>"+projName+">>"+prodName : false;
+	
 });
 $(document).on('click', 'li#Templates', function(){ 
 	
@@ -225,7 +231,6 @@ function LayOut(){
 	this.close = 0;
 	this.menu = [];
 }
-
 //var menu =["Account","Design","Deploy","Manage","Monitor","Projects"];
 LayOut.prototype = {
 	getRoles: function(){
@@ -239,7 +244,7 @@ LayOut.prototype = {
 			 datatype: 'jsonp',
 			 data: data,
 			 async: false,
-			 url: 'http://172.29.59.65:3000/getRoles',
+			 url: 'http://172.29.59.63:3000/getRoles',
 			 success: function(results) {
 				 console.log(results);
 				 for(var i =0;i<results.length;i++)
@@ -256,7 +261,9 @@ LayOut.prototype = {
 	},
 	primaryLins:{
 		level_1:self.menu,//["Dashboard","Design","Deploy","Manage","Monitor","Projects"],
-		level_2:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers","Build","Sonar", "nexus", "Test Management", "Defect"],
+		main_nav: ['Infrastructure', 'DevOps', 'Products'],
+		infra_sub_nav:["Nodes","Scheduling Node","Load Balancer","Volumes","Security Groups","Traffic Managers"],
+		devops_sub_nav: ['Builds', 'Quality', 'Package', 'Defects'],
 		level_2_1:["dsd"],
 		
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],
@@ -264,30 +271,65 @@ LayOut.prototype = {
 		// 5:"Load Balancer"},
 		Design:{1:"Option 1", 2:"Option 2", 3:"Option 3"},
 	},
+	createMainNavView: function () {
+        var th = $("#mainNav").parent();
+        $(th).prepend("<ul id='designLin'></ul>");
+
+        var dl = document.getElementById("designLin") || false;
+
+        for(d=0; d<= this.primaryLins.main_nav.length-1; d++ ){
+            dl.innerHTML+='<li class="link_Prime" id="design_'+d+'">\
+								'+this.primaryLins.main_nav[d]+'\
+							</li>';
+        }
+	},
 	createParentView: function(){
-		var navv = document.getElementById("navDiv"), i;
+        var navv = document.getElementById("navDiv"), i;
 		for(i=0; i<= this.menu.length-1; i++ ){
 			navv.innerHTML+='<li class="link_Prime" id='+this.menu[i]+'>\
 							<ul class="howMe" id="link_'+i+'"></ul>\
 							<!--<i class="fa fa-2x '+this.primaryLins.level_1_Icons[i]+'"></i>-->\
 								<span class="myTe">'+this.menu[i]+'</span></li>';
 		}
+		this.createMainNavView();
 		this.createSubView();
 		this.pagNav();this.activeTab();
 	},
 	createSubView:function(elementId){
+        this.activeTab();
 		var subL0_1 = document.getElementById("themeNav");
+		var infraNav = $('#design_0').hasClass('active');
+		var devOpsNav = $('#design_1').hasClass('active');
 		if(subL0_1 === null){
 			return false;
-		}else{
-			for(i=0; i<= this.primaryLins.level_2.length-1; i++ ){
-			subL0_1.innerHTML+='<li id='+[i]+''+this.primaryLins.level_2[i]+'>\
-							<span class="myTe">'+this.primaryLins.level_2[i]+'</span>\
+		}else if(infraNav){
+			for(i=0; i<= this.primaryLins.infra_sub_nav.length-1; i++ ){
+			subL0_1.innerHTML+='<li id='+[i]+''+this.primaryLins.infra_sub_nav[i]+'>\
+							<span class="myTe">'+this.primaryLins.infra_sub_nav[i]+'</span>\
 							</li>';
 			}
+		} else if(devOpsNav) {
+            for(i=0; i<= this.primaryLins.devops_sub_nav.length-1; i++ ){
+                subL0_1.innerHTML+='<li id='+[i]+''+this.primaryLins.devops_sub_nav[i]+'>\
+							<span class="myTe">'+this.primaryLins.devops_sub_nav[i]+'</span>\
+							</li>';
+            }
 		}
 		this.createSubView3();
 	},
+    /*createSubView:function(elementId){
+        var subL0_1 = document.getElementById("themeNav");
+        if(subL0_1 === null){
+            return false;
+        }else{
+            for(i=0; i<= this.primaryLins.infra_sub_nav.length-1; i++ ){
+                subL0_1.innerHTML+='<li id='+[i]+''+this.primaryLins.infra_sub_nav[i]+'>\
+							<span class="myTe">'+this.primaryLins.infra_sub_nav[i]+'</span>\
+							</li>';
+            }
+        }
+        this.createSubView3();
+    },*/
 	createSubView3:function(){
 		var subL0 = document.getElementById("link_1_0");
 		for(i=0; i<= this.primaryLins.level_2_1.length-1; i++ ){
@@ -305,14 +347,20 @@ LayOut.prototype = {
 	activeTab:function(){
 		var pt = location.pathname;
 			pt === "/accounts" ? $("#Accounts").addClass("active") : false ;
-			pt === "/manageEnv" ? $("#Manage, #0Nodes").addClass("active") : false ;
-			pt === "/loadBalance" ? $("#Manage, #2Load").addClass("active") : false ;
-			pt === "/manageVolumes" ? $("#Manage, #3Volumes").addClass("active") : false ;
-			pt === "/schedulingNode" ? $("#Manage, #1Scheduling").addClass("active") : false ;
-			pt === "/securityGroupManage" ? $("#Manage, #4Security").addClass("active") : false ;
-			pt === "/trafficManager" ? $("#Manage, #5Traffic").addClass("active") : false ;
+			pt === "/manageEnv" ? $("#Manage, #0Nodes, #design_0").addClass("active") : false ;
+			pt === "/loadBalance" ? $("#Manage, #2Load, #design_0").addClass("active") : false ;
+			pt === "/manageVolumes" ? $("#Manage, #3Volumes, #design_0").addClass("active") : false ;
+			pt === "/schedulingNode" ? $("#Manage, #1Scheduling, #design_0").addClass("active") : false ;
+			pt === "/securityGroupManage" ? $("#Manage, #4Security, #design_0").addClass("active") : false ;
+			pt === "/trafficManager" ? $("#Manage, #5Traffic, #design_0").addClass("active") : false ;
 			
 			pt === "/nodeTemplates" ? $("#p0Node, #3rd0Single, #Deploy").addClass("active") : false ;
+        	pt === "/pipelinelist" ? $("#design_1, #0Builds").addClass("active") : false ;
+        	pt === "/pipelineView" ? $("#design_1, #0Builds").addClass("active") : false ;
+        	pt === "/sonarProject" ? $("#design_1, #1Quality").addClass("active") : false ;
+        	pt === "/sonarView" ? $("#design_1, #1Quality").addClass("active") : false ;
+			pt === "/nexusView" ? $("#design_1, #2Package").addClass("active") : false ;
+			pt === "/nexusafView" ? $("#design_1, #2Package").addClass("active") : false ;
 	},
 	pagNav:function(){
 		$('#1Scheduling').hide();
@@ -324,11 +372,7 @@ LayOut.prototype = {
 		$('#1Scheduling').click(function(){location.href = location.origin+"/schedulingNode";});
 		$('#4Security').click(function(){location.href = location.origin+"/securityGroupManage";});
 		$('#5Traffic').click(function(){location.href = location.origin+"/trafficManager";});
-		$('#6Build').click(function(){location.href = location.origin+"/pipelinelist";});
-		$('#7Sonar').click(function(){location.href = location.origin+"/sonarProject";});
-		$('#8nexus').click(function(){location.href = location.origin+"/nexusView";});
-		$('#9Test').click(function(){window.open("http://sonatabugs.cloudapp.net/tr_show_product.cgi");});
-		$('#10Defect').click(function(){window.open("http://sonatabugs.cloudapp.net/buglist.cgi?query_format=specific&order=bugs.bug_id+desc&bug_status=__all__&product=");});
+		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});
 		$('#Templates').click(function(){location.href = location.origin+"/master_2";});
@@ -349,6 +393,18 @@ LayOut.prototype = {
 		$('#3rdRoute').click(function(){location.href = location.origin+"/routeTable"});
 		
 		$('#Deploy').click(function(){location.href = location.origin+"/nodeTemplates"});
+		$('#design_1').click(function() {
+			location.href = location.origin + '/pipelinelist';
+		});
+		$('#design_0').click(function(){location.href = location.origin + '/manageEnv'});
+        $('#0Builds').click(function() {
+            location.href = location.origin + '/pipelinelist';
+        });
+        $('#design_1').click(function() {
+            location.href = location.origin + '/pipelinelist';
+        });
+        $('#1Quality').click(function(){location.href = location.origin+"/sonarProject";});
+        $('#2Package').click(function(){location.href = location.origin+"/nexusView";});
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){
@@ -404,11 +460,6 @@ LayOut.prototype = {
 	assignIcons:function(){
 	}
 }
-/*$('#9TestOps').click(function(){
-	alert("testops function");
-	window.open("http://sonatabugs.cloudapp.net/");
-})*/
-
 /*
 function theme(ev, themeNum){
 	if(themeNum == 1){

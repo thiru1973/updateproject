@@ -237,7 +237,8 @@ function getToolList(toolsData){
 }
 function inValid(message){
   //To be changes with new design
-  alert(message);
+  $('.alert-body').html(message);
+  $('#alertModal').modal('show');
 }
 function cloudServiceData(url){
   var cloudService = [];
@@ -422,7 +423,7 @@ function previewAndDeploy(){
   var data = selectedTemplateDetails.deployTemplate[0];
   var pipeline = data.pipelines;
   var deployPipeline = [];
-  var toolsData = [];
+  var toolsData = '';
   for( var i in pipeline){
     for(var j in pipeline[i]){
       if(pipeline[i][j]){
@@ -432,11 +433,11 @@ function previewAndDeploy(){
     }
   }
   getToolList(data.cIVMs).forEach(function(element){
-    toolsData.push('<label class="tool-label">\
+    toolsData += '<label class="tool-label">\
                       <img class="col-xs-12" src="/images_1/'+ element +'.png">\
                       <figcaption>'+ element +'</figcaption>\
-                      <input type="checkbox" name="tool" value="'+ element +'" class="col-xs-12">'+
-                    '</label>');
+                      <input type="checkbox" name="tool" value="'+ element +'" class="col-xs-12 hidden">'+
+                    '</label>';
   })
   var pipelinesTemplate = '<div class="panel panel-default">\
                              <div class="panel-heading content-title-heading">Pipelines <div class="pull-right"><a onclick="addPipelines()" data-toggle="modal" data-target="#deployDevOps">Add pipelines</a></div></div>\
@@ -486,6 +487,18 @@ function deployAndExit(){
     alert('Failed to Send Data');
   }
 }
+function deployAndConfigure(){
+    console.log(deployTemplateData);
+  $.post('http://172.29.59.62:3000/deployDevopsData',{data:JSON.stringify(deployTemplateData)})
+  .done(function(){
+    inValid('Deployed successfully. Configure the pipeline...');
+    location.pathname = '/configureDevOps';
+  })
+  .fail(function(e){
+    inValid(JSON.stringify(e));
+  });
+}
+
 String.prototype.firstLetterCapital = function(){
   return this.split('_')
              .reduce(function(acc, val){
@@ -504,11 +517,11 @@ $('#templates').on('click', '.infra-template', function(){
   updateOverview(selectedTemplateDetails);
 })
 $('#cloudDetails').click(function(){
-  d
   var selectionStatus = $('.temp-selected')[0];
   if(selectionStatus){
     deployTemplateData.deployTemplate = selectedTemplateDetails.deployTemplate;
     $('.step1, .infrastructure, .infra-overview').addClass('hidden');
+    $('.step2').removeClass('hidden');
     $('.step2').removeClass('hidden');
     $('.deploy-wizard1 li')[1].className = 'done';
     cloudDetails();
@@ -638,7 +651,18 @@ $('#DeployAndExit').click(function(){
     inValid('Select Pipeline and Tools');
   }
 })
+$('#configure').click(function(){
+  var pipelinesSelected = $('.deploy-pipelines .pipeline-label input:checked');
+  var toolsSelected = $('.deploy-tools .tool-label input');
+  if(pipelinesSelected.length != 0 /*&& toolsSelected.length != 0*/){
+    sessionStorage.setItem('configTemplate',JSON.stringify(selectedTemplateDetails));
+    deployAndConfigure();
+  }else{
+    inValid('Select Pipeline and Tools');
+  }
 
+
+})
 
 
 

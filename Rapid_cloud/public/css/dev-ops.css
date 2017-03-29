@@ -74,7 +74,7 @@
 }
 
 label, span {
-    color: #666;
+    @color: #666;
     font-family: "Segoe Ui",Helvetica,Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
@@ -273,3 +273,27 @@ a:active {
 .marTop-15{
 	margin-top:15px;	
 }
+
+.build-info{
+	background:#EEEEEE;
+	border:1px solid #BFBFBF;
+	width:30%;
+	float:left;
+	margin-right: 23px;
+    margin-left: 10px;
+	margin-top:10px;
+}
+
+.build-label{
+	width:130px;
+	display:-webkit-inline-box;
+	color:#862929;
+	font-weight:600;
+	margin-left:5px;
+}
+
+.build-info p{ margin-left: 42%;
+    /* width: 68%; */
+    float: left;
+    margin-top: -19px;
+   }

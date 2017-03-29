@@ -623,7 +623,7 @@ exports.deployTemplate = function(req, res){
 					  for(var i=0;i<results.length;i++)
 						  {
 						  	arr.push(results[i]);
-							console.log(results[i]);
+							console.log(arr)
 							var data = {arr1 : arr};
 							var data1 = JSON.stringify(data);
 							http.get(cloudurl+data1, function(response) {

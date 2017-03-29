@@ -223,6 +223,7 @@ app.post('/deployResource', manage.deployResource);
 
 app.get('/multicloud', routes.multicloud);
 //DevOps
+app.get('/configureDevOps', routes.configureDevOps);
 app.post('/devopsTemplate', resources.devopsTemplate);
 app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
@@ -269,8 +270,8 @@ app.post('/nexusaf', nexus.nexusaf);
 app.get('/nexusafView', nexus.nexusafView);
 app.post('/nexusstatus', nexus.nexusstatus);
 
-app.get('/uploadJson', nexus.uploadJson);
-app.post('/uploadConfJson', nexus.uploadConfJson);
+app.get('/uploadJson', jenkins.uploadJson);
+app.post('/uploadConfJson', jenkins.uploadConfJson);
 
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")

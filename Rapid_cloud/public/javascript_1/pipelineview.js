@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////
 var _ip = "http://172.29.59.65:3000";
+var editProfileUrl;
 $(document).ready(function(){
 	$(".cancelPoup, .close").click(function(){
 		$("#instan").hide();
@@ -32,64 +33,84 @@ pipelineList.prototype = {
 			success: function(data, textStatus){
 				if(data.notFound == true){
 					alert("No Jobs found");
-				}else{			
-						$("#pipeView").append("<h5>"+pipe+"<i>&nbsp&nbsp&nbsp<a href="+data.url+"/configure title="+data.url+" target='_blank' class='viewLink'>Edit</a>&nbsp&nbsp&nbsp<a href='#' title="+data.jobs[0].name+" onclick='pL.buildPipeLine(this)' class='viewLink'>Build PipeLine</a></i></h5>")
+				}else{	$('.pipeline').html(pipe);
+                    	editProfileUrl = data.url+"/configure";
 						for(var i=0; i<data.jobs.length; i++){
 							if(i != (data.jobs.length-1)){
 								if(data.jobs[i].color == "red"){
-									$("#pipeView").append("<span id='job' style='background:rgba(239, 41, 41, 0.73);'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Failed</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:rgba(239, 41, 41, 0.73);'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Failed</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
-									+"</span>"
+                                        +"<button class='btn btn-danger' style='margin-left:auto;margin-right:auto' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
+									+"</span>"									
 									+"<span class='glyphicon glyphicon-arrow-right'></span>")
 								}
 								if(data.jobs[i].color == "disabled"){
-									$("#pipeView").append("<span id='job' style='background:#e6e6e6;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Disabled</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:#e6e6e6;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Disabled</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
+                                        +"<button class='btn btn-danger' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
 									+"</span><span class='glyphicon glyphicon-arrow-right'></span>")
 								}
 								if(data.jobs[i].color == "notbuilt"){
-									$("#pipeView").append("<span id='job' style='background:#00ccff;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Not built</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:#00ccff;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Not built</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
+                                        +"<button class='btn btn-danger' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
 									+"</span><span class='glyphicon glyphicon-arrow-right'></span>")
 								}
 								if(data.jobs[i].color == "blue"){
-									$("#pipeView").append("<span id='job' style='background:#1bd130;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Bulid Success</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									var clickData = data.jobs[i].name;
+									$("#pipeView").append("<span id='job' style='background:#1bd130; padding:10px; width:30%; display: inline-block;'><i><a href='#' title="+data.jobs[i].name+" onfocus='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Bulid Success</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
-									+"</span><span class='glyphicon glyphicon-arrow-right'></span>")
+                                        +"<button class='btn btn-danger devops-btn' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
+									
+									+"</span>"
+												
+									+"<span class='glyphicon glyphicon-arrow-right'></span>")									
 								}
+								
+								
 								pL.showDetails(data.jobs[i].name,i);
 							}else{
 								if(data.jobs[i].color == "red"){
-									$("#pipeView").append("<span id='job' style='background:rgba(239, 41, 41, 0.73);'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Failed</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:rgba(239, 41, 41, 0.73);'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Failed</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
-									+"</span>")
+                                        +"<button class='btn btn-danger' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
+										+"</span>")
 								}
 								if(data.jobs[i].color == "disabled"){
-									$("#pipeView").append("<span id='job' style='background:#e6e6e6;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Disabled</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:#e6e6e6;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Disabled</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
-									+"</span>")
+                                        +"<button class='btn btn-danger' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
+										+"</span>")
 								}
 								if(data.jobs[i].color == "notbuilt"){
-									$("#pipeView").append("<span id='job' style='background:#00ccff;;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Not built</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:#00ccff;;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Not built</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
-									+"</span>")
+                                        +"<button class='btn btn-danger' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
+										+"</span>")
 								}
 								if(data.jobs[i].color == "blue"){
-									$("#pipeView").append("<span id='job' style='background:#1bd130;'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Bulid Success</br><a href='#' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>console log</a>"
+									$("#pipeView").append("<span id='job' style='background:#1bd130; padding:10px; width:30%'><i><a href='#' title="+data.jobs[i].name+" onclick='pL.showDetails(this)' class='viewLink1'>"+data.jobs[i].name+"</a></i></br>Bulid Success</br>"
 									+"<table style='width:100%' class='nodeSell'><thead id=''></thead><tbody id='instList"+i+"'></tbody></table>"
-									+"</span>")
+                                        +"<button class='btn btn-danger devops-btn' title="+data.jobs[i].name+" onclick='pL.showLogdetails(this)'>View Log</button>"
+										+"</span>"									
+									)
 								}
+								
 								pL.showDetails(data.jobs[i].name,i);
 							}
 							
-						}						
+						}
+
 					}
+
 				 },
+				 
 				 error: function (xhr, status, error){
 					   console.log('Failure');
 					},
 				});
-	},
+
+		},
 	openWindow : function(ev){
 		var reWindow = window.open(ev.title+"configure", "Jenkins page", "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=nowidth=1000px,height=700px");
 	},
@@ -137,12 +158,18 @@ pipelineList.prototype = {
 		  var a = document.getElementById("a");
 		  var file = new Blob([dwData], {type: type});
 		  a.href = URL.createObjectURL(file);
+		  console.log(a.href);
 		  a.download = "Status.txt";
-
 	},
+	
 	showDetails : function(ev,id){
-		var self = this;
-		var inList = document.getElementById("instList"+id+"");
+		//alert(ev)
+		var self = this;		
+		var build = document.getElementById("build");
+		var buildDetails = document.createElement('div');
+		buildDetails.id = 'buildDetails '+ev;
+		buildDetails.className  = 'build-info';
+		build.appendChild(buildDetails);
 		var data = {};
 		data.jobName = ev;
 		data.accountName = localStorage.getItem("Account");
@@ -155,26 +182,27 @@ pipelineList.prototype = {
 			data: data,
 			url: _ip+'/getBuild',
 			success: function(data, textStatus){
+				console.log(data);
 				if(data.notFound == true){
 					alert("NO data found");
 				}else{
-					inList.innerHTML="";
+					//buildDetails.innerHTML="";
 					var date = new Date(data.timestamp);
 					var ms = data.duration, min = (ms/1000/60) << 0, sec = (ms/1000) % 60;
 					var ms1 = data.estimatedDuration, mins = (ms1/1000/60) << 0, secs = (ms1/1000) % 60;
 					
-					inList.innerHTML+='<tr><th>Job Name</th>\
-								<td>'+data.fullDisplayName+'</td></tr>\
-								<tr><th>Total Builds</th>\
-								<td>'+data.number+'</td></tr>\
-								<tr><th>Lastbuild Result</th>\
-								<td>'+data.result+'</td></tr>\
-								<tr><th>StartDate</th>\
-								<td>'+date+'</td></tr>\
-								<tr><th>Build Duration</th>\
-								<td>'+min+':'+sec+' sec</td></tr>\
-								<tr><th>Estimated Duration</th>\
-								<td>'+mins+':'+secs+' sec</td></tr>\
+					buildDetails.innerHTML+='  <!--<tr><th>Job Name</th>\
+								<td>'+data.fullDisplayName+'</td></tr>-->\
+								<tr><th><span class="build-label">Total Builds</span></th>\
+								<td class="padleft"> '+ data.number + '<br/></td></tr>\
+								<tr><th><span class="build-label">Lastbuild Result</span></th>\
+								<td>'+data.result+' <br/></td></tr>\
+								<tr><th><span class="build-label">StartDate</span></th>\
+								<td><p>'+date+' </p><br/></td></tr>\
+								<tr><th><span class="build-label">Build Duration</span></th>\
+								<td>'+min+':'+sec+' sec <br/></td></tr>\
+								<tr><th><span class="build-label">Estimated Duration</span></th>\
+								<td>'+mins+':'+secs+' sec <br/></td></tr>\
 								<!--<tr><th>Url</th>\
 								<td>'+data.url+'</td></tr>-->\
 								';					
@@ -187,7 +215,44 @@ pipelineList.prototype = {
 				});
 	}
 	
+	// add div //
+	
+	
+	/*
+	var iDiv = document.createElement('div');
+	iDiv.id = 'block';
+	iDiv.className = 'block';
+	document.getElementsByTagName('build-detials');
+
+	iDiv.innerHTML = "I'm the first div";
+*/
+	
+	
+	
 }
 var pL = new pipelineList();
 	pL.init();
+
+$(document).on("click", "#design_0", function(){
+    location.href = location.origin + '/manageEnv';
+});
+
+$(document).on("click", "#edit-pipeline", function(){
+	var newUrl = editProfileUrl;
+	$('.btn').hide();
+    $('#pipeView').hide();
+    $('#jenkins-inline').append(
+		"<iframe width='1100' height='600px' target='_parent' src="+newUrl+"></iframe>" +
+			"<button class='btn btn-danger' id='go-back'>Back</button>"
+	)
+});
+
+$(document).on("click", "#yui-gen2-button", function(){
+    $('#pipeView').show();
+    $('.btn').show();
+});
+
+$(document).on("click", "#go-back", function(){
+    location.href = location.origin + '/pipelinelist';
+});
 ////////////////////////////////////////////////////
