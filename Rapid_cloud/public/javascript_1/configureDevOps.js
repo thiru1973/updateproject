@@ -158,6 +158,12 @@ var data = [
            	}
            ];
 var configTemplateData = JSON.parse(sessionStorage.getItem('configTemplate'));
+var changeWizard = configTemplateData.changeWizard;
+if(changeWizard){
+  $('.configure-wizard li')[0].remove();
+  $('.configure-wizard li')[1].remove();
+  delete configTemplateData.changeWizard;
+}
 var pipe = ['Build','Unit Test','Code Analysis','Package'];
 var select = configTemplateData['deployTemplate'][0]['cIVMs'];
 function getToolList(toolsData){

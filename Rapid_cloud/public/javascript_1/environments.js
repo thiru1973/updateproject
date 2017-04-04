@@ -1393,7 +1393,14 @@ function getPublicIp(valuee, append){
 							<button class="redButton" id="this_Reboot_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Reboot</button>\
 							</div>\
 							</td>\
-						</tr>';
+						</tr>\
+						<div class="col-xs-12">\
+						<div class="col-xs-12 content-title content-title-heading custom-spacing">Deploy Tool<button class="redButton pull-right" onclick="manage.deployTools(this)">Deploy</button>\</div>\
+						<div class="col-xs-6"><label class="deploy-model custom-spacing"><input type="radio" name="model" value="tomacat" checked="">Tomcat</label></div>\
+						<div class="col-xs-6"><label class="deploy-model custom-spacing"><input type="radio" name="model" value="nginx" >Nginx</label></div>\
+						</div>';
+						
+				
 			var _StatusOfNode = this.dataOfNd[clickedData].status;
 			if(_StatusOfNode == "stopped"){						
 				var _start = document.getElementById("this_Start_"+this.dataOfNd[clickedData].inst_id);
@@ -1423,7 +1430,11 @@ function getPublicIp(valuee, append){
 			for(var j = 0; j < 60; j++){
 				$('#user_min').append("<option value='"+j+"'>"+j+"</option>");
 			}
-	}
+	},
+	Projects.prototype.deployTools = function(){
+		var tool = $('[name="model"]:checked').val();
+		alert(tool);
+	},
 	Projects.prototype.nodeSchedule = function(data){
 		var accountName = localStorage.getItem("Account")
 	    ,projName = localStorage.getItem("ProjectName")

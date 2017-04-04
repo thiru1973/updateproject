@@ -132,6 +132,10 @@ exports.viewDevOpsTemplate = function(req,res){
 res.render('viewDevOpsTemplate');
 
 };
+exports.deployPipelines = function(req,res){
+res.render('deployPipelines');
+
+};
 
 exports.configureDevOps = function(req,res){
   res.render('configureDevOps');

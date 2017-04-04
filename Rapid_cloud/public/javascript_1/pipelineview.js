@@ -31,9 +31,11 @@ pipelineList.prototype = {
 			data: data,
 			url: _ip+'/pipelineviewdata',
 			success: function(data, textStatus){
+				console.log(data)
 				if(data.notFound == true){
 					alert("No Jobs found");
 				}else{	$('.pipeline').html(pipe);
+						$('.pipeline').append("&nbsp&nbsp&nbsp&nbsp<a href='#' title="+data.jobs[0].name+" onclick='pL.buildPipeLine(this)' class='viewLink'>Trigger Build</a>");	
                     	editProfileUrl = data.url+"/configure";
 						for(var i=0; i<data.jobs.length; i++){
 							if(i != (data.jobs.length-1)){

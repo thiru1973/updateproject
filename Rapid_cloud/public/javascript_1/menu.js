@@ -352,7 +352,7 @@ LayOut.prototype = {
 							</li>';
 			}
 		}*/
-		else if(pt === "/viewDevOpsTemplate"|| pt === "/configureDevOps"){
+		else if(pt === "/viewDevOpsTemplate" || pt === "/configureDevOps"){
 			$("#link_1_0").hide();
 			subL0_1.style="margin-bottom:5px;"
 			subL0_1.innerHTML="";
@@ -411,7 +411,7 @@ LayOut.prototype = {
 							</li>';
 			}
 			//$("#design_0, #deploy0, #depInfra0").addClass("active");
-		}else if(pt === "/viewDevOpsTemplate" || pt === "/viewProductTemplate" || pt === "/configureDevOps"){
+		}else if(pt === "/viewDevOpsTemplate" || pt === "/deployPipelines" || pt === "/configureDevOps"){
 			dl.innerHTML="";
 			for(d=0; d<= this.primaryLins.deployPrime.length-1; d++ ){
 				dl.innerHTML+='<li class="link_Prime" id="deploy'+d+'">\
@@ -422,19 +422,22 @@ LayOut.prototype = {
 			$("#link_1_0").hide();
 			subL0.style="margin-bottom:-6px;"
 			subL0_1.innerHTML="";
-			for(i=0; i<= this.primaryLins.level_2desPrime.length-1; i++ ){
+			/*for(i=0; i<= this.primaryLins.level_2desPrime.length-1; i++ ){
 			subL0_1.innerHTML+='<li id=depInfra'+i+'>\
 							<span class="myTe">'+this.primaryLins.level_2desPrime[i]+'</span>\
 							</li>';
-			}
+			}*/
+			$('#link_1_0').remove();
+
 		}
 	},
 	activeTab:function(){
 		var pt = location.pathname;
 			pt === "/viewDevOpsTemplate" ? $("#depInfra0, #Deploy, #deploy1").addClass("active") : false;
+			pt === "/deployPipelines" ? $("#depInfra0, #Deploy, #deploy1").addClass("active") : false;
 			pt === "/configureDevOps" ? $("#depInfra0, #Deploy, #deploy1").addClass("active") : false;
 			pt === "/deployDivOpsTemplate" ? $("#depInfra1, #Deploy, #deploy1").addClass("active") : false;
-			
+
 			pt === "/viewProductTemplate" ? $("#depInfra0, #Deploy, #deploy2").addClass("active") : false;
 			pt === "/deployProductTemplate" ? $("#depInfra1, #Deploy, #deploy2").addClass("active") : false;
 			//pt === "/viewProductTemplate" || pt === "/deployProductTemplate" ? $("#design_2, #viewProTe0, #Deploy").addClass("active") : false;
@@ -478,7 +481,7 @@ LayOut.prototype = {
 		$("#design_1").click(function(){location.href = location.origin+"/designDevOpsTemp";});
 		
 		$("#deploy0").click(function(){location.href = location.origin+"/master_2";});
-		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/viewDevOpsTemplate";});
+		$("#deploy1, #depInfra0").click(function(){location.href = location.origin+"/deployPipelines";});
 		$("#depInfra2").click(function(){location.href = location.origin+"/nodeTemplates";});
 		$("#deploy2").click(function(){location.href = location.origin+"/viewProductTemplate";});
 		$("#deploy3").click(function(){location.href = location.origin+"/nodeTemplates";});
@@ -490,14 +493,13 @@ LayOut.prototype = {
 		$('#creDevTem0').click(function(){location.href = location.origin+"/vpc";});
 		$('#creDevTem1').click(function(){location.href = location.origin+"/create_devOps_template";});
 		//$('#creDevTem2').click(function(){location.href = location.origin+"/viewProductTemplate";});
-		
+
 		
 		$('#Accounts').click(function(){location.href = location.origin+"/accounts";});
 		
 		$('#Design').click(function(){location.href = location.origin+"/vpc";});
 		$('#Networks').click(function(){location.href = location.origin+"/vpc";});
 		$('#Templates').click(function(){location.href = location.origin+"/create_template";});
-		//$('#DevOps').click(function(){location.href = location.origin+"/designDevOpsTemp";});
 		$('#Manage').click(function(){location.href = location.origin+"/manageEnv"});
 		$('#3rdVPC').click(function(){location.href = location.origin+"/vpc"});
 		$('#3rdKey').click(function(){location.href = location.origin+"/keyPair"});

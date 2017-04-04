@@ -40,6 +40,7 @@ exports.pipelineviewdata = function(req, res){
 	   ,pdName = req.body.productName;
 	   
 		getUrlPipe(pipe,acName,pjName,pdName, function(callback){
+			console.log(callback)
 			var jenkins = require('jenkins')({ baseUrl: callback, crumbIssuer: false });
 			jenkins.view.get(pipe, function(err, data) {
 			  if (err) res.send(err);

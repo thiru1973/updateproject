@@ -75,6 +75,7 @@ a{
   background: #E13F3E;
 }
 label.pipeline-label {
+ font-size: 1vw;
   display: flex;
   align-items: center;
 }

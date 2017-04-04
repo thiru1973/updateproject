@@ -112,11 +112,11 @@ function pvdSpec_function(myT){
 	var template = myT.id;
 	//alert("Disabled the functions....!");
 	console.log(myT);
-	location.href="//172.25.24.91:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
+	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
 }
 
 $('#manageEnv').click(function(){
-	location.href="//172.25.24.91/manageEnv";
+	location.href="//172.29.59.65/manageEnv";
 })
 function addDevOps(ev){
 	localStorage.setItem("InfraId",ev.title)
@@ -223,13 +223,15 @@ function DevOpsDetails(templateDetails){
                                <figcaption >Continues Delivery</figcaption>\
                                <input type="checkbox" name="cd" val="CD"  class="col-xs-12" onclick="devChainCD()"/>\
                              </label>';
-       var overviewTemplate = '<div class="col-xs-12 col-sm-3 col-md-3 pull-right jumbotron selection-overview">\
-                                <h4>Selection Overview</h4>\
-                                <h5>Infrastructure</h5> \
-                                <h7>DevOps Infra Selected : ' + templateDetails.Template_name + '</h7><br>\
-                                <h7>Cloud : ' + templateDetails.Cloud + '</h7><br>\
-                                <h7>Nodes : ' + templateDetails.VMSs + '</h7><br> \
-                               </div>';
+       var overviewTemplate = '<div class="col-xs-12 col-sm-3 col-md-3 pull-right ">\
+                                 <div class="panel panel-default">\
+                                  <div class="panel-heading">Selection Overview</div>\
+                                  <div class="panel-body selection-overview">\
+                                    <h5><b>Infrastructure</b></h5> \
+                                    <h7><b>DevOps Infra Selected : </b>' + templateDetails.Template_name + '</h7><br>\
+                                    <h7><b>Cloud : </b>' + templateDetails.Cloud + '</h7><br>\
+                                    <h7><b>Nodes : </b>' + templateDetails.VMSs + '</h7><br> \
+                                  </div></div></div>';
        var devOpsDetailTemplate = '<div class="stage-devops"><div class="col-xs-12 col-sm-9 col-md-9 ">\
                                     <div class="panel panel-default">\
                                      <div class="panel-heading">Technology or Enterprise Application</div>\
@@ -289,7 +291,7 @@ function choosePipeline(devOpsDetail,technology){
       return '';
     }
   }
-  $('.selection-overview').append('<div class="devdetail-overview"><h5>DevOps Details</h5><h7>Technology : ' + technology + '</h7><br><h7>DevOps Type : ' + devopslist + '</h7></div>')
+  $('.selection-overview').append('<div class="devdetail-overview"><h5><b>DevOps Details</b></h5><h7><b>Technology : </b>' + technology + '</h7><br><h7><b>DevOps Type : </b>' + devopslist + '</h7></div>')
   $('.stage-devops').addClass('hidden');
   $('.templates').append(pipelineTemplate);
 
@@ -377,7 +379,7 @@ function buildServer(codeRepo){
                          + '</div></div>';
 
      finalToolData.push(document.getElementsByClassName(codeRepo)[0]);
-     $('.selection-overview').append('<div class="tools-overview"><h5> Tools </h5><h7 class="code-repo-overview">Code Repository: ' + codeRepo + '</h7><br></div>')
+     $('.selection-overview').append('<div class="tools-overview"><h5><b> Tools <b></h5><h7 class="code-repo-overview"><b>Code Repository: </b>' + codeRepo + '</h7><br></div>')
      $('.templates').append('<div class="stage-build-server col-xs-12 col-sm-9 col-md-9" >' + serverToolsTemplate+vmTemplate + '</div>');
    //});
 }
@@ -424,7 +426,7 @@ function buildTool(buildServer,vmData,VMData){
                                  + buildTools
                                  + '</div></div>';
      finalToolData.push(document.getElementsByClassName(buildServer)[0]);
-     $('.tools-overview').append('<div class="build-server-overview"><h7>Build Server: ' + buildServer + ' ['+ templateData.Instances[vmData].node + ' - '+ templateData.Instances[vmData].role +' ]' +'</h7><br></div>');
+     $('.tools-overview').append('<div class="build-server-overview"><h7><b>Build Server: </b>' + buildServer + ' ['+ templateData.Instances[vmData].node + ' - '+ templateData.Instances[vmData].role +' ]' +'</h7><br></div>');
      $('.templates').append('<div class="stage-build-tool col-xs-12 col-sm-9 col-md-9">' + buildToolsTemplate + '</div>');
    //});
 }
@@ -456,7 +458,7 @@ function unitTest(buildTool){
                          + vmTemplate
                          + '</div></div>';*/
      finalToolData.push(document.getElementsByClassName(buildTool)[0]);
-     $('.tools-overview').append('<div  class="build-tool-overview"><h7>Build Tool: ' + buildTool + '</h7><br></div>')
+     $('.tools-overview').append('<div  class="build-tool-overview"><h7><b>Build Tool: </b>' + buildTool + '</h7><br></div>')
      $('.templates').append('<div class="stage-unit-test col-xs-12 col-sm-9 col-md-9" >' + unitTestToolsTemplate /*+vmTemplate */ + '</div>');
    //});
 }
@@ -488,7 +490,7 @@ function codeCoverage(unitTest){
                          + vmTemplate
                          + '</div></div>';
      finalToolData.push(document.getElementsByClassName(unitTest)[0]);
-     $('.tools-overview').append('<div class="unit-test-overview"><h7>Unit Test Tool: ' + unitTest + '</h7><br></div>')
+     $('.tools-overview').append('<div class="unit-test-overview"><h7><b>Unit Test Tool: </b>' + unitTest + '</h7><br></div>')
      $('.templates').append('<div class="stage-code-coverage col-xs-12 col-sm-9 col-md-9" >' + codeCoverageToolsTemplate+vmTemplate + '</div>');
    //});
 }
@@ -551,7 +553,7 @@ function package(codeCoverage,vmData,VMData){
                          + vmTemplate
                          + '</div></div>';
      finalToolData.push(document.getElementsByClassName(codeCoverage)[0]);
-     $('.tools-overview').append('<div  class="code-coverage-overview"><h7>Code Coverage Tool: ' + codeCoverage + ' ['+ templateData.Instances[vmData].node + ' - '+ templateData.Instances[vmData].role +' ]'  + '</h7><br></div>')
+     $('.tools-overview').append('<div  class="code-coverage-overview"><h7><b>Code Coverage Tool: </b>' + codeCoverage + ' ['+ templateData.Instances[vmData].node + ' - '+ templateData.Instances[vmData].role +' ]'  + '</h7><br></div>')
      $('.templates').append('<div class="stage-package-tool col-xs-12 col-sm-9 col-md-9" >' + codeCoverageToolsTemplate+vmTemplate + '</div>');
    //});
 }
@@ -623,9 +625,9 @@ function previewSave(data,title,vmData,VMData){
     toolList = toolList + '<li class="tool-preview"><img src="'+e.src +'" /></li>';
   });
   if(vmData)
-    $('.tools-overview').append('<div  class="preview-save-overview"><h7>'+ title + ': ' + data + ' ['+ templateData.Instances[vmData].node + ' - '+ templateData.Instances[vmData].role +' ]'  + '</h7></div>');
+    $('.tools-overview').append('<div  class="preview-save-overview"><h7><b>'+ title + ': </b>' + data + ' ['+ templateData.Instances[vmData].node + ' - '+ templateData.Instances[vmData].role +' ]'  + '</h7></div>');
   else
-	$('.tools-overview').append('<div  class="preview-save-overview"><h7>'+ title + ': ' + data + '</h7></div>');
+	$('.tools-overview').append('<div  class="preview-save-overview"><h7><b>'+ title + ': </b>' + data + '</h7></div>');
   $('.templates').append('<div class="stage-preview-save"><ol class="track-progress col-xs-12 col-sm-9 col-md-9">'+ toolList+'</ol></div>')
 }
 

@@ -32,6 +32,10 @@
 .track-progress li:first-child:nth-last-child(3) ~ li {
   width: 33.33%;
 }
+.track-progress li:first-child:nth-last-child(2),
+.track-progress li:first-child:nth-last-child(2) ~ li {
+  width: 50%;
+}
 
 .track-progress li > span {
   display: block;

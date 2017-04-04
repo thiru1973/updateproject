@@ -509,6 +509,9 @@ String.prototype.firstLetterCapital = function(){
                             +val.substr(1);
              });
 }
+$('#cancelDedicated').click(function(){
+  location.pathname = '/deployPipelines';
+})
 $('#templates').on('click', '.infra-template', function(){
   $('article').removeClass('temp-selected');
   this.parentElement.className += ' temp-selected';

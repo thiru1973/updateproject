@@ -21,7 +21,7 @@ exports.createGroup = function(req,res){
 		    console.log('Connection established to', url);    
 		    var collection = db.collection('resourcegroup');
 			
-			var list1 = {rg_id : 1, userName : "test@rapiddirectory.onmicrosoft.com", pwd : "Boron12#4", resGrpName : "TestRG1", region : "West US"};
+			var list1 = {rg_id : 1,resGrpName : "TestRG1", region : "West US"};
 		    collection.insert([list1], function (err, result) {
 		      if (err) {
 		        console.log(err);

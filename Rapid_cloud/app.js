@@ -229,6 +229,7 @@ app.get('/devopsTemp', resources.devopsTemp);
 app.post('/saveDevopsTemplate', resources.saveDevopsTemplate);
 app.get('/createDevTemp', account.createDevTemp);
 app.get('/viewDevOpsTemplate', routes.viewDevOpsTemplate);
+app.get('/deployPipelines', routes.deployPipelines);
 app.get('/deploydbData', resources.deploydbData);
 app.get('/deployDivOpsTemplate', routes.deployDivOpsTemplate);
 app.get('/appTechnologies', resources.appTechnologies);

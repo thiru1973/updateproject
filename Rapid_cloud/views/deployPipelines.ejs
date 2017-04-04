@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View DevOps Template</title>
+    <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css_1/style.css" id="myTheme" rel="stylesheet"/>
+    <!--<link href="css/dev-ops.css" rel="stylesheet"/>-->
+    <link href="css_1/modules/deployDevOpsTemp.css"  rel="stylesheet"/>
+    <link href="css_1/modules/deployPipelines.css"  rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="javascript_1/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+</head>
+<body  id="bg">
+<div class="container">
+    <aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation"></aside>
+    <section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="view_temp">
+        <nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
+        <div class="col-xs-12 deploy-type">
+            <div class="col-xs-12 custom-spacing" data-toggle="buttons">
+                <div class="col-xs-2"></div>
+                <label class="btn btn-danger col-xs-3" id="commonDeploy">
+                    <input type="radio" name="deployType"  autocomplete="off" />Common
+                </label>
+                <div class="col-xs-2"></div>
+                <label class="btn btn-danger col-xs-3"  id="dedicatedDeploy">
+                    <input type="radio" name="deployType" autocomplete="off" /> Dedicated
+                </label>
+                <div class="col-xs-2"></div>
+            </div>
+        </div>
+        <div class="hidden" id="dedicated-layout">
+          <div id="DevOpsStages" class="deploy-stages ">
+              <ol class="track-progress deploy-wizard1 col-xs-12">
+                  <li class="done">
+                      <span>Preview and Deploy</span>
+                  </li><!--
+               --><li>
+                      <span>Configure DevOps</span>
+                  </li>
+              </ol>
+          </div>
+          <hr class="line-seperator"/>
+          <section class="deployDevOps col-sm-7" id="templates">
+              <div class="col-xs-12 preview-deploy" id="previewDeploy">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">Choose Pipeline</div>
+                      <div class="panel-body">
+                          <div class="panel panel-default">
+                              <div class="panel-heading accordion-toggle" data-toggle="collapse" data-target="#ciContent">Choose CI Pipeline</div>
+                              <div class="panel-body collapse in" id="ciContent">
+                                  <label class="col-xs-12 pipeline-label ci">
+                                      <input type="checkbox" class="col-xs-2" name="ci1-pipeline" value="CI1" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>Code Repo</li>
+                                          <li>Build</li>
+                                      </ul>
+                                  </label>
+                                  <label class="col-xs-12 pipeline-label ci">
+                                      <input type="checkbox" class="col-xs-2" name="ci2-pipeline" value="CI2" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>Code Repo</li>
+                                          <li>Build</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>Unit Test</li>
+                                      </ul>
+                                  </label>
+                                  <label class="col-xs-12 pipeline-label ci">
+                                      <input type="checkbox" class="col-xs-2" name="ci3-pipeline" value="CI3" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>Code Repo</li>
+                                          <li>Build </li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>Unit Test</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>Code Coverage</li>
+                                      </ul>
+                                  </label>
+                                  <label class="col-xs-12 pipeline-label ci">
+                                      <input type="checkbox" class="col-xs-2" name="ci4-pipeline" value="CI4" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>Code Repo</li>
+                                          <li>Build</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>Unit Test</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>Code Coverage</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>Package</li>
+                                      </ul>
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading accordion-toggle"  data-toggle="collapse" data-target="#ctContent">Choose CT Pipeline</div>
+                              <div class="panel-body collapse" id="ctContent">
+                                  <label class="col-xs-12 pipeline-label">
+                                      <input type="checkbox" class="col-xs-2" name="ct1-pipeline" value="CT1" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>SAT</li>
+                                      </ul>
+                                  </label>
+                                  <label class="col-xs-12 pipeline-label">
+                                      <input type="checkbox" class="col-xs-2" name="ct2-pipeline" value="CT2" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>SAT</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>UAT</li>
+                                      </ul>
+                                  </label>
+                                  <label class="col-xs-12 pipeline-label">
+                                      <input type="checkbox" class="col-xs-2" name="ct3-pipeline" value="CT3" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>SAT</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>UAT</li>
+                                          <li class="icon">
+                                              <i class="glyphicon glyphicon-arrow-right"></i>
+                                          </li>
+                                          <li>PAT</li>
+                                      </ul>
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading accordion-toggle"  data-toggle="collapse" data-target="#cdContent">Choose CD Pipeline</div>
+                              <div class="panel-body collapse" id="cdContent">
+                                  <label class="col-xs-12 pipeline-label">
+                                      <input type="checkbox" class="col-xs-2" name="cd-pipeline" value="CD1" />
+                                      <ul class="col-xs-10 pipe-block">
+                                          <li>Deployment</li>
+                                      </ul>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="panel panel-default">
+                      <div class="panel-heading content-title-heading">
+                          Tools
+                      </div>
+                      <div class="panel-body deploy-tools">
+                          <label class="tool-label">
+                              <img class="col-xs-12" src="/images_1/Github.png" />
+                              <figcaption>Github</figcaption>
+                              <input type="checkbox" name="tool" value="Github" class="col-xs-12 hidden" />
+                          </label>
+                          <label class="tool-label">
+                              <img class="col-xs-12" src="/images_1/Jenkins.png" />
+                              <figcaption>Jenkins</figcaption>
+                              <input type="checkbox" name="tool" value="Jenkins" class="col-xs-12 hidden" />
+                          </label>
+                          <label class="tool-label">
+                              <img class="col-xs-12" src="/images_1/Ant.png" />
+                              <figcaption>Ant</figcaption>
+                              <input type="checkbox" name="tool" value="Ant" class="col-xs-12 hidden" />
+                          </label>
+                          <label class="tool-label">
+                              <img class="col-xs-12" src="/images_1/Junit.png" />
+                              <figcaption>Junit</figcaption>
+                              <input type="checkbox" name="tool" value="Junit" class="col-xs-12 hidden" />
+                          </label>
+                          <label class="tool-label">
+                              <img class="col-xs-12" src="/images_1/Sonarqube.png" />
+                              <figcaption>Sonarqube</figcaption>
+                              <input type="checkbox" name="tool" value="Sonarqube" class="col-xs-12 hidden" />
+                          </label>
+                          <label class="tool-label">
+                              <img class="col-xs-12" src="/images_1/Nexus.png" />
+                              <figcaption>Nexus</figcaption>
+                              <input type="checkbox" name="tool" value="Nexus" class="col-xs-12 hidden" />
+                          </label>
+                      </div>
+                  </div>
+              </div>
+
+          </section>
+          <section class="overview col-sm-5 panel panel-default">
+              <div class="panel-heading content-title-heading">Selection Overview</div>
+              <div class="panel-body selection-overview">
+                  <div class="infra-overview">
+                      <h7 class="col-xs-12"><b>DevOps Infra : </b>Sonata Account</h7>
+                      <h7 class="col-xs-12"><b>Cloud: </b>Azure</h7>
+                  </div>
+              </div>
+          </section>
+          <div class="templateCreateButtons">
+              <button class="btn btn-lg btn-default deploy-selection">Back</button>
+              <button class="btn btn-lg btn-danger" id="configure">Configure</button>
+          </div>
+        </div>
+    </section>
+    <footer>
+        <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+        <span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+    </footer>
+</div>
+<script src="javascript_1/menu.js"></script>
+<script src="javascript_1/deployPipelines.js"></script>
+</body>
+</html>
