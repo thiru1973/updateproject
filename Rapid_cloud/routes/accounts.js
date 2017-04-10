@@ -29,33 +29,60 @@ exports.validate = function(req,res){
 	res.send("Success");
 }
 var path = require('path');
-
+var cron = require('cron');
 exports.runScript = function(req, res){
 	var result = JSON.stringify(req.body),
 	    Obj = JSON.parse(result),
 	    scriptName = Obj.scriptName,
-	    scriptData = Obj.scriptData;
-	
-	fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
-	  if (err) return res.send(err);
-	  console.log('creating file');
-	  
-	  var script_path = './scripts/'+scriptName+'.ps1';
-	  child = spawn("powershell.exe",[script_path]);
-		child.stdout.on("data",function(data){
-		   console.log("Powershell Data: " + data);	
-		   
-		});
-		child.stderr.on("data",function(data){
-		console.log("Powershell Errors: " + data);
-		res.send(data);
-		});
-		child.on("exit",function(){
-		console.log("Powershell Script finished");
-		res.send("Success");
-		});
-		child.stdin.end(); //end input	  
-	});	
+	    scriptData = Obj.scriptData,
+	    stype = Obj.type;
+	if(stype == "Once"){
+        fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
+          if (err) return res.send(err);
+          console.log('creating file');
+
+          var script_path = './scripts/'+scriptName+'.ps1';
+          child = spawn("powershell.exe",[script_path]);
+            child.stdout.on("data",function(data){
+               console.log("Powershell Data: " + data);
+
+            });
+            child.stderr.on("data",function(data){
+            console.log("Powershell Errors: " + data);
+            res.send(data);
+            });
+            child.on("exit",function(){
+            console.log("Powershell Script finished");
+            res.send("Success");
+            });
+            child.stdin.end(); //end input
+        });
+	}else{
+        var scdtime = '00 '+"*"+' '+"10"+' '+"*"+' '+"*"+' '+"*"+' ';
+        var cronJob = cron.job(scdtime, function(){
+        console.log(scLoc);
+        fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
+              if (err) return res.send(err);
+              console.log('creating file');
+
+            var script_path = './scripts/'+scriptName+'.ps1';
+            child = spawn("powershell.exe", [script_path]);
+            child.stdout.on("data",function(data){
+               console.log("Powershell Data: " + data);
+            });
+            child.stderr.on("data",function(data){
+                console.log("Powershell Errors: " + data);
+                //res.send(data);
+            });
+            child.on("exit",function(){
+               console.log("Powershell Script finished");
+               //res.send("Script finished");
+            });
+            child.stdin.end(); //end input
+            });
+            cronJob.start();
+           });
+	}
 }
 var _ = require("underscore");
 exports.download = function(req,res){

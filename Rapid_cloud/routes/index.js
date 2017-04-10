@@ -779,7 +779,7 @@ exports.create_deploy_slot = function(req,res){
 	 //client.invoke("assign", arr, function(error, res, more) {});
 	 res.send("Created");
 };
-var cron = require('cron');
+
 var spawn = require("child_process").spawn,child;
 exports.scheduleService = function(req, res){
 	res.setHeader("Access-Control-Allow-Origin", "*");

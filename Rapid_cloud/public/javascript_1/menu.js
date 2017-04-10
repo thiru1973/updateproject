@@ -277,7 +277,7 @@ LayOut.prototype = {
 										  level_2a:["Node", "Templates"],
 														level_2a1:["Single Node"],
 														level_2a2:["Account Templates"],
-		level_2_1:["VPC","Subnet","Security Gruop","Route Table","VPN Connection","Key Pair","Local Network Gate Way","Internet Gate Way","DNS Zone","End Points","Virtual Network Gateway"],
+		level_2_1:["VPC","Subnet","Security Gruop","Internet Gate Way","VPN Connection","Key Pair","Local Network Gate Way","Route Table","DNS Zone","End Points","Virtual Network Gateway"],
 		
 
 		level_1_Icons:["fa-tachometer","fa-paint-brush","fa-desktop","fa-hourglass-half","fa-eye","fa-th-list"],

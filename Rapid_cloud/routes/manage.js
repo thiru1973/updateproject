@@ -306,11 +306,12 @@ exports.routeTable = function(req,res){
 	      ,routeRegion = Obj.region
 	      ,routeName = Obj.routeName
 	      ,routeVpc = Obj.routeVpc
-	      ,routeSubnet = Obj.routeSubnet;
+	      ,routeSubnet = Obj.routeSubnet
+		  ,inetGate = Obj.inetGateway;
 	      getAwsCred.getAwsMethod(accountName,projName,prodName);
 	      setTimeout(function(){
-	     		var arr = [pvd, "route_table",auth1, auth2, routeRegion , routeName, routeVpc, routeSubnet];
-	      		//console.log(arr);
+	     		var arr = [pvd, "route_table",auth1, auth2, routeRegion , routeName, routeVpc, routeSubnet, inetGate];
+	      		console.log(arr);
 				var data = {arr1 : arr};
 				var data1 = JSON.stringify(data);
 				http.get(cloudurl+data1, function(response) {
@@ -1701,7 +1702,7 @@ exports.accountDetails = function(req, res){
 		}
 		rows3 = result.rows;
 	});
-	client_pg.query("SELECT * FROM subscription;", function(err, result){
+	client_pg.query("SELECT accountid, subscription_name, provider FROM subscription;", function(err, result){
 		if(err){
 		throw err;
 		}
@@ -2162,5 +2163,9 @@ exports.upadatevm_details = function(req, res){
 	}		 
 	
 }
-
+exports.softwareTool = function(req, res){	
+	var list1 = {t_id : 1, ip_add : req.body.pip, node_name : req.body.name, tool : req.body.sName};
+	var msg = saveObject(list1, "softwareDeploy");
+	res.send("Success");
+}
 

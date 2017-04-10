@@ -4,6 +4,7 @@ window.onload = function(){
 	//getSubnet();
 	getVnet();
 	getSubnetName();
+	getInetGateway();
 	document.getElementById("RM_name1").value = sessionStorage.getItem("resourceGroup");
 }
 function getVnet(){
@@ -60,6 +61,18 @@ function getSubnetName(){
 		 
 	});
 }
+function getInetGateway(){
+    var gWay = [];
+    $.getJSON(_ip+'/getInetGateWay', function(data){
+    			 for(var x=0;x<data.length;x++)
+    				 {
+
+    				 			gWay[x] = data[x].igateway_name;
+       				 }
+    			   var appendD = new DropdownConst();
+    			   appendD.appendData(gWay,"inetgate_Drop");
+    		  });
+}
 function createRoute()
 {
 	alert("In Create subnet page");
@@ -77,6 +90,7 @@ function createRoute()
 		var vpcId1 = vpcId2.split("/")
 		var subnetId2 = document.getElementById("subnetFs21").innerText;
 		var subnetId1 = subnetId2.split("/");
+		var inetGateway = document.getElementById("inetgate").innerText;
 		//alert(vpcId1);
 		if(vpcId2 == "Select")
 			{
@@ -100,6 +114,7 @@ function createRoute()
 					data.routeName = routeName;
 					data.routeVpc = vpcId1[1];
 					data.routeSubnet = subnetId1[1];
+					data.inetGateway = inetGateway;
 					console.log(data);
 					//console.log(routeName+routeVpc+pvd_name);
 					$.ajax({

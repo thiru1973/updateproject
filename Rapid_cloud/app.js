@@ -110,6 +110,7 @@ app.post('/createStorage', manage.createStorage);
 app.post('/createSecGroup', manage.createSecGroup);
 app.post('/createKeyPair', manage.createKeyPair);
 app.post('/deployTemplate', manage.deployTemplate);
+app.post('/softwareTool', manage.softwareTool);
 
 app.get('/actions', manage.actions);
 app.get('/vpc_deploy',manage.vpc_deploy);

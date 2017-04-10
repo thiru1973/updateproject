@@ -178,7 +178,7 @@ function selectOpt(ev, idn){
 		 							{	
 										//document.getElementById("sell0").innerText="";
 		 								roleAt = idDt[j].subrole;
-		 								addValues(roleAt,"sell"+norole[i]+"s")
+		 								addValues(roleAt,"sell"+norole[i]+"s",norole[i])
 		 							}
 		 				}	 		
 		 }
@@ -186,8 +186,9 @@ function selectOpt(ev, idn){
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");	
 }
-function addValues(data, toWhat){
-		$("#sell0 > span:first-child").text("Select");
+function addValues(data, toWhat, pos){
+		console.log(pos);
+		$("#sell"+pos+" > span:first-child").text("Select");
 		var appendD = new DropdownConst();
 		appendD.appendData(data,toWhat);
 }

@@ -962,20 +962,22 @@ function loadBalancer(){
 				            <td colspan=""><div class="detailsDiv">Add Script</div></td>\
 				           </tr>\
 							<tr>\
-								<td><div class="roleID"><div class="pull-left">\
-									<label id="" class="labelTemp"><span></span></label>\
-									<div id="addSc" class="clickRole temp1stRowWid"><span>Select</span>\
-										<ul id="accounts_ID" class="dropDown">\
-											<li onclick="selectOpt(this,0)" class="Dev"><dl><dt></dt><dd class="va">one</dd></dl></li>\
-											<li onclick="selectOpt(this,1)" class="Dev"><dl><dt></dt><dd class="va">two</dd></dl></li>\
-										</ul>\
-										<span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span>\
-									</div>\
-								</div></div>\
+								<td>\
+								<div class="col-xs-12 custom-spacing">\
+								   <div class="col-md-8">\
+									 <div class="col-md-4">\
+									   <label for="scriptname">Script Name</label>\
+									 </div>\
+									 <div class="col-md-6">\
+									   <input type="text" class="form-control" id="scriptname" name="scriptname" required/>\
+									 </div></div>\
+									 <label><input type="radio" name="script" value="Once" checked/>Once</label>\
+									 <label><input type="radio" name="script" value="Daily"/>\Daily</label>\
+								 </div>\
 							  </td>\
 							</tr>\
 							<tr>\
-								<td><textarea name="textarea" placeholder="Your script here.." class="pastYourScript" rows="10" style="width:100%"></textarea>\
+								<td><textarea name="textarea" id="scriptdata" placeholder="Your script here.." class="pastYourScript" rows="10" style="width:100%"></textarea>\
 							  </td>\
 							</tr>\
 							 <tr>\
@@ -988,11 +990,14 @@ function loadBalancer(){
 		this.dropDownMenu();
 	}
 	function addScriptFunction(){
-		var scriptName = document.getElementById("addSc").innerText;
-		var scriptData = document.getElementById("scriptdata").value;
+		var type = $('[name="script"]:checked').val();
+		var scriptName = document.getElementById("scriptname").value;
+		var scriptData = document.getElementById("scriptdata").value;  
 		var data = {};
 		data.scriptName = scriptName;
 		data.scriptData = scriptData;
+		data.type = type;
+		console.log(data);
 		$.ajax({
 		     type: 'POST',
 			 jsonpCallback: "callback",
@@ -1000,9 +1005,10 @@ function loadBalancer(){
 		     data: data,	 
 		     url:  _ip+'/runScript',
 		     success: function(results) {
-		    	 if(results == "Success")
+				 alert(results);
+		    	 /*if(results == "Success")
 		    		 {window.open(_ip+'/download');}
-		    	 else{alert(results);}
+		    	 else{alert(results);}*/
 		     },
 			 error: function (xhr, status, error){
 		        console.log('Failure');
@@ -1395,7 +1401,7 @@ function getPublicIp(valuee, append){
 							</td>\
 						</tr>\
 						<div class="col-xs-12">\
-						<div class="col-xs-12 content-title content-title-heading custom-spacing">Deploy Tool<button class="redButton pull-right" onclick="manage.deployTools(this)">Deploy</button>\</div>\
+						<div class="col-xs-12 content-title content-title-heading custom-spacing">Add Software<button id="'+this.dataOfNd[clickedData].public_ip+','+this.dataOfNd[clickedData].role+'" class="redButton pull-right" onclick="manage.deployTools(this)">Add</button>\</div>\
 						<div class="col-xs-6"><label class="deploy-model custom-spacing"><input type="radio" name="model" value="tomacat" checked="">Tomcat</label></div>\
 						<div class="col-xs-6"><label class="deploy-model custom-spacing"><input type="radio" name="model" value="nginx" >Nginx</label></div>\
 						</div>';
@@ -1431,9 +1437,26 @@ function getPublicIp(valuee, append){
 				$('#user_min').append("<option value='"+j+"'>"+j+"</option>");
 			}
 	},
-	Projects.prototype.deployTools = function(){
+	Projects.prototype.deployTools = function(tData){
 		var tool = $('[name="model"]:checked').val();
-		alert(tool);
+		var tD = tData.id;
+		var tdata = tD.split(",")
+		var data = {};
+		data.pip = tdata[0];
+		data.name = tdata[1];
+		data.sName = tool;
+		$.ajax({
+		  type: 'POST',
+		  data:data,
+		  url: _ip+'/softwareTool'
+		})
+		.done(function(data){
+			console.log(data);
+		})
+		.fail(function(err){
+			console.log(err);
+		})
+		
 	},
 	Projects.prototype.nodeSchedule = function(data){
 		var accountName = localStorage.getItem("Account")
