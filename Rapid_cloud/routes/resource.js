@@ -219,3 +219,27 @@ exports.appTools = function(req, res){
              }
        });
  };
+
+
+exports.deployedDevops = function(req, res){
+ //var result = "Java";
+  //var result=req.body;
+   MongoClient.connect(url, function (err, db) {
+        if (err) {
+                  console.log('Unable to connect to the mongoDB server. Error:', err);
+               } else {
+               console.log('Connection established');
+               var instance=db.collection('deployed_devops_template');
+               instance.find().toArray(function(err,result){
+               if(err){
+                     throw err
+                     }
+                  else{
+                        res.send(result);
+                        //console.log(result);
+                     }
+                db.close();
+               });
+            }
+      });
+};

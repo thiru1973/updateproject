@@ -69,7 +69,7 @@ var deployDataFormat = {
   ]
 };
 function CIStage1(){
-  delete deployDataFormat.deployTemplate[0].cIVMs[0]['vmPackages']['CI_Data']['add_pkgs'][2]
+  delete deployDataFormat.deployTemplate[0].cIVMs[0]['vmPackages']['CI_Data']['add_pkgs'].splice(2,1);
   delete deployDataFormat.deployTemplate[0].cIVMs[1];
   delete deployDataFormat.deployTemplate[0].cIVMs[2];
 }

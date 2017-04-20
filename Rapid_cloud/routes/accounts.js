@@ -35,8 +35,13 @@ exports.runScript = function(req, res){
 	    Obj = JSON.parse(result),
 	    scriptName = Obj.scriptName,
 	    scriptData = Obj.scriptData,
-	    stype = Obj.type;
+	    stype = Obj.type,
+	    hr = Obj.hr,
+	    min = Obj.min;
+	 console.log(req.body);
 	if(stype == "Once"){
+	   // var scdtime = '00 '+min+' '+hr+' '+"*"+' '+"*"+' '+"*"+' ';
+	    //var cronJob = cron.job(scdtime, function(){
         fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
           if (err) return res.send(err);
           console.log('creating file');
@@ -56,11 +61,12 @@ exports.runScript = function(req, res){
             res.send("Success");
             });
             child.stdin.end(); //end input
-        });
+            });
+            // cronJob.start();
+       // });
 	}else{
-        var scdtime = '00 '+"*"+' '+"10"+' '+"*"+' '+"*"+' '+"*"+' ';
+	    var scdtime = '00 '+min+' '+hr+' '+"*"+' '+"*"+' '+"*"+' ';
         var cronJob = cron.job(scdtime, function(){
-        console.log(scLoc);
         fs.writeFile('./scripts/'+scriptName+'.ps1', scriptData, function (err) {
               if (err) return res.send(err);
               console.log('creating file');

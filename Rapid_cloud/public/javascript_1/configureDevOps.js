@@ -14,7 +14,7 @@ var data = [
            			},
            			{
            				"name": "Build",
-           				"tool": "maven",
+           				"tool": "Maven",
            				"configuration": {
            					"goals": "textarea",
            					"POM": "textarea",
@@ -189,7 +189,6 @@ function configDetails(data,name,tool){
 	return configDetails
 }
 function inValid(message){
-   //alert(message);
    $('.alert-body').html(message);
    $('#alertModal').modal('show');
  }
@@ -226,9 +225,9 @@ form.forEach(function(e,i){
   tabs+= '<li role="presentation" class="'+ active +'"><a href="#'+ pipe[i].replace(' ','') +'" aria-controls="'+ pipe[i] +'" role="tab" data-toggle="tab">'+ pipe[i] +'</a></li>';
   content += '<div role="tabpanel" class="pipeline-data tab-pane '+ active +'" id="'+ pipe[i].replace(' ','') +'" data-stage="'+ pipe[i] +'">'+ e.reduce(function(a,e){ return a+e},'')+'</div>';
 })
-var farm = '<div><ul class="nav nav-tabs full-width-tab" role="tablist">'+tabs + '</ul><div class="tab-content">'+ content + '</div></div>'
+var configureForms = '<div><ul class="nav nav-tabs full-width-tab" role="tablist">'+tabs + '</ul><div class="tab-content">'+ content + '</div></div>'
 
-$('#configTemplate').append(farm);
+$('#configTemplate').append(configureForms);
 $('[role=presentation]')[0].className+=' active';
 
 function readConfigFieldData(field){
@@ -268,4 +267,5 @@ $('#configure').click(function(){
     inValid('Please fill all the fields for each stage');
   }
 })
+
 

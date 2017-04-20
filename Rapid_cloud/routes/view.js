@@ -483,3 +483,54 @@ exports.importSubscription = function(req, res){
 	
 	
 }
+exports.envData = function(req, res){
+	var envdt;
+	client_pg.query("SELECT env_name,role,inst_id FROM deployment_env where accountid = ($1)and p_name = ($2) and product_name = ($3)", ["Sonata_Account","TUI_Group","TUI_Hotels"], function(err,result){
+			  if(err){
+			   throw err;
+			  }
+			  envdt = result.rows;
+			  res.send(envdt);
+			});
+}
+exports.nodeData = function(req,res){
+	var accName = "Sonata_Account"
+	   ,projName = "TUI_Group"
+	   ,prodName = "TUI_Hotels"
+	   ,envName = "Test";
+	client_pg.query("SELECT role,inst_id,deploy_id FROM deployment_env where accountid = ($1)and p_name = ($2) and product_name = ($3) and env_name = ($4)", [accName,projName,prodName,envName], function(err,result){
+			  if(err){
+			   throw err;
+			  }
+			  var nodedt = result.rows;
+			  res.send(nodedt);			  
+			});
+}
+exports.nodeDetails = function(req, res){
+	var deploy_id = 10001;
+	var arr = [];
+	var nodeDet =  {};
+	 client_pg.query("SELECT * FROM deployment_env where deploy_id = ($1)", [deploy_id], function(err,result){
+			  if(err){
+			   throw err;
+			  }
+			  var dt = result.rows;			 
+			  nodeDet.Data = dt[0];
+			  nodeDet.Manage = {"ScheduleStart" : "button","ScheduleStop" : "button","date" : "date","hours" : "select",
+				"Minutes" : "select","Start" : "button","Stop" : "button","Terminate" : "button","Reboot" : "button"
+				};
+			  nodeDet.Addscript = {"Script Name" : "textbox","Once" : "Radio","Daily" : "Radio","Script" : "textarea","RunScript" : "button"};
+			  nodeDet.AddSoftware = {
+				"Role" : {
+					"select" : ["Database","WebServer","ApplictionServer","Integration","TestServer","Buildserver","ProxyServer","mailServer","ApacheSolrServer","CachingServer","NATServer","RDPServer","CMTool","RepoManager"]
+					},
+				"Software" : {
+					"Select" : []	
+					},
+				"Add" : "button"
+				}
+			  arr.push(nodeDet);
+			  console.log(arr);
+			  res.send(arr);			  
+			}); 
+}

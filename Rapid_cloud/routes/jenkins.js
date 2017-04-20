@@ -177,6 +177,31 @@ exports.uploadConfJson = function(req, res){
 }
 
 
+exports.getDedicatedDevops = function(req,res){
+var deploy_id = req.body.deployment_id;
+console.log(req.body);
+	client_pg.query("SELECT ci_url from dedicated_devops where deployment_id = ($1)",[deploy_id],function(err, result){
+				if(err){
+					throw err;
+				}
+				rows4 = result.rows;
+                console.log(rows4);
+				var ci_url = rows4[0].ci_url;
+				var jenkins = require('jenkins')({ baseUrl: ci_url, crumbIssuer: false });
+                jenkins.job.build('Dynamic_Pipeline', function(err, data) {
+                      if (err) throw err;
+                      res.send('success');
+                });
+	})
+
+}
 
 
 
+exports.demoJenkins = function(req,res){
+var jenkins = require('jenkins')({ baseUrl:'http://sonatawkins.cloudapp.net:8080', crumbIssuer: false });
+    					jenkins.job.build('Dynamic_Pipeline', function(err, data) {
+    						  if (err) throw err;
+    						  res.send(data);
+    					});
+}

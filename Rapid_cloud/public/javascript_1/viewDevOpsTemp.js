@@ -1,8 +1,9 @@
 $("#single_node").hide();
 var _ip = "http://172.29.59.65:3000";
+var deployedData;
 function ViewConstru(j){
 	this.jd = j;
-	this.docId = document.querySelector("#infrastructure");
+	this.docId = document.querySelector("#deployTemplate");
 	this.data = {};
 	this.i = 0;
 	this.dt = "deployTemplate";
@@ -79,20 +80,17 @@ ViewConstru.prototype = {
 		event.preventDefault();
 		$("#"+id+" li a span").removeClass("arrowPointer glyphicon glyphicon-triangle-top");
 		ev.firstElementChild.className += "arrowPointer glyphicon glyphicon-triangle-top";
-
 		var devOpsTyp = "cIVMs";
 		ev.text == "CI" ? devOpsTyp : true ;
 		ev.text == "CT" ? devOpsTyp = "cTVMs" : true ;
 		ev.text == "CD" ? devOpsTyp = "cDVMs" : true ;
 		document.getElementById(id+"_vm").innerHTML="";
-
 		var k = Object.keys(this.data[id][this.dt][0][devOpsTyp]);
-
 		for(var g=0; g< k.length; g++){
 			var p = k[g];
 			var addVM = document.getElementById(id+"_vm");
 			0 < g ? addVM.innerHTML+='<hr>' : true;
-			
+
 			var oo = this.data[id][this.dt][0][devOpsTyp][p].vmPackages
 			var pack = "";
 			var d = 0;
@@ -123,7 +121,38 @@ ViewConstru.prototype = {
 }
 var vt = new ViewConstru(_ip+"/deploydbData");
 	vt.init();
-
+(function(){
+  var configureTemplateData = '';
+  $.ajax(_ip+ '/deployedDevops').then(function(data){
+    deployedData = data;
+    data.forEach(function(element,index){
+      configureTemplateData += '<tr><td>'
+                                + element["deployedTemplate"]["deployTemplate"][0]["templateName"]
+                                + '</td><td>'
+                                + element['deployedTemplate']['deployTemplate'][0]['projectName']
+                                + '</td><td>'
+                                + element['deployedTemplate']['deployTemplate'][0]['technology']
+                                + '</td><td><a onclick="configureDeployedData('
+                                + index
+                                +  ')" > Configure </a></td>'
+    })
+  }).then(function(){
+    var configureTemplate = '<table class="table table-hover">\
+                                 <thead>\
+                                   <tr>\
+                                     <th>Template Name</th>\
+                                     <th>Project Name </th>\
+                                     <th>Techonlogy</th>\
+                                     <th>Action</th>\
+                                   </tr>\
+                                 </thead>\
+                                 <tbody>'
+                                   +  configureTemplateData +
+                                 '</tbody>\
+                               </table>';
+    $('#configureTemplate').append(configureTemplate);
+  })
+})()
 var templatesData;
 var selectedTemplateDetails;
 var pipelineTemplate = {
@@ -449,7 +478,6 @@ function previewAndDeploy(){
                            <div class="panel-body deploy-tools">'
                            + toolsData
                            + '</div></div>';
-
    var deployTemplate = '<div class="col-xs-12 preview-deploy">'
                         + pipelinesTemplate
                         + toolsTemplate
@@ -480,15 +508,14 @@ function deployAndExit(){
   $.post('http://172.29.59.62:3000/deployDevopsData',{data:JSON.stringify(deployTemplateData)})
   .then(success,error);
   function success(data){
-    alert(data);
-    //location.pathname = '/viewDevOpsTemplate';
+    inValid(data);
+    location.pathname = '/deployPipelines';
   }
   function error(e){
-    alert('Failed to Send Data');
+    inValid('Failed to Send Data');
   }
 }
 function deployAndConfigure(){
-    console.log(deployTemplateData);
   $.post('http://172.29.59.62:3000/deployDevopsData',{data:JSON.stringify(deployTemplateData)})
   .done(function(){
     inValid('Deployed successfully. Configure the pipeline...');
@@ -498,7 +525,6 @@ function deployAndConfigure(){
     inValid(JSON.stringify(e));
   });
 }
-
 String.prototype.firstLetterCapital = function(){
   return this.split('_')
              .reduce(function(acc, val){
@@ -643,12 +669,11 @@ $('.modal').on('click', '#addStorageBtn', function(){
   function error(e){
     inValid('Failed to add Storage Account');
   }
-
 })
 $('#DeployAndExit').click(function(){
   var pipelinesSelected = $('.deploy-pipelines .pipeline-label input:checked');
-  var toolsSelected = $('.deploy-tools .tool-label input:checked');
-  if(pipelinesSelected.length != 0 && toolsSelected.length != 0){
+  //var toolsSelected = $('.deploy-tools .tool-label input:checked');
+  if(pipelinesSelected.length != 0/* && toolsSelected.length != 0*/){
     deployAndExit();
   }else{
     inValid('Select Pipeline and Tools');
@@ -663,10 +688,22 @@ $('#configure').click(function(){
   }else{
     inValid('Select Pipeline and Tools');
   }
-
-
 })
-
-
-
-
+$('#configureTemplateTab').click(function(){
+  $('.overview').hide();
+  $('#DevOpsStages').addClass('hidden')
+  $('.line-seperator').addClass('hidden')
+  $('#templates').removeClass('col-sm-7').addClass('col-xs-12');
+})
+$('#deployTemplateTab').click(function(){
+  $('#templates').removeClass('col-xs-12').addClass('col-sm-7');
+  $('.overview').show();
+  $('.line-seperator').removeClass('hidden')
+  $('#DevOpsStages').removeClass('hidden')
+})
+function configureDeployedData(index){
+  var configureData = $.extend({},deployedData[index]['deployedTemplate'])
+  configureData['_id'] = deployedData[index]['_id']
+  sessionStorage.setItem('configTemplate',JSON.stringify(configureData));
+  location.pathname = '/configureDevOps';
+}

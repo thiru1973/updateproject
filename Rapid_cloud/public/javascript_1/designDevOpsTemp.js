@@ -200,6 +200,8 @@ function getDataFromEndPoint(type,url,dtype,data){
 function DevOpsDetails(templateDetails){
    designDevOpsData.deployTemplate[0].templateName = templateDetails.Template_name;
    designDevOpsData.deployTemplate[0].projectName = templateDetails.Project_Name;
+   designDevOpsData.deployTemplate[0].productName = templateDetails.Product_Name;
+   designDevOpsData.deployTemplate[0].accountName = templateDetails.Account_Name;
    designDevOpsData.deployTemplate[0].cloud = templateDetails.Cloud;
    designDevOpsData.deployTemplate[0].region = templateDetails.Region;
    getDataFromEndPoint('GET','/appTechnologies','json')

@@ -73,6 +73,8 @@ window.onload = function(){
 window.onclick=function(){
 	$(".popUpHide").hide();
 }
+
+
 function disPlayPop(a){
 	var popHeight = $(a).parent().children("div").children("div.popover").height();
 	var topPost=-popHeight/2 - 8;
@@ -973,6 +975,8 @@ function loadBalancer(){
 									 </div></div>\
 									 <label><input type="radio" name="script" value="Once" checked/>Once</label>\
 									 <label><input type="radio" name="script" value="Daily"/>\Daily</label>\
+									 <select id="hr"></select><label>hr</label>\
+									 <select id="min"></select><label>mn</label>\
 								 </div>\
 							  </td>\
 							</tr>\
@@ -987,16 +991,28 @@ function loadBalancer(){
 								</div>\
 				            </td>\
 							</tr>';
+		for(var i = 0; i < 24; i++)
+			{
+			  $('#hr').append("<option value='"+i+"'>"+i+"</option>");
+			}
+		for(var j = 0; j < 60; j++){
+			$('#min').append("<option value='"+j+"'>"+j+"</option>");
+		}
 		this.dropDownMenu();
 	}
 	function addScriptFunction(){
 		var type = $('[name="script"]:checked').val();
 		var scriptName = document.getElementById("scriptname").value;
-		var scriptData = document.getElementById("scriptdata").value;  
+		var scriptData = document.getElementById("scriptdata").value
+			,hr = document.getElementById("hr").value
+			,min = document.getElementById("min").value		
 		var data = {};
 		data.scriptName = scriptName;
 		data.scriptData = scriptData;
 		data.type = type;
+		data.hr = hr;
+		data.min = min;
+		
 		console.log(data);
 		$.ajax({
 		     type: 'POST',
@@ -1402,10 +1418,10 @@ function getPublicIp(valuee, append){
 						</tr>\
 						<div class="col-xs-12">\
 						<div class="col-xs-12 content-title content-title-heading custom-spacing">Add Software<button id="'+this.dataOfNd[clickedData].public_ip+','+this.dataOfNd[clickedData].role+'" class="redButton pull-right" onclick="manage.deployTools(this)">Add</button>\</div>\
-						<div class="col-xs-6"><label class="deploy-model custom-spacing"><input type="radio" name="model" value="tomacat" checked="">Tomcat</label></div>\
-						<div class="col-xs-6"><label class="deploy-model custom-spacing"><input type="radio" name="model" value="nginx" >Nginx</label></div>\
+						<div class="roleID"><div class="pull-left"><label class="labelTemp">Role</label><div id="selrole" class="clickRole borderNoN"><span>Select</span><ul id="selroles" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div></div>\
+						<div class="roleID"><div class="pull-left"><label class="labelTemp">Software</label><div id="selsoft" class="clickRole borderNoN"><span>Select</span><ul id="selsoftws" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div></div>\
 						</div>';
-						
+			this.getroles();
 				
 			var _StatusOfNode = this.dataOfNd[clickedData].status;
 			if(_StatusOfNode == "stopped"){						
@@ -1437,6 +1453,23 @@ function getPublicIp(valuee, append){
 				$('#user_min').append("<option value='"+j+"'>"+j+"</option>");
 			}
 	},
+	Projects.prototype.getroles = function(){
+		$(function(){		
+		   $.getJSON('http://172.29.59.65:3000/org_temp', function(data) {			
+			   
+			   var idArr = [];
+			   
+			   idDt = data[0].types;			  
+			   for(var j=0;j<=idDt.length-1;j++){
+				   var dd = data[0].types[j].name;				   
+				   idArr.push(dd);
+			   }
+			   var appendD = new DropdownConst();
+			   	 appendD.appendData(idArr,"selroles");			   			  
+		   });
+		 
+		});
+	}
 	Projects.prototype.deployTools = function(tData){
 		var tool = $('[name="model"]:checked').val();
 		var tD = tData.id;
@@ -1444,7 +1477,8 @@ function getPublicIp(valuee, append){
 		var data = {};
 		data.pip = tdata[0];
 		data.name = tdata[1];
-		data.sName = tool;
+		data.sName = document.getElementById("selsoft").innerText;
+		console.log(data);
 		$.ajax({
 		  type: 'POST',
 		  data:data,
@@ -1701,7 +1735,7 @@ function selectOpt(event, idn){
 	//alert(idd);
 	if(idd == "selci1"){getPublicIp(aTex,0);}
 	if(idd == "typeDro12"){setMonitorPort_AzureTraffic(aTex);}
-	 
+	if(idd == "selrole"){getsoftware(aTex);} 
 	 $("#"+idd+" span:first").html(aImage+aTex);
 	 $("#"+idd+" span img").css("width", "25px");
 }
@@ -1733,7 +1767,7 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 	epn.innerHTML="";
 	for(var i=0;i<=name.length-1;i++){
 		var epn;
-		epn.innerHTML+="<li onclick='selectOpt(this,"+i+")' class='"+nme[i]+"'>"
+		epn.innerHTML+="<li onclick='selectOpt(this,"+i+")' class='"+name[i]+"'>"
 						+"<dl>"
 						+"<dt></dt>"
 						+"<dd class='va'>"+name[i]+"</dd>"
@@ -1742,6 +1776,26 @@ DropdownConst.prototype.appendData = function(name,appentoWhat){
 	}
 	epn.write = epn;
 	//console.log(epn);
+}
+function getsoftware(sw){
+	//alert(sw);
+	var sftw = [];
+	$.ajax({
+		  type: 'GET',
+		  url: _ip+'/org_temp'
+		})
+	.done(function(data){
+		var roles = data[0].types;
+		for(var i=0;i<roles.length;i++){
+			if(roles[i].name == sw){
+				console.log(roles);
+				sftw = roles[i].subrole;
+				console.log(sftw)
+				var appendD = new DropdownConst();
+			   	 appendD.appendData(sftw,"selsoftws");
+			}
+		}
+	})
 }
 function iopsFunction(value,Id){
 	var vType = document.getElementById("selstg0").innerText;

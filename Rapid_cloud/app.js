@@ -235,6 +235,7 @@ app.get('/deploydbData', resources.deploydbData);
 app.get('/deployDivOpsTemplate', routes.deployDivOpsTemplate);
 app.get('/appTechnologies', resources.appTechnologies);
 app.post('/appTools', resources.appTools);
+app.get('/deployedDevops', resources.deployedDevops);
 //Product Templates
 app.get('/viewProductTemplate', routes.viewProductTemplate);
 app.get('/deployProductTemplate', routes.deployProductTemplate);
@@ -273,8 +274,9 @@ app.get('/nexusafView', nexus.nexusafView);
 app.post('/nexusstatus', nexus.nexusstatus);
 
 app.get('/uploadJson', jenkins.uploadJson);
+app.get('/demoJenkins', jenkins.demoJenkins);
 app.post('/uploadConfJson', jenkins.uploadConfJson);
-
+app.post('/getDedicatedDevops', jenkins.getDedicatedDevops);
 var AuthenticationContext = require('adal-node').AuthenticationContext;
 var crypto = require("crypto")
 
@@ -336,7 +338,9 @@ app.post('/getAzureToken', function(req, res) {
 	    }
 	  );
 });
-
+app.get('/envData', view.envData);
+app.get('/nodeData', view.nodeData);
+app.get('/nodeDetails', view.nodeDetails);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
