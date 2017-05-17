@@ -1,4 +1,6 @@
 .track-progress {
+  display: flex;
+  justify-content: center;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -19,22 +21,27 @@
 .track-progress li:first-child:nth-last-child(6),
 .track-progress li:first-child:nth-last-child(6) ~ li {
   width: 16.66%;
+  max-width: 300px;
 }
 .track-progress li:first-child:nth-last-child(5),
 .track-progress li:first-child:nth-last-child(5) ~ li {
   width: 20%;
+  max-width: 300px;
 }
 .track-progress li:first-child:nth-last-child(4),
 .track-progress li:first-child:nth-last-child(4) ~ li {
   width: 25%;
+  max-width: 300px;
 }
 .track-progress li:first-child:nth-last-child(3),
 .track-progress li:first-child:nth-last-child(3) ~ li {
   width: 33.33%;
+  max-width: 300px;
 }
 .track-progress li:first-child:nth-last-child(2),
 .track-progress li:first-child:nth-last-child(2) ~ li {
   width: 50%;
+  max-width: 300px;
 }
 
 .track-progress li > span {

@@ -20,7 +20,7 @@ exports.jenkinsJob = function(req, res){
 	var acName = req.body.accountName
 	   ,pjName = req.body.projectName
 	   ,pdName = req.body.productName;
-	client_pg.query("SELECT pipeline_names,url from jenkins where accountid = ($1) and p_name = ($2) and product_name = ($3)",[acName,pjName,pdName],function(err, result){
+	client_pg.query("SELECT pipeline_names,url,delivery_pipeline from jenkins where accountid = ($1) and p_name = ($2) and product_name = ($3)",[acName,pjName,pdName],function(err, result){
 				if(err){
 					throw err;
 				}
@@ -56,10 +56,19 @@ exports.buildPipe = function(req, res){
 	getUrlJob(acName,pjName,pdName, function(callback){
 		var jenkins = require('jenkins')({ baseUrl: callback, crumbIssuer: false });
 		jenkins.job.build(job, function(err, data) {
-		  if (err) throw err;		 
-		  console.log('queue item number', data);
+		  if (err){
+			  console.log(err);
+			  res.send(err);}
+		  else{
+			  console.log(data);
+			  var d = {};
+			  d.msg = "Build pipeLine has started with queue item number";
+			  d.queue = data;
+			  d.url = callback;
+			  res.send(d);
+			  }
 		});
-		res.send("Success");
+		
 	})
 }
 
@@ -199,9 +208,15 @@ console.log(req.body);
 
 
 exports.demoJenkins = function(req,res){
-var jenkins = require('jenkins')({ baseUrl:'http://sonatawkins.cloudapp.net:8080', crumbIssuer: false });
+						/* var jenkins = require('jenkins')({ baseUrl:'http://sonatawkins.cloudapp.net:8080', crumbIssuer: false });
     					jenkins.job.build('Dynamic_Pipeline', function(err, data) {
     						  if (err) throw err;
     						  res.send(data);
-    					});
+    					}); */
+    					var jenkins = require('jenkins')({ baseUrl:'http://sonatawkins.cloudapp.net:8080', crumbIssuer: false });
+                        jenkins.view.get('Demo_Delivery_Project', function(err, data) {
+                          if (err) console.log(err);
+						  console.log(data);
+                          res.send(data.pipelines[0].pipelines);
+                        });
 }

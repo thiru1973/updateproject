@@ -244,9 +244,8 @@ LayOut.prototype = {
 			 datatype: 'jsonp',
 			 data: data,
 			 async: false,
-			 url: 'http://172.29.59.63:3000/getRoles',
+			 url: 'http://172.29.59.65:3000/getRoles',
 			 success: function(results) {
-				 console.log(results);
 				 for(var i =0;i<results.length;i++)
 				 {
 					 self.menu.push(results[i].perm_name);
@@ -361,6 +360,7 @@ LayOut.prototype = {
         	pt === "/sonarView" ? $("#design_1, #1Quality").addClass("active") : false ;
 			pt === "/nexusView" ? $("#design_1, #2Package").addClass("active") : false ;
 			pt === "/nexusafView" ? $("#design_1, #2Package").addClass("active") : false ;
+			pt === "/monitor" ? $("#Monitor").addClass("active") : false ;
 	},
 	pagNav:function(){
 		$('#1Scheduling').hide();
@@ -405,6 +405,8 @@ LayOut.prototype = {
         });
         $('#1Quality').click(function(){location.href = location.origin+"/sonarProject";});
         $('#2Package').click(function(){location.href = location.origin+"/nexusView";});
+
+        $('#Monitor').click(function(){location.href = location.origin+"/monitor"});
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){

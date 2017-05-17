@@ -1,14 +1,17 @@
 @import url("../../css_1/components/wizard.css");
-
+@import url("../../css_1/components/tabs.css");
 .deploy-stages{
   display:flex;
-  padding-top:15px;
+  padding: 10px;
 }
 .deployDevOps{
   display: inline-block;
 }
 .table tr td:nth-child(2){
-   word-break: break-word
+   max-width: 210px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 .col-xs-12{
   padding:0;
@@ -46,6 +49,7 @@ li.icon {
   background: transparent;
 }
 .line-seperator {
+ margin-top: 10px;
  border-top: 3px solid #777575;
 }
 .temp-selected {
@@ -75,7 +79,6 @@ a{
   background: #E13F3E;
 }
 label.pipeline-label {
- font-size: 1vw;
   display: flex;
   align-items: center;
 }
@@ -95,10 +98,6 @@ label.pipeline-label {
 .content-title{
   background-color: #f5f5f5;
   border: 1px solid #ddd;
-}
-.content-title-heading{
-  font-size: 16px;
-  font-weight: 500;
 }
 .table>tbody>tr>td{
   padding: 3px;
@@ -120,11 +119,19 @@ article[role="devTemp"] summary[role="packagesDetails"]{
   height: 125px;
   overflow-y: auto;
 }
-.infrastructure{
+.infrastructure-tab-content{
   overflow-y: auto;
   max-height: 700px;
+  padding-top: 10px;
 }
 .alert-area{
   background: #F2DEDE;
   color: #A94442;
+}
+.table-padding td{
+  padding: 10px !important;
+}
+.table-padding thead tr{
+  background: grey;
+  color: #fff;
 }

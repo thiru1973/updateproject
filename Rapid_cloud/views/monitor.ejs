@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<title>Monitor</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="theme/theme1.css" id="myTheme" rel="stylesheet"/>
+<link rel="stylesheet" href="css/dev-ops.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<body id="bg">
+
+
+<div class="container">
+		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+		</aside>
+		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+			<header>
+				<span class="pipeline"></span>
+				<button class="btn btn-danger" id="edit-infra">Infra</button>
+				<button class="btn btn-danger" id="edit-app" style="">APP</button>
+				<aside><div id="data"></div>
+			</header>
+			<div id="jenkins-inline" style="clear:both;line-height:10px;">&nbsp;</div>			
+			<div id='build'></div>
+			
+			<div class="roles">
+				<div class="pull-left">
+					<label id="" class="labelTemp"><span>Environments</span></label>
+					<div id="monitorEnv" class="clickRole temp1stRowWid"><span>Select</span>
+						<ul id="monitorEnv_Drop" class="dropDown" style="display: none;">
+						</ul>
+						<!-- <span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span> -->
+					</div>
+				</div>
+			</div>
+			<div id="toBeDone"></div>
+			<button class="btn btn-danger" id="host-infra">Host</button>
+				
+		</section>
+		<footer>
+			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+		</footer>
+</div>
+<script src="javascript_1/manage.js"></script>
+<script src="javascript_1/monitor.js"></script>
+<script>
+$(document).ready(function()
+{
+  $(".nodeSel tr:odd").css("background-color", "#eee");
+});
+</script>
+</body>
+</html>

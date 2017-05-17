@@ -6,8 +6,23 @@ $(document).ready(function(){
 		$("#instan").hide();
 		$("#logDetail").hide();
 	});
-	
+	$(".proDiv ,.popupData").hide();	
 });
+window.onload = function(){
+	//getData();
+}
+function getData(){
+	$.ajax({
+		  type: 'GET',
+		  url: _ip+'/demoJenkins'
+		})
+		.done(function(data){
+			console.log(data[0].stages.length);
+		})
+		.fail(function(err){
+			console.log(err);
+		})
+}
 var dwData;
 function pipelineList(){
 	this.addLoadBa = document.getElementById("mvTable");
@@ -19,8 +34,9 @@ pipelineList.prototype = {
 		var url = document.location.href
 		var idx = url.lastIndexOf("data=");
 		var pipe = url.substring(idx+5).replace("#","");
+		var delData = pipe.split(",");
 		var data = {};
-		data.pipelineName = pipe;
+		data.pipelineName = delData[0];
 		data.accountName = localStorage.getItem("Account");
 		data.projectName = localStorage.getItem("ProjectName");
 		data.productName = localStorage.getItem("ProductName");
@@ -34,8 +50,8 @@ pipelineList.prototype = {
 				console.log(data)
 				if(data.notFound == true){
 					alert("No Jobs found");
-				}else{	$('.pipeline').html(pipe);
-						$('.pipeline').append("&nbsp&nbsp&nbsp&nbsp<a href='#' title="+data.jobs[0].name+" onclick='pL.buildPipeLine(this)' class='viewLink'>Trigger Build</a>");	
+				}else{	$('.pipeline').html(delData[0]);
+						$('.pipeline').append("&nbsp&nbsp&nbsp&nbsp<a href='#' title="+data.jobs[0].name+","+delData[1]+" onclick='pL.buildPipeLine(this)' class='viewLink'>Trigger Build</a>");	
                     	editProfileUrl = data.url+"/configure";
 						for(var i=0; i<data.jobs.length; i++){
 							if(i != (data.jobs.length-1)){
@@ -117,22 +133,40 @@ pipelineList.prototype = {
 		var reWindow = window.open(ev.title+"configure", "Jenkins page", "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=nowidth=1000px,height=700px");
 	},
 	buildPipeLine : function(ev){
-		alert(ev.title);
+		//alert(ev.title);
+		var buildData = (ev.title).split(",");
 		var data = {};
-		data.jobName = ev.title;
+		data.jobName = buildData[0];
 		data.accountName = localStorage.getItem("Account");
 		data.projectName = localStorage.getItem("ProjectName");
 		data.productName = localStorage.getItem("ProductName");
+		
 		$.ajax({
 		  type: 'POST',
 		  data: data,	 
 		  url: _ip+'/buildPipe'
 		})
 		.done(function(data){
-			alert(data);
+			//alert(data);
+			console.log(data);
+			var newUrl = data.url+'/view/'+buildData[1]+'/';
+			$('.btn').hide();
+			$('#pipeView').hide();
+			$('#build').hide();
+			$('#jenkins-inline').append(
+				"<iframe width='1100' height='600px' target='_parent' src="+newUrl+"></iframe>" +
+					"<button class='btn btn-danger' id='go-back'>Back</button>"
+			)
+			/*$(".popupData, .proDiv").show(); 
+			$("#instanceName").html("<b>"+data.msg+" : "+data.queue+"</b></br><b>Please visit after sometime for Build information</b>");
+			
+			setTimeout(function(){
+					$(".popupData, .proDiv").hide();
+					location.herf = location.origin + '/manageEnv';
+				},8000);*/
 		})
 		.fail(function(err){
-			alert(err);
+			console.log(err);
 		})
 	},
 	showLogdetails : function(ev){
@@ -184,7 +218,7 @@ pipelineList.prototype = {
 			data: data,
 			url: _ip+'/getBuild',
 			success: function(data, textStatus){
-				console.log(data);
+				//console.log(data);
 				if(data.notFound == true){
 					alert("NO data found");
 				}else{
@@ -216,21 +250,6 @@ pipelineList.prototype = {
 					},
 				});
 	}
-	
-	// add div //
-	
-	
-	/*
-	var iDiv = document.createElement('div');
-	iDiv.id = 'block';
-	iDiv.className = 'block';
-	document.getElementsByTagName('build-detials');
-
-	iDiv.innerHTML = "I'm the first div";
-*/
-	
-	
-	
 }
 var pL = new pipelineList();
 	pL.init();
@@ -243,6 +262,7 @@ $(document).on("click", "#edit-pipeline", function(){
 	var newUrl = editProfileUrl;
 	$('.btn').hide();
     $('#pipeView').hide();
+	$('#build').hide();
     $('#jenkins-inline').append(
 		"<iframe width='1100' height='600px' target='_parent' src="+newUrl+"></iframe>" +
 			"<button class='btn btn-danger' id='go-back'>Back</button>"
@@ -255,6 +275,7 @@ $(document).on("click", "#yui-gen2-button", function(){
 });
 
 $(document).on("click", "#go-back", function(){
-    location.href = location.origin + '/pipelinelist';
+    //location.href = location.origin + '/pipelinelist';
+	window.location.reload();
 });
 ////////////////////////////////////////////////////

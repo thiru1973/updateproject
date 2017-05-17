@@ -42,7 +42,7 @@ $(function(){
 							nodes[j] = (result[j].Instances).length;
 							cloud[j] = result[j].Cloud;
 							desc1[j] = result[j].Template_Desc;
-						}else{console.log("No");}
+						}
 					}
 
 				 for(var j=0;j<cloud.length;j++)
@@ -225,10 +225,10 @@ function DevOpsDetails(templateDetails){
                                <figcaption >Continues Delivery</figcaption>\
                                <input type="checkbox" name="cd" val="CD"  class="col-xs-12" onclick="devChainCD()"/>\
                              </label>';
-       var overviewTemplate = '<div class="col-xs-12 col-sm-3 col-md-3 pull-right ">\
+       var overviewTemplate = '<div class="col-xs-12 col-sm-3 col-md-3 selection-overview pull-right ">\
                                  <div class="panel panel-default">\
                                   <div class="panel-heading">Selection Overview</div>\
-                                  <div class="panel-body selection-overview">\
+                                  <div class="panel-body selection-overview-body">\
                                     <h5><b>Infrastructure</b></h5> \
                                     <h7><b>DevOps Infra Selected : </b>' + templateDetails.Template_name + '</h7><br>\
                                     <h7><b>Cloud : </b>' + templateDetails.Cloud + '</h7><br>\
@@ -264,7 +264,7 @@ function choosePipeline(devOpsDetail,technology){
         'CI4':false
       };
       devopslist = devopslist +  'Continuous Integration';
-      return ' <div class="panel panel-default"> <div class="panel-heading">Choose CI Pipeline</div> <div class="panel-body"><label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci1-pipeline"   value="CI1"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci2-pipeline"   value="CI2"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Unit Test</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci3-pipeline"   value="CI3"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build </li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Unit Test</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Code Coverage</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci4-pipeline"  value="CI4"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Unit Test</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Code Coverage</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Package</li> </ul> </label> </div></div>'
+      return ' <div class="panel panel-default"> <div class="panel-heading">Choose CI Pipeline</div> <div class="panel-body ci-pipeline-body"><label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci1-pipeline"   value="CI1"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci2-pipeline"   value="CI2"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Unit Test</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci3-pipeline"   value="CI3"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build </li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Unit Test</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Code Coverage</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ci4-pipeline"  value="CI4"> <ul class="col-xs-10 pipe-block"> <li>Code Repo</li> <li>Build</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Unit Test</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Code Coverage</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Package</li> </ul> </label> </div></div>'
     }else{
       return '';
     }
@@ -277,7 +277,7 @@ function choosePipeline(devOpsDetail,technology){
         'CT3':false
       };
       devopslist = devopslist +  ', Continuous Testing';
-      return '<div class="panel panel-default"> <div class="panel-heading">Choose CT Pipeline(CT can be selected only after package is done in CI)</div> <div class="panel-body"><label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ct1-pipeline" value="CT1"> <ul class="col-xs-10 pipe-block"> <li>SAT</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ct2-pipeline"  value="CT2"> <ul class="col-xs-10 pipe-block"> <li>SAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>UAT</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ct3-pipeline"  value="CT3"> <ul class="col-xs-10 pipe-block"> <li>SAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>UAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>PAT</li> </ul> </label></div></div>'
+      return '<div class="panel panel-default"> <div class="panel-heading">Choose CT Pipeline(CT can be selected only after package is done in CI)</div> <div class="panel-body ct-pipeline-body"><label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ct1-pipeline" value="CT1"> <ul class="col-xs-10 pipe-block"> <li>SAT</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ct2-pipeline"  value="CT2"> <ul class="col-xs-10 pipe-block"> <li>SAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>UAT</li> </ul> </label> <label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="ct3-pipeline"  value="CT3"> <ul class="col-xs-10 pipe-block"> <li>SAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>UAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>PAT</li> </ul> </label></div></div>'
     }else{
       return '';
     }
@@ -288,12 +288,12 @@ function choosePipeline(devOpsDetail,technology){
         'CD1':false
       };
       devopslist = devopslist +  ', Continues Delivery';
-      return '<div class="panel panel-default"> <div class="panel-heading">Choose CD Pipeline( CD can be selected only after selecting CT)</div> <div class="panel-body"><label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="cd-pipeline" value="CD1"> <ul class="col-xs-10 pipe-block"> <li>Deployment</li> </ul> </label></div></div>'
+      return '<div class="panel panel-default"> <div class="panel-heading">Choose CD Pipeline( CD can be selected only after selecting CT)</div> <div class="panel-body cd-pipeline-body"><label class="col-xs-12 pipeline-label"> <input type="checkbox" class="col-xs-2" name="cd-pipeline" value="CD1"> <ul class="col-xs-10 pipe-block"> <li>Deployment</li> </ul> </label></div></div>'
     }else{
       return '';
     }
   }
-  $('.selection-overview').append('<div class="devdetail-overview"><h5><b>DevOps Details</b></h5><h7><b>Technology : </b>' + technology + '</h7><br><h7><b>DevOps Type : </b>' + devopslist + '</h7></div>')
+  $('.selection-overview-body').append('<div class="devdetail-overview"><h5><b>DevOps Details</b></h5><h7><b>Technology : </b>' + technology + '</h7><br><h7><b>DevOps Type : </b>' + devopslist + '</h7></div>')
   $('.stage-devops').addClass('hidden');
   $('.templates').append(pipelineTemplate);
 
@@ -381,7 +381,7 @@ function buildServer(codeRepo){
                          + '</div></div>';
 
      finalToolData.push(document.getElementsByClassName(codeRepo)[0]);
-     $('.selection-overview').append('<div class="tools-overview"><h5><b> Tools <b></h5><h7 class="code-repo-overview"><b>Code Repository: </b>' + codeRepo + '</h7><br></div>')
+     $('.selection-overview-body').append('<div class="tools-overview"><h5><b> Tools </b></h5><h7 class="code-repo-overview"><b>Code Repository: </b>' + codeRepo + '</h7><br></div>')
      $('.templates').append('<div class="stage-build-server col-xs-12 col-sm-9 col-md-9" >' + serverToolsTemplate+vmTemplate + '</div>');
    //});
 }
@@ -663,7 +663,7 @@ $('#stageDevOps').click(function(){
         DevOpsDetails(data[0])
       })
   }else{
-    alert('Select Some tile');
+    inValid('Select Some tile');
   }
 })
 
@@ -693,7 +693,7 @@ $('#stagePipeline').click(function(){
         $('.design-wizard1 li')[2].className = 'done';
         choosePipeline(devOps,technology);
       }else{
-        alert('Select any Technology');
+        inValid('Select any Technology');
       }
     })
 })
@@ -1053,13 +1053,43 @@ console.log(designDevOpsData);
   $.post( _ip + '/saveDevopsTemplate',{data:JSON.stringify(designDevOpsData)})
   .then(success,error);
   function success(data){
-    alert(data);
+    inValid(data);
     location.pathname = '/viewDevOpsTemplate';
   }
   function error(e){
-    alert('Failed to Send Data');
+    inValid('Failed to Send Data');
   }
 })
+
+$('.templates').on('click','.stage-pipeline .ct-pipeline-body input', function() {
+   if(!$('input[name="ci4-pipeline"]:checked').val()){
+     this.checked = false;
+     inValid('Select maximum pipelines in CI pipeline');
+   }
+});
+$('.templates').on('click','.stage-pipeline .cd-pipeline-body input', function() {
+   if(!$('input[name="ct3-pipeline"]:checked').val()){
+     this.checked = false;
+     inValid('Select maximum pipelines in CT pipeline');
+   }
+});
+$('.templates').on('click','.ci-pipeline-body input[name="ci4-pipeline"]', function() {
+  if(!$('input[name="ci4-pipeline"]:checked')[0]){
+    for (var i in $('.ct-pipeline-body input')){
+      $('.ct-pipeline-body input')[i].checked =  false;
+    }
+    for (var i in $('.cd-pipeline-body input')){
+      $('.cd-pipeline-body input')[i].checked =  false;
+    }
+  }
+});
+$('.templates').on('click','.ct-pipeline-body input[name="ct3-pipeline"]', function() {
+  if(!$('input[name="ct3-pipeline"]:checked')[0]){
+    for (var i in $('.cd-pipeline-body input')){
+      $('.cd-pipeline-body input')[i].checked =  false;
+    }
+  }
+});
 
 function devChainCD(){
   if($('input[name="cd"]')[0].checked){
@@ -1072,7 +1102,8 @@ function devChainCT(){
   }
 }
 function inValid(message){
-  alert(message);
+  $('.alert-body').html(message);
+  $('#alertModal').modal('show');
 }
 function getCIData(vmOS,toolName){
   var CIData = {};

@@ -30,7 +30,7 @@ pipelineList.prototype = {
 						crTr.id ="dataOf"+i;
 						insertAfter(self.addLoadBa, crTr);
 					crTr.innerHTML+='<td>'+data[i].pipeline_names+'</td>\
-								<td><a href="#" title="'+data[i].pipeline_names+'" onclick="pL.pipelineView(this)" class="viewLink">view</a>&nbsp;&nbsp;</td>\
+								<td><a href="#" title="'+data[i].pipeline_names+','+data[i].delivery_pipeline+'" onclick="pL.pipelineView(this)" class="viewLink">view</a>&nbsp;&nbsp;</td>\
 								';
 				}
 			}else{
@@ -46,8 +46,9 @@ pipelineList.prototype = {
 		})
 	},
 	pipelineView: function(ev){
+	var pipeData = (ev.title).split(",");
 	console.log(ev.title);
-	location.href=_ip+"/pipelineView"+"?data="+ev.title;
+	location.href=_ip+"/pipelineView"+"?data="+pipeData;
 	}
 }
 var pL = new pipelineList();

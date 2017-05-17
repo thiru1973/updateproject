@@ -494,10 +494,16 @@ exports.envData = function(req, res){
 			});
 }
 exports.nodeData = function(req,res){
-	var accName = "Sonata_Account"
+    console.log(req.body);
+	/*var accName = "Sonata_Account"
 	   ,projName = "TUI_Group"
 	   ,prodName = "TUI_Hotels"
-	   ,envName = "Test";
+	   ,envName = "Test";*/
+
+	 var accName = req.body.accName
+     	   ,projName = req.body.projName
+     	   ,prodName = req.body.prodName
+     	   ,envName = req.body.envName;
 	client_pg.query("SELECT role,inst_id,deploy_id FROM deployment_env where accountid = ($1)and p_name = ($2) and product_name = ($3) and env_name = ($4)", [accName,projName,prodName,envName], function(err,result){
 			  if(err){
 			   throw err;

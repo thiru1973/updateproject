@@ -188,7 +188,7 @@ describe("Azure create resource group test", function(){
         done()
       });
 	});
-});*/
+});
 
 describe("Azure Attach disk test", function(){
 	it("Attach diak", function(done){
@@ -202,3 +202,4 @@ describe("Azure Attach disk test", function(){
 	});
 });
 
+*/

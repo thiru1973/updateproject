@@ -50,7 +50,7 @@
         </section>
            <div class="templateCreateButtons">
                <button  class="btn btn-lg devstage-next step1 btn-danger" id="stageDevOps">Next</button>
-               <button class="btn btn-lg devstage-cancel step1 btn-default active">Cancel</button>
+               <button class="btn btn-lg devstage-cancel step1 btn-danger">Cancel</button>
                <button  class="btn btn-lg devstage-next step2 btn-danger hidden" id="stageInfra">Back</button>
                <button  class="btn btn-lg devstage-next step2 btn-danger hidden" id="stagePipeline">Next</button>
                <button  class="btn btn-lg devstage-next step3 btn-danger hidden" id="backStageDevOps">Back</button>
@@ -71,6 +71,16 @@
                <button  class="btn btn-lg devstage-next step5 btn-danger hidden" id="stage6">Save</button>
            </div>
     </section>
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="deployModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content alert-area">
+        <div class="modal-body ">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="alert-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
     <footer>
         <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
         <span style="float:right;"><img src="images_1/Social_icons.png" /></span>

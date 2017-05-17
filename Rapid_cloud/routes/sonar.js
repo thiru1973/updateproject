@@ -7,11 +7,11 @@ var client_pg = new pg.Client(conString);
 client_pg.connect();
 
 var murl = 'mongodb://172.29.59.100:27017/test';
-var ip = 'http://172.29.59.33:9000';
-
+//var ip = 'http://172.29.59.33:9000';
+var ip = 'http://sonatasonar.cloudapp.net:9000';
 
 var sonarUrl = ip+'/api/issues/search?facetMode=debt&facets=severities';
-var comp = ip+'/api/resources?resource=sonarproject&metrics=ncloc,quality_gate_details,complexity,sqale_index,sqale_rating,sqale_debt_ratio,duplicated_lines';
+var comp = ip+'/api/resources?resource=demoproject&metrics=ncloc,quality_gate_details,complexity,sqale_index,sqale_rating,sqale_debt_ratio,duplicated_lines';
 
 exports.sonarProject = function(req, res){
 	res.render('sonarProject');
@@ -59,7 +59,7 @@ exports.sonarPrjList = function(req, res){
 			console.log(callback);
 			//var comp = callback[0].url+'/api/resources?resource=sonarproject&metrics=ncloc,quality_gate_details,complexity,sqale_index,sqale_rating,sqale_debt_ratio,duplicated_lines';
 			//var sonarUrl = callback[0].url+'/api/issues/search?facetMode=debt&facets=severities';
-			var comp = ip+'/api/resources?resource=sonarproject&metrics=ncloc,quality_gate_details,complexity,sqale_index,sqale_rating,sqale_debt_ratio,duplicated_lines';
+			var comp = ip+'/api/resources?resource=demoproject&metrics=ncloc,quality_gate_details,complexity,sqale_index,sqale_rating,sqale_debt_ratio,duplicated_lines';
 			var sonarUrl = ip+'/api/issues/search?facetMode=debt&facets=severities';
 			request({method: 'GET', url: comp}, function(error, response) {
 					if ( error || (response.statusCode !== 201 && response.statusCode !== 302) ) {

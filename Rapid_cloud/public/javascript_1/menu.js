@@ -523,6 +523,7 @@ LayOut.prototype = {
 		//$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/nodeTemplates"});
 		$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/master_2"});
 		$('#p1Templates').click(function(){location.href = location.origin+"/accountTemplates"});
+		$('#Monitor').click(function(){location.href = location.origin+"/monitor"});
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){

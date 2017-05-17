@@ -1,3 +1,4 @@
+var _ip = 'http://172.29.59.65:3000'
 var data = [
            	{
            		"technology": "Java",
@@ -162,6 +163,7 @@ var changeWizard = configTemplateData.changeWizard;
 if(changeWizard){
   $('.configure-wizard li')[0].remove();
   $('.configure-wizard li')[1].remove();
+  $('.configure-wizard li span')[0].innerHTML = 'SELECT PIPELINES';
   delete configTemplateData.changeWizard;
 }
 var pipe = ['Build','Unit Test','Code Analysis','Package'];
@@ -269,3 +271,30 @@ $('#configure').click(function(){
 })
 
 
+
+if(changeWizard){
+  delete configTemplateData.changeWizard;
+ $('#configure').click(function(){
+    console.log('common')
+ })
+}else{
+  delete configTemplateData.changeWizard;
+  $('#configure').click(function(){
+     //console.log('Dedicated')
+     //console.log(configTemplateData.deployTemplate[0].deployment_id);
+     var data = {};
+     data.deployment_id = configTemplateData.deployTemplate[0].deployment_id;
+     $.ajax({
+     		  type: 'POST',
+     		  data:data,
+     		  url: _ip+'/getDedicatedDevops'
+     		})
+     		.done(function(data){
+     			inValid(data);
+     			location.pathname = '/pipelinelist';
+     		})
+     		.fail(function(err){
+     			console.log(err);
+     		})
+  })
+}

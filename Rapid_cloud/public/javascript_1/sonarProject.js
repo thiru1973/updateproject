@@ -74,7 +74,7 @@ sonarProject.prototype = {
 		  url: _ip+'/sonarPrjList'
 		})
 		.done(function(data){
-			
+			console.log(data);
 			var ot = JSON.parse(data.data1),
 			   ot1 = JSON.parse(data.data2);
 			  complexData = JSON.parse(ot1[0].msr[6].data);

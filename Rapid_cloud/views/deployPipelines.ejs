@@ -20,12 +20,20 @@
         <div class="col-xs-12 deploy-type">
             <div class="col-xs-12 custom-spacing" data-toggle="buttons">
                 <div class="col-xs-2"></div>
-                <label class="btn btn-danger col-xs-3" id="commonDeploy">
-                    <input type="radio" name="deployType"  autocomplete="off" />Common
+                <label class="btn  col-xs-3" id="commonDeploy">
+                    <figure>
+                        <img src="/images_1/commonInfra.png" />
+                        <figcaption class="infra-fig-caption"><b>COMMON</b></figcaption>
+                    </figure>
+                    <!--<input type="radio" name="deployType"  autocomplete="off" />Common-->
                 </label>
                 <div class="col-xs-2"></div>
-                <label class="btn btn-danger col-xs-3"  id="dedicatedDeploy">
-                    <input type="radio" name="deployType" autocomplete="off" /> Dedicated
+                <label class="btn col-xs-3"  id="dedicatedDeploy">
+                    <figure>
+                        <img src="/images_1/dedicatedInfra.png" />
+                        <figcaption class="infra-fig-caption"><b>DEDICATED</b></figcaption>
+                    </figure>
+                    <!--<input type="radio" name="deployType" autocomplete="off" /> Dedicated-->
                 </label>
                 <div class="col-xs-2"></div>
             </div>
@@ -34,10 +42,10 @@
           <div id="DevOpsStages" class="deploy-stages ">
               <ol class="track-progress deploy-wizard1 col-xs-12">
                   <li class="done">
-                      <span>Preview and Deploy</span>
+                      <span>Select Pipelines</span>
                   </li><!--
                --><li>
-                      <span>Configure DevOps</span>
+                      <span>Configure Pipelines</span>
                   </li>
               </ol>
           </div>
@@ -152,43 +160,43 @@
                           </div>
                       </div>
                   </div>
-                  <div class="panel panel-default">
-                      <div class="panel-heading content-title-heading">
-                          Tools
-                      </div>
-                      <div class="panel-body deploy-tools">
-                          <label class="tool-label">
-                              <img class="col-xs-12" src="/images_1/Github.png" />
-                              <figcaption>Github</figcaption>
-                              <input type="checkbox" name="tool" value="Github" class="col-xs-12 hidden" />
-                          </label>
-                          <label class="tool-label">
-                              <img class="col-xs-12" src="/images_1/Jenkins.png" />
-                              <figcaption>Jenkins</figcaption>
-                              <input type="checkbox" name="tool" value="Jenkins" class="col-xs-12 hidden" />
-                          </label>
-                          <label class="tool-label">
-                              <img class="col-xs-12" src="/images_1/Ant.png" />
-                              <figcaption>Ant</figcaption>
-                              <input type="checkbox" name="tool" value="Ant" class="col-xs-12 hidden" />
-                          </label>
-                          <label class="tool-label">
-                              <img class="col-xs-12" src="/images_1/Junit.png" />
-                              <figcaption>Junit</figcaption>
-                              <input type="checkbox" name="tool" value="Junit" class="col-xs-12 hidden" />
-                          </label>
-                          <label class="tool-label">
-                              <img class="col-xs-12" src="/images_1/Sonarqube.png" />
-                              <figcaption>Sonarqube</figcaption>
-                              <input type="checkbox" name="tool" value="Sonarqube" class="col-xs-12 hidden" />
-                          </label>
-                          <label class="tool-label">
-                              <img class="col-xs-12" src="/images_1/Nexus.png" />
-                              <figcaption>Nexus</figcaption>
-                              <input type="checkbox" name="tool" value="Nexus" class="col-xs-12 hidden" />
-                          </label>
-                      </div>
-                  </div>
+                      <!--<div class="panel panel-default">
+                          <div class="panel-heading content-title-heading">
+                              Tools
+                          </div>
+                          <div class="panel-body deploy-tools">
+                              <label class="tool-label">
+                                  <img class="col-xs-12" src="/images_1/Github.png" />
+                                  <figcaption>Github</figcaption>
+                                  <input type="checkbox" name="tool" value="Github" class="col-xs-12 hidden" />
+                              </label>
+                              <label class="tool-label">
+                                  <img class="col-xs-12" src="/images_1/Jenkins.png" />
+                                  <figcaption>Jenkins</figcaption>
+                                  <input type="checkbox" name="tool" value="Jenkins" class="col-xs-12 hidden" />
+                              </label>
+                              <label class="tool-label">
+                                  <img class="col-xs-12" src="/images_1/Ant.png" />
+                                  <figcaption>Ant</figcaption>
+                                  <input type="checkbox" name="tool" value="Ant" class="col-xs-12 hidden" />
+                              </label>
+                              <label class="tool-label">
+                                  <img class="col-xs-12" src="/images_1/Junit.png" />
+                                  <figcaption>Junit</figcaption>
+                                  <input type="checkbox" name="tool" value="Junit" class="col-xs-12 hidden" />
+                              </label>
+                              <label class="tool-label">
+                                  <img class="col-xs-12" src="/images_1/Sonarqube.png" />
+                                  <figcaption>Sonarqube</figcaption>
+                                  <input type="checkbox" name="tool" value="Sonarqube" class="col-xs-12 hidden" />
+                              </label>
+                              <label class="tool-label">
+                                  <img class="col-xs-12" src="/images_1/Nexus.png" />
+                                  <figcaption>Nexus</figcaption>
+                                  <input type="checkbox" name="tool" value="Nexus" class="col-xs-12 hidden" />
+                              </label>
+                          </div>
+                      </div>-->
               </div>
 
           </section>
@@ -198,20 +206,32 @@
                   <div class="infra-overview">
                       <h7 class="col-xs-12"><b>DevOps Infra : </b>Sonata Account</h7>
                       <h7 class="col-xs-12"><b>Cloud: </b>Azure</h7>
+                      <div class="pipeline-overview"></div>
+                      <div class="tools-overview"></div>
                   </div>
               </div>
           </section>
           <div class="templateCreateButtons">
-              <button class="btn btn-lg btn-default deploy-selection">Back</button>
-              <button class="btn btn-lg btn-danger" id="configure">Configure</button>
+              <button class="btn btn-lg btn-danger deploy-selection">Back</button>
+              <button class="btn btn-lg btn-danger" id="configure">Next</button>
           </div>
         </div>
     </section>
-    <footer>
-        <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
-        <span style="float:right;"><img src="images_1/Social_icons.png" /></span>
-    </footer>
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="deployModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content alert-area">
+                <div class="modal-body ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="alert-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<footer>
+    <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+    <span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+</footer>
 <script src="javascript_1/menu.js"></script>
 <script src="javascript_1/deployPipelines.js"></script>
 </body>

@@ -12,13 +12,15 @@ var express = require('express')
   , jenkins = require('./routes/jenkins')
   , sonar = require('./routes/sonar')
   , nexus = require('./routes/nexus')
+  , monitors = require('./routes/monitors')
   , http = require('http')
   , path = require('path')
   , multer = require('multer');
 
 
 var app = express();
-
+//var monitor = require('node-monitor');// insert monitor module-plugin
+//monitor.Monitor(server); //add server to monitor
 
 // all environments
 app.use(bodyParser.json());
@@ -273,6 +275,10 @@ app.post('/nexusaf', nexus.nexusaf);
 app.get('/nexusafView', nexus.nexusafView);
 app.post('/nexusstatus', nexus.nexusstatus);
 
+app.get('/monitor', monitors.monitor);
+app.post('/zabbixHost', monitors.zabbixHost);
+app.get('/openzabbix', monitors.openzabbix);
+
 app.get('/uploadJson', jenkins.uploadJson);
 app.get('/demoJenkins', jenkins.demoJenkins);
 app.post('/uploadConfJson', jenkins.uploadConfJson);
@@ -339,7 +345,7 @@ app.post('/getAzureToken', function(req, res) {
 	  );
 });
 app.get('/envData', view.envData);
-app.get('/nodeData', view.nodeData);
+app.post('/nodeData', view.nodeData);
 app.get('/nodeDetails', view.nodeDetails);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

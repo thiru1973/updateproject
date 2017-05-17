@@ -20,7 +20,7 @@ ViewConstru.prototype = {
 										<table  class="table">\
 											<tr>\
 												<td><b>Template: </b></td>\
-												<td>'+d[_self.i][_self.dt][0].templateName+'</td>\
+												<td title="'+ d[_self.i][_self.dt][0].templateName +'">'+ d[_self.i][_self.dt][0].templateName+'</td>\
 											</tr>\
 											<tr>\
 												<td><b>Project: </b></td>\
@@ -247,7 +247,7 @@ function toolsOverview(toolsData){
   var elements = toolList.map(function(element){
     return '<img class="tool-images" src="/images_1/'+ element.toLowerCase() +'.png" />'
   })
-  return '<div class="col-xs-12"><div class="col-xs-12"><b>Tools</b></div>' + elements + '</div>';
+  return '<div class="col-xs-12"><div class="col-xs-12"><b>Tools</b></div>' + elements.join('') + '</div>';
 }
 function getToolList(toolsData){
   var toolList = [];
@@ -691,15 +691,17 @@ $('#configure').click(function(){
 })
 $('#configureTemplateTab').click(function(){
   $('.overview').hide();
-  $('#DevOpsStages').addClass('hidden')
-  $('.line-seperator').addClass('hidden')
+  $('#DevOpsStages').addClass('hidden');
+  $('.line-seperator').addClass('hidden');
+  $('#cloudDetails').addClass('hidden');
   $('#templates').removeClass('col-sm-7').addClass('col-xs-12');
 })
 $('#deployTemplateTab').click(function(){
   $('#templates').removeClass('col-xs-12').addClass('col-sm-7');
   $('.overview').show();
-  $('.line-seperator').removeClass('hidden')
-  $('#DevOpsStages').removeClass('hidden')
+  $('.line-seperator').removeClass('hidden');
+  $('#cloudDetails').removeClass('hidden');
+  $('#DevOpsStages').removeClass('hidden');
 })
 function configureDeployedData(index){
   var configureData = $.extend({},deployedData[index]['deployedTemplate'])

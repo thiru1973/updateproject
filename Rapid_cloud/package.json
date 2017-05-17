@@ -15,7 +15,8 @@
     "jenkins-api": "^0.2.8",
     "request": "^2.79.0",
     "supertest": "^1.2.0",
-    "xml2js": "^0.4.17"
+    "xml2js": "^0.4.17",
+    "zabbix": "^0.1.1"
   },
   "devDependencies": {
     "mocha": "1.20.1",

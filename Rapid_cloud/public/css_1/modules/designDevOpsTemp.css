@@ -1,7 +1,14 @@
+@import url("../../css_1/components/wizard.css");
+
 [role=template] ul {
   overflow-y: auto;
 }
+.stage-infrastructure{
+  height: 360px;
+  overflow-y: scroll;
+}
 .line-seperator {
+ margin-top: 10px;
  border-top: 3px solid #777575;
 }
 .devops-stages{
@@ -38,7 +45,6 @@ figcaption{
  margin: 0 !important;
 }
 .pipeline-label{
- font-size: 1vw;
  display: flex;
  align-items: center;
  margin-bottom: 10px;
@@ -61,7 +67,7 @@ li.icon {
 }
 
 
-.track-progress {
+/*.track-progress {
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -147,10 +153,14 @@ li.icon {
 .track-progress li:first-child > span:after,
 .track-progress li:first-child > span:before {
   display: none;
-}
+}*/
 .design-wizard2{
   margin-bottom: 15px;
 }
 .tool-preview{
   background-color: transparent !important;
+}
+.alert-area{
+  background: #F2DEDE;
+  color: #A94442;
 }
