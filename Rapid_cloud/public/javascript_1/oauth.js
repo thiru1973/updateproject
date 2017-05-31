@@ -3,7 +3,7 @@
 	Created on: 4th April 2016
 *************************************** */
 "use strict";
-var _ip = 'http://172.29.59.65:3000'
+var _ip = 'http://172.29.59.63:3000'
 var _userName_Input_Id = document.getElementById("userName_Input_Id"),
 	_passWord_Input_Id = document.getElementById("passWord_Input_Id"),
 	_login_Button = document.getElementById("login_Button"),

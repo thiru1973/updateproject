@@ -10,7 +10,7 @@ function provider(name){
 	 jsonpCallback: "callback",
      datatype: 'jsonp',
      data: data,	 
-     url: 'http://172.29.59.65:3000/temp_region',
+     url: 'http://172.29.59.63:3000/temp_region',
      success: function(results) { 
     	 alert(results.length);
 	     $('#region1').empty();	   
@@ -40,7 +40,7 @@ function node_details(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: data,	 
-			     url: 'http://172.29.59.65:3000/filter',
+			     url: 'http://172.29.59.63:3000/filter',
 			     success: function(results) {				    
 				        var len = results.length;	
 					 	var tr;
@@ -77,7 +77,7 @@ function node_details(){
 							 jsonpCallback: "callback",
 						     datatype: 'jsonp',
 						     data: data,	 
-						     url: 'http://172.29.59.65:3000/temp_image',
+						     url: 'http://172.29.59.63:3000/temp_image',
 						     success: function(results) {	  
 							     $('select#image1').empty();	
 							    //alert(results);
@@ -170,7 +170,7 @@ function saveFunction(){
 		     datatype: 'jsonp',
 		     data: "d1="+arr1+"&d2="+details,
 		     //data: arr,
-		     url: 'http://172.29.59.65:3000/temp_store',
+		     url: 'http://172.29.59.63:3000/temp_store',
 		     success: function(results) {
 		    	 alert("inserted Successfully");		    
 		     },

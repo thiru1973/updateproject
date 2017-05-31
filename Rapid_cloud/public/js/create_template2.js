@@ -17,7 +17,7 @@ jQuery(document).ready(function() {
 			 jsonpCallback: "callback",
 		     datatype: 'jsonp',
 		     data: template,	 
-		     url: 'http://172.29.59.65:3000/pvd_template',
+		     url: 'http://172.29.59.63:3000/pvd_template',
 		     success: function(results) { 			   
 		    	 roles=results[0].Template_Role;		    	
 		    	 display_roles();
@@ -78,7 +78,7 @@ function region_function(name){
 	 jsonpCallback: "callback",
      datatype: 'jsonp',
      data: data,	 
-     url: 'http://172.29.59.65:3000/temp_region',
+     url: 'http://172.29.59.63:3000/temp_region',
      success: function(results) {   	
 	     $('#content2').empty();	   
 	   var testDdl = $('#content2');
@@ -180,7 +180,7 @@ function display_image(img_len){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: img_data,	 
-	     url: 'http://172.29.59.65:3000/temp_image',
+	     url: 'http://172.29.59.63:3000/temp_image',
 	     success: function(results) {   	
 		     //alert(results);
 		     $('#sel_image').empty();	   
@@ -221,7 +221,7 @@ function function_region(rg_name){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/filter',
+	     url: 'http://172.29.59.63:3000/filter',
 	     success: function(results) {
 	    	 nodes=results;
 	    	 var len=results.length;
@@ -383,7 +383,7 @@ function save_all_info(){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: "d1="+arr1+"&d2="+arr2,	     
-	     url: 'http://172.29.59.65:3000/temp_store',
+	     url: 'http://172.29.59.63:3000/temp_store',
 	     success: function(results) {
 	    	 var msg = "Template Saved";
 	    	 showPopup(msg);
@@ -397,7 +397,7 @@ function save_all_info(){
 }
 
 function pvd_name_check(name){
-	$.getJSON("http://172.29.59.65:3000/pvd_check", function(data){
+	$.getJSON("http://172.29.59.63:3000/pvd_check", function(data){
 		for(var i=0;i<data.length;i++)
 			{
 				if(name != data[i].Template_name)

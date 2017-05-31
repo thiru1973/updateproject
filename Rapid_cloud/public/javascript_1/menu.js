@@ -78,11 +78,12 @@ $(document).ready(function(){
 		i.prepend("<div class='userName'>Jason Statham | <a href='/login' class='userNa'>SignOut</a></div>");*/
 	var uName = sessionStorage.getItem("User");
 	if(uName != null){
-	var i = $('[role="contentArea"]')
+	var i = $('[role="loginArea"]')
 		i.prepend("<div class='userName'>"+uName+" | <a href='/oauth' class='userNa'>SignOut</a></div>");
 	}else{
 		location.href = location.origin+"/oauth";
 	}
+
 	var accountName = localStorage.getItem("Account")
 	,projName = localStorage.getItem("ProjectName")
 	,prodName = localStorage.getItem("ProductName");
@@ -176,19 +177,7 @@ LayOut1.prototype = {
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){
-		this.lnav.innerHTML+='<div class="header-sec">\
-							<header role="header">\
-								<a href="#"> <img src="images_1/RapidCloud_Logo.png" /> </a> <span class="header-txt"> Manage, Govern and Optimize your Cloud Environments</span>\
-								<img src="images_1/Sonata_Logo.png" class="second-logo"/>\
-								<ul>\
-									<li><span class="glyphicon glyphicon-bell"></span></li>\
-									<li><span class="glyphicon glyphicon-envelope"></span></li>\
-									<li><span class="glyphicon glyphicon-question-sign"></span></li>\
-									<li><span class="glyphicon glyphicon-cog"></span></li>\
-								</ul>\
-							</header>\
-						</div>\
-					<div id="menuBox">\
+		this.lnav.innerHTML+='<div id="menuBox">\
 					  <a href="#" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
 					  <section role="aboutProject">\
 						<!-- <br>\
@@ -524,22 +513,11 @@ LayOut.prototype = {
 		$('#Deploy, #p0Node').click(function(){location.href = location.origin+"/master_2"});
 		$('#p1Templates').click(function(){location.href = location.origin+"/accountTemplates"});
 		$('#Monitor').click(function(){location.href = location.origin+"/monitor"});
+		
 	},
 	lnav: document.getElementById("leftNavigation"),
 	aboutProject:function(){
-		this.lnav.innerHTML+='<div class="header-sec">\
-							<header role="header">\
-								<a href="#"> <img src="images_1/RapidCloud_Logo.png" /> </a> <span class="header-txt"> Manage, Govern and Optimize your Cloud Environments</span>\
-								<img src="images_1/Sonata_Logo.png" class="second-logo"/>\
-								<ul>\
-									<li><span class="glyphicon glyphicon-bell"></span></li>\
-									<li><span class="glyphicon glyphicon-envelope"></span></li>\
-									<li><span class="glyphicon glyphicon-question-sign"></span></li>\
-									<li><span class="glyphicon glyphicon-cog"></span></li>\
-								</ul>\
-							</header>\
-						</div>\
-					<div id="menuBox">\
+		this.lnav.innerHTML+='<div id="menuBox">\
 					  <a href="#" class="moreMenu" onclick="menU.moreMenu(this)"><i class="fa fa-bars fa-2x"></i></a>\
 					  <section role="aboutProject" style="display:none;">\
 						<!-- <br>\
@@ -612,9 +590,57 @@ $('#3rdVirtual').click(function(){location.href = location.origin+"/virtualNetwo
 
 $('#3rdSecurity').click(function(){location.href = location.origin+"/securityGroup"});
 $('#3rdRoute').click(function(){location.href = location.origin+"/routeTable"});
+$('.designEnviron').click(function(){location.href = location.origin+"/create_template"});
+$('.deployNetworks').click(function(){location.href = location.origin+"/vpc"});
+$('.deployEnvironment').click(function(){location.href = location.origin+"/master_2"});
+$('.manageEnvironments').click(function(){location.href = location.origin+"/manageEnv"});
+$('.manageLoadBalancer').click(function(){location.href = location.origin+"/loadBalance"});
+$('.manageTraffic').click(function(){location.href = location.origin+"/trafficManager"});
+$('.designDedicatedDevops').click(function(){location.href = location.origin+"/designDevOpsTemp"});
+$('.deployDedicatedDevops').click(function(){location.href = location.origin+"/viewDevOpsTemplate"});
+$('.deployPipeline').click(function(){location.href = location.origin+"/deployPipelines"});
+$('.manageBuild').click(function(){location.href = location.origin+"/pipelinelist"});
+$('.manageTechDebt').click(function(){location.href = location.origin+"/sonarProject"});
+$('.manageViewPackages').click(function(){location.href = location.origin+"/nexusView"});
 
+//Main Tab Navigation
+$('.cloudopsTab').click(function(){location.href = location.origin+"/create_template"});
+$('.devopsTab').click(function(){location.href = location.origin+"/designDevOpsTemp"});
+$('.packagesTab').click(function(){location.href = location.origin+"/packages"});
+$('.monitoringTab').click(function(){location.href = location.origin+"/monitoring"});
+$('.dashboardTab').click(function(){location.href = location.origin+"/dashInfrastructure"});
+$('.organizationTab').click(function(){location.href = location.origin+"/accounts"});
+
+//packages navigation
+$('.designPkgProductDeployment').click(function(){location.href = location.origin+"/packages"});
+$('.deployPkgDeployProducts').click(function(){location.href = location.origin+"/packagesDeployProducts"});
+$('.managePkgEnvironments').click(function(){location.href = location.origin+"/pkgMngEnv"});
+$('.managePkgTrafficManager').click(function(){location.href = location.origin+"/pkgTrafficMngr"});
+$('.managePkgLoadBalancer').click(function(){location.href = location.origin+"/pkgLoadBlncr"});
+
+//Monitoring navigation
+$('.deployInfrMonitoring').click(function(){location.href = location.origin+"/monitoring"});
+$('.deployAppMonitoring').click(function(){location.href = location.origin+"/deployAppMonitoring"});
+$('.manageInfrMonitoring').click(function(){location.href = location.origin+"/manageInfrMonitoring"});
+$('.manageAppMonitoring').click(function(){location.href = location.origin+"/manageAppMonitoring"});
+
+//Dashboard Navigation
+$('.dashboardInfra').click(function(){location.href = location.origin+"/dashInfrastructure"});
+$('.dashboardApp').click(function(){location.href = location.origin+"/dashApplication"});
 //$(document).on('#Test', click function(){alert("fd"); location.href = "http://172.23.8.11"});
 
+//Navigation for vpc tabs
+
+$('#subnet').load('/subnet'); 
+$('#securityGroup').load('/securityGroup');
+$('#internetGateway').load('/internetGateway');
+$('#vpnConnection').load('/vpnConnection');
+$('#keyPair').load('/keyPair');
+$('#localNetworkGateway').load('/localNetworkGateway');
+$('#routeTable').load('/routeTable');
+$('#DNSZone').load('/DNSZone');
+$('#endPoint').load('/endPoint');
+$('#virtualNetworkGatWay').load('/virtualNetworkGatWay');
 
 $(document).on("click", "#Test", function (){
 	window.open("http://172.23.8.11", "_blank");

@@ -4,7 +4,7 @@
 *************************************** */
 
 $("#single_node").hide();
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 function ViewConstru(j){
 	this.jd = j;
 	this.docId = document.querySelector("[role='devOpsTemplate']");

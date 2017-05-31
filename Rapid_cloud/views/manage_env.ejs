@@ -43,7 +43,7 @@ $(function() {
         datatype: 'jsonp',
         data: data,
    	 //contentType: 'application/json',
-        url: 'http://172.29.59.65:3000/filter_env',
+        url: 'http://172.29.59.63:3000/filter_env',
         success: function(data, textStatus) {
         console.log(data);
         	$('tbody.nodedet').empty(); 
@@ -218,9 +218,9 @@ window.onload=function(){
 		<ul>
 		<li><a href="#">Node</a>
 		<ul>			
-			<li><a href="http://172.29.59.65:3000">Create</a></li>			
-			<li><a href="172.29.59.65:3000/deploy">Deploy</a></li>		
-			<li><a href="172.29.59.65:3000/manage_env">Manage</a></li>		
+			<li><a href="http://172.29.59.63:3000">Create</a></li>			
+			<li><a href="172.29.59.63:3000/deploy">Deploy</a></li>		
+			<li><a href="172.29.59.63:3000/manage_env">Manage</a></li>		
 		</ul>
 		</li>		
 		<li><a href="#">Template</a>

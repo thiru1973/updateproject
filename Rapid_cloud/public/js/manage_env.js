@@ -31,7 +31,7 @@ id1 = $(el).closest("tr").find('td:eq(0)').text();
         datatype: 'jsonp',
         data: data,
    	 //contentType: 'application/json',
-        url: 'http://172.29.59.65:3000/filter_env',
+        url: 'http://172.29.59.63:3000/filter_env',
         success: function(data, textStatus) {
         	$('table.center_left_table2 tbody').empty(); 
         var a = [], b = [], prev,newsort= [];
@@ -122,7 +122,7 @@ function tognodes(el){
         datatype: 'jsonp',
         data: data,
    	 //contentType: 'application/json',
-        url: 'http://172.29.59.65:3000/popup_nodes',
+        url: 'http://172.29.59.63:3000/popup_nodes',
         success: function(data, textStatus) {
         //alert('success');
         	console.log(data);
@@ -258,7 +258,7 @@ function dynode(el){
         datatype: 'jsonp',
         data: data,
    	 //contentType: 'application/json',
-        url: 'http://172.29.59.65:3000/node_details',
+        url: 'http://172.29.59.63:3000/node_details',
         success: function(data, textStatus) {
         var node_info = JSON.parse(data);
         console.log(node_info[0].inst_type);	
@@ -330,7 +330,7 @@ function node_action(el){
         datatype: 'jsonp',
         data: data,
    	 //contentType: 'application/json',
-        url: 'http://172.29.59.65:3000/manage_env_nodes',
+        url: 'http://172.29.59.63:3000/manage_env_nodes',
         success: function(data, textStatus){
         	},
         	 error: function (xhr, status, error){

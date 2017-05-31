@@ -330,10 +330,10 @@ function save_temp_info(){
 	     datatype: 'jsonp',
 	     data: "d1="+ary1+"&d2="+te_name,
 	     //data: arr,
-	     url: 'http://172.29.59.65:3000/node_store',
+	     url: 'http://172.29.59.63:3000/node_store',
 	     success: function(results) {
 	    	 alert("inserted Successfully");
-	    	location.href="//172.29.59.65:3000/create_template2"+"?data="+te_name; 
+	    	location.href="//172.29.59.63:3000/create_template2"+"?data="+te_name; 
 	     },
 		 error: function (xhr, status, error){
 	        console.log('Failure');
@@ -442,7 +442,7 @@ font-size: 120%;
 <ul>
 <li><a href="#">Node</a>
 <ul> 
-<li><a href="http://172.29.59.65:3000/">Create</a></li> 
+<li><a href="http://172.29.59.63:3000/">Create</a></li> 
 <li><a href="#">Deploy</a></li> 
 <li><a href="#">Manage</a></li> 
 </ul>
@@ -451,8 +451,8 @@ font-size: 120%;
 <ul>
 <li><a href="#">View</a></li>
 <li><a href="#" id="create">Create</a></li> 
-<li><a href="http://172.29.59.65:3000/deploy">Deploy</a></li> 
-<li><a href="http://172.29.59.65:3000/manage_env">Manage</a></li> 
+<li><a href="http://172.29.59.63:3000/deploy">Deploy</a></li> 
+<li><a href="http://172.29.59.63:3000/manage_env">Manage</a></li> 
 </ul>
 </li>
 <li><a href="#">Project</a>

@@ -1,4 +1,4 @@
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 function createKeyPair(){
 	var accountName = localStorage.getItem("Account")
 		,projName = localStorage.getItem("ProjectName")

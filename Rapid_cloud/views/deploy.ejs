@@ -30,7 +30,7 @@ window.onload=function(){
 	$('#deployform').hide();
 	$('table.network_region').hide();
 		$('table.azure_cloud').hide();
-	 $.get('http://172.29.59.65:3000/vpc_deploy', {}, function(results){
+	 $.get('http://172.29.59.63:3000/vpc_deploy', {}, function(results){
 	 
 	 var array = results.split('~');
 	 //alert(array);
@@ -55,7 +55,7 @@ window.onload=function(){
        
    });
    
-   $.get('http://172.29.59.65:3000/project', {}, function(results){
+   $.get('http://172.29.59.63:3000/project', {}, function(results){
 	 	
 	        //alert(results);
 	        var p_name = results.split(',');
@@ -72,7 +72,7 @@ window.onload=function(){
        
    });
    
-      $.get('http://172.29.59.65:3000/subnet_deploy', {}, function(results){
+      $.get('http://172.29.59.63:3000/subnet_deploy', {}, function(results){
 	 	
 	       // alert(results);
 	        var subnet_name = results.split(',');
@@ -116,7 +116,7 @@ function myfun(el)
 //var id = el.id();
 //alert(el);
 //alert(id1);
-location.href = 'http://172.29.59.65:3000/actions?status='+el+"&id="+id1;
+location.href = 'http://172.29.59.63:3000/actions?status='+el+"&id="+id1;
 
 }
 
@@ -149,7 +149,7 @@ function myFunction(el) {
      datatype: 'jsonp',
      data: data,
 	 //contentType: 'application/json',
-     url: 'http://172.29.59.65:3000/deploy_data',
+     url: 'http://172.29.59.63:3000/deploy_data',
      success: function(data, textStatus) {
      $('table.center_left_table2 tbody').empty(); 
         //alert(data);
@@ -245,7 +245,7 @@ form_det.push(tename);
      datatype: 'jsonp',
      data: "d1="+form_det+"&d2="+roles,
 	 //contentType: 'application/json',
-     url: 'http://172.29.59.65:3000/store_template',
+     url: 'http://172.29.59.63:3000/store_template',
      success: function(data, textStatus) {
      alert('success');
 	   

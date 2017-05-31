@@ -4,16 +4,75 @@
 <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 <link href="theme/theme1.css" id="myTheme" rel="stylesheet"/>
+<link href="css/style1.css" id="" rel="stylesheet"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 <script src="javascript_1/bootstrap.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <body id="bg">
-
+<div class="logoBar">
+		<div class="col-md-2 logoMenu" id="leftNavigation"></div>
+		<div class="col-md-5 mainmenuIcons" id="">
+		          <span>
+		          <form class="" role="search">
+					<div class="input-group add-on">
+					  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+					  <div class="input-group-btn">
+						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+					  </div>
+					</div>
+					
+                  </form>
+				  </span>
+				  
+		</div>
+		<div class="col-md-1 padLft0 padRgt0 mainmenuicons">
+		      <span><i class="fa fa-wikipedia-w" aria-hidden="true"></i></span>
+						<span><i class="fa fa-user" aria-hidden="true"></i></span>
+						<span><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+						<span><i class="fa fa-bell" aria-hidden="true"></i></span>
+		</div>
+		
+		<div class="col-md-4 padLft0" id="" role="loginArea"></div>
+</div>
+<div class="mainNavSection">
+		  <ul>
+			   <li class="organizationTab"><i class="fa fa-gear"></i>Organization</li>		   
+			   <li class="cloudopsTab"><i class="fa fa-cloud"></i>CloudOps</li>
+			   <li class="devopsTab navigationTabActive-devops"><i class="fa fa-cogs"></i>DevOps</li>
+			   <li class="packagesTab"><i class="fa fa-square" aria-hidden="true"></i>Packages</li>
+			   <li class="monitoringTab"><i class="fa fa-bar-chart" aria-hidden="true"></i>Monitoring</li>
+			   <li class="dashboardTab"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</li>
+		  </ul>
+</div>
+<div id="devOpsDesignTemplate">
+<div id="singleNavigation" class="col-md-2">
+      <div class="col-md-12">
+            <div class="subnavMainTab">Design</div>
+            <ul>
+                 <li class="designDedicatedDevops"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>Dedicated DevOps</li>
+				 <!-- <li><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>Environments</li> -->
+            </ul>
+      </div>
+	  <div class="col-md-12">
+            <div class="subnavMainTab">Deploy</div>
+            <ul>
+                 <li class="deployDedicatedDevops"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>Dedicated DevOps</li>
+				 <li class="deployPipeline"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>Pipeline</li>
+            </ul>
+      </div>
+	  <div class="col-md-12">
+            <div class="subnavMainTab subnavMainTabActive-devops">Manage</div>
+            <ul>
+                 <li class="manageBuild"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>Build</li>
+				 <li class="manageTechDebt"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>TechDebt</li>
+				<li class="manageViewPackages navigationTextActive-devops"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span>View Packages</li>             
+            </ul>
+      </div>
+</div>
+<div class="singleNavigation col-md-10">
 <div class="container">
-		<aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
-		</aside>
-		<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+		<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12" role="contentArea">
 			<nav class="themeCon"><ul id="mainNav"></ul></nav>
 			<nav class="themeCon"><ul id="themeNav"></ul><ul class="" id="link_1_0"></ul></nav>
 			<header>
@@ -35,12 +94,10 @@
 			</div>
 			
 		</section>
-		<footer>
-			<a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
-			<span style="float:right;"><img src="images_1/Social_icons.png" /></span>
-		</footer>
 	</div>
-
+</div>
+</div>
+<footer>Copyright &copy; to Sonata Software</footer>
 <script src="javascript_1/manage.js"></script>
 <script src="javascript_1/nexusView.js"></script>
 <script>

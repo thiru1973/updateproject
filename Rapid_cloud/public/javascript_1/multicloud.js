@@ -2,7 +2,7 @@
 	Create by: Omprakash Ramanadham
 	Created on: 1st Aug 2016
 *************************************** */
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 $(".up_1").click(function(e){
    var vv = $(this).parent().parent().children("input[type='text']");
    var valu = vv.val();

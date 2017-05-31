@@ -141,6 +141,70 @@ exports.configureDevOps = function(req,res){
   res.render('configureDevOps');
 };
 
+//packages Tab
+
+exports.packages = function(req,res){
+  res.render('packages');
+};
+exports.packagesDeployProducts = function(req,res){
+  res.render('packagesDeployProducts');
+};
+exports.pkgMngEnv = function(req,res){
+  res.render('pkgMngEnv');
+};
+exports.pkgTrafficMngr = function(req,res){
+  res.render('pkgTrafficMngr');
+};
+exports.pkgLoadBlncr = function(req,res){
+  res.render('pkgLoadBlncr');
+};
+
+//monitoring Tab
+exports.monitoring = function(req,res){
+  res.render('monitoring');
+};
+exports.deployAppMonitoring = function(req,res){
+  res.render('deployAppMonitoring');
+};
+exports.manageInfrMonitoring = function(req,res){
+  res.render('manageInfrMonitoring');
+};
+exports.manageAppMonitoring = function(req,res){
+  res.render('manageAppMonitoring');
+};
+
+//organization
+
+exports.organization = function(req,res){
+  res.render('organization');
+};
+
+//dashboard Tab
+exports.dashInfrastructure = function(req,res){
+  res.render('dashInfrastructure');
+};
+exports.dashApplication = function(req,res){
+  res.render('dashApplication');
+};
+
+/* exports.cloudopsHeader = function(req,res){
+  res.render('cloudopsHeader');
+};
+
+exports.cloudopsLeftnav = function(req,res){
+  res.render('cloudopsLeftnav');
+};
+exports.rapidFooter = function(req,res){
+  res.render('rapidFooter');
+};
+ exports.cloudopsMaster = function(req,res){
+  res.render('cloudopsMaster');
+}; */
+
+exports.designEnviron = function(req,res){
+  res.render('designEnviron');
+};
+
 /*Old page functions*/
 exports.index = function(req, res){
   res.render('index');

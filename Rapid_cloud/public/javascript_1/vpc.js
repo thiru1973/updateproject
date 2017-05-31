@@ -5,7 +5,7 @@
 
 /* Global
 ************************************************************************** */
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 
 // Refresh for html page when change the js file.
 
@@ -94,7 +94,7 @@ $(document).ready(function(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: data,	 
-			     url: 'http://172.29.59.65:3000/getSubProviders',
+			     url: 'http://172.29.59.63:3000/getSubProviders',
 			     success: function(results) {	
 						console.log(results);
 						for(var i=0;i<results.length;i++)
@@ -242,6 +242,7 @@ function createVpc()
          		},
             });	
 	}
+	
 }
 
 function createResourceGp(pvd)

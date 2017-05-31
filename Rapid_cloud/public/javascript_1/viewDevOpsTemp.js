@@ -1,5 +1,5 @@
 $("#single_node").hide();
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 var deployedData;
 function ViewConstru(j){
 	this.jd = j;

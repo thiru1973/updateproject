@@ -1,0 +1,44 @@
+<div class="container">
+				<section class="" role="contentArea" id="view_temp">				
+					<header>
+						<h1>View Templates</h1>
+						
+						<aside>
+							<input type="text" placeholder="Search Template" id="search" name="q">
+							<!--<button id="create_temp" onclick="http://172.29.59.63:3000/create_template">Create Template</button></br>-->
+							<!--<h1></h1><div id="data"></div>-->
+						</aside>
+						<aside><div id="data" style="margin-right: 5px"></div></aside>
+					</header>		
+					<section role="templatesFilter">
+						<ul>
+							<li><label><input type="radio" checked="checked" name="filter" value="ATemplates" />All</label></li>
+							<li><label><input type="radio" name="filter" value="MTemplates" />Account Templates</label></li>
+							<li><label><input type="radio" value="GTemplates"  name="filter" />Multicloud Templates</label></li>
+							<!--<li><label><input type="radio" value="STemplates" name="filter" />System Templates</label></li>-->
+						</ul>
+					</section>
+					<section role="template">
+					
+					</section>
+				</section>
+				
+				<section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea" id="single_node">
+					<header>
+						<h1>View Nodes</h1>
+						<aside>
+							<input type="text" placeholder="Search Nodes" id="search1">					
+						</aside>
+					</header>		
+					<section role="templatesFilter">
+						<ul>
+							<li><label><input type="radio" checked="checked" name="filter1" value="ATemplates" />All</label></li>
+							<li><label><input type="radio" name="filter1" value="MTemplates" />AWS</label></li>
+							<li><label><input type="radio" value="GTemplates"  name="filter1" />Azure</label></li>
+						</ul>
+					</section>
+					<section role="template1">
+					
+					</section>
+				</section>				
+</div>
