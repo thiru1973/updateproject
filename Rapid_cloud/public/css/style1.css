@@ -1029,3 +1029,9 @@ footer {
 .stage-infrastructure {
     height: 550px;
 }
+
+.templateCreateButtons {
+	position:absolute;
+	bottom:33px;
+	right:10px;
+}
