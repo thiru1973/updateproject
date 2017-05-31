@@ -1,0 +1,737 @@
+.padLft0 {
+	padding-left:0px !important;
+}
+.padbot0 {
+	padding-bottom:0px !important;
+}
+
+.padbot20 {
+	padding-bottom:20px !important;
+} 
+.padtop5 {
+	padding-top:5px !important;
+}
+
+.padtop15 {
+	padding-top:15px;
+}
+
+.mt20 {
+	margin-top:20px;
+}
+
+.mt60 {
+	margin-top:60px;
+}
+
+.mt15 {
+	margin-top:15px;
+}
+
+.mt5 {
+	margin-top:5px;
+}
+
+.mt13 {
+	margin-top:13px;
+}
+
+.mt14 {
+	margin-top:13px;
+}
+
+.mt17 {
+	margin-top:17px;
+}
+
+.mt25 {
+	margin-top:25px;
+}
+
+.mt50 {
+	margin-top:50px;
+}
+
+.mlm10 {
+	margin-left:-10px;
+}
+
+.mlm15 {
+	margin-left:-15px;
+}
+
+.userName {
+    padding: 1px;
+	background-color:#f2f2f2;
+}
+
+#designLin .active, #themeNav  {
+    background-color: #E13F3E;
+}
+
+#themeNav .active {
+    background-color: #999;
+}
+
+[role="contentArea"] header { 
+  padding-bottom:10px;
+  padding-top:10px;
+  padding-left:10px;
+  background-color: #fff !important;
+  font-size: 12px !important;
+  box-shadow: 0px 1px 1px #666;
+}
+
+[role="contentArea"] header  h1{
+	font-size:14px !important;
+	color:#000 !important;
+}
+
+#vpc, #internetGateWay, #subnet, #securityGroup, #routeTable, #dnszone, #endPoint,
+#virtualNetworkGateWay {
+	padding-left:10px;
+}
+
+.labelTemp {
+	color:#000;
+	font-weight:bold;
+}
+
+#designLin {
+	background-color:#000;
+}
+
+#designLin li {
+	color:#fff;
+}
+
+#link_1_0  {
+	background-color:#fff;
+}
+
+#data {
+    color: #000;
+    text-align: right;
+    padding-bottom: 10px;
+}
+
+.clickRole {
+	font-size:14px;
+}
+
+/* #leftNavigation {
+	position:fixed !important;
+} */
+
+.design-infra-nav li>a {
+    position: relative;
+    /* display: block; */
+    padding: 10px 15px;
+    float: left !important;
+	text-decoration:none;
+	color:#fff;
+}
+
+.design-infra-nav li>a:hover {
+	background-color:#999;
+}
+
+.tab-active {
+	background-color:#999;
+}
+
+.design-infra-nav li>a:active, .design-infra-nav li>a:focus {
+	background-color:#999;
+}
+
+.design-infra-nav .navbar {
+    min-height: 40px;
+    margin-bottom: 10px;
+	background-color: #ccc;
+	margin-top:-16px;
+	box-shadow: 3px 2px 1px #666;
+}
+
+#themeNav {
+	display:none;
+}
+
+#Account {
+	display:none;
+}
+
+.logoMenu {
+	margin-bottom:10px;
+	box-shadow: 0px 3px 1px #ccc;
+	background-image: url("../images_1/RapidCloud_Logo.png");
+	background-repeat:no-repeat;
+	background-size:100px 30px;
+	background-color:#f2f2f2;
+	background-position:left center;
+	height:40px;
+}
+
+.logoMenu .col-md-3 {
+	width:31%;
+}
+
+[role="naviGation"] > ul li {
+	color:#000;
+	text-align:center;
+	box-shadow: 3px 2px 1px #ccc;
+}
+
+#designLin {
+	height:40px;
+}
+
+#designLin li {
+    display: inline-block;
+    padding: 10px 10px;
+    color: #EDEDED;
+}
+
+.mainmenuIcons .fa {
+	float:right;
+	margin-top:13px;
+	margin-right:20px;
+}
+
+.mainmenuIcons .input-group.add-on {
+	float: right;
+    top: -4px;
+    width: 50%;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 8px;
+	font-size:12px;
+}
+
+.nav-tabs {
+	border-bottom: 1px solid #E13F3E;
+}
+
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #E13F3E;
+    border-bottom-color: transparent;
+}
+ 
+ .tab-content section {
+	 background-color: #f2f2f2;
+    overflow: auto;
+    border-radius: 5px;
+ }
+ 
+ .roles {
+    width: 99%;
+}
+
+[role="naviGation"] > ul li {
+    background-color: #f2f2f2;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #E13F3E;
+	color:#fff;
+}
+
+a:hover {
+    color: #000;
+}
+
+footer div {
+	text-align:center;
+}
+
+.sidenav {
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: 75px;
+    background-color: #ccc;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+}
+
+.sidenav a {
+    padding: 3px 3px 3px 13px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 16px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+#main .fa {
+	display:inline;
+}
+
+#main .col-md-1 .col-md-12 {
+	    height: 50px;
+    width: 50px;
+    padding-top: 15px;
+    border: 1px solid #ccc;
+	text-align:center;
+	box-shadow: 3px 2px 1px #ccc;
+}
+
+#main .col-md-1 {
+	width:5.33333%;
+}
+
+#main .col-md-2 {
+	width:8%;
+}
+
+#main .col-md-9 {
+	width:86%;
+}
+
+.cloud, .devops, .products, .devopstemp, .productstemp {
+	display:none;
+}
+
+.displayBlock {
+	display:block;
+}
+
+.cloud ul li, .devops ul li {
+	padding:3px 5px;
+	background:#ccc;
+	margin-top:2px;
+	box-shadow: 3px 2px 1px #f2f2f2;
+}
+
+.cloud ul li a, .devops ul li a {
+	text-decoration:none;
+	color:#fff;
+}
+
+.leftMenuActive {
+	background:#E13F3E;
+	color:#fff;
+}
+
+#main .col-md-2 {
+	display:none;
+}
+
+#main .design-infra-nav {
+	margin-top:18px;
+}
+
+#main #designLin, #navDiv {
+	display:none;
+}
+
+.layout5Tab, .layout5Tab1, .layout5Tab2 {
+	min-height: 225px;
+    background: #ccc;
+    position: absolute;
+    width: 150px;
+	padding:10px 10px;
+	margin-left:-160px;
+	transition: 0.2s;
+	box-shadow: 3px 2px 1px #999;
+}
+
+.layout5Tab {
+	z-index:1;
+}
+
+.layout5Tab1 {
+	z-index:2;
+	 background: #bfbfbf;
+	 color:#000;
+}
+
+.layout5Tab2 {
+	z-index:3;
+	 background: #ccc;
+	 color:#000;
+}
+
+.fa-bars {
+	text-align: left;
+    margin-bottom: 10px;
+}
+
+#mainTab1Close, #mainTab1Close1, #mainTab1Close2 {
+	position: absolute;
+    /* display: block; */
+    text-align: right;
+    right: 5px;
+    bottom: 3px;
+    font-size: 14px;
+    font-weight: bold;
+	cursor:pointer;
+}
+
+#mainTab ul li a, #mainTab1 ul li a, #mainTab2 ul li a {
+	text-decoration:none;
+	color:#000;
+}
+
+#mainTab ul li, #mainTab1 ul li, #mainTab2 ul li {
+	padding:10px 0px 2px;
+	border-bottom:1px solid #fff;
+	text-align:center;
+	font-size:12px;
+	height:50px;
+}
+
+#designLin {
+	display:none;
+}
+
+.fa.fa-chevron-left {
+	font-size:12px;
+}
+
+[role="profileLinks"] {
+    display:none;
+}
+
+/* #mainTab ul li:hover, #mainTab1 ul li:hover, #mainTab2 ul li:hover {
+	background:#f2f2f2;
+} */
+ 
+.cloudTab {
+	background: #9ebfe0;
+}
+.devopsTab {
+	background-color: #e2ead9;
+}
+.productTab {
+	background-color: #e6cbcf;
+}
+
+#main5 .tab-pane.active header {
+	background: #9ebfe0!important;
+}
+
+#main5 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #9ebfe0;  
+	    border-bottom-color: transparent;
+}
+
+#main5 .nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #ef4344;
+    color: #000;
+}
+
+.cloudDesignTab, .cloudDeployTab, .cloudManageTab, .cloudMonitorTab, .cloudNetworkTab, .cloudTemplateTab {
+	background-color: #9ebfe0;
+
+}
+
+#main5 .layout5Tab, .layout5Tab1, .layout5Tab2 {
+    padding: 2px 2px;
+	background:#f2f2f2;
+}
+
+#main5 .nav-tabs {
+	border-bottom: 1px solid #9ebfe0;
+}
+
+#main5 .templateCreateButtons button{
+	background-color: #9ebfe0;
+}
+
+/* #main5 .cloudTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 12px;
+    top: 9%;
+    left: 10px;
+} */
+
+#main5 .cloudTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 9%;
+    left: 10px;
+}
+
+#main5 .devopsTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 32%;
+    left: 10px;
+}
+
+#main5 .productTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 54%;
+    left: 10px;
+}
+
+#main5 .cloudDesignTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 9%;
+    left: 10px;
+}
+
+#main5 .cloudDeployTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 32%;
+    left:10px;
+}
+
+#main5 .cloudManageTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 54%;
+    left: 10px;
+}
+
+#main5 .cloudMonitorTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 76%;
+    left: 10px;
+}
+
+.layout5Content h3 {
+	color: #9ebfe0;
+}
+
+.fa-bars {
+	float: left;
+    margin-right: 5px;
+	cursor:pointer;
+}
+
+/* -------------------------- */
+
+#singleNavigation .headTab {
+	background: #6ea8e4;
+    padding: 1px 10px;
+	font-weight:bold;
+	text-align:center;
+	/* box-shadow: 3px 2px 1px #999; */
+}
+
+#singleNavigation .linkTab {
+	background-color:#f2f2f2;
+	/* box-shadow: 4px 4px 2px #999; */
+}
+
+#singleNavigation .linkTab li {
+	/* padding: 5px 0px; */
+    /* border-bottom: 1px solid #ccc; */
+}
+
+.subnavTab {
+	padding:5px 8px;
+}
+
+#singleNavigation  .linkTab .fa {
+	display:inline-block;
+	margin-right:7px;
+	font-size:13px;
+}
+
+#singleNavigation  ul {
+	margin-bottom:2px;
+    padding:10px;
+}
+
+#singleNavigation .sublinkTab {
+	padding: 5px 10px;
+    background: #fff;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+#singleNavigation .sublinkTab li:last-child {
+	border-bottom:none;
+}
+
+.linkActive {
+	color:#aec2ac;
+	font-weight:bold;
+}
+
+.singleNavigation .nav-tabs {
+	border-bottom: 1px solid #ef4344;
+}
+
+#singleNavigation ul li {
+ box-shadow: 1px 1px 1px #e5e5e5;
+ padding:10px 10px;
+}
+
+
+.singleNavigation .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #ef4344;
+    border-bottom-color: transparent;
+}
+
+/* .singleNavigation [role="contentArea"] header {
+    background-color: #AEC2AC !important;
+} */
+
+.logoMenu, .userName {
+	/* background-color: #d8ffd4; */
+	/* background-color:#bcc7ff; */
+	background-color:#bbb;
+}
+
+footer {
+    background-color:#f5f5f5;
+}
+
+.mainNavSection ul li {
+	    display: inline-block;
+    width: 187px;
+    text-align: center;
+    border-right: 1px solid #fff;
+    padding: 18px 10px;
+    background-color: #fff;
+    height: 68px;
+    margin-right: 15px;
+    /* border-bottom: 5px solid #000; */
+    border-radius:5px;
+
+}
+
+/* .mainNavSection ul li:hover {
+	background-color:#aec2ac;
+} */
+
+.mainNavSection ul {
+	background-color: #f2f2f2;
+	/* 	box-shadow: 1px 2px 1px #999; */
+	padding:10px;
+}
+
+.container {
+	background:#f2f2f2;
+    margin-left:17px;
+}
+
+#link_1_0 {
+	display:none;
+}
+
+.subNavSectionHeader {
+	text-align: center;
+    padding: 15px 0px;
+    font-size: 20px;
+}
+
+#singleNavigation.col-md-2 {
+	width:15.75%;
+}
+.singleNavigation.col-md-10 {
+	width:83%;
+	padding:0px;
+}
+
+.templateCreateButtons button {
+    background-color: #ef4344;
+}
+
+#singleNavigation .col-md-12 {
+    padding:0px;
+}
+
+.subnavMainTab {
+    background-color: #bbb;
+    padding: 5px 9px;
+    font-weight: bold;
+    text-align: left;
+    border-right:7px solid #000;
+}
+
+.subnavMainTabActive {
+   border-right:7px solid #ef4344;
+}
+
+.mainContent {
+    margin-left:-15px;
+}
+
+.contentHead {
+    padding: 0px 20px 5px;
+    font-size: 28px;
+}
+
+.navigationTabActive {
+    background-color: #ef4344  !important;
+}
+
+.navigationTextActive {
+    color: #ef4344 !important;
+}
+
+.mainNavSection .organizationTab:hover {
+     background-color: #f1baba;
+}
+.mainNavSection .cloudopsTab:hover {
+    background: #f1d8ba;
+}
+.mainNavSection .devopsTab:hover {
+    background: #c0f1ba;
+}
+.mainNavSection .packagesTab:hover {
+    background: #bad3f1;
+}
+.mainNavSection .monitoringTab:hover {
+    background: #e9baf1;
+}
+
+.mainNavSection .dashboardTab:hover {
+    background: #baecf1;
+}
+
+#singleNavigation  .fa-chevron-right{
+    display: inline-block;
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.tab-pane header {
+    display:none;
+}
+
+#singleNavigation .col-md-12 ul {
+    border:1px solid #f2f2f2;
+}
+
+.mainNavSection ul {
+   background-color:#bbb;
+}

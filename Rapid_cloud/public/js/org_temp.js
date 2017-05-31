@@ -43,7 +43,7 @@ function mytemp(el){
 
 
 function test_name(value){ 	
-	$.getJSON("http://172.29.59.65:3000/name_check", function(data){
+	$.getJSON("http://172.29.59.63:3000/name_check", function(data){
 		for(var i=0;i<data.length;i++)
 			{
 				if(value != data[i].Template_name)
@@ -73,7 +73,7 @@ function view_temp(){
 	$('#gen_temp').hide();
 
 	$('#my_temp_info').empty();
-	$.getJSON( "http://172.29.59.65:3000/my_view", function( data ) {	
+	$.getJSON( "http://172.29.59.63:3000/my_view", function( data ) {	
 		my_template = data;
 		for(var i=0;i<data.length;i++)
 			{
@@ -85,7 +85,7 @@ function view_temp(){
 
 
 	$('#gn_temp_info').empty();
-	$.getJSON( "http://172.29.59.65:3000/gen_view", function( data1 ) {
+	$.getJSON( "http://172.29.59.63:3000/gen_view", function( data1 ) {
 		gen_template = data1;
 		for(var i=0;i<data1.length;i++)
 			{
@@ -127,7 +127,7 @@ function gen_temp_info(value){
 }
 
 function create_pvd_temp(){
-	location.href="//172.29.59.65:3000/create_template2"+"?data="+temp;
+	location.href="//172.29.59.63:3000/create_template2"+"?data="+temp;
 }
 var temp1;
 function my_temp_info(value1){

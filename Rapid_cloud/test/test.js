@@ -83,7 +83,7 @@ describe("Routing", function(){
     });
 });
 
-var server = supertest.agent("http://172.29.59.65:3000");
+var server = supertest.agent("http://172.29.59.63:3000");
 
 /*describe("AWS script test",function(){
 	it("Run the script",function(done){

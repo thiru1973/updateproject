@@ -83,6 +83,11 @@ app.get('/securityGroup', routes.securityGroup);
 app.get('/routeTable', routes.routeTable);
 
 app.get('/myAccount', routes.myAccount);
+/* app.get('/cloudopsHeader', routes.cloudopsHeader);
+app.get('/cloudopsLeftnav', routes.cloudopsLeftnav);
+app.get('/rapidFooter', routes.rapidFooter);
+app.get('/cloudopsMaster', routes.cloudopsMaster); */
+app.get('/designEnviron', routes.designEnviron);
 //design devops template
 app.get('/designDevOpsTemp', routes.designDevOpsTemp);
 
@@ -244,7 +249,22 @@ app.get('/deployedDevops', resources.deployedDevops);
 app.get('/viewProductTemplate', routes.viewProductTemplate);
 app.get('/deployProductTemplate', routes.deployProductTemplate);
 
-
+//Packages Templates
+app.get('/packages', routes.packages);
+app.get('/packagesDeployProducts', routes.packagesDeployProducts);
+app.get('/pkgMngEnv', routes.pkgMngEnv);
+app.get('/pkgTrafficMngr', routes.pkgTrafficMngr);
+app.get('/pkgLoadBlncr', routes.pkgLoadBlncr);
+//Monitoring Templates
+app.get('/monitoring', routes.monitoring);
+app.get('/deployAppMonitoring', routes.deployAppMonitoring);
+app.get('/manageInfrMonitoring', routes.manageInfrMonitoring);
+app.get('/manageAppMonitoring', routes.manageAppMonitoring);
+//dashboard Templates
+app.get('/dashInfrastructure', routes.dashInfrastructure);
+app.get('/dashApplication', routes.dashApplication);
+//organization
+app.get('/organization', routes.organization);
 //Resource group actions
 app.post('/resGroup_action', manage.resGroup_action);
 //Get the provider name
@@ -294,7 +314,7 @@ var clientSecret = 'j4fxNOAKv27JLGFkb7yRV1VE7/FMXaWqxkfbdom8Ic8=';
 var authorityHostUrl = 'https://login.windows.net';
 var tenant = '56836078-8488-41e7-bcfb-b5a9d0e5e5e3';
 var authorityUrl = authorityHostUrl + '/' + tenant;
-var redirectUri = 'http://172.29.59.65:3000/getAToken';
+var redirectUri = 'http://172.29.59.63:3000/getAToken';
 var resource = 'https://management.core.windows.net';
 var templateAuthzUrl = 'https://login.windows.net/' + 
                         tenant + 

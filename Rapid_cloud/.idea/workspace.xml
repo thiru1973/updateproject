@@ -152,7 +152,7 @@
       <find>child</find>
     </findStrings>
     <replaceStrings>
-      <replace>172.29.59.65</replace>
+      <replace>172.29.59.63</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\updated\Rapid_cloud</dir>

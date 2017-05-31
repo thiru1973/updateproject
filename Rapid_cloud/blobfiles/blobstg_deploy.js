@@ -1,4 +1,4 @@
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 $(document).ready(function(){
 	var i =0;
 	/*$(".clickRole").click(function(){
@@ -272,7 +272,7 @@ function get_templateName(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: template,	 
-			     url: 'http://172.29.59.65:3000/pvd_template',
+			     url: 'http://172.29.59.63:3000/pvd_template',
 			     success: function(results) {
 			    	 //console.log(results);
 			    	 temp_info = results[0].Instances;
@@ -329,7 +329,7 @@ function displayZones(pname,region){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/temp_region',
+	     url: 'http://172.29.59.63:3000/temp_region',
 	     success: function(results) {
 	    	//console.log(results);
 	    	 var zones;
@@ -354,7 +354,7 @@ function displayZones(pname,region){
 
 function get_project(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/project', function(data){
+		  $.getJSON('http://172.29.59.63:3000/project', function(data){
 			   var proje = data;
 			   var pj_Na=[];
 			   for(var d=0; d<=proje.length-1; d++){				   			   
@@ -368,7 +368,7 @@ function get_project(){
 
 function getVpcName(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/vpc_deploy', function(data){
+		  $.getJSON('http://172.29.59.63:3000/vpc_deploy', function(data){
 			 //console.log(data);
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
@@ -389,7 +389,7 @@ function getSubnetName(vpcid){
 	var id=vpcid;
 	var subNetName1 = [];
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){
+		  $.getJSON('http://172.29.59.63:3000/subnet_deploy', function(data){
 			  console.log(data);
 			  
 			 for(var x=0;x<data.length;x++)
@@ -412,7 +412,7 @@ function getSubnetName(vpcid){
 //cloud service list changed code
 function getCloudService(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/list_cloud_service', function(data){
+		  $.getJSON('http://172.29.59.63:3000/list_cloud_service', function(data){
 			 //console.log(data);
 			 var cloud_name = [];
 			 for(var x=0;x<data.length;x++)
@@ -718,7 +718,7 @@ $('#createVpc').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/vpc',
+        url: 'http://172.29.59.63:3000/vpc',
         success: function(data, textStatus){
         	console.log(data);
         	$(".popupData").hide();
@@ -774,7 +774,7 @@ $('#createSubnet').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/subnet',
+        url: 'http://172.29.59.63:3000/subnet',
         success: function(data, textStatus){
         	console.log(data);
         	$(".popupData").hide();
@@ -804,7 +804,7 @@ $('#createClsrv').click(function(){
 	     datatype: 'jsonp',
 	     data: data,
 		 //contentType: 'application/json',
-	     url: 'http://172.29.59.65:3000/create_cloud_service',
+	     url: 'http://172.29.59.63:3000/create_cloud_service',
 	     success: function(data, textStatus) {
 	     //alert('success');
 		   //if(!alert('Details updated succesfully!')){window.close();}
@@ -859,7 +859,7 @@ $('.buttonRt').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/routeTable',
+        url: 'http://172.29.59.63:3000/routeTable',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-route").stop().slideDown();
@@ -891,7 +891,7 @@ $('.buttonGtw').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/gateWay',
+        url: 'http://172.29.59.63:3000/gateWay',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-gate").stop().slideDown();
@@ -940,7 +940,7 @@ function createStgFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createStorage',
+        url: 'http://172.29.59.63:3000/createStorage',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-stg").stop().slideDown();
@@ -990,7 +990,7 @@ function createSgpFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createSecGroup',
+        url: 'http://172.29.59.63:3000/createSecGroup',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-sg").stop().slideDown();
@@ -1019,7 +1019,7 @@ function createKpFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createKeyPair',
+        url: 'http://172.29.59.63:3000/createKeyPair',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-kp").stop().slideDown();
@@ -1174,11 +1174,11 @@ function deployTemplateFunction()
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        url: 'http://172.29.59.63:3000/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
 		        	$(".alert-temp").stop().slideDown();
-		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	//location.href="http://172.29.59.63:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1214,10 +1214,10 @@ function deployTemplateFunction()
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        url: 'http://172.29.59.63:3000/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
-		        	location.href="http://172.29.59.65:3000/master_2"
+		        	location.href="http://172.29.59.63:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -1228,10 +1228,10 @@ function deployTemplateFunction()
 }
 
 $('.exit').click(function(){
-	location.href = "http://172.29.59.65:3000/master_2";
+	location.href = "http://172.29.59.63:3000/master_2";
 })
 /*---------------------------------*/
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 $(document).ready(function(){
 	var i =0;
 	/*$(".clickRole").click(function(){
@@ -1631,7 +1631,7 @@ function displayZones(pname,region){
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/temp_region',
+	     url: 'http://172.29.59.63:3000/temp_region',
 	     success: function(results) {
 	    	//console.log(results);
 	    	 var zones;
@@ -1656,7 +1656,7 @@ function displayZones(pname,region){
 
 function get_project(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/project', function(data){
+		  $.getJSON('http://172.29.59.63:3000/project', function(data){
 			   var proje = data;
 			   var pj_Na=[];
 			   for(var d=0; d<=proje.length-1; d++){				   			   
@@ -1670,7 +1670,7 @@ function get_project(){
 
 function getVpcName(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/vpc_deploy', function(data){
+		  $.getJSON('http://172.29.59.63:3000/vpc_deploy', function(data){
 			 //console.log(data);
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
@@ -1691,7 +1691,7 @@ function getSubnetName(vpcid){
 	var id=vpcid;
 	var subNetName1 = [];
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){
+		  $.getJSON('http://172.29.59.63:3000/subnet_deploy', function(data){
 			  console.log(data);
 			  
 			 for(var x=0;x<data.length;x++)
@@ -1714,7 +1714,7 @@ function getSubnetName(vpcid){
 //cloud service list changed code
 function getCloudService(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/list_cloud_service', function(data){
+		  $.getJSON('http://172.29.59.63:3000/list_cloud_service', function(data){
 			 //console.log(data);
 			 var cloud_name = [];
 			 for(var x=0;x<data.length;x++)
@@ -2235,7 +2235,7 @@ $('#createVpc').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/vpc',
+        url: 'http://172.29.59.63:3000/vpc',
         success: function(data, textStatus){
         	console.log(data);
         	$(".popupData").hide();
@@ -2291,7 +2291,7 @@ $('#createSubnet').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/subnet',
+        url: 'http://172.29.59.63:3000/subnet',
         success: function(data, textStatus){
         	console.log(data);
         	$(".popupData").hide();
@@ -2321,7 +2321,7 @@ $('#createClsrv').click(function(){
 	     datatype: 'jsonp',
 	     data: data,
 		 //contentType: 'application/json',
-	     url: 'http://172.29.59.65:3000/create_cloud_service',
+	     url: 'http://172.29.59.63:3000/create_cloud_service',
 	     success: function(data, textStatus) {
 	     //alert('success');
 		   //if(!alert('Details updated succesfully!')){window.close();}
@@ -2376,7 +2376,7 @@ $('.buttonRt').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/routeTable',
+        url: 'http://172.29.59.63:3000/routeTable',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-route").stop().slideDown();
@@ -2408,7 +2408,7 @@ $('.buttonGtw').click(function(){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/gateWay',
+        url: 'http://172.29.59.63:3000/gateWay',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-gate").stop().slideDown();
@@ -2457,7 +2457,7 @@ function createStgFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createStorage',
+        url: 'http://172.29.59.63:3000/createStorage',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-stg").stop().slideDown();
@@ -2507,7 +2507,7 @@ function createSgpFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createSecGroup',
+        url: 'http://172.29.59.63:3000/createSecGroup',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-sg").stop().slideDown();
@@ -2536,7 +2536,7 @@ function createKpFunction(buttonId, Id){
    	 	jsonpCallback: "callback",
         datatype: 'jsonp',
         data: data,
-        url: 'http://172.29.59.65:3000/createKeyPair',
+        url: 'http://172.29.59.63:3000/createKeyPair',
         success: function(data, textStatus){
         	console.log(data);
         	$(".alert-kp").stop().slideDown();
@@ -2691,11 +2691,11 @@ function deployTemplateFunction()
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        url: 'http://172.29.59.63:3000/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
 		        	$(".alert-temp").stop().slideDown();
-		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	//location.href="http://172.29.59.63:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -2731,10 +2731,10 @@ function deployTemplateFunction()
 		   	 	jsonpCallback: "callback",
 		        datatype: 'jsonp',
 		        data:  "d1="+result_arr+"&d2="+resultObj1,
-		        url: 'http://172.29.59.65:3000/deployTemplate',
+		        url: 'http://172.29.59.63:3000/deployTemplate',
 		        success: function(data, textStatus){
 		        	//alert(data);
-		        	location.href="http://172.29.59.65:3000/master_2"
+		        	location.href="http://172.29.59.63:3000/master_2"
 		        	},
 		        	 error: function (xhr, status, error){
 		                 console.log('Failure');
@@ -2745,6 +2745,6 @@ function deployTemplateFunction()
 }
 
 $('.exit').click(function(){
-	location.href = "http://172.29.59.65:3000/master_2";
+	location.href = "http://172.29.59.63:3000/master_2";
 })
 

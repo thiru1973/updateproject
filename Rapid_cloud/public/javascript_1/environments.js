@@ -1,7 +1,7 @@
 /* ************************************
 	Create by: Omprakash Ramanadham	
 *************************************** */
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 
 $(document).ready(function(){
 	var i =0;
@@ -53,7 +53,7 @@ $(document).ready(function(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: data,	 
-			     url: 'http://172.29.59.65:3000/getSubProviders',
+			     url: 'http://172.29.59.63:3000/getSubProviders',
 			     success: function(results) {	
 						sessionStorage.setItem("Provider", results[0].provider);
 			    	 },
@@ -65,7 +65,7 @@ $(document).ready(function(){
 });
 $(".closeAlert").click(function(){
 	$(".alertS div.alert").stop().slideUp();
-	//location.href="http://172.29.59.65:3000/master_2"
+	//location.href="http://172.29.59.63:3000/master_2"
 });
 window.onload = function(){
 	showEnvironment();
@@ -1455,7 +1455,7 @@ function getPublicIp(valuee, append){
 	},
 	Projects.prototype.getroles = function(){
 		$(function(){		
-		   $.getJSON('http://172.29.59.65:3000/org_temp', function(data) {			
+		   $.getJSON('http://172.29.59.63:3000/org_temp', function(data) {			
 			   
 			   var idArr = [];
 			   
@@ -1939,7 +1939,7 @@ function updatevmsFunc(){
 	        url: _ip+'/upadatevm_details',
 	        success: function(data, textStatus){
 	        	alert(data);
-				location.href="//172.29.59.65:3000/importvm"
+				location.href="//172.29.59.63:3000/importvm"
 				/*$(".popupData, .proDiv").show(); 
 				        var int = setInterval(hideme, 1*60000); 
 				        

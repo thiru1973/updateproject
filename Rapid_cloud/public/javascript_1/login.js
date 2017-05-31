@@ -47,13 +47,13 @@ function validate()
 		 jsonpCallback: "callback",
 	     datatype: 'jsonp',
 	     data: data,	 
-	     url: 'http://172.29.59.65:3000/validate',
+	     url: 'http://172.29.59.63:3000/validate',
 	     success: function(results) {
 	    	 console.log(results);
 	    	 if(results.result == "Valid")
 	    		 {
 					 sessionStorage.setItem("role",results.role);
-	    		 	location.href = "http://172.29.59.65:3000/accounts"
+	    		 	location.href = "http://172.29.59.63:3000/accounts"
 	    		 }else{
 	    			 $(".alert-danger, .alert-warning").hide();
 	    				$(".alert-danger").show().delay(2000).fadeOut('slow');

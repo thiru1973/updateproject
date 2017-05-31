@@ -14,7 +14,7 @@ var conString = "pg://postgres:cloud123@172.29.59.63:5432/Rapid";
 var client_pg = new pg.Client(conString);
 
 var rpcConString = "tcp://172.29.93.97:4242";
-//var rpcConString = "tcp://172.29.59.65:4242";
+//var rpcConString = "tcp://172.29.59.63:4242";
 //var client = new zerorpc.Client();
 //client.connect(rpcConString);
 

@@ -1,4 +1,4 @@
-var _ip = "http://172.29.59.65:3000";
+var _ip = "http://172.29.59.63:3000";
 $(document).ready(function(){
 	var i =0;
 	/*$(".clickRole").click(function(){
@@ -286,7 +286,7 @@ window.onload = function(){
 }
 function getAzureStorage(){
 	$(function(){
-		$.getJSON('http://172.29.59.65:3000/getAzureStg', function(data){
+		$.getJSON('http://172.29.59.63:3000/getAzureStg', function(data){
 			var stgAcc = [];
 			for(i=0;i<data.length;i++)
 				{
@@ -299,7 +299,7 @@ function getAzureStorage(){
 }
 function get_role_os(){
 	$(function(){		
-		   $.getJSON('http://172.29.59.65:3000/org_temp', function(data) {			
+		   $.getJSON('http://172.29.59.63:3000/org_temp', function(data) {			
 			   
 			   var idArr = [], osArr = [];
 			   
@@ -587,7 +587,7 @@ function displayZones(pname,region){
 
 /*function get_project(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/project', function(data){
+		  $.getJSON('http://172.29.59.63:3000/project', function(data){
 			   var proje = data;
 			   var pj_Na=[];
 			   for(var d=0; d<=proje.length-1; d++){				   			   
@@ -601,7 +601,7 @@ function displayZones(pname,region){
 
 function getVpcName(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/vpc_deploy', function(data){
+		  $.getJSON('http://172.29.59.63:3000/vpc_deploy', function(data){
 			 //console.log(data);
 			  var vpc_Name = [];
 			 for(var x=0;x<data.length;x++)
@@ -621,7 +621,7 @@ function getSubnetName(vpcid){
 	var id=vpcid;
 	var subNetName1 = [];
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/subnet_deploy', function(data){			  
+		  $.getJSON('http://172.29.59.63:3000/subnet_deploy', function(data){			  
 			 for(var x=0;x<data.length;x++)
 				 {
 				 	if(data[x].vpc_id == id)
@@ -642,7 +642,7 @@ function getSubnetName(vpcid){
 //cloud service list changed code
 function getCloudService(){
 	$(function(){
-		  $.getJSON('http://172.29.59.65:3000/list_cloud_service', function(data){
+		  $.getJSON('http://172.29.59.63:3000/list_cloud_service', function(data){
 			 //console.log(data);
 			 var cloud_name = [];
 			 for(var x=0;x<data.length;x++)
@@ -1822,7 +1822,7 @@ function deployTemplateFunction()
 		        success: function(data, textStatus){
 		        	alert(data);
 		        	//$(".alert-temp").stop().slideDown();
-		        	//location.href="http://172.29.59.65:3000/master_2"
+		        	//location.href="http://172.29.59.63:3000/master_2"
 					/*var st = [];
 					if(str == "single"){
 						var st = {};

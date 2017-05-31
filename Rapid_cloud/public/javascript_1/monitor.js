@@ -1,7 +1,8 @@
-var _ip = "http://172.29.59.65:3000"
+var _ip = "http://172.29.59.63:3000"
 
 $(document).on("click", "#go-back", function(){
 	window.location.reload();
+
 });
 
 $(document).ready(function(){
@@ -14,8 +15,13 @@ $(document).ready(function(){
 			$(this).find(".dropDown").slideDown();
 		}
 	});
+
+     
+
 	
 });
+
+   
 
 function selectOpt(event, idn, con){
 	var aImage = event.getElementsByTagName("dt")[0].innerHTML;
@@ -31,14 +37,28 @@ function selectOpt(event, idn, con){
 	 $("#"+idd+" span img").css("width", "25px");
 	
 }
-$(document).on("click", "#edit-infra", function(){
+window.onload=function(){
+     var newUrl = 'http://zabbixservercld.cloudapp.net/zabbix/charts.php?ddreset=1';
+	//$('.btn').hide();
+    $('#pipeView').hide();
+	$('#build').hide();
+	$('#jenkins-inline').empty();;
+    $('#jenkins-inline').append(
+		"<div class='zabixMonitor'><object type='text/html' width='1045px' height='600px' target='_parent' data="+newUrl+"></object>" +
+			"<button class='btn btn-danger' id='go-back'>Back</button></div>"
+			//"<object type='text/html' data='http://validator.w3.org/' width='800px' height='600px' style='overflow:auto;border:5px ridge blue'></object>"
+	);
+       
+};
+
+$(document).on("l", ".deployInfrMonitoring", function(){
 	var newUrl = 'http://zabbixservercld.cloudapp.net/zabbix/charts.php?ddreset=1';
 	//$('.btn').hide();
     $('#pipeView').hide();
 	$('#build').hide();
 	$('#jenkins-inline').empty();;
     $('#jenkins-inline').append(
-		"<object type='text/html' width='1100' height='600px' target='_parent' data="+newUrl+"></object>" +
+		"<object type='text/html' width='1045px' height='600px' target='_parent' data="+newUrl+"></object>" +
 			"<button class='btn btn-danger' id='go-back'>Back</button>"
 			//"<object type='text/html' data='http://validator.w3.org/' width='800px' height='600px' style='overflow:auto;border:5px ridge blue'></object>"
 	)

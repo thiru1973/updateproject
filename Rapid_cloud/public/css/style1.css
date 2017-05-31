@@ -1,0 +1,1031 @@
+.padLft0 {
+	padding-left:0px !important;
+}
+.padRgt0 {
+	padding-right:0px;
+}
+.padbot0 {
+	padding-bottom:0px !important;
+}
+
+.padbot20 {
+	padding-bottom:20px !important;
+} 
+.padtop5 {
+	padding-top:5px !important;
+}
+
+.padtop15 {
+	padding-top:15px;
+}
+
+.mt20 {
+	margin-top:20px;
+}
+
+.mt60 {
+	margin-top:60px;
+}
+
+.mt15 {
+	margin-top:15px;
+}
+
+.mt5 {
+	margin-top:5px;
+}
+
+.mt13 {
+	margin-top:13px;
+}
+
+.mt14 {
+	margin-top:13px;
+}
+
+.mt17 {
+	margin-top:17px;
+}
+
+.mt25 {
+	margin-top:25px;
+}
+
+.mt50 {
+	margin-top:50px;
+}
+
+.mlm10 {
+	margin-left:-10px;
+}
+
+.mlm15 {
+	margin-left:-15px;
+}
+
+.userName {
+    padding: 1px;
+	background-color:#f2f2f2;
+}
+
+#designLin .active, #themeNav  {
+    background-color: #E13F3E;
+}
+
+#themeNav .active {
+    background-color: #999;
+}
+
+[role="contentArea"] header { 
+  padding-bottom:10px;
+  padding-top:10px;
+  padding-left:10px;
+  background-color: #fff !important;
+  font-size: 12px !important;
+  box-shadow: 0px 1px 1px #666;
+}
+
+[role="contentArea"] header  h1{
+	font-size:14px !important;
+	color:#000 !important;
+}
+
+
+
+.labelTemp {
+	color:#000;
+	font-weight:bold;
+}
+
+#designLin {
+	background-color:#000;
+}
+
+#designLin li {
+	color:#fff;
+}
+
+#link_1_0  {
+	background-color:#fff;
+}
+
+#data {
+    color: #000;
+    text-align: right;
+    padding-bottom: 10px;
+}
+
+.clickRole {
+	font-size:14px;
+}
+
+/* #leftNavigation {
+	position:fixed !important;
+} */
+
+.design-infra-nav li>a {
+    position: relative;
+    /* display: block; */
+    padding: 10px 15px;
+    float: left !important;
+	text-decoration:none;
+	color:#fff;
+}
+
+.design-infra-nav li>a:hover {
+	background-color:#999;
+}
+
+.tab-active {
+	background-color:#999;
+}
+
+.design-infra-nav li>a:active, .design-infra-nav li>a:focus {
+	background-color:#999;
+}
+
+.design-infra-nav .navbar {
+    min-height: 40px;
+    margin-bottom: 10px;
+	background-color: #ccc;
+	margin-top:-16px;
+	box-shadow: 3px 2px 1px #666;
+}
+
+#themeNav {
+	display:none;
+}
+
+#Account {
+	display:none;
+}
+
+.logoMenu {
+	/* margin-bottom:10px; */
+/* 	box-shadow: 0px 3px 1px #ccc; */
+	background-image: url("../images_1/RapidCloud_Logo.png");
+	background-repeat:no-repeat;
+	background-size:100px 30px;
+	background-color:#f2f2f2;
+	background-position:left center;
+	height:40px;
+}
+
+.logoMenu .col-md-3 {
+	width:31%;
+}
+
+[role="naviGation"] > ul li {
+	color:#000;
+	text-align:center;
+	box-shadow: 3px 2px 1px #ccc;
+}
+
+#designLin {
+	height:40px;
+}
+
+#designLin li {
+    display: inline-block;
+    padding: 10px 10px;
+    color: #EDEDED;
+}
+
+.mainmenuIcons .fa {
+	float:right;
+	margin-top:13px;
+	margin-right:20px;
+}
+
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 8px;
+	font-size:12px;
+}
+
+.nav-tabs {
+	border-bottom: 1px solid #E13F3E;
+}
+
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #E13F3E;
+    border-bottom-color: transparent;
+}
+ 
+ .tab-content section {
+	 background-color: #f2f2f2;
+    overflow: auto;
+    border-radius: 5px;
+	padding-left:20px;
+	padding-right:10px;
+ }
+ 
+ .roles {
+    width: 99%;
+}
+
+[role="naviGation"] > ul li {
+    background-color: #f2f2f2;
+}
+
+a:hover {
+    color: #000;
+}
+
+footer div {
+	text-align:center;
+}
+
+.sidenav {
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: 75px;
+    background-color: #ccc;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+}
+
+.sidenav a {
+    padding: 3px 3px 3px 13px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 16px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+#main .fa, .fa {
+	display:inline;
+}
+
+
+
+#main .col-md-1 .col-md-12 {
+	    height: 50px;
+    width: 50px;
+    padding-top: 15px;
+    border: 1px solid #ccc;
+	text-align:center;
+	box-shadow: 3px 2px 1px #ccc;
+}
+
+#main .col-md-1 {
+	width:5.33333%;
+}
+
+#main .col-md-2 {
+	width:8%;
+}
+
+#main .col-md-9 {
+	width:86%;
+}
+
+.cloud, .devops, .products, .devopstemp, .productstemp {
+	display:none;
+}
+
+.displayBlock {
+	display:block;
+}
+
+.cloud ul li, .devops ul li {
+	padding:3px 5px;
+	background:#ccc;
+	margin-top:2px;
+	box-shadow: 3px 2px 1px #f2f2f2;
+}
+
+.cloud ul li a, .devops ul li a {
+	text-decoration:none;
+	color:#fff;
+}
+
+.leftMenuActive {
+	background:#E13F3E;
+	color:#fff;
+}
+
+#main .col-md-2 {
+	display:none;
+}
+
+#main .design-infra-nav {
+	margin-top:18px;
+}
+
+#main #designLin, #navDiv {
+	display:none;
+}
+
+.layout5Tab, .layout5Tab1, .layout5Tab2 {
+	min-height: 225px;
+    background: #ccc;
+    position: absolute;
+    width: 150px;
+	padding:10px 10px;
+	margin-left:-160px;
+	transition: 0.2s;
+	box-shadow: 3px 2px 1px #999;
+}
+
+.layout5Tab {
+	z-index:1;
+}
+
+.layout5Tab1 {
+	z-index:2;
+	 background: #bfbfbf;
+	 color:#000;
+}
+
+.layout5Tab2 {
+	z-index:3;
+	 background: #ccc;
+	 color:#000;
+}
+
+.fa-bars {
+	text-align: left;
+    margin-bottom: 10px;
+}
+
+#mainTab1Close, #mainTab1Close1, #mainTab1Close2 {
+	position: absolute;
+    /* display: block; */
+    text-align: right;
+    right: 5px;
+    bottom: 3px;
+    font-size: 14px;
+    font-weight: bold;
+	cursor:pointer;
+}
+
+#mainTab ul li a, #mainTab1 ul li a, #mainTab2 ul li a {
+	text-decoration:none;
+	color:#000;
+}
+
+#mainTab ul li, #mainTab1 ul li, #mainTab2 ul li {
+	padding:10px 0px 2px;
+	border-bottom:1px solid #fff;
+	text-align:center;
+	font-size:12px;
+	height:50px;
+}
+
+#designLin {
+	display:none;
+}
+
+.fa.fa-chevron-left {
+	font-size:12px;
+}
+
+[role="profileLinks"] {
+    display:none;
+}
+
+/* #mainTab ul li:hover, #mainTab1 ul li:hover, #mainTab2 ul li:hover {
+	background:#f2f2f2;
+} */
+ 
+.cloudTab {
+	background: #9ebfe0;
+}
+.devopsTab {
+	background-color: #e2ead9;
+}
+.productTab {
+	background-color: #e6cbcf;
+}
+
+#main5 .tab-pane.active header {
+	background: #9ebfe0!important;
+}
+
+#main5 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #9ebfe0;  
+	    border-bottom-color: transparent;
+}
+
+
+.cloudDesignTab, .cloudDeployTab, .cloudManageTab, .cloudMonitorTab, .cloudNetworkTab, .cloudTemplateTab {
+	background-color: #9ebfe0;
+
+}
+
+#main5 .layout5Tab, .layout5Tab1, .layout5Tab2 {
+    padding: 2px 2px;
+	background:#f2f2f2;
+}
+
+#main5 .nav-tabs {
+	border-bottom: 1px solid #9ebfe0;
+}
+
+#main5 .templateCreateButtons button{
+	background-color: #9ebfe0;
+}
+
+/* #main5 .cloudTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 12px;
+    top: 9%;
+    left: 10px;
+} */
+
+#main5 .cloudTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 9%;
+    left: 10px;
+}
+
+#main5 .devopsTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 32%;
+    left: 10px;
+}
+
+#main5 .productTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 54%;
+    left: 10px;
+}
+
+#main5 .cloudDesignTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 9%;
+    left: 10px;
+}
+
+#main5 .cloudDeployTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 32%;
+    left:10px;
+}
+
+#main5 .cloudManageTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 54%;
+    left: 10px;
+}
+
+#main5 .cloudMonitorTab .fa.fa-chevron-right {
+	position: absolute;
+    font-size: 10px;
+    top: 76%;
+    left: 10px;
+}
+
+.layout5Content h3 {
+	color: #9ebfe0;
+}
+
+.fa-bars {
+	float: left;
+    margin-right: 5px;
+	cursor:pointer;
+}
+
+/* -------------------------- */
+
+#singleNavigation .headTab {
+	background: #6ea8e4;
+    padding: 1px 10px;
+	font-weight:bold;
+	text-align:center;
+	/* box-shadow: 3px 2px 1px #999; */
+}
+
+#singleNavigation .linkTab {
+	background-color:#f2f2f2;
+	/* box-shadow: 4px 4px 2px #999; */
+}
+
+#singleNavigation .linkTab li {
+	/* padding: 5px 0px; */
+    /* border-bottom: 1px solid #ccc; */
+}
+
+.subnavTab {
+	padding:5px 8px;
+}
+
+#singleNavigation  .linkTab .fa {
+	display:inline-block;
+	margin-right:7px;
+	font-size:13px;
+}
+
+#singleNavigation  ul {
+	margin-bottom:2px;
+    padding:10px;
+}
+
+#singleNavigation .sublinkTab {
+	padding: 5px 10px;
+    background: #fff;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+#singleNavigation .sublinkTab li:last-child {
+	border-bottom:none;
+}
+
+.linkActive {
+	color:#aec2ac;
+	font-weight:bold;
+}
+
+.singleNavigation .nav-tabs {
+	border-bottom: 1px solid #ef4344;
+}
+
+#singleNavigation ul li {
+ box-shadow: 1px 1px 1px #e5e5e5;
+ padding:10px 10px;
+}
+
+
+.singleNavigation .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border: 1px solid #ef4344;
+    border-bottom-color: transparent;
+}
+
+/* .singleNavigation [role="contentArea"] header {
+    background-color: #AEC2AC !important;
+} */
+
+.logoMenu, .userName {
+	/* background-color: #d8ffd4; */
+	/* background-color:#bcc7ff; */
+	background-color:#f2f2f2;
+}
+
+footer {
+    background-color:#f5f5f5;
+}
+
+.mainNavSection ul li {
+	    display: inline-block;
+    width: 15%;
+    text-align: center;
+    border-right: 1px solid #fff;
+    padding: 18px 10px;
+    background-color: #fff;
+    height: 68px;
+    margin-right: 15px;
+    /* border-bottom: 5px solid #000; */
+    border-radius:5px;
+
+}
+
+/* .mainNavSection ul li:hover {
+	background-color:#aec2ac;
+} */
+
+.mainNavSection ul {
+	background-color: #f2f2f2;
+	/* 	box-shadow: 1px 2px 1px #999; */
+	padding:10px;
+}
+
+.container {
+	background:#f2f2f2;
+    margin-left:17px;
+}
+
+#link_1_0 {
+	display:none;
+}
+
+.subNavSectionHeader {
+	text-align: center;
+    padding: 15px 0px;
+    font-size: 20px;
+}
+
+#singleNavigation.col-md-2 {
+	width:15.75%;
+}
+.singleNavigation.col-md-10 {
+	width:84%;
+	padding-right:10px;
+}
+
+.templateCreateButtons button {
+    background-color: #ef4344;
+}
+
+#singleNavigation .col-md-12 {
+    padding:0px;
+}
+
+.subnavMainTab {
+    background-color: #f2f2f2;
+    padding: 5px 9px;
+    font-weight: bold;
+    text-align: left;
+    border-right:7px solid #000;
+}
+
+.subnavMainTabActive {
+   border-right:7px solid #ef4344;
+}
+
+.mainContent {
+    margin-left:-15px;
+}
+
+.contentHead {
+    padding: 0px 20px 5px;
+    font-size: 28px;
+}
+
+.navigationTabActive {
+    background-color: #ef4344  !important;
+}
+
+.navigationTextActive {
+    color: #ef4344 !important;
+}
+
+.mainNavSection .organizationTab:hover {
+     background-color: #ff984f;
+}
+.mainNavSection .cloudopsTab:hover {
+    background: #ef4344;
+}
+.mainNavSection .devopsTab:hover {
+    background: #84ca7c;
+}
+.mainNavSection .packagesTab:hover {
+    background: #91c3ff;
+}
+.mainNavSection .monitoringTab:hover {
+    background: #ffdf66;
+}
+
+.mainNavSection .dashboardTab:hover {
+    background: #7de6f1;
+}
+
+#singleNavigation  .fa-chevron-right{
+    display: inline-block;
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.tab-pane header {
+    display:none;
+}
+
+#singleNavigation .col-md-12 ul {
+    border:1px solid #f2f2f2;
+}
+
+.mainNavSection ul {
+   background-color:#f2f2f2;
+}
+
+.mainNavSection {
+   margin-top:10px;
+}
+
+.logoBar {
+	overflow:auto;
+	background:#f2f2f2;
+}
+
+.logoBar .col-md-2 {
+	width:16.66666667%;
+}
+
+.mainmenuicons  span {
+	margin-right:3px;
+	display:inline-block;
+	padding-top:10px;
+}
+
+.mainNavSection  .fa {
+	display:block;
+	font-size:16px;
+}
+
+.input-group.add-on {
+	margin-top:3px;
+}
+
+footer {
+	text-align:center;
+}
+.designEnviron, .deployNetworks, .deployEnvironment, .manageEnvironments, .manageLoadBalancer, .manageTraffic,
+.designDedicatedDevops, .deployDedicatedDevops, .deployPipeline, .manageBuild, .manageTechDebt, .manageViewPackages,
+.devopsTab, .cloudopsTab , .packagesTab, .designPkgProductDeployment, .deployPkgDeployProducts, .managePkgEnvironments,
+.managePkgTrafficManager, .managePkgLoadBalancer, .deployInfrMonitoring, .deployAppMonitoring, .manageInfrMonitoring,
+.manageAppMonitoring, .dashboardInfra, .dashboardApp, .monitoringTab, .dashboardTab {
+	cursor:pointer;
+}
+.designEnivornment {
+	background:#f2f2f2;
+}
+.singleNavigation.col-md-10, .assignNodeContent, .createTemplateSection {
+	padding-left:0px;
+}
+
+#singleNavigation ul li:hover , #singleNavigation ul li:active{
+    box-shadow: 2px 2px 2px #ccc;
+    padding: 10px 10px;
+}
+
+.networkResourceGroup {
+	margin-top:20px;
+}
+
+.subnavMainTabActive-devops {
+   border-right:7px solid #84ca7c;
+}
+
+.navigationTabActive-devops {
+    background-color: #84ca7c  !important;
+}
+
+.navigationTextActive-devops {
+    color: #84ca7c !important;
+}
+
+.line-seperator, .deploy-wizard1 .line-seperator{
+    margin-top: 0px;
+    border-top: 1px solid #ffffff;
+}
+.track-progress li.done > span {
+    color: #fff;
+    background-color: #84ca7c;
+}
+.track-progress li > span:after, .track-progress li > span:before {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: solid transparent;
+    border-left-color: #eaeaea;
+    border-width: 19px;
+}
+.track-progress li.done + li > span:before {
+    border-left-color: #84ca7c;
+}
+.track-progress li > span:after {
+    top: -5px;
+    z-index: 1;
+    border-left-color: white;
+    border-width: 24px;
+}
+.track-progress li > span {
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.track-progress li {
+    line-height: 40px;
+    height: 40px;
+    background-color: #eaeaea;
+}
+.devops-stages {
+   padding: 0px;
+}
+
+#devOpsDesignTemplate #gen_div summary {
+	background:#b4d0b0;
+}
+
+#gen_div summary {
+	background:#ff8d8d;
+}
+
+#gen_div  .face.front figure {
+	text-align:center;
+}
+
+#gen_div  .face.front ul {
+	background:#fff;
+}
+
+#devOpsDesignTemplate .templateCreateButtons button {
+    background-color: #84ca7c;
+    width: 70px;
+    height: 30px;
+	padding:0px;
+	font-size: 14px;
+}
+
+.design-wizard2  li.done > span {
+    color: #fff;
+    background-color: #478640;
+}
+
+.design-wizard2 li.done + li > span:before {
+    border-left-color: #478640;
+}
+
+.flip .card {
+    box-shadow: 2px 22px 1px #ccc;
+}
+
+#devOpsDesignTemplate .singleNavigation .nav-tabs {
+    border-bottom: 1px solid #84ca7c;
+}
+#devOpsDesignTemplate .singleNavigation .nav-tabs>li.active>a, #devOpsDesignTemplate .singleNavigation .nav-tabs>li.active>a:focus, 
+#devOpsDesignTemplate .singleNavigation .nav-tabs>li.active>a:hover {
+    border: 1px solid #84ca7c;
+    border-bottom-color: transparent;
+}
+#devOpsDesignTemplate .infrastructure-tab-content thead  tr{
+	background-color: #b4d0b0;
+	color:#000;
+	font-weight:normal !important;
+}
+
+#devOpsDesignTemplate .table tr td:nth-child(2) {
+    max-width: 180px;
+}
+#devOpsDesignTemplate .overview {
+	display: block;
+    position: fixed;
+    right: 0;
+    width: 35%;
+}
+#devOpsDesignTemplate article[role="devTemp"] {
+    min-height: 450px;
+}
+
+#devOpsDesignTemplate article[role="devTemp"] summary[role="packagesDetails"] {
+    overflow-y: visible;
+}
+#devOpsDesignTemplate .infrastructure-tab-content {
+    overflow-y: visible;
+}
+#devOpsDesignTemplate article[role="devTemp"] > h2.vmAPacks {
+    background-color: #b4d0b0;
+}
+#devOpsDesignTemplate article[role="devTemp"] > nav[role="devopsCycle"] ul li a span.arrowPointer {
+    color: #b4d0b0;
+
+}
+#devOpsDesignTemplate .overview  .panel-heading {
+	background-color: #b4d0b0;
+}
+
+#devOpsDesignTemplate .viewLink {
+    color: #84ca7c;
+}
+
+#devOpsDesignTemplate table.nodeSel tr th {
+    background-color: #b4d0b0;
+}
+
+#addNewStorageAccount, #addNewCloudService {
+	background-color: #84ca7c;
+}
+
+.track-progress.configure-wizard.col-xs-12 {
+	justify-content:left;
+}
+#configure, #edit-pipeline, #view-issues, #view-server, .artifact_btn {
+	background:#84ca7c;
+	border:1px solid #84ca7c;
+}
+.artifact_btn:hover, .artifact_btn:active:focus, .artifact_btn.active.focus {
+	background:#84ca7c;
+	border:1px solid #84ca7c;
+}
+
+.packagesTemplate .subnavMainTabActive-pkg {
+   border-right:7px solid #91c3ff;
+}
+
+.packagesTemplate .navigationTabActive-pkg {
+    background-color:#91c3ff  !important;
+}
+
+.packagesTemplate .navigationTextActive-pkg {
+    color: #91c3ff !important;
+}
+.packageContainer {
+	padding: 170px 10px;
+    text-align: center;
+	color: #91c3ff !important;
+}
+
+.dashboardContainer {
+	padding: 170px 10px;
+    text-align: center;
+	color: #7de6f1   !important;
+}
+
+.monitoringTemplate .subnavMainTabActive-mon {
+   border-right:7px solid #fdd439  ;
+}
+.monitoringTemplate .navigationTabActive-mon {
+    background-color:#fdd439  !important;
+}
+.monitoringTemplate .navigationTextActive-mon {
+    color: #fdd439 !important;
+}
+.dashboardTemplate .subnavMainTabActive-dash {
+   border-right:7px solid#7de6f1;
+}
+.dashboardTemplate .navigationTabActive-dash {
+    background-color:#7de6f1 !important;
+}
+.dashboardTemplate .navigationTextActive-dash {
+    color: #7de6f1 !important;
+}
+.monitoringContainer .col-xs-12.col-sm-12.col-md-12.col-lg-12 {
+	padding-left:0px;
+}
+
+.monitoringContainer {
+	margin-top:5px;
+}
+.monitoringContainer button , .monitoringContainer button:hover {
+	background-color: #fdd439;
+	border-color: #fdd439;
+}
+
+.organizationTemplate  .navigationTabActive-org {
+	background-color:#ff984f;
+}
+.organizationContainer  .col-xs-12.col-sm-12.col-md-12.col-lg-12{
+	padding: 170px 10px;
+	color:#ff984f;
+	text-align:center;
+}
+.deployTemplate .col-xs-12.col-sm-12.col-md-12.col-lg-12 {
+	padding-left:0px;
+}
+
+.deployTemplate table.nodeSel tr th {
+	background-color: #f9c5c5;
+}
+
+.deployTemplate .templateConfiguration {
+	background-color:#f2f2f2;
+}
+
+.accountsTemplate .navigationTabActive, .accountsTemplate .redButton  {
+	background-color:#ff984f !important;
+}
+.accountsTemplate .col-xs-12.col-sm-12.col-md-12.col-lg-12 {
+	padding-left:0px;
+}
+
+.accountsTemplate .accountsTable tr th {
+    background-color: #ffc8a0;
+    font-size: 12px;
+}
+footer {
+	position:fixed;
+	bottom:0;
+}
+.stage-infrastructure {
+    height: 550px;
+}

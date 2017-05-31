@@ -21,7 +21,7 @@ window.onload=function(){
 	  str = data.prov_id;
 	  
 	  
-	 $.get('http://172.29.59.65:3000/drop_down', {}, function(results){
+	 $.get('http://172.29.59.63:3000/drop_down', {}, function(results){
 	 
 	 var array = results.split('~');
 		 var region = array[0].split(',');
@@ -52,7 +52,7 @@ function test(el) {
 	var id4 = $(el).closest("tr").find('td:eq(3)').text();
 	var id5 = $(el).closest("tr").find('td:eq(4)').text();
 	
- //location.href="http://172.29.59.65:3000/proj"+"?prov_id="+id1+"&vcpu="+id2+"&mem="+id3+"&store="+id4;
+ //location.href="http://172.29.59.63:3000/proj"+"?prov_id="+id1+"&vcpu="+id2+"&mem="+id3+"&store="+id4;
 
 }
 
@@ -67,7 +67,7 @@ function test(el) {
 				//alert(values.length);
 				
 				
-				location.href="http://172.29.59.65:3000/tmplt_pg"+"?data="+values;
+				location.href="http://172.29.59.63:3000/tmplt_pg"+"?data="+values;
         });
         
     });
@@ -84,7 +84,7 @@ function myFunction() {
 	 jsonpCallback: "callback",
      datatype: 'jsonp',
      data: data,	
-     url: 'http://172.29.59.65:3000/filter',
+     url: 'http://172.29.59.63:3000/filter',
      success: function(results) {    
         $('tbody').empty();
 		var len=results.length;				
@@ -125,8 +125,8 @@ function myFunction() {
 
 	<div id="left_part">
 	<ul><font size="5">
-		<li><a href=http://172.29.59.65:3000/next?prov_id=aws>AWS</a></li>
-		<li><a href=http://172.29.59.65:3000/next?prov_id=azure>Azure</a></li>
+		<li><a href=http://172.29.59.63:3000/next?prov_id=aws>AWS</a></li>
+		<li><a href=http://172.29.59.63:3000/next?prov_id=azure>Azure</a></li>
 		<li><a href="">OpenStack</a></li>
 		<li><a href="">HP Helion</a></li>
 		<li><a href="">SoftLayer</a></li></font>
