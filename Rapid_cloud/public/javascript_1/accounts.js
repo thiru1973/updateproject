@@ -360,7 +360,7 @@ AccountsConst.prototype.create = function(ev){
 }
 AccountsConst.prototype.getDetals = function(accId){
 	$.getJSON(_ip+'/accountDetails', function(data){
-
+		console.log(data);
 		var _subid  = document.getElementById("acSubscriptions"),
 			_subd  = document.getElementById("SubNameDro_ID");
 			_sub  = document.getElementById("ProNameDro_ID");
@@ -666,4 +666,8 @@ function importSubscription(){
 	})
 }
 
-
+function accountSetting(){
+	var accName = document.getElementById("typeDro").innerText;
+	if(accName == "Select"){alert("Please select account");return;}
+	location.href=_ip+"/accSetting"+"?data="+accName;
+}

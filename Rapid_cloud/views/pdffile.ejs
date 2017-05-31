@@ -1,0 +1,38 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <h3 allign="center"><u>Usage Data</u></h3>
+<table style="width:100%">
+    <tr>
+        <th>Sub ID</th>
+        <th>Meter Category</th>
+        <th>Meter Id</th>
+        <th>Meter Name</th>
+        <th>Qantity</th>
+        <th>Unit</th>
+        <th>Usage EndTime</th>
+        <th>Usage StartTime</th>
+    </tr>
+    <% for(var i=0; i < info.value.length; i++) { %>
+        <tr>
+            <td><%= info.value[i].properties.subscriptionId %></td>
+            <td><%= info.value[i].properties.meterCategory %></td>
+            <td><%= info.value[i].properties.meterId %></td>
+            <td><%= info.value[i].properties.meterName %></td>
+            <td><%= info.value[i].properties.quantity %></td>
+            <td><%= info.value[i].properties.unit %></td>
+            <td><%= info.value[i].properties.usageEndTime %></td>
+            <td><%= info.value[i].properties.usageStartTime %></td>
+        </tr>
+    <% } %>
+</table>
+</body>
+</html>
