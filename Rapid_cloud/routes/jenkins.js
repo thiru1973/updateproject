@@ -50,6 +50,7 @@ exports.pipelineviewdata = function(req, res){
 }
 exports.buildPipe = function(req, res){
 	var job = req.body.jobName;
+	console.log(req.body.url);
 	var acName = req.body.accountName
 	   ,pjName = req.body.projectName
 	   ,pdName = req.body.productName;

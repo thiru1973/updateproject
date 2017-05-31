@@ -200,7 +200,7 @@ function pipelineOverview(pipelineData){
       }else if(pipelineData[i][j] && i == 'CT'){
         CTpipeline = j;
       }else if(pipelineData[i][j] && i == 'CD'){
-        CDTemplate = j;
+        CDpipeline = j;
       }
     }
   }

@@ -13,6 +13,7 @@ var express = require('express')
   , sonar = require('./routes/sonar')
   , nexus = require('./routes/nexus')
   , monitors = require('./routes/monitors')
+  , usage = require('./routes/usage_Bill')
   , http = require('http')
   , path = require('path')
   , multer = require('multer');
@@ -35,6 +36,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'usagedata')));
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
@@ -367,6 +369,10 @@ app.post('/getAzureToken', function(req, res) {
 app.get('/envData', view.envData);
 app.post('/nodeData', view.nodeData);
 app.get('/nodeDetails', view.nodeDetails);
+app.get('/accSetting', usage.accSetting);
+app.post('/subusage', usage.subusage);
+app.get('/Topdf', usage.Topdf)
+app.get('/subbill', usage.subbill);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

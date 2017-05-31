@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<title>Monitor</title>
+<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+<link href="theme/theme1.css" id="myTheme" rel="stylesheet"/>
+<link rel="stylesheet" href="css/dev-ops.css">
+    <link href="css_1/modules/deployDevOpsTemp.css"  rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="javascript_1/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+    #sbscr,#fdate, #tdate{
+    padding:6px 12px;
+    }
+</style>
+<body id="bg">
+<div class="container">
+    <aside class="col-xs-12 col-sm-2 col-md-2 col-lg-2" id="leftNavigation">
+    </aside>
+    <section class="col-xs-12 col-sm-10 col-md-10 col-lg-10" role="contentArea">
+        <header>
+            <h1>Account Setting</h1>
+            <aside><div id="data"></div></aside>
+        </header>
+        <span class="pipeline"></span>
+        <!--<button class="btn btn-danger" id="edit-infra">Usage</button>
+        <button class="btn btn-danger" id="edit-app" style="">Billing</button>-->
+
+        <div class="roles gapForDiv">
+            <div id="subscriptions">
+
+            </div>
+        </div>
+
+    </section>
+    <footer>
+        <a href="#">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Terms of use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Offerings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Blog</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Wiki</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#">Contact us</a>
+        <span style="float:right;"><img src="images_1/Social_icons.png" /></span>
+    </footer>
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="deployModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content alert-area">
+                <div class="modal-body ">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="alert-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="javascript_1/manage.js"></script>
+<script src="javascript_1/accSetting.js"></script>
+</body>
+</html>
