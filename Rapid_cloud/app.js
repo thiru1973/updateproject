@@ -373,6 +373,10 @@ app.get('/accSetting', usage.accSetting);
 app.post('/subusage', usage.subusage);
 app.get('/subbill', usage.subbill);
 app.get('/generateBill', usage.generateBill)
+
 http.createServer(app).listen(app.get('port'), function(){
+
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+

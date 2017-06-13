@@ -255,49 +255,50 @@ var manageAct = new HideAndShow_Constructor("liNkaction1","action1");
 				crTr.id ="dataOf"+id;
 			insertAfter(manageTable, crTr);
 			crTr.innerHTML+="<table><tr class='action1'>\
-								</tr>\
-								<tr class='action1'>\
-									<td style='padding:5px 0px;' colspan='7'>\
-										<table style='width:100%;'>\
-											<tr>\
-												<td style='padding:0px;width:160px;vertical-align: top;background-color: #666666;'>\
-													<nav role='tempLates'>\
-														<ul>\
-															<li class='naee'><a href='#'>Environments</a>\
-															  <dl id='envir_"+manageTable.id+"'>\
-															  </dl>\
-															</li>\
-														</ul>\
-													</nav>\
-												</td>\
-												<td style='display:none' id='loadBalTd'>\
-													<nav role='noDes'>\
-														<ul>\
-															<li class='naee' id='loadBal'>\
-															  <a href='#' id='loadBalTDText'>Load Balancer</a>\
-															</li>\
-														</ul>\
-													</nav>\
-												</td>\
-												<td style='padding:0px;width:250px;vertical-align:top;background-color: #DDDDDD;' id='nodeTD'>\
-													<nav role='noDes'>\
-														<ul>\
-															<li class='naee' id='singleTd'><a href='#' id='singleTDText'>Nodes</a>\
-																<dl id='node_"+manageTable.id+"'>\
-																</dl>\
-															</li>\
-														</ul>\
-													</nav>\
-												</td>\
-												<td style='padding:0px;vertical-align:top;background-color:#EEEEEE;' id='detailsTD'>\
-													<table id='nodeDetails_"+manageTable.id+"'>\
-													</table>\
-												</td>\
-											</tr>\
-										</table>\
-									</td>\
-								</tr>\
-								</tr></table>";
+										</tr>\
+										<tr class='action1'>\
+											<td colspan='7' class='manageActions'>\
+												<table style='width:100%;'>\
+													<tr>\
+														<td class='manageActionsSideNav'>\
+															<nav role='tempLates'>\
+																<ul>\
+																	<li class='naee'><a href='#'>Environments</a>\
+																	  <dl id='envir_"+manageTable.id+"'>\
+																	  </dl>\
+																	</li>\
+																</ul>\
+															</nav>\
+														</td>\
+														<td style='display:none' id='loadBalTd'>\
+															<nav role='noDes'>\
+																<ul>\
+																	<li class='naee' id='loadBal'>\
+																	  <a href='#' id='loadBalTDText'>Load Balancer</a>\
+																	</li>\
+																</ul>\
+															</nav>\
+														</td>\
+														<td style='padding:0px;width:20%;vertical-align:top;background-color: #DDDDDD;' id='nodeTD'>\
+															<nav role='noDes'>\
+																<ul>\
+																	<li class='naee' id='singleTd'><a href='#' id='singleTDText'>Nodes</a>\
+																		<dl id='node_"+manageTable.id+"'>\
+																		</dl>\
+																	</li>\
+																</ul>\
+															</nav>\
+														</td>\
+														<td style='padding:0px;vertical-align:top;background-color:#EEEEEE;' id='detailsTD'>\
+															<table id='nodeDetails_"+manageTable.id+"'>\
+															</table>\
+														</td>\
+													</tr>\
+												</table>\
+											</td>\
+										</tr>\
+									</tr></table>";
+								
 			sel.getJsonDataOfEnviro(id);
 		}
 	}
@@ -1405,7 +1406,7 @@ function getPublicIp(valuee, append){
 						</tr>\
 						<tr>\
 							<td colspan="2">\
-							<div class="nodeBuT" style="border-top:solid 1px #ccc;">\
+							<div class="nodeBuT">\
 							<button class="redButton" id="this_Start_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Start</button>\
 							\
 							<button class="redButton" id="this_Stop_'+this.dataOfNd[clickedData].inst_id+'"  value="'+this.dataOfNd[clickedData].inst_id+','+this.dataOfNd[clickedData].region+','+this.dataOfNd[clickedData].prov_id+','+this.dataOfNd[clickedData].cloud_name+','+this.dataOfNd[clickedData].role+','+this.dataOfNd[clickedData].p_name+','+this.dataOfNd[clickedData].type+'" onclick="manage.nodeServerEngine(this)">Stop</button>\
@@ -1416,10 +1417,10 @@ function getPublicIp(valuee, append){
 							</div>\
 							</td>\
 						</tr>\
-						<div class="col-xs-12">\
-						<div class="col-xs-12 content-title content-title-heading custom-spacing">Add Software<button id="'+this.dataOfNd[clickedData].public_ip+','+this.dataOfNd[clickedData].role+'" class="redButton pull-right" onclick="manage.deployTools(this)">Add</button>\</div>\
-						<div class="roleID"><div class="pull-left"><label class="labelTemp">Role</label><div id="selrole" class="clickRole borderNoN"><span>Select</span><ul id="selroles" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div></div>\
-						<div class="roleID"><div class="pull-left"><label class="labelTemp">Software</label><div id="selsoft" class="clickRole borderNoN"><span>Select</span><ul id="selsoftws" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div></div>\
+						<div class="col-xs-12 addSoftware">\
+						<div class="col-xs-12 content-title content-title-heading custom-spacing"><span>Add Software</span><button id="'+this.dataOfNd[clickedData].public_ip+','+this.dataOfNd[clickedData].role+'" class="redButton pull-right" onclick="manage.deployTools(this)">Add</button>\</div>\
+						<div class="roleID"><div class=""><label class="labelTemp">Role</label><div id="selrole" class="clickRole borderNoN"><span>Select</span><ul id="selroles" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div></div>\
+						<div class="roleID"><div class=""><label class="labelTemp">Software</label><div id="selsoft" class="clickRole borderNoN"><span>Select</span><ul id="selsoftws" class="dropDown"></ul><span id="" class="glyphicon glyphicon-chevron-down pull-right"><span></span></span></div></div></div>\
 						</div>';
 			this.getroles();
 				

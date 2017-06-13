@@ -171,6 +171,8 @@
 	height:40px;
 }
 
+
+
 .logoMenu .col-md-3 {
 	width:31%;
 }
@@ -595,11 +597,47 @@ footer div {
 .logoMenu, .userName {
 	/* background-color: #d8ffd4; */
 	/* background-color:#bcc7ff; */
-	background-color:#f2f2f2;
+	   background-color:#f2f2f2; 
+}
+
+
+
+.cloudops_tab_template .logoMenu, .cloudops_tab_template  .userName , .cloudops_tab_template  .userName a{
+	/* background-color: #d8ffd4; */
+	/* background-color:#bcc7ff; */
+	/* background-color:#f2f2f2; */
+	background-color:#ef4344;
+	color:#fff;
+}
+.packagesTemplate .logoMenu, .packagesTemplate  .userName , .packagesTemplate  .userName a{
+	background-color:#3583e0;
+	color:#fff;
+}
+
+.devops_tab_template .logoMenu, .devops_tab_template  .userName , .devops_tab_template  .userName a{
+	background-color:#169c07;
+	color:#fff;
+}
+
+.monitoringTemplate .logoMenu, .monitoringTemplate  .userName , .monitoringTemplate  .userName a{
+	background-color:#ecbc04;
+	color:#fff;
+}
+
+.dashboardTemplate .logoMenu, .dashboardTemplate  .userName , .dashboardTemplate  .userName a{
+	background-color:#04c9de;
+	color:#fff;
+}
+
+.accountsTemplate  .logoMenu, .accountsTemplate  .userName , .accountsTemplate  .userName a{
+	background-color:#ef7620;
+	color:#fff;
 }
 
 footer {
     background-color:#f5f5f5;
+	position:relative;
+	bottom:-150px;
 }
 
 .mainNavSection ul li {
@@ -629,6 +667,7 @@ footer {
 .container {
 	background:#f2f2f2;
     margin-left:17px;
+	min-height:500px;
 }
 
 #link_1_0 {
@@ -653,6 +692,11 @@ footer {
     background-color: #ef4344;
 }
 
+.cloudops_tab_template .templateCreateButtons button {
+    background-color: #f19394;
+	color:#000;
+}
+
 #singleNavigation .col-md-12 {
     padding:0px;
 }
@@ -669,6 +713,14 @@ footer {
    border-right:7px solid #ef4344;
 }
 
+.cloudops_tab_template .subnavMainTabActive {
+   border-right:7px solid #f19394;
+}
+
+.cloudops_tab_template .navigationTextActive {
+    color: #f19394;
+}
+
 .mainContent {
     margin-left:-15px;
 }
@@ -678,19 +730,27 @@ footer {
     font-size: 28px;
 }
 
+.cloudops_tab_template  .navigationTabActive {
+    background-color: #f19394;
+}
+
+.cloudops_tab_template .mainNavSection .cloudopsTab:hover {
+    background-color: #f19394;
+}
+
 .navigationTabActive {
-    background-color: #ef4344  !important;
+    background-color: #f2f2f2;
 }
 
 .navigationTextActive {
-    color: #ef4344 !important;
+    color: #ef4344;
 }
 
 .mainNavSection .organizationTab:hover {
      background-color: #ff984f;
 }
-.mainNavSection .cloudopsTab:hover {
-    background: #ef4344;
+ .mainNavSection .cloudopsTab:hover {
+    background: #f19394;
 }
 .mainNavSection .devopsTab:hover {
     background: #84ca7c;
@@ -728,9 +788,45 @@ footer {
    margin-top:10px;
 }
 
+.cloudops_tab_template .logoBar {
+	overflow:auto;
+	background:#ef4344;
+	color:#fff;
+}
+
+.devops_tab_template .logoBar {
+	overflow:auto;
+	background:#169c07;
+	color:#fff;
+}
+
+.packagesTemplate .logoBar {
+	overflow:auto;
+	background:#3583e0;
+	color:#fff;
+}
+
+.accountsTemplate .logoBar {
+	overflow:auto;
+	background:#ef7620;
+	color:#fff;
+}
+
 .logoBar {
 	overflow:auto;
 	background:#f2f2f2;
+}
+
+.monitoringTemplate .logoBar {
+	overflow:auto;
+	background:#ecbc04;
+	color:#fff;
+}
+
+.dashboardTemplate .logoBar {
+	overflow:auto;
+	background:#04c9de;
+	color:#fff;
 }
 
 .logoBar .col-md-2 {
@@ -754,7 +850,44 @@ footer {
 
 footer {
 	text-align:center;
+	background-color:#f2f2f2;
 }
+.cloudops_tab_template  footer {
+	text-align:center;
+	background-color:#ef4344;
+	color:#fff;
+}
+
+.devops_tab_template  footer {
+	text-align:center;
+	background-color:#169c07;
+	color:#fff;
+}
+
+.packagesTemplate  footer {
+	text-align:center;
+	background-color:#3583e0;
+	color:#fff;
+}
+
+.monitoringTemplate  footer {
+	text-align:center;
+	background-color:#ecbc04;
+	color:#fff;
+}
+
+.dashboardTemplate footer {
+	text-align:center;
+	background-color:#04c9de;
+	color:#fff;
+}
+
+.accountsTemplate  footer {
+	text-align:center;
+	background-color:#ef7620;
+	color:#fff;
+}
+
 .designEnviron, .deployNetworks, .deployEnvironment, .manageEnvironments, .manageLoadBalancer, .manageTraffic,
 .designDedicatedDevops, .deployDedicatedDevops, .deployPipeline, .manageBuild, .manageTechDebt, .manageViewPackages,
 .devopsTab, .cloudopsTab , .packagesTab, .designPkgProductDeployment, .deployPkgDeployProducts, .managePkgEnvironments,
@@ -841,6 +974,22 @@ footer {
 	background:#ff8d8d;
 }
 
+.cloudops_tab_template #gen_div summary {
+	background:#e6c0c0;
+}
+
+.cloudops_tab_template table.nodeSel tr th {
+    background-color: #f19394;
+}
+
+.cloudops_tab_template .redButton {
+    background-color: #f19394;
+    padding: 5px 10px;
+    color: #000;
+	font-size:14px !important;
+	width:85px;
+}
+
 #gen_div  .face.front figure {
 	text-align:center;
 }
@@ -860,6 +1009,10 @@ footer {
 .design-wizard2  li.done > span {
     color: #fff;
     background-color: #478640;
+}
+.nodeScheduleBox .redButton {
+	width:120px;
+	padding:10px 10px;
 }
 
 .design-wizard2 li.done + li > span:before {
@@ -977,7 +1130,7 @@ footer {
     background-color:#7de6f1 !important;
 }
 .dashboardTemplate .navigationTextActive-dash {
-    color: #7de6f1 !important;
+    color: #04c9de !important;
 }
 .monitoringContainer .col-xs-12.col-sm-12.col-md-12.col-lg-12 {
 	padding-left:0px;
@@ -1019,19 +1172,159 @@ footer {
 }
 
 .accountsTemplate .accountsTable tr th {
-    background-color: #ffc8a0;
+    background-color: #ecdacd;
     font-size: 12px;
 }
-footer {
-	position:fixed;
+/* footer {
+	position:absolute;
 	bottom:0;
 }
 .stage-infrastructure {
     height: 550px;
-}
+} */
+/* .templateCreateButtons {
+	position:absolute;
 
-.templateCreateButtons {
-	#position:absolute;
 	bottom:33px;
 	right:10px;
+} */
+.devops_tab_template .pipeline-label ul {
+	font-size:12px !important;
+}
+
+.devops_tab_template .pipe-block li {
+    padding: 8px 8px;
+    border: 1px solid #84ca7c;
+	background: linear-gradient(to right, rgba(255,0,0,0), rgb(217, 232, 215));
+	border-radius:10px;
+}
+.devops_tab_template li.icon {
+    background: transparent;
+    color: #84ca7c;
+}
+.devops_tab_template .deployDevOps .panel-body {
+    padding: 15px 0px;
+}
+.devops_tab_template .overview .panel-body {
+	padding-left:10px;
+}
+.devops_tab_template .glyphicon.glyphicon-arrow-right {
+	font-size:16px;
+}
+
+.devops_tab_template .pipe-block li img {
+	height:20px;
+	width:20px;
+}
+
+#grad {
+  background:#3583e0;
+  background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(22,156,7,1)); /*Safari 5.1-6*/
+  background: -o-linear-gradient(right,rgba(255,0,0,0),rgba(22,156,7,1)); /*Opera 11.1-12*/
+  background: -moz-linear-gradient(right,rgba(255,0,0,0),rgba(22,156,7,1)); /*Fx 3.6-15*/
+  background: linear-gradient(to left, rgba(255,0,0,0), rgba(22,156,7,1)); /*Standard*/
+}
+
+.devops_tab_template .logoMenu {
+	background-image: url("../images_1/RapidCloud_Logo.png"), linear-gradient(to right, #fff, #169c07);
+}
+
+.cloudops_tab_template .logoMenu {
+	background-image: url("../images_1/RapidCloud_Logo.png"), linear-gradient(to right, #fff, #ef4344);
+}
+
+.manageActions {
+	padding: 15px 15px !important;
+    background-color: #fff !important;
+	box-shadow:2px 2px 2px #ccc !important;
+}
+
+[role="tempLates"] {
+    background-color: #f19394;
+}
+
+.manageActionsSideNav {
+	background-color: #f19394 !important;
+	padding: 0px !important;
+    width: 160px;
+    vertical-align: top !important;
+}
+
+.manageActionsSideNav  a, .manageActionsSideNav .activeLink , .manageActionsSideNav  [role="tempLates"] ul li dl dt,
+.manageActionsSideNav  [role="noDes"] ul li dl dt{
+	color:#000;
+}
+
+[role="tempLates"] ul li dl dt, [role="noDes"] ul li dl dt {
+    border-bottom: 1px solid #666;
+}
+
+.manageActionsSideNav [role="tempLates"] ul li dl dt.activeLink, .manageActionsSideNav [role="tempLates"] ul li dl dt:hover {
+       background-color: #d2d2d2;
+}
+
+[role="noDes"] ul li dl dt:hover {
+    color: #000;
+    background-color: #d2d2d2;
+} 
+.enviromentMoreLinks , .enviromentMoreLinks:hover {
+    background-color: transparent;
+    color: #000;
+}
+
+.enviromentMoreLinks .node_Details {
+    border: none; 
+}
+
+.arrowGray {
+    color: #000;
+}
+
+#detailsTD table tbody tr:first-child td {
+	text-align:center;
+}
+
+#detailsTD table tr td {
+	background-color:#fff;
+}
+
+#detailsTD table:first-child {
+	width:80%;
+}
+
+#detailsTD table table td:first-child {
+	font-weight:bold;
+}
+
+
+
+.enviTable tr td {
+    padding: 7px 10px;
+}
+
+#user_date {
+	height: 40px;
+}
+#user_hr, #user_min {
+	height:40px;
+}
+
+.addSoftware {
+	width: 190%;
+    background-color: #fff;
+    padding: 10px;
+}
+#roleID .pull-left {
+	clear:both !important;
+}
+
+.addSoftware .roleID .clickRole {
+    background-color: #f2f2f2;
+}
+.addSoftware .clickRole.borderNoN {
+	width:100%;
+}
+.addSoftware .content-title-heading.custom-spacing span {
+	padding-top:7px;
+	display:inline-block;
 }
