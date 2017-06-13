@@ -408,10 +408,30 @@ LayOut.prototype = {
 		$('.manageBuild').click(function(){location.href = location.origin+"/pipelinelist"});
 		$('.manageTechDebt').click(function(){location.href = location.origin+"/sonarProject"});
 		$('.manageViewPackages').click(function(){location.href = location.origin+"/nexusView"});
-//Main Navigation
-		$('.cloudopsTab').click(function(){location.href = location.origin+"/create_template"});
-		$('.devopsTab').click(function(){location.href = location.origin+"/designDevOpsTemp"});
-		$('.packagesTab').click(function(){location.href = location.origin+"/packages"});
+//Main Tab Navigation
+$('.cloudopsTab').click(function(){location.href = location.origin+"/create_template"});
+$('.devopsTab').click(function(){location.href = location.origin+"/designDevOpsTemp"});
+$('.packagesTab').click(function(){location.href = location.origin+"/packages"});
+$('.monitoringTab').click(function(){location.href = location.origin+"/monitoring"});
+$('.dashboardTab').click(function(){location.href = location.origin+"/dashInfrastructure"});
+$('.organizationTab').click(function(){location.href = location.origin+"/accounts"});
+
+//packages navigation
+$('.designPkgProductDeployment').click(function(){location.href = location.origin+"/packages"});
+$('.deployPkgDeployProducts').click(function(){location.href = location.origin+"/packagesDeployProducts"});
+$('.managePkgEnvironments').click(function(){location.href = location.origin+"/pkgMngEnv"});
+$('.managePkgTrafficManager').click(function(){location.href = location.origin+"/pkgTrafficMngr"});
+$('.managePkgLoadBalancer').click(function(){location.href = location.origin+"/pkgLoadBlncr"});
+
+//Monitoring navigation
+$('.deployInfrMonitoring').click(function(){location.href = location.origin+"/monitoring"});
+$('.deployAppMonitoring').click(function(){location.href = location.origin+"/deployAppMonitoring"});
+$('.manageInfrMonitoring').click(function(){location.href = location.origin+"/manageInfrMonitoring"});
+$('.manageAppMonitoring').click(function(){location.href = location.origin+"/manageAppMonitoring"});
+
+//Dashboard Navigation
+$('.dashboardInfra').click(function(){location.href = location.origin+"/dashInfrastructure"});
+$('.dashboardApp').click(function(){location.href = location.origin+"/dashApplication"});
       
 	},
 	lnav: document.getElementById("leftNavigation"),

@@ -373,6 +373,8 @@ app.get('/accSetting', usage.accSetting);
 app.post('/subusage', usage.subusage);
 app.get('/Topdf', usage.Topdf)
 app.get('/subbill', usage.subbill);
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+server.on('error', function(err) {console.log("error:"+err)});
