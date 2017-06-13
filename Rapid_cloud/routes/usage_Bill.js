@@ -39,7 +39,7 @@ exports.subusage = function(req, res){
                     finalData += data.toString();
                   });
                   response.on("end", function() {
-                    //saveUsageData(finalData)
+                    saveUsageData(JSON.parse(finalData),"usage_data")
                     //res.send(JSON.parse(finalData));
                     var ret = ejs.render(html, {
                          info: JSON.parse(finalData)
@@ -54,7 +54,7 @@ exports.subusage = function(req, res){
                 });
     })
 }
-exports.subbill = function(req, res){
+/*exports.subbill = function(req, res){
     var data = {};
     data.accName = "Sonata_Account";
     data.subscname = "MicroSoft Azure";
@@ -88,16 +88,47 @@ exports.subbill = function(req, res){
                               console.log(result); //
                               res.send(result)
                             });
-                        //res.send(dt);
-                        /*var ret = ejs.render(html, {
-                             info: JSON.parse(finalData)
-                            });
-                            pdf.create(ret, options).toFile('./usagedata/bill'+fdate+'.pdf', function(err, result) {
+                      });
+                    });
+        })
+}*/
+exports.subbill = function(req, res){
+    var data = {};
+    data.accName = "Sonata_Account";
+    data.subscname = "MicroSoft Azure";
+    data.fdate = "2017-05-01";
+    data.tdate = "2017-05-15";
+    getsubid(data.accName,data.subscname, function(callback){
+                var fdate = req.body.fdate;
+                var data1 = JSON.stringify(data);
+                console.log(data1);
+                http.get(billurl+data1, function(response) {
+                    var finalData = '';
+                      response.on("data", function (data) {
+                        finalData += data.toString();
+                      });
+                      response.on("end", function() {
+                        saveUsageData(JSON.parse(finalData),"bill_data")
+                        //console.log(finalData);
+                        /*var subbl = JSON.parse(finalData);
+                        console.log(subbl.value[0].properties.quantity);
+                        //res.send(subbl.value[0].properties.quantity);
+                        var subbll = 0;
+                        for(var bl=0;bl<subbl.value.length;bl++){
+                            if(subbl.value[bl].properties.usageStartTime == '2017-03-01T00:00:00+00:00'){
+                                console.log(subbl.value[bl].properties.quantity)
+                                subbll = subbll+subbl.value[bl].properties.quantity;
+                            }
+                        }
+                        var dt ={};
+                        dt.service = "Virtual Machines"
+                        dt.amount = subbll;
+                        var ret = ejs.render(billfile,{info : dt});
+                            pdf.create(ret, options).toFile('./usagedata/bill.pdf', function(err, result) {
                               if (err) return console.log(err);
                               console.log(result); //
-                              res.send(fdate)
+                              res.send(result)
                             });*/
-                        //console.log(JSON.stringify(finalData));
                       });
                     });
         })
@@ -130,7 +161,8 @@ function saveUsageData(usageData, cname){
       } else {
         console.log('Connection established to');
         var collection=db.collection(cname);
-        var DB_data = {data : usageData}
+        var dte = Date();
+        var DB_data = {day : dte, data : usageData}
         collection.insert([DB_data], function (err, result) {
           if (err) {
             console.log(err);
@@ -142,30 +174,42 @@ function saveUsageData(usageData, cname){
       }
     });
 }
+exports.generateBill = function(req, res){
+    var usagedata;
+    MongoClient.connect(url, function (err, db) {
+          if (err) {
+                console.log('Unable to connect to the mongoDB server. Error:', err);
+           } else {
+            console.log('Connection established');
+            var instance=db.collection('usage_data');
+            instance.find().toArray(function(err,result){
+            if(err){
+                    throw err
+                    }
+                else{
+                        usagedata = result;
+                        var instance=db.collection('bill_data');
+                        instance.find().toArray(function(err,resultdb){
+                        if(err){
+                                throw err
+                                }
+                            else{
+                                    var sum = 0;
+                                    for(var i=0;i<usagedata[0].data.value.length;i++){
+                                        for(j=0;j<resultdb[0].data.Meters.length;j++){
+                                            if(usagedata[0].data.value[i].properties["meterId"] == resultdb[0].data.Meters[j].MeterId)
+                                            sum = sum+resultdb[0].data.Meters[j].MeterRates["0"]
+                                        }
+
+                                    }
+                                    console.log(sum);
+                                    res.send(usagedata[0].data.value[0].properties["meterId"]);
+                                }
+                        });
+                    }
+            });
+        }
+            });
+}
 
 
-exports.Topdf = function (req, res) {
-     var info = {};
-    info.Company = "ABC";
-    info.Team = "JsonNode";
-    var ret = ejs.render(html, {
-     info: info
-    });
-    pdf.create(ret, options).toFile('./usagedata/test.pdf', function(err, result) {
-      if (err) return console.log(err);
-      console.log(result); //
-      res.send(result)
-    });
-    /*res.render('pdffile', {
-        info: info
-    }, function (err, HTML) {
-        pdf.create(HTML, options).toFile('./usagedata/employee.pdf', function (err, result) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            console.log(result)
-        })
-      })*/
- }

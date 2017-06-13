@@ -188,7 +188,7 @@ a:active {
 }
 
 .project-name, .pipeline {
-    color: white;
+    #color: white;
 }
 
 #view-log, #build-pipeline, #edit-pipeline {

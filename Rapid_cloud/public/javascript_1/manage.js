@@ -232,7 +232,7 @@ LayOut.prototype = {
 			 datatype: 'jsonp',
 			 data: data,
 			 async: false,
-			 url: 'http://172.29.59.63:3000/getRoles',
+			 url: 'http://172.29.59.65:3000/getRoles',
 			 success: function(results) {
 				 for(var i =0;i<results.length;i++)
 				 {

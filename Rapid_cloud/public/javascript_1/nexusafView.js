@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////
-var _ip = "http://172.29.59.63:3000";
+var _ip = "http://172.29.59.65:3000";
 $(document).ready(function(){
 	$(".cancelPoup, .close").click(function(){
 		$("#instan").hide();

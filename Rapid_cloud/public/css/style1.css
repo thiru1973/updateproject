@@ -1023,7 +1023,7 @@ footer {
     font-size: 12px;
 }
 footer {
-	position:fixed;
+	#position:fixed;
 	bottom:0;
 }
 .stage-infrastructure {
@@ -1031,7 +1031,7 @@ footer {
 }
 
 .templateCreateButtons {
-	position:absolute;
+	#position:absolute;
 	bottom:33px;
 	right:10px;
 }

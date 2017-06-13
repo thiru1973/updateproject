@@ -1,4 +1,4 @@
-var _ip = "http://172.29.59.63:3000";
+var _ip = "http://172.29.59.65:3000";
 
 $(document).ready(function(){	
 	var accountName = localStorage.getItem("Account")
@@ -14,7 +14,7 @@ $(document).ready(function(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: data,	 
-			     url: 'http://172.29.59.63:3000/getSubProviders',
+			     url: 'http://172.29.59.65:3000/getSubProviders',
 			     success: function(results) {	
 						console.log(results[0].provider);
 			    	 },
@@ -40,7 +40,7 @@ Projects.prototype.importVmDetails = function(){
 				 jsonpCallback: "callback",
 			     datatype: 'jsonp',
 			     data: data,	 
-			     url: 'http://172.29.59.63:3000/getvms',
+			     url: 'http://172.29.59.65:3000/getvms',
 			     success: function(data) {	
 						for(var d=0; d<data.length; d++){				   			   
 							var createTr = document.createElement("tr");

@@ -76,7 +76,8 @@ var pipelineTemplate = {
   CT1 : '<ul class="col-xs-12 pipe-block"> <li>SAT</li></ul>',
   CT2 : '<ul class="col-xs-12 pipe-block"> <li>SAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>UAT</li></ul>',
   CT3 : '<ul class="col-xs-12 pipe-block"> <li>SAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>UAT</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>PAT</li></ul>',
-  CD1 : '<ul class="col-xs-12 pipe-block"> <li>Deployment</li> </ul>'
+  CD1 : '<ul class="col-xs-12 pipe-block"> <li>Dedicated-App-Infra</li><li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Application-tools</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Application-Tool-Configuration</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li><li>Application-Deployment</li> </ul>',
+  CD2 : '<ul class="col-xs-12 pipe-block"> <li>Dynamic-App-Infra</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Application-tools</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li> <li>Application-Tool-Configuration</li> <li class="icon"><i class="glyphicon glyphicon-arrow-right"></i></li><li>Application-Deployment</li></ul>',
 };
 var toolOverviewList = ['Github','Jenkins','Ant','Junit','Sonarqube','Nexus'];
 var selectedToolOverview = [];
@@ -166,6 +167,9 @@ function pipelineOverview(pipelineData){
   switch(CDpipeline){
     case 'CD1':
       CDTemplate = '<div class="col-xs-12"><b>CD</b></div><div class="col-xs-12">' + pipelineTemplate.CD1 + '</div>'
+      break;
+    case 'CD2':
+      CDTemplate = '<div class="col-xs-12"><b>CD</b></div><div class="col-xs-12">' + pipelineTemplate.CD2 + '</div>';
       break;
     default:
       CDpipeline = '';

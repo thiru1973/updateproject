@@ -60,7 +60,7 @@ $(document).on("click", "#edit-check", function(){
         console.log(data);
         /*var subsc = document.getElementById("subscriptions");
         subsc.innerHTML+='<a href='+data+'.pdf>View</a>';*/
-        location.href = _ip+'/'+data+'.pdf'
+        location.href = _ip+'/usage'+data+'.pdf'
     })
     .fail(function(err){
         console.log(err)

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////
-var _ip = "http://172.29.59.63:3000";
+var _ip = "http://172.29.59.65:3000";
 $(document).ready(function(){
 	$(".cancelPoup, .close").click(function(){
 		$("#instan").hide();
@@ -55,7 +55,7 @@ Con_ManageVolumes.prototype = {
 				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 			}
 		$(".countConfigBox").hide();
-		// http://172.29.59.63:3000/volumeDetails
+		// http://172.29.59.65:3000/volumeDetails
 		$.getJSON( _ip + '/volumeDetails1', function (data){
 			console.log(data);
 			if(data.length > 0){

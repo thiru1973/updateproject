@@ -1,4 +1,4 @@
-var _ip = "http://172.29.59.63:3000";
+var _ip = "http://172.29.59.65:3000";
 function isIE () {	
   var myNav = navigator.userAgent.toLowerCase();
   ieVer = (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
@@ -144,11 +144,11 @@ function pvdSpec_function(myT){
 	var template = myT.id;
 	//alert("Disabled the functions....!");
 	console.log(myT);
-	location.href="//172.29.59.63:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
+	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
 }	
 
 $('#manageEnv').click(function(){
-	location.href="//172.29.59.63/manageEnv";
+	location.href="//172.29.59.65/manageEnv";
 })
 function addDevOps(ev){	
 	localStorage.setItem("InfraId",ev.title)

@@ -1,4 +1,4 @@
-var _ip = "http://172.29.59.63:3000";
+var _ip = "http://172.29.59.65:3000";
 function isIE () {
   var myNav = navigator.userAgent.toLowerCase();
   ieVer = (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
@@ -112,11 +112,11 @@ function pvdSpec_function(myT){
 	var template = myT.id;
 	//alert("Disabled the functions....!");
 	console.log(myT);
-	location.href="//172.29.59.63:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
+	location.href="//172.29.59.65:3000/deployTemplate"+"?data="+"multi"+"?data2="+template;
 }
 
 $('#manageEnv').click(function(){
-	location.href="//172.29.59.63/manageEnv";
+	location.href="//172.29.59.65/manageEnv";
 })
 function addDevOps(ev){
 	localStorage.setItem("InfraId",ev.title)
@@ -741,7 +741,7 @@ $('#stageCodeRepo').click(function(){
     $('.design-wizard1 li')[3].className = 'done';
     $('.step3').addClass('hidden');
     $('.step4').removeClass('hidden');
-    $.post( "http://172.29.59.63:3000/devopsTemplate", {'cloud':designDevOpsData.deployTemplate[0].cloud,'technology':designDevOpsData.deployTemplate[0].technology,'devops_type' : 'CI'})
+    $.post( "http://172.29.59.65:3000/devopsTemplate", {'cloud':designDevOpsData.deployTemplate[0].cloud,'technology':designDevOpsData.deployTemplate[0].technology,'devops_type' : 'CI'})
       .then(function(data){
         toolDataForVm = data;
       }).then(codeRepository(pipelineSelected));
